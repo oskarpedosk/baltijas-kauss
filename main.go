@@ -1,7 +1,10 @@
 package main
 
 import (
+	"encoding/csv"
 	"fmt"
+	"log"
+	"os"
 	"strconv"
 	"strings"
 
@@ -10,42 +13,39 @@ import (
 
 // NBA player
 type PlayerData struct {
-	playerRank			int
-	playerName			string
-	playerPositions		[]string
-	playerTeam			string
-	playerHeight		[]int
-	playerRatings 		[]int
+	Rank      int      `json:"rank"`
+	Name      string   `json:"name"`
+	Positions []string `json:"positions"`
+	Team      string   `json:"team"`
+	Height    []int    `json:"height"`
+	Ratings   []int    `json:"ratings"`
 }
 
 func main() {
 	scrapeDataFromURL("https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings")
-	fmt.Println(PlayerData)
+
 }
 
 func scrapeDataFromURL(scrapeUrl string) {
-	// creating a file
-	/*
-    fName := "data.csv"
-    file, err := os.Create(fName)
-    if err != nil {
-        log.Fatalf("Could not create file, err: %q", err)
-        return
-    }
-    defer file.Close()
-
-    writer := csv.NewWriter(file)
-    defer writer.Flush()
-	*/
+	// Create a file
+	fName := "data.json"
+	file, err := os.Create(fName)
+	if err != nil {
+		log.Fatalf("Could not create file, err: %q", err)
+		return
+	}
+	defer file.Close()
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
 
 	c := colly.NewCollector()
-    c.OnHTML("div.table-responsive tbody", func(e *colly.HTMLElement) {
+	c.OnHTML("div.table-responsive tbody", func(e *colly.HTMLElement) {
 		i := 1
 		e.ForEach("tr", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				// Get player name
 				playerName := el.ChildText("td:nth-child(2) div.entries span.entry-font")
-				
+
 				// Get player info (positions, height, team)
 				playerInfo := strings.Split(el.ChildText("td:nth-child(2) div.entries span.entry-subtext-font"), "|")
 
@@ -74,21 +74,24 @@ func scrapeDataFromURL(scrapeUrl string) {
 				player3ptRating := atoi(el.ChildText("td:nth-child(4)"))
 				playerDunkRating := atoi(el.ChildText("td:nth-child(5)"))
 				playerRatings = append(playerRatings, playerOverallRating, player3ptRating, playerDunkRating)
-				
+
 				// Add data to struct
-				data := PlayerData{}
-				data.playerRank = i
+				player := PlayerData{
+					Rank: i,
+					Name: playerName,
+					Positions: playerPositions,
+					Team: playerTeam,
+					Height: playerHeight,
+					Ratings: playerRatings,
+				}
 				i++
-				data.playerName = playerName
-				data.playerPositions = playerPositions
-				data.playerTeam = playerTeam
-				data.playerHeight = playerHeight
-				data.playerRatings = playerRatings
+				fmt.Println(player)
+
 			}
 		})
-        fmt.Println("Scrapping Complete")	
-    })
-    c.Visit(scrapeUrl)
+		// fmt.Println("Scraping Complete")
+	})
+	c.Visit(scrapeUrl)
 }
 
 func trimSpace(str string) string {
@@ -102,6 +105,6 @@ func trim(str string, condition string) string {
 }
 
 func atoi(str string) int {
-	integer,_ := strconv.Atoi(str)
+	integer, _ := strconv.Atoi(str)
 	return integer
 }
