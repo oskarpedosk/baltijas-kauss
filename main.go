@@ -1,9 +1,9 @@
 package main
 
 import (
-	"encoding/csv"
+	"encoding/json"
 	"fmt"
-	"log"
+	"io/ioutil"
 	"os"
 	"strconv"
 	"strings"
@@ -13,31 +13,23 @@ import (
 
 // NBA player
 type PlayerData struct {
-	Rank      int      `json:"rank"`
-	Name      string   `json:"name"`
-	Positions []string `json:"positions"`
-	Team      string   `json:"team"`
-	Height    []int    `json:"height"`
-	Ratings   []int    `json:"ratings"`
+	Rank      int      `json:"player_rank"`
+	Name      string   `json:"player_name"`
+	Positions []string `json:"player_positions"`
+	Team      string   `json:"player_team"`
+	Height    []int    `json:"player_height"`
+	Ratings   []int    `json:"player_ratings"`
 }
+
+var sliceOfPlayers []PlayerData
+
 
 func main() {
-	scrapeDataFromURL("https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings")
-
+	scrapedData := scrapeDataFromURL("https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings")
+	writeToJson("data.json", scrapedData)
 }
 
-func scrapeDataFromURL(scrapeUrl string) {
-	// Create a file
-	fName := "data.json"
-	file, err := os.Create(fName)
-	if err != nil {
-		log.Fatalf("Could not create file, err: %q", err)
-		return
-	}
-	defer file.Close()
-	writer := csv.NewWriter(file)
-	defer writer.Flush()
-
+func scrapeDataFromURL(scrapeUrl string) []PlayerData {
 	c := colly.NewCollector()
 	c.OnHTML("div.table-responsive tbody", func(e *colly.HTMLElement) {
 		i := 1
@@ -85,13 +77,29 @@ func scrapeDataFromURL(scrapeUrl string) {
 					Ratings: playerRatings,
 				}
 				i++
-				fmt.Println(player)
-
+				
+				// Add struct to slice
+				sliceOfPlayers = append(sliceOfPlayers, player)
 			}
 		})
 		// fmt.Println("Scraping Complete")
 	})
 	c.Visit(scrapeUrl)
+
+	return sliceOfPlayers
+}
+
+func writeToJson(fileName string, sliceOfPlayers []PlayerData) {
+	// Create a file
+	file, err := os.Create(fileName)
+	if err != nil {
+		fmt.Printf("Could not create file, err: %q", err)
+	}
+	defer file.Close()
+
+	// Write scraped data to .json
+	data,_ := json.MarshalIndent(sliceOfPlayers, "", "	")	
+	ioutil.WriteFile(fileName, data, 0644)
 }
 
 func trimSpace(str string) string {
