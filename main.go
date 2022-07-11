@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strconv"
@@ -89,14 +88,11 @@ func scrapeDataFromURL(scrapeUrl string) []PlayerData {
 	return sliceOfPlayers
 }
 
-func writeToJson(fileName string, sliceOfPlayers []PlayerData) {
+func writeToJson(fileName string, sliceOfPlayers interface{}) {
 	// Create a file
-	file, err := os.Create(fileName)
-	if err != nil {
-		fmt.Printf("Could not create file, err: %q", err)
-	}
+	file,_ := os.Create(fileName)
 	defer file.Close()
-
+	
 	// Write scraped data to .json
 	data,_ := json.MarshalIndent(sliceOfPlayers, "", "	")	
 	ioutil.WriteFile(fileName, data, 0644)
