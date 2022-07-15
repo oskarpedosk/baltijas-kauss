@@ -1,4 +1,4 @@
-module github.com/oskarpedosk/2K22
+module 2K22
 
 go 1.18
 

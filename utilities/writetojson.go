@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func writeToJson(fileName string, sliceOfPlayers interface{}) {
+func WriteToJson(fileName string, sliceOfPlayers interface{}) {
 	// Create a file
 	file,err := os.Create(fileName)
 	if err != nil {

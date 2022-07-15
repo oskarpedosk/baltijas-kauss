@@ -1,8 +1,10 @@
 package main
 
 import (
+	"2K22/utilities"
 	"strconv"
 	"strings"
+
 	"github.com/gocolly/colly"
 )
 
@@ -21,7 +23,7 @@ var sliceOfPlayers []PlayerData
 
 func main() {
 	scrapedData := scrapeDataFromURL("https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings")
-	writeToJson("data.json", scrapedData)
+	utilities.WriteToJson("data.json", scrapedData)
 }
 
 func scrapeDataFromURL(scrapeUrl string) []PlayerData {
