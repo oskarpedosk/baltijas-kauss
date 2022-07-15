@@ -1,10 +1,6 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 	"github.com/gocolly/colly"
@@ -86,22 +82,6 @@ func scrapeDataFromURL(scrapeUrl string) []PlayerData {
 	c.Visit(scrapeUrl)
 
 	return sliceOfPlayers
-}
-
-func writeToJson(fileName string, sliceOfPlayers interface{}) {
-	// Create a file
-	file,err := os.Create(fileName)
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	defer file.Close()
-	
-	// Write scraped data to .json
-	data,err := json.MarshalIndent(sliceOfPlayers, "", "	")	
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	ioutil.WriteFile(fileName, data, 0644)
 }
 
 func trimSpace(str string) string {
