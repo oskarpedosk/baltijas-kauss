@@ -8,12 +8,14 @@ import (
 
 // NBA player
 type PlayerData struct {
-	Rank      int      `json:"player_rank"`
-	Name      string   `json:"player_name"`
-	Positions []string `json:"player_positions"`
-	Team      string   `json:"player_team"`
-	Height    []int    `json:"player_height"`
-	Ratings   []int    `json:"player_ratings"`
+	Rank      			int      `json:"rank"`
+	Name      			string   `json:"name"`
+	Positions 			[]string `json:"positions"`
+	Team      			string   `json:"team"`
+	Height    			[]int    `json:"feet_inch"`
+	OverallRating      	int      `json:"overall_rating"`
+	ThreePointRating	int      `json:"3pt_rating"`
+	DunkRating      	int      `json:"dunk_rating"`
 }
 
 var sliceOfPlayers []PlayerData
@@ -50,20 +52,20 @@ func ScrapeDataFromURL(scrapeUrl string) []PlayerData {
 				playerTeam := TrimSpace(playerInfo[2])
 
 				// Get player ratings
-				playerRatings := []int{}
 				playerOverallRating := Atoi(el.ChildText("td:nth-child(3)"))
 				player3ptRating := Atoi(el.ChildText("td:nth-child(4)"))
 				playerDunkRating := Atoi(el.ChildText("td:nth-child(5)"))
-				playerRatings = append(playerRatings, playerOverallRating, player3ptRating, playerDunkRating)
 
 				// Add data to struct
 				player := PlayerData{
-					Rank:      i,
-					Name:      playerName,
-					Positions: playerPositions,
-					Team:      playerTeam,
-					Height:    playerHeight,
-					Ratings:   playerRatings,
+					Rank:     			i,
+					Name:      			playerName,
+					Positions: 			playerPositions,
+					Team:      			playerTeam,
+					Height:   			playerHeight,
+					OverallRating:   	playerOverallRating,
+					ThreePointRating:   player3ptRating,
+					DunkRating:   		playerDunkRating,
 				}
 				i++
 
