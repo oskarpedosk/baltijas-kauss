@@ -1,21 +1,22 @@
 package utilities
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gocolly/colly"
 )
 
-// NBA player
+// NBA player struct
 type PlayerData struct {
-	Rank      			int      `json:"rank"`
-	Name      			string   `json:"name"`
-	Positions 			[]string `json:"positions"`
-	Team      			string   `json:"team"`
-	Height    			[]int    `json:"feet_inch"`
-	OverallRating      	int      `json:"overall_rating"`
-	ThreePointRating	int      `json:"3pt_rating"`
-	DunkRating      	int      `json:"dunk_rating"`
+	Rank             int      `json:"rank"`
+	Name             string   `json:"name"`
+	Positions        []string `json:"positions"`
+	Team             string   `json:"team"`
+	Height           []int    `json:"feet_inch"`
+	OverallRating    int      `json:"overall_rating"`
+	ThreePointRating int      `json:"3pt_rating"`
+	DunkRating       int      `json:"dunk_rating"`
 }
 
 var sliceOfPlayers []PlayerData
@@ -58,14 +59,14 @@ func ScrapeDataFromURL(scrapeUrl string) []PlayerData {
 
 				// Add data to struct
 				player := PlayerData{
-					Rank:     			i,
-					Name:      			playerName,
-					Positions: 			playerPositions,
-					Team:      			playerTeam,
-					Height:   			playerHeight,
-					OverallRating:   	playerOverallRating,
-					ThreePointRating:   player3ptRating,
-					DunkRating:   		playerDunkRating,
+					Rank:             i,
+					Name:             playerName,
+					Positions:        playerPositions,
+					Team:             playerTeam,
+					Height:           playerHeight,
+					OverallRating:    playerOverallRating,
+					ThreePointRating: player3ptRating,
+					DunkRating:       playerDunkRating,
 				}
 				i++
 
@@ -73,7 +74,7 @@ func ScrapeDataFromURL(scrapeUrl string) []PlayerData {
 				sliceOfPlayers = append(sliceOfPlayers, player)
 			}
 		})
-		// fmt.Println("Scraping Complete")
+		fmt.Println("Scraping Complete")
 	})
 	c.Visit(scrapeUrl)
 
