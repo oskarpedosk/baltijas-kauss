@@ -27,16 +27,5 @@ func ReadJson(fileName string) []PlayerData {
 	// jsonFile's content into 'players' which we defined above
 	json.Unmarshal(byteValue, &players)
 
-	// Iterate through every player within our players array
-	for i := 0; i < len(players); i++ {
-		fmt.Println("Rank: ", players[i].Rank)
-		fmt.Println(players[i].Name, players[i].Team)
-		fmt.Println("Positions: ", players[i].Positions)
-		fmt.Println("Height: ", players[i].Height)
-		fmt.Println("Overall: ", players[i].OverallRating)
-		fmt.Println("3pt: ", players[i].ThreePointRating)
-		fmt.Println("Dunk: ", players[i].DunkRating)
-		fmt.Println("--------------")
-	}
 	return players
 }
