@@ -1,13 +1,14 @@
-package main
+package handlers
 
 import (
+	"2K22/pkg/render"
 	"2K22/utilities"
 	"fmt"
 	"net/http"
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	renderTemplate(w, "home.page.tmpl")
+	render.RenderTemplate(w, "home.page.tmpl")
 }
 
 func Players(w http.ResponseWriter, r *http.Request) {
@@ -41,5 +42,3 @@ func Players(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
-
-
