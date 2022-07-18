@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func ReadJson(fileName string) {
+func ReadJson(fileName string) []PlayerData {
 	// Open our jsonFile
 	jsonFile, err := os.Open(fileName)
 	if err != nil {
@@ -38,5 +38,5 @@ func ReadJson(fileName string) {
 		fmt.Println("Dunk: ", players[i].DunkRating)
 		fmt.Println("--------------")
 	}
-
+	return players
 }
