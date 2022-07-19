@@ -12,7 +12,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func Players(w http.ResponseWriter, r *http.Request) {
-	players := utilities.ReadJson("player_data.json")
+	players := utilities.ReadJson("../../player_data.json")
 
 	for i := 0; i < len(players); i++ {
 		// Print player info
