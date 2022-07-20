@@ -12,6 +12,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func Players(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "players.page.tmpl")
 	players := utilities.ReadJson("../../player_data.json")
 
 	for i := 0; i < len(players); i++ {
