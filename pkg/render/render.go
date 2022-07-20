@@ -2,6 +2,7 @@ package render
 
 import (
 	"2K22/pkg/config"
+	"2K22/pkg/models"
 	"bytes"
 	"fmt"
 	"html/template"
@@ -10,9 +11,7 @@ import (
 	"path/filepath"
 )
 
-var functions = template.FuncMap {
-
-}
+var functions = template.FuncMap{}
 
 var app *config.AppConfig
 
@@ -21,7 +20,11 @@ func NewTemplate(a *config.AppConfig) {
 	app = a
 }
 
-func RenderTemplate(w http.ResponseWriter, templateName string) {
+func AddDefaultData(tmplData *models.TemplateData) *models.TemplateData {
+	return tmplData
+}
+
+func RenderTemplate(w http.ResponseWriter, templateName string, tmplData *models.TemplateData) {
 
 	var templateCache map[string]*template.Template
 	if app.UseCache {
@@ -30,7 +33,6 @@ func RenderTemplate(w http.ResponseWriter, templateName string) {
 	} else {
 		templateCache, _ = CreateTemplateCache()
 	}
-	
 
 	tmpl, ok := templateCache[templateName]
 	if !ok {
@@ -39,7 +41,9 @@ func RenderTemplate(w http.ResponseWriter, templateName string) {
 
 	buf := new(bytes.Buffer)
 
-	_ = tmpl.Execute(buf, nil)
+	tmplData = AddDefaultData(tmplData)
+
+	_ = tmpl.Execute(buf, tmplData)
 
 	_, err := buf.WriteTo(w)
 	if err != nil {
@@ -47,9 +51,9 @@ func RenderTemplate(w http.ResponseWriter, templateName string) {
 	}
 }
 
-func CreateTemplateCache() (map[string] *template.Template, error) {
+func CreateTemplateCache() (map[string]*template.Template, error) {
 	myCache := map[string]*template.Template{}
-	
+
 	// Get all the files named *.page.tmpl from ../../templates/
 	pages, err := filepath.Glob("../../templates/*.page.tmpl")
 	if err != nil {

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"2K22/pkg/config"
+	"2K22/pkg/models"
 	"2K22/pkg/render"
 	"2K22/utilities"
 	"fmt"
@@ -18,7 +19,7 @@ type Repository struct {
 
 // NewRepo creates a new repository
 func NewRepo(a *config.AppConfig) *Repository {
-	return &Repository {
+	return &Repository{
 		App: a,
 	}
 }
@@ -29,12 +30,27 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "home.page.tmpl")
+	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "players.page.tmpl")
+	// Perform some logic
+
 	players := utilities.ReadJson("../../player_data.json")
+
+	playerData := make(map[string]interface{})
+
+	playerData["players"] = players
+
+	stringMap := make(map[string]string)
+	stringMap["test"] = "hello again"
+
+	render.RenderTemplate(w, "players.page.tmpl", &models.TemplateData{
+		StringMap: stringMap,
+		PlayerData: playerData,
+	})
+
+	
 
 	for i := 0; i < len(players); i++ {
 		// Print player info
