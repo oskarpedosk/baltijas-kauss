@@ -10,6 +10,7 @@ require (
 
 require (
 	github.com/PuerkitoBio/goquery v1.8.0 // indirect
+	github.com/alexedwards/scs/v2 v2.5.0 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/antchfx/htmlquery v1.2.5 // indirect
 	github.com/antchfx/xmlquery v1.3.11 // indirect
