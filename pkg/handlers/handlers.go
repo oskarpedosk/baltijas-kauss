@@ -34,7 +34,6 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
-	// Perform some logic
 
 	players := utilities.ReadJson("../../player_data.json")
 
