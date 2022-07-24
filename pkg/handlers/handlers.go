@@ -5,7 +5,6 @@ import (
 	"2K22/pkg/models"
 	"2K22/pkg/render"
 	"2K22/utilities"
-	"fmt"
 	"net/http"
 )
 
@@ -30,6 +29,9 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+	remoteIP := r.RemoteAddr
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
+
 	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
 }
 
@@ -42,38 +44,11 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 	stringMap := make(map[string]string)
 	stringMap["test"] = "hello again"
 
+	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
+	stringMap["remote_ip"] = remoteIP
+
 	render.RenderTemplate(w, "players.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 		PlayerData: playerData,
 	})
-
-	
-
-	for i := 0; i < len(players); i++ {
-		// Print player info
-		fmt.Fprint(w, "#", players[i].Rank)
-		fmt.Fprint(w, " ", players[i].Name)
-		fmt.Fprint(w, " ", players[i].Team)
-		fmt.Fprintln(w, "")
-
-		// Print player positions
-		for j := 0; j < len(players[i].Positions); j++ {
-			fmt.Fprint(w, players[i].Positions[j])
-			if j < len(players[i].Positions)-1 {
-				fmt.Fprint(w, "/")
-			}
-		}
-		// Print player height
-		fmt.Fprintln(w, "")
-		fmt.Fprint(w, players[i].Height[0], "'", players[i].Height[1], "\"")
-
-		// Print player ratings
-		fmt.Fprintln(w, "")
-		fmt.Fprintln(w, players[i].OverallRating, "OVR")
-		fmt.Fprintln(w, players[i].ThreePointRating, "3PT")
-		fmt.Fprintln(w, players[i].DunkRating, "DUNK")
-		if i < len(players)-1 {
-			fmt.Fprintln(w, "")
-		}
-	}
 }
