@@ -1,23 +1,25 @@
 package main
 
 import (
-	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/handlers"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/render"
 	"fmt"
 	"log"
 	"net/http"
 	"time"
 
+	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/handlers"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/render"
+	"github.com/oskarpedosk/baltijas-kauss/utilities"
+
 	"github.com/alexedwards/scs/v2"
 )
 
 const portNumber = ":8080"
+
 var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
-	
 
 	// Change this to true when in production
 	app.InProduction = false
@@ -42,17 +44,20 @@ func main() {
 	handlers.NewHandlers(repo)
 	render.NewTemplate(&app)
 
-	// scrapedData := utilities.ScrapeDataFromURL("https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings")
-	// utilities.WriteToJson("player_data.json", scrapedData)
+	needsScraping := false
+
+	if needsScraping {
+		scrapedData := utilities.ScrapeDataFromURL("https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings")
+		utilities.WriteToJson("player_data.json", scrapedData)
+	}
 
 	fmt.Printf("Starting application on port%s\n", portNumber)
 
-	serve := &http.Server {
-		Addr: portNumber,
+	serve := &http.Server{
+		Addr:    portNumber,
 		Handler: routes(&app),
 	}
 
 	err = serve.ListenAndServe()
 	log.Fatal(err)
 }
-
