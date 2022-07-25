@@ -1,0 +1,1574 @@
+[
+	{
+		"rank": 1,
+		"name": "Giannis Antetokounmpo",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "MIL",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 97,
+		"3pt_rating": 72,
+		"dunk_rating": 91
+	},
+	{
+		"rank": 2,
+		"name": "LeBron James",
+		"positions": [
+			"SF",
+			"PG"
+		],
+		"team": "LAL",
+		"feet_inch": [
+			6,
+			9
+		],
+		"overall_rating": 96,
+		"3pt_rating": 79,
+		"dunk_rating": 90
+	},
+	{
+		"rank": 3,
+		"name": "Kevin Durant",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "BKN",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 96,
+		"3pt_rating": 88,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 4,
+		"name": "Joel Embiid",
+		"positions": [
+			"C"
+		],
+		"team": "PHI",
+		"feet_inch": [
+			7,
+			0
+		],
+		"overall_rating": 96,
+		"3pt_rating": 81,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 5,
+		"name": "Stephen Curry",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "GSW",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 96,
+		"3pt_rating": 99,
+		"dunk_rating": 36
+	},
+	{
+		"rank": 6,
+		"name": "Nikola Jokic",
+		"positions": [
+			"C"
+		],
+		"team": "DEN",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 96,
+		"3pt_rating": 78,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 7,
+		"name": "Luka Doncic",
+		"positions": [
+			"PG",
+			"SF"
+		],
+		"team": "DAL",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 95,
+		"3pt_rating": 86,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 8,
+		"name": "Kawhi Leonard",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "LAC",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 95,
+		"3pt_rating": 83,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 9,
+		"name": "Ja Morant",
+		"positions": [
+			"PG"
+		],
+		"team": "MEM",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 93,
+		"3pt_rating": 79,
+		"dunk_rating": 95
+	},
+	{
+		"rank": 10,
+		"name": "James Harden",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "PHI",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 92,
+		"3pt_rating": 85,
+		"dunk_rating": 84
+	},
+	{
+		"rank": 11,
+		"name": "Anthony Davis",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "LAL",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 92,
+		"3pt_rating": 70,
+		"dunk_rating": 88
+	},
+	{
+		"rank": 12,
+		"name": "Jimmy Butler",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "MIA",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 92,
+		"3pt_rating": 72,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 13,
+		"name": "Kyrie Irving",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "BKN",
+		"feet_inch": [
+			6,
+			2
+		],
+		"overall_rating": 92,
+		"3pt_rating": 85,
+		"dunk_rating": 30
+	},
+	{
+		"rank": 14,
+		"name": "Devin Booker",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "PHX",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 91,
+		"3pt_rating": 87,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 15,
+		"name": "Jayson Tatum",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "BOS",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 90,
+		"3pt_rating": 84,
+		"dunk_rating": 88
+	},
+	{
+		"rank": 16,
+		"name": "Chris Paul",
+		"positions": [
+			"PG"
+		],
+		"team": "PHX",
+		"feet_inch": [
+			6,
+			0
+		],
+		"overall_rating": 90,
+		"3pt_rating": 76,
+		"dunk_rating": 27
+	},
+	{
+		"rank": 17,
+		"name": "Damian Lillard",
+		"positions": [
+			"PG"
+		],
+		"team": "POR",
+		"feet_inch": [
+			6,
+			2
+		],
+		"overall_rating": 90,
+		"3pt_rating": 85,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 18,
+		"name": "Trae Young",
+		"positions": [
+			"PG"
+		],
+		"team": "ATL",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 90,
+		"3pt_rating": 86,
+		"dunk_rating": 30
+	},
+	{
+		"rank": 19,
+		"name": "DeMar DeRozan",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "CHI",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 90,
+		"3pt_rating": 78,
+		"dunk_rating": 84
+	},
+	{
+		"rank": 20,
+		"name": "Zion Williamson",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "NOP",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 89,
+		"3pt_rating": 70,
+		"dunk_rating": 97
+	},
+	{
+		"rank": 21,
+		"name": "Karl-Anthony Towns",
+		"positions": [
+			"C"
+		],
+		"team": "MIN",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 89,
+		"3pt_rating": 88,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 22,
+		"name": "Paul George",
+		"positions": [
+			"SG",
+			"SF"
+		],
+		"team": "LAC",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 88,
+		"3pt_rating": 83,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 23,
+		"name": "Zach LaVine",
+		"positions": [
+			"SG",
+			"SF"
+		],
+		"team": "CHI",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 88,
+		"3pt_rating": 85,
+		"dunk_rating": 95
+	},
+	{
+		"rank": 24,
+		"name": "Shai Gilgeous-Alexander",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "OKC",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 88,
+		"3pt_rating": 76,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 25,
+		"name": "Darius Garland",
+		"positions": [
+			"PG"
+		],
+		"team": "CLE",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 88,
+		"3pt_rating": 85,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 26,
+		"name": "Rudy Gobert",
+		"positions": [
+			"C"
+		],
+		"team": "MIN",
+		"feet_inch": [
+			7,
+			1
+		],
+		"overall_rating": 88,
+		"3pt_rating": 25,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 27,
+		"name": "Donovan Mitchell",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "UTA",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 87,
+		"3pt_rating": 84,
+		"dunk_rating": 92
+	},
+	{
+		"rank": 28,
+		"name": "Bradley Beal",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "WAS",
+		"feet_inch": [
+			6,
+			4
+		],
+		"overall_rating": 87,
+		"3pt_rating": 82,
+		"dunk_rating": 84
+	},
+	{
+		"rank": 29,
+		"name": "Bam Adebayo",
+		"positions": [
+			"C"
+		],
+		"team": "MIA",
+		"feet_inch": [
+			6,
+			9
+		],
+		"overall_rating": 87,
+		"3pt_rating": 69,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 30,
+		"name": "Dejounte Murray",
+		"positions": [
+			"PG"
+		],
+		"team": "ATL",
+		"feet_inch": [
+			6,
+			4
+		],
+		"overall_rating": 87,
+		"3pt_rating": 74,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 31,
+		"name": "Domantas Sabonis",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "SAC",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 87,
+		"3pt_rating": 74,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 32,
+		"name": "Pascal Siakam",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "TOR",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 87,
+		"3pt_rating": 80,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 33,
+		"name": "C.J. McCollum",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "NOP",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 87,
+		"3pt_rating": 86,
+		"dunk_rating": 40
+	},
+	{
+		"rank": 34,
+		"name": "LaMelo Ball",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "CHA",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 86,
+		"3pt_rating": 82,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 35,
+		"name": "Jaylen Brown",
+		"positions": [
+			"SF",
+			"SG"
+		],
+		"team": "BOS",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 86,
+		"3pt_rating": 83,
+		"dunk_rating": 89
+	},
+	{
+		"rank": 36,
+		"name": "Deandre Ayton",
+		"positions": [
+			"C"
+		],
+		"team": "PHX",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 86,
+		"3pt_rating": 70,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 37,
+		"name": "Kristaps Porzingis",
+		"positions": [
+			"C",
+			"PF"
+		],
+		"team": "WAS",
+		"feet_inch": [
+			7,
+			3
+		],
+		"overall_rating": 86,
+		"3pt_rating": 70,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 38,
+		"name": "Khris Middleton",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "MIL",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 86,
+		"3pt_rating": 81,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 39,
+		"name": "Jarrett Allen",
+		"positions": [
+			"C"
+		],
+		"team": "CLE",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 86,
+		"3pt_rating": 66,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 40,
+		"name": "Brandon Ingram",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "NOP",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 85,
+		"3pt_rating": 81,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 41,
+		"name": "Jamal Murray",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "DEN",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 85,
+		"3pt_rating": 84,
+		"dunk_rating": 82
+	},
+	{
+		"rank": 42,
+		"name": "R.J. Barrett",
+		"positions": [
+			"SF",
+			"SG"
+		],
+		"team": "NYK",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 85,
+		"3pt_rating": 78,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 43,
+		"name": "Clint Capela",
+		"positions": [
+			"C"
+		],
+		"team": "ATL",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 85,
+		"3pt_rating": 25,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 44,
+		"name": "Tyler Herro",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "MIA",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 85,
+		"3pt_rating": 84,
+		"dunk_rating": 60
+	},
+	{
+		"rank": 45,
+		"name": "Jrue Holiday",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "MIL",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 85,
+		"3pt_rating": 85,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 46,
+		"name": "Jaren Jackson Jr.",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "MEM",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 84,
+		"3pt_rating": 75,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 47,
+		"name": "De’Aaron Fox",
+		"positions": [
+			"PG"
+		],
+		"team": "SAC",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 84,
+		"3pt_rating": 72,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 48,
+		"name": "Ben Simmons",
+		"positions": [
+			"PG",
+			"PF"
+		],
+		"team": "BKN",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 84,
+		"3pt_rating": 58,
+		"dunk_rating": 86
+	},
+	{
+		"rank": 49,
+		"name": "Miles Bridges",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "CHA",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 84,
+		"3pt_rating": 78,
+		"dunk_rating": 91
+	},
+	{
+		"rank": 50,
+		"name": "Desmond Bane",
+		"positions": [
+			"SF",
+			"SG"
+		],
+		"team": "MEM",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 84,
+		"3pt_rating": 86,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 51,
+		"name": "Christian Wood",
+		"positions": [
+			"C",
+			"PF"
+		],
+		"team": "DAL",
+		"feet_inch": [
+			6,
+			9
+		],
+		"overall_rating": 84,
+		"3pt_rating": 83,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 52,
+		"name": "Tyrese Maxey",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "PHI",
+		"feet_inch": [
+			6,
+			2
+		],
+		"overall_rating": 84,
+		"3pt_rating": 85,
+		"dunk_rating": 55
+	},
+	{
+		"rank": 53,
+		"name": "Evan Mobley",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "CLE",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 83,
+		"3pt_rating": 70,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 54,
+		"name": "Anthony Edwards",
+		"positions": [
+			"SG",
+			"SF"
+		],
+		"team": "MIN",
+		"feet_inch": [
+			6,
+			4
+		],
+		"overall_rating": 83,
+		"3pt_rating": 79,
+		"dunk_rating": 95
+	},
+	{
+		"rank": 55,
+		"name": "Tyrese Haliburton",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "IND",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 83,
+		"3pt_rating": 83,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 56,
+		"name": "Klay Thompson",
+		"positions": [
+			"SG",
+			"SF"
+		],
+		"team": "GSW",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 83,
+		"3pt_rating": 88,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 57,
+		"name": "Nikola Vucevic",
+		"positions": [
+			"C"
+		],
+		"team": "CHI",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 83,
+		"3pt_rating": 74,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 58,
+		"name": "John Collins",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "ATL",
+		"feet_inch": [
+			6,
+			9
+		],
+		"overall_rating": 83,
+		"3pt_rating": 80,
+		"dunk_rating": 93
+	},
+	{
+		"rank": 59,
+		"name": "Tobias Harris",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "PHI",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 83,
+		"3pt_rating": 79,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 60,
+		"name": "John Wall",
+		"positions": [
+			"PG"
+		],
+		"team": "LAC",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 83,
+		"3pt_rating": 75,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 61,
+		"name": "Mikal Bridges",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "PHX",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 83,
+		"3pt_rating": 81,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 62,
+		"name": "Derrick Rose",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "NYK",
+		"feet_inch": [
+			6,
+			2
+		],
+		"overall_rating": 83,
+		"3pt_rating": 83,
+		"dunk_rating": 45
+	},
+	{
+		"rank": 63,
+		"name": "Jusuf Nurkic",
+		"positions": [
+			"C"
+		],
+		"team": "POR",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 83,
+		"3pt_rating": 65,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 64,
+		"name": "Andrew Wiggins",
+		"positions": [
+			"SF",
+			"SG"
+		],
+		"team": "GSW",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 83,
+		"3pt_rating": 82,
+		"dunk_rating": 92
+	},
+	{
+		"rank": 65,
+		"name": "Malcolm Brogdon",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "BOS",
+		"feet_inch": [
+			6,
+			5
+		],
+		"overall_rating": 83,
+		"3pt_rating": 74,
+		"dunk_rating": 70
+	},
+	{
+		"rank": 66,
+		"name": "Steven Adams",
+		"positions": [
+			"C"
+		],
+		"team": "MEM",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 83,
+		"3pt_rating": 26,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 67,
+		"name": "Wendell Carter Jr.",
+		"positions": [
+			"C"
+		],
+		"team": "ORL",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 83,
+		"3pt_rating": 75,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 68,
+		"name": "Jonas Valanciunas",
+		"positions": [
+			"C"
+		],
+		"team": "NOP",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 83,
+		"3pt_rating": 74,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 69,
+		"name": "Draymond Green",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "GSW",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 83,
+		"3pt_rating": 65,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 70,
+		"name": "Fred VanVleet",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "TOR",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 83,
+		"3pt_rating": 82,
+		"dunk_rating": 35
+	},
+	{
+		"rank": 71,
+		"name": "Cade Cunningham",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "DET",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 82,
+		"3pt_rating": 79,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 72,
+		"name": "Scottie Barnes",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "TOR",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 82,
+		"3pt_rating": 72,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 73,
+		"name": "Kyle Lowry",
+		"positions": [
+			"PG"
+		],
+		"team": "MIA",
+		"feet_inch": [
+			6,
+			0
+		],
+		"overall_rating": 82,
+		"3pt_rating": 80,
+		"dunk_rating": 25
+	},
+	{
+		"rank": 74,
+		"name": "Julius Randle",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "NYK",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 82,
+		"3pt_rating": 73,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 75,
+		"name": "Lonzo Ball",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "CHI",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 82,
+		"3pt_rating": 86,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 76,
+		"name": "Mike Conley",
+		"positions": [
+			"PG"
+		],
+		"team": "UTA",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 82,
+		"3pt_rating": 84,
+		"dunk_rating": 30
+	},
+	{
+		"rank": 77,
+		"name": "T.J. Warren",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "BKN",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 82,
+		"3pt_rating": 78,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 78,
+		"name": "Mitchell Robinson",
+		"positions": [
+			"C"
+		],
+		"team": "NYK",
+		"feet_inch": [
+			7,
+			0
+		],
+		"overall_rating": 82,
+		"3pt_rating": 32,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 79,
+		"name": "Kyle Kuzma",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "WAS",
+		"feet_inch": [
+			6,
+			9
+		],
+		"overall_rating": 82,
+		"3pt_rating": 77,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 80,
+		"name": "Robert Williams III",
+		"positions": [
+			"C"
+		],
+		"team": "BOS",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 82,
+		"3pt_rating": 25,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 81,
+		"name": "Keldon Johnson",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "SAS",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 82,
+		"3pt_rating": 84,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 82,
+		"name": "Terry Rozier III",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "CHA",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 82,
+		"3pt_rating": 82,
+		"dunk_rating": 70
+	},
+	{
+		"rank": 83,
+		"name": "Myles Turner",
+		"positions": [
+			"C"
+		],
+		"team": "IND",
+		"feet_inch": [
+			6,
+			11
+		],
+		"overall_rating": 82,
+		"3pt_rating": 80,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 84,
+		"name": "Josh Giddey",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "OKC",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 81,
+		"3pt_rating": 70,
+		"dunk_rating": 65
+	},
+	{
+		"rank": 85,
+		"name": "Gordon Hayward",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "CHA",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 81,
+		"3pt_rating": 83,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 86,
+		"name": "Saddiq Bey",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "DET",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 81,
+		"3pt_rating": 80,
+		"dunk_rating": 60
+	},
+	{
+		"rank": 87,
+		"name": "D’Angelo Russell",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "MIN",
+		"feet_inch": [
+			6,
+			4
+		],
+		"overall_rating": 81,
+		"3pt_rating": 77,
+		"dunk_rating": 45
+	},
+	{
+		"rank": 88,
+		"name": "OG Anunoby",
+		"positions": [
+			"SF",
+			"PF"
+		],
+		"team": "TOR",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 81,
+		"3pt_rating": 80,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 89,
+		"name": "Spencer Dinwiddie",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "DAL",
+		"feet_inch": [
+			6,
+			6
+		],
+		"overall_rating": 81,
+		"3pt_rating": 76,
+		"dunk_rating": 45
+	},
+	{
+		"rank": 90,
+		"name": "Jerami Grant",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "POR",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 81,
+		"3pt_rating": 79,
+		"dunk_rating": 85
+	},
+	{
+		"rank": 91,
+		"name": "Kevin Love",
+		"positions": [
+			"PF",
+			"C"
+		],
+		"team": "CLE",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 81,
+		"3pt_rating": 82,
+		"dunk_rating": 50
+	},
+	{
+		"rank": 92,
+		"name": "Jordan Poole",
+		"positions": [
+			"SG",
+			"PG"
+		],
+		"team": "GSW",
+		"feet_inch": [
+			6,
+			4
+		],
+		"overall_rating": 81,
+		"3pt_rating": 80,
+		"dunk_rating": 60
+	},
+	{
+		"rank": 93,
+		"name": "Jalen Brunson",
+		"positions": [
+			"PG"
+		],
+		"team": "NYK",
+		"feet_inch": [
+			6,
+			1
+		],
+		"overall_rating": 81,
+		"3pt_rating": 81,
+		"dunk_rating": 50
+	},
+	{
+		"rank": 94,
+		"name": "Anfernee Simons",
+		"positions": [
+			"PG",
+			"SG"
+		],
+		"team": "POR",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 81,
+		"3pt_rating": 84,
+		"dunk_rating": 89
+	},
+	{
+		"rank": 95,
+		"name": "Cameron Johnson",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "PHX",
+		"feet_inch": [
+			6,
+			8
+		],
+		"overall_rating": 81,
+		"3pt_rating": 87,
+		"dunk_rating": 60
+	},
+	{
+		"rank": 96,
+		"name": "Norman Powell",
+		"positions": [
+			"SF",
+			"SG"
+		],
+		"team": "LAC",
+		"feet_inch": [
+			6,
+			3
+		],
+		"overall_rating": 81,
+		"3pt_rating": 84,
+		"dunk_rating": 80
+	},
+	{
+		"rank": 97,
+		"name": "Bojan Bogdanovic",
+		"positions": [
+			"PF",
+			"SF"
+		],
+		"team": "UTA",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 81,
+		"3pt_rating": 83,
+		"dunk_rating": 70
+	},
+	{
+		"rank": 98,
+		"name": "Dillon Brooks",
+		"positions": [
+			"SF",
+			"SG"
+		],
+		"team": "MEM",
+		"feet_inch": [
+			6,
+			7
+		],
+		"overall_rating": 81,
+		"3pt_rating": 73,
+		"dunk_rating": 75
+	},
+	{
+		"rank": 99,
+		"name": "Bobby Portis",
+		"positions": [
+			"C",
+			"PF"
+		],
+		"team": "MIL",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 81,
+		"3pt_rating": 83,
+		"dunk_rating": 70
+	},
+	{
+		"rank": 100,
+		"name": "Andre Drummond",
+		"positions": [
+			"C"
+		],
+		"team": "CHI",
+		"feet_inch": [
+			6,
+			10
+		],
+		"overall_rating": 81,
+		"3pt_rating": 47,
+		"dunk_rating": 85
+	}
+]

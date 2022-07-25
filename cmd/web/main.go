@@ -15,8 +15,8 @@ import (
 )
 
 const portNumber = ":8080"
-const urlToScrape = "https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings"
-const playerDataFileName = "player_data"
+const nba2KRatingsURL = "https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings"
+const nba2KDataFileName = "nba2k_player_data"
 
 var app config.AppConfig
 var session *scs.SessionManager
@@ -49,8 +49,8 @@ func main() {
 	needsScraping := false
 
 	if needsScraping {
-		scrapedData := utilities.ScrapeDataFromURL(urlToScrape)
-		utilities.WriteToJson(playerDataFileName, scrapedData)
+		scrapedData := utilities.ScrapeDataFromURL(nba2KRatingsURL)
+		utilities.WriteToJson(nba2KDataFileName, scrapedData)
 	}
 
 	fmt.Printf("Starting application on port%s\n", portNumber)

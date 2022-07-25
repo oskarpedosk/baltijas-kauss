@@ -37,18 +37,19 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 
-	players := utilities.ReadJson("../../static/jsondata/player_data.json")
+	players := utilities.ReadJson("../../static/jsondata/nba2k_player_data.json")
 	playerData := make(map[string]interface{})
-	playerData["players"] = players
+
+	for i := 0; i < len(players); i++ {
+		playerData[players[i].Name] = players[i]
+	}
 
 	stringMap := make(map[string]string)
-	stringMap["test"] = "hello again"
-
 	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
 	stringMap["remote_ip"] = remoteIP
 
 	render.RenderTemplate(w, "players.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
-		PlayerData: playerData,
+		NBAPlayerData: playerData,
 	})
 }
