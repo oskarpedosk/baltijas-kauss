@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"2K22/pkg/config"
-	"2K22/pkg/models"
-	"2K22/pkg/render"
-	"2K22/utilities"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/models"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/render"
+	"github.com/oskarpedosk/baltijas-kauss/utilities"
 	"net/http"
 )
 

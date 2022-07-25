@@ -1,9 +1,9 @@
 package main
 
 import (
-	"2K22/pkg/config"
-	"2K22/pkg/handlers"
-	"2K22/pkg/render"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/handlers"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/render"
 	"fmt"
 	"log"
 	"net/http"

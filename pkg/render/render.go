@@ -1,8 +1,8 @@
 package render
 
 import (
-	"2K22/pkg/config"
-	"2K22/pkg/models"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/models"
 	"bytes"
 	"fmt"
 	"html/template"

@@ -1,8 +1,8 @@
 package main
 
 import (
-	"2K22/pkg/config"
-	"2K22/pkg/handlers"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/handlers"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
