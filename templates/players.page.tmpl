@@ -5,29 +5,29 @@
         <div class="row">
             <div class="col">
                 <h1>2K22 RATINGS</h1>
-                <table>
+                <table class="sortable">
                     <thead>
                         <tr>
-                            <td>RANK</td>
-                            <td>NAME</td>
-                            <td>TEAM</td>
-                            <td>HEIGHT</td>
-                            <td>OVERALL</td>
-                            <td>3PT</td>
-                            <td>DUNK</td>
+                            <th>NAME</th>
+                            <th>OVERALL</th>
+                            <th>TEAM</th>
+                            <th>ARCHETYPE</th>
+                            <th>HEIGHT</th>
+                            <th>WEIGHT</th>
+                            <th>BLOCK</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         {{range .NBAPlayerData}}
                         <tr>
-                            <td>{{.Rank}}</td>
                             <td>{{.Name}}</td>
+                            <td>{{.Stats.Overall}}</td>
                             <td>{{.Team}}</td>
+                            <td>{{.Archetype}}</td>
                             <td>{{.Height}}</td>
-                            <td>{{.OverallRating}}</td>
-                            <td>{{.ThreePointRating}}</td>
-                            <td>{{.DunkRating}}</td>
+                            <td>{{.Weight}}</td>
+                            <td>{{.Stats.Block}}</td>
                         </tr>
                         {{end}}
                     </tbody>

@@ -15,7 +15,7 @@ import (
 )
 
 const portNumber = ":8080"
-const nba2KRatingsURL = "https://www.2kratings.com/lists/top-100-highest-nba-2k-ratings"
+const nba2KDataURL = "https://www.2kratings.com/current-teams"
 const nba2KDataFileName = "nba2k_player_data"
 
 var app config.AppConfig
@@ -47,9 +47,8 @@ func main() {
 	render.NewTemplate(&app)
 
 	needsScraping := false
-
 	if needsScraping {
-		scrapedData := utilities.ScrapeDataFromURL(nba2KRatingsURL)
+		scrapedData := utilities.ScrapeNBA2KData(nba2KDataURL)
 		utilities.WriteToJson(nba2KDataFileName, scrapedData)
 	}
 

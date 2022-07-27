@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func ReadJson(fileName string) []PlayerData {
+func ReadJson(fileName string) []NBAPlayerData {
 	// Open our jsonFile
 	jsonFile, err := os.Open(fileName)
 	if err != nil {
@@ -23,7 +23,7 @@ func ReadJson(fileName string) []PlayerData {
 	byteValue, _ := ioutil.ReadAll(jsonFile)
 
 	// Initialize our players array
-	var players []PlayerData
+	var players []NBAPlayerData
 
 	// Unmarshal our byteArray which contains our
 	// jsonFile's content into 'players' which we defined above
