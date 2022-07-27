@@ -15,6 +15,13 @@
                             <th>HEIGHT</th>
                             <th>WEIGHT</th>
                             <th>3PT</th>
+                            <th>FT</th>
+                            <th>PERIMETER</th>
+                            <th>LATERAL</th>
+                            <th>OREB</th>
+                            <th>DREB</th>
+                            <th>BADGES</th>
+                            <th>TOTAL</th>
                         </tr>
                     </thead>
 
@@ -28,6 +35,13 @@
                             <td>{{.Height}}</td>
                             <td>{{.Weight}}</td>
                             <td>{{.Stats.Three_Point_Shot}}</td>
+                            <td>{{.Stats.Free_Throw}}</td>
+                            <td>{{.Stats.Perimeter_Defense}}</td>
+                            <td>{{.Stats.Lateral_Quickness}}</td>
+                            <td>{{.Stats.Offensive_Rebound}}</td>
+                            <td>{{.Stats.Defensive_Rebound}}</td>
+                            <td>{{.BadgeCount}}</td>
+                            <td>{{.Stats.Total_Attributes}}</td>
                         </tr>
                         {{end}}
                     </tbody>
