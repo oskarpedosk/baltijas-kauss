@@ -158,7 +158,8 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 		e.ForEach("div[id=nav-attributes] div.card-body li.mb-1", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				statsRating := Atoi(strings.SplitN(el.Text, " ", 2)[0])
-				statsName := strings.SplitN(el.Text, " ", 2)[1]
+				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_") 
+				statsName = strings.ReplaceAll(statsName, "-", "_") 
 				playerStats[statsName] = statsRating
 			}
 		})
@@ -167,7 +168,7 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 			if el.Text != "" {
 				// Get total attributes without a comma
 				statsRating := Atoi(strings.Replace((strings.SplitN(el.Text, " ", 2)[0]), ",", "", -1))
-				statsName := strings.SplitN(el.Text, " ", 2)[1]
+				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_")
 				playerStats[statsName] = statsRating
 			}
 		})
