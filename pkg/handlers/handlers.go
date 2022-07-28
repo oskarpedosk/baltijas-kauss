@@ -37,8 +37,8 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 
 func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 
-	players := utilities.ReadJson("../../static/jsondata/nba2k_player_data.json")
 	playerData := make(map[string]interface{})
+	players := utilities.ReadJson("../../static/jsondata/nba2k_player_data.json")
 
 	for i := 0; i < len(players); i++ {
 		playerData[players[i].Name] = players[i]

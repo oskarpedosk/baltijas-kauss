@@ -1,61 +1,83 @@
 {{template "base" .}}
 
+{{define "css"}}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
+{{end}}
+
 {{define "content"}}
     <div class="container">
-        <div class="row">
-            <div class="col">
-                <h1>2K22 RATINGS</h1>
-                <table class="sortable">
-                    <thead>
-                        <tr>
-                            <th>NAME</th>
-                            <th>OVERALL</th>
-                            <th>TEAM</th>
-                            <th>ARCHETYPE</th>
-                            <th>HEIGHT</th>
-                            <th>WEIGHT</th>
-                            <th>3PT</th>
-                            <th>FT</th>
-                            <th>PERIMETER</th>
-                            <th>LATERAL</th>
-                            <th>OREB</th>
-                            <th>DREB</th>
-                            <th>BADGES</th>
-                            <th>TOTAL</th>
-                        </tr>
-                    </thead>
+        <h1>2K22 RATINGS</h1>
+        <style>
+            table {
+                border-spacing: 0;
+                width: 100%;
+                border: 1px solid #ddd;
+                font-size: 12px;
+            }
 
-                    <tbody>
-                        {{range .NBAPlayerData}}
-                        <tr>
-                            <td>{{.Name}}</td>
-                            <td>{{.Stats.Overall}}</td>
-                            <td>{{.Team}}</td>
-                            <td>{{.Archetype}}</td>
-                            <td>{{.Height}}</td>
-                            <td>{{.Weight}}</td>
-                            <td>{{.Stats.Three_Point_Shot}}</td>
-                            <td>{{.Stats.Free_Throw}}</td>
-                            <td>{{.Stats.Perimeter_Defense}}</td>
-                            <td>{{.Stats.Lateral_Quickness}}</td>
-                            <td>{{.Stats.Offensive_Rebound}}</td>
-                            <td>{{.Stats.Defensive_Rebound}}</td>
-                            <td>{{.BadgeCount}}</td>
-                            <td>{{.Stats.Total_Attributes}}</td>
-                        </tr>
-                        {{end}}
-                    </tbody>
-                </table>
+            th,
+            td {
+                text-align: left;
+                padding: 12px;
+            }
+        </style>
+        <table class="table" id="playerData">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>OVERALL</th>
+                    <th>TEAM</th>
+                    <th>ARCHETYPE</th>
+                    <th>HEIGHT</th>
+                    <th>WEIGHT</th>
+                    <th>3PT</th>
+                    <th>FT</th>
+                    <th>PRMD</th>
+                    <th>LTRL</th>
+                    <th>OREB</th>
+                    <th>DREB</th>
+                    <th>BADGES</th>
+                    <th>TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .NBAPlayerData}}
+                <tr>
+                    <td>{{.Name}}</td>
+                    <td>{{.Stats.Overall}}</td>
+                    <td>{{.Team}}</td>
+                    <td>{{.Archetype}}</td>
+                    <td>{{.Height}}</td>
+                    <td>{{.Weight}}</td>
+                    <td>{{.Stats.Three_Point_Shot}}</td>
+                    <td>{{.Stats.Free_Throw}}</td>
+                    <td>{{.Stats.Perimeter_Defense}}</td>
+                    <td>{{.Stats.Lateral_Quickness}}</td>
+                    <td>{{.Stats.Offensive_Rebound}}</td>
+                    <td>{{.Stats.Defensive_Rebound}}</td>
+                    <td>{{.BadgeCount}}</td>
+                    <td>{{.Stats.Total_Attributes}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+        <script>
+            $('#playerData').DataTable();
+        </script>
 
-                <p>
-                    {{if ne (index .StringMap "remote_ip") ""}}
-                        Your remote IP address is {{index .StringMap "remote_ip"}}
-                    {{else}}
-                        I don't know your IP address yet. Visit the <a href="/">Home page</a> so I can set it.
-                    {{end}}
-                </p>
+        <!--<p>
+        {{if ne (index .StringMap "remote_ip") ""}}
+        Your remote IP address is {{index .StringMap "remote_ip"}}
+        {{else}}
+        I don't know your IP address yet. Visit the <a href="/">Home page</a> so I can set it.
+        {{end}}
+        /p>-->
 
-            </div>
-        </div>
     </div>
 {{end}}
