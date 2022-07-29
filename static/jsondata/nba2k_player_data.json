@@ -57,7 +57,8 @@
 			"Total_Attributes": 2623,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/trae-young"
+		"player_url": "https://www.2kratings.com/trae-young",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trae-Young-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dejounte Murray",
@@ -117,7 +118,8 @@
 			"Total_Attributes": 2904,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/dejounte-murray"
+		"player_url": "https://www.2kratings.com/dejounte-murray",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dejounte-Murray-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Clint Capela",
@@ -177,7 +179,8 @@
 			"Total_Attributes": 2609,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/clint-capela"
+		"player_url": "https://www.2kratings.com/clint-capela",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Clint-Capela-2K-Rating-411x300.png"
 	},
 	{
 		"name": "John Collins",
@@ -238,7 +241,8 @@
 			"Total_Attributes": 2720,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/john-collins"
+		"player_url": "https://www.2kratings.com/john-collins",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/John-Collins-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bogdan Bogdanovic",
@@ -299,7 +303,8 @@
 			"Total_Attributes": 2630,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/bogdan-bogdanovic"
+		"player_url": "https://www.2kratings.com/bogdan-bogdanovic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bogdan-Bogdanovic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Onyeka Okongwu",
@@ -360,10 +365,11 @@
 			"Total_Attributes": 2592,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/onyeka-okongwu"
+		"player_url": "https://www.2kratings.com/onyeka-okongwu",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Onyeka-Okongwu-2K-Rating-411x300.png"
 	},
 	{
-		"name": "De’Andre Hunter",
+		"name": "De'Andre Hunter",
 		"team": "Atlanta Hawks",
 		"archetype": "3PT Specialist",
 		"positions": [
@@ -421,7 +427,8 @@
 			"Total_Attributes": 2616,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/deandre-hunter"
+		"player_url": "https://www.2kratings.com/deandre-hunter",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DeAndre-Hunter-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Aaron Holiday",
@@ -482,7 +489,8 @@
 			"Total_Attributes": 2505,
 			"Vertical": 56
 		},
-		"player_url": "https://www.2kratings.com/aaron-holiday"
+		"player_url": "https://www.2kratings.com/aaron-holiday",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Aaron-Holiday-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lou Williams",
@@ -543,7 +551,8 @@
 			"Total_Attributes": 2369,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/lou-williams"
+		"player_url": "https://www.2kratings.com/lou-williams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lou-Williams-2K-Rating-1-411x300.png"
 	},
 	{
 		"name": "Jalen Johnson",
@@ -604,7 +613,8 @@
 			"Total_Attributes": 2527,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/jalen-johnson"
+		"player_url": "https://www.2kratings.com/jalen-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jalen-Johnson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Skylar Mays",
@@ -665,7 +675,8 @@
 			"Total_Attributes": 2403,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/skylar-mays"
+		"player_url": "https://www.2kratings.com/skylar-mays",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Skylar-Mays-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Justin Holiday",
@@ -726,7 +737,8 @@
 			"Total_Attributes": 2454,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/justin-holiday"
+		"player_url": "https://www.2kratings.com/justin-holiday",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Justin-Holiday-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Timothe Luwawu-Cabarrot",
@@ -787,7 +799,8 @@
 			"Total_Attributes": 2395,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/timothe-luwawu-cabarrot"
+		"player_url": "https://www.2kratings.com/timothe-luwawu-cabarrot",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Timothe-Luwawu-Cabarrot-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Maurice Harkless",
@@ -848,7 +861,8 @@
 			"Total_Attributes": 2464,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/maurice-harkless"
+		"player_url": "https://www.2kratings.com/maurice-harkless",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Maurice-Harkless-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jayson Tatum",
@@ -909,7 +923,8 @@
 			"Total_Attributes": 2983,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/jayson-tatum"
+		"player_url": "https://www.2kratings.com/jayson-tatum",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jayson-Tatum-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jaylen Brown",
@@ -970,7 +985,8 @@
 			"Total_Attributes": 2890,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/jaylen-brown"
+		"player_url": "https://www.2kratings.com/jaylen-brown",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaylen-Brown-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Malcolm Brogdon",
@@ -1031,7 +1047,8 @@
 			"Total_Attributes": 2792,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/malcolm-brogdon"
+		"player_url": "https://www.2kratings.com/malcolm-brogdon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Malcolm-Brogdon-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Robert Williams III",
@@ -1091,7 +1108,8 @@
 			"Total_Attributes": 2642,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/robert-williams-iii"
+		"player_url": "https://www.2kratings.com/robert-williams-iii",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Robert-Williams-III-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Al Horford",
@@ -1152,7 +1170,8 @@
 			"Total_Attributes": 2715,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/al-horford"
+		"player_url": "https://www.2kratings.com/al-horford",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Al-Horford-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Derrick White",
@@ -1213,7 +1232,8 @@
 			"Total_Attributes": 2715,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/derrick-white"
+		"player_url": "https://www.2kratings.com/derrick-white",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Derrick-White-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Marcus Smart",
@@ -1274,7 +1294,8 @@
 			"Total_Attributes": 2575,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/marcus-smart"
+		"player_url": "https://www.2kratings.com/marcus-smart",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Marcus-Smart-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Danilo Gallinari",
@@ -1335,7 +1356,8 @@
 			"Total_Attributes": 2530,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/danilo-gallinari"
+		"player_url": "https://www.2kratings.com/danilo-gallinari",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Danilo-Gallinari-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Payton Pritchard",
@@ -1396,7 +1418,8 @@
 			"Total_Attributes": 2427,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/payton-pritchard"
+		"player_url": "https://www.2kratings.com/payton-pritchard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Payton-Pritchard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Grant Williams",
@@ -1457,7 +1480,8 @@
 			"Total_Attributes": 2510,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/grant-williams"
+		"player_url": "https://www.2kratings.com/grant-williams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Grant-Williams-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Sam Hauser",
@@ -1518,7 +1542,8 @@
 			"Total_Attributes": 2234,
 			"Vertical": 62
 		},
-		"player_url": "https://www.2kratings.com/sam-hauser"
+		"player_url": "https://www.2kratings.com/sam-hauser",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Sam-Hauser-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Luke Kornet",
@@ -1578,7 +1603,8 @@
 			"Total_Attributes": 2328,
 			"Vertical": 62
 		},
-		"player_url": "https://www.2kratings.com/luke-kornet"
+		"player_url": "https://www.2kratings.com/luke-kornet",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Luke-Kornet-2K-Rating.png"
 	},
 	{
 		"name": "Brodric Thomas",
@@ -1639,7 +1665,8 @@
 			"Total_Attributes": 2356,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/brodric-thomas"
+		"player_url": "https://www.2kratings.com/brodric-thomas",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brodric-Thomas-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Matt Ryan",
@@ -1700,7 +1727,8 @@
 			"Total_Attributes": 2202,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/matt-ryan"
+		"player_url": "https://www.2kratings.com/matt-ryan",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Matt-Ryan-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Kevin Durant",
@@ -1761,7 +1789,8 @@
 			"Total_Attributes": 3114,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/kevin-durant"
+		"player_url": "https://www.2kratings.com/kevin-durant",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kevin-Durant-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kyrie Irving",
@@ -1822,7 +1851,8 @@
 			"Total_Attributes": 2808,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/kyrie-irving"
+		"player_url": "https://www.2kratings.com/kyrie-irving",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kyrie-Irving-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ben Simmons",
@@ -1883,7 +1913,8 @@
 			"Total_Attributes": 3031,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/ben-simmons"
+		"player_url": "https://www.2kratings.com/ben-simmons",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ben-Simmons-Nets-2K-Rating-411x300.png"
 	},
 	{
 		"name": "T.J. Warren",
@@ -1944,7 +1975,8 @@
 			"Total_Attributes": 2549,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/tj-warren"
+		"player_url": "https://www.2kratings.com/tj-warren",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/T.J.-Warren-2K-Rating-411x300.png"
 	},
 	{
 		"name": "LaMarcus Aldridge",
@@ -2005,7 +2037,8 @@
 			"Total_Attributes": 2559,
 			"Vertical": 62
 		},
-		"player_url": "https://www.2kratings.com/lamarcus-aldridge"
+		"player_url": "https://www.2kratings.com/lamarcus-aldridge",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/LaMarcus-Aldridge-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nicolas Claxton",
@@ -2066,7 +2099,8 @@
 			"Total_Attributes": 2552,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/nicolas-claxton"
+		"player_url": "https://www.2kratings.com/nicolas-claxton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nicolas-Claxton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Seth Curry",
@@ -2127,7 +2161,8 @@
 			"Total_Attributes": 2391,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/seth-curry"
+		"player_url": "https://www.2kratings.com/seth-curry",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Seth-Curry-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Joe Harris",
@@ -2188,7 +2223,8 @@
 			"Total_Attributes": 2343,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/joe-harris"
+		"player_url": "https://www.2kratings.com/joe-harris",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Joe-Harris-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Blake Griffin",
@@ -2249,7 +2285,8 @@
 			"Total_Attributes": 2585,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/blake-griffin"
+		"player_url": "https://www.2kratings.com/blake-griffin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Blake-Griffin-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cameron Thomas",
@@ -2310,7 +2347,8 @@
 			"Total_Attributes": 2517,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/cameron-thomas"
+		"player_url": "https://www.2kratings.com/cameron-thomas",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cam-Thomas-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Edmond Sumner",
@@ -2371,7 +2409,8 @@
 			"Total_Attributes": 2508,
 			"Vertical": 93
 		},
-		"player_url": "https://www.2kratings.com/edmond-sumner"
+		"player_url": "https://www.2kratings.com/edmond-sumner",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Edmond-Sumner-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Day’Ron Sharpe",
@@ -2431,7 +2470,8 @@
 			"Total_Attributes": 2387,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/dayron-sharpe"
+		"player_url": "https://www.2kratings.com/dayron-sharpe",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DayRon-Sharpe-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Royce O’Neale",
@@ -2492,7 +2532,8 @@
 			"Total_Attributes": 2544,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/royce-oneale"
+		"player_url": "https://www.2kratings.com/royce-oneale",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Royce-ONeale-2K-Rating-411x300.png"
 	},
 	{
 		"name": "James Johnson",
@@ -2553,7 +2594,8 @@
 			"Total_Attributes": 2582,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/james-johnson"
+		"player_url": "https://www.2kratings.com/james-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/James-Johnson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Patty Mills",
@@ -2613,7 +2655,8 @@
 			"Total_Attributes": 2338,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/patty-mills"
+		"player_url": "https://www.2kratings.com/patty-mills",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Patty-Mills-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kessler Edwards",
@@ -2674,7 +2717,8 @@
 			"Total_Attributes": 2424,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/kessler-edwards"
+		"player_url": "https://www.2kratings.com/kessler-edwards",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kessler-Edwards-2K-Rating-411x300.png"
 	},
 	{
 		"name": "David Duke Jr.",
@@ -2734,7 +2778,8 @@
 			"Total_Attributes": 2389,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/david-duke"
+		"player_url": "https://www.2kratings.com/david-duke",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/David-Duke-2K-Rating-411x300.png"
 	},
 	{
 		"name": "LaMelo Ball",
@@ -2795,7 +2840,8 @@
 			"Total_Attributes": 2899,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/lamelo-ball"
+		"player_url": "https://www.2kratings.com/lamelo-ball",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/LaMelo-Ball-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Miles Bridges",
@@ -2856,7 +2902,8 @@
 			"Total_Attributes": 2794,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/miles-bridges"
+		"player_url": "https://www.2kratings.com/miles-bridges",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Miles-Bridges-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Terry Rozier III",
@@ -2917,7 +2964,8 @@
 			"Total_Attributes": 2740,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/terry-rozier"
+		"player_url": "https://www.2kratings.com/terry-rozier",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Terry-Rozier-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gordon Hayward",
@@ -2978,7 +3026,8 @@
 			"Total_Attributes": 2668,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/gordon-hayward"
+		"player_url": "https://www.2kratings.com/gordon-hayward",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gordon-Hayward-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Montrezl Harrell",
@@ -3039,7 +3088,8 @@
 			"Total_Attributes": 2497,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/montrezl-harrell"
+		"player_url": "https://www.2kratings.com/montrezl-harrell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Montrezl-Harrell-2K-Rating-413x300.png"
 	},
 	{
 		"name": "P.J. Washington",
@@ -3100,7 +3150,8 @@
 			"Total_Attributes": 2593,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/pj-washington"
+		"player_url": "https://www.2kratings.com/pj-washington",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/P.J.-Washington-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kelly Oubre Jr.",
@@ -3161,7 +3212,8 @@
 			"Total_Attributes": 2607,
 			"Vertical": 95
 		},
-		"player_url": "https://www.2kratings.com/kelly-oubre-jr"
+		"player_url": "https://www.2kratings.com/kelly-oubre-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kelly-Oubre-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mason Plumlee",
@@ -3221,7 +3273,8 @@
 			"Total_Attributes": 2581,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/mason-plumlee"
+		"player_url": "https://www.2kratings.com/mason-plumlee",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mason-Plumlee-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaiah Thomas",
@@ -3281,7 +3334,8 @@
 			"Total_Attributes": 2415,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/isaiah-thomas"
+		"player_url": "https://www.2kratings.com/isaiah-thomas",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Thomas-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Cody Martin",
@@ -3342,7 +3396,8 @@
 			"Total_Attributes": 2568,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/cody-martin"
+		"player_url": "https://www.2kratings.com/cody-martin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cody-Martin-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nick Richards",
@@ -3402,7 +3457,8 @@
 			"Total_Attributes": 2357,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/nick-richards"
+		"player_url": "https://www.2kratings.com/nick-richards",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nick-Richards-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jalen McDaniels",
@@ -3463,7 +3519,8 @@
 			"Total_Attributes": 2434,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/jalen-mcdaniels"
+		"player_url": "https://www.2kratings.com/jalen-mcdaniels",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jalen-McDaniels-2K-Rating-411x300.png"
 	},
 	{
 		"name": "James Bouknight",
@@ -3523,7 +3580,8 @@
 			"Total_Attributes": 2469,
 			"Vertical": 90
 		},
-		"player_url": "https://www.2kratings.com/james-bouknight"
+		"player_url": "https://www.2kratings.com/james-bouknight",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/James-Bouknight-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kai Jones",
@@ -3583,7 +3641,8 @@
 			"Total_Attributes": 2332,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/kai-jones"
+		"player_url": "https://www.2kratings.com/kai-jones",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kai-Jones-2K-Rating-411x300.png"
 	},
 	{
 		"name": "J.T. Thor",
@@ -3643,7 +3702,8 @@
 			"Total_Attributes": 2478,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/jt-thor"
+		"player_url": "https://www.2kratings.com/jt-thor",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/JT-Thor-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Scottie Lewis",
@@ -3703,7 +3763,8 @@
 			"Total_Attributes": 2396,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/scottie-lewis"
+		"player_url": "https://www.2kratings.com/scottie-lewis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Scottie-Lewis-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Arnoldas Kulboka",
@@ -3763,7 +3824,8 @@
 			"Total_Attributes": 2186,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/arnoldas-kulboka"
+		"player_url": "https://www.2kratings.com/arnoldas-kulboka",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Arnoldas-Kulboka-2K-Rating-411x300.png"
 	},
 	{
 		"name": "DeMar DeRozan",
@@ -3824,7 +3886,8 @@
 			"Total_Attributes": 2981,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/demar-derozan"
+		"player_url": "https://www.2kratings.com/demar-derozan",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DeMar-DeRozan-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Zach LaVine",
@@ -3885,7 +3948,8 @@
 			"Total_Attributes": 2811,
 			"Vertical": 97
 		},
-		"player_url": "https://www.2kratings.com/zach-lavine"
+		"player_url": "https://www.2kratings.com/zach-lavine",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Zach-LaVine-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nikola Vucevic",
@@ -3945,7 +4009,8 @@
 			"Total_Attributes": 2696,
 			"Vertical": 45
 		},
-		"player_url": "https://www.2kratings.com/nikola-vucevic"
+		"player_url": "https://www.2kratings.com/nikola-vucevic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nikola-Vucevic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lonzo Ball",
@@ -4006,7 +4071,8 @@
 			"Total_Attributes": 2771,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/lonzo-ball"
+		"player_url": "https://www.2kratings.com/lonzo-ball",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lonzo-Ball-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Andre Drummond",
@@ -4066,7 +4132,8 @@
 			"Total_Attributes": 2616,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/andre-drummond"
+		"player_url": "https://www.2kratings.com/andre-drummond",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Andre-Drummond-Nets-2K-Ratings-411x300.png"
 	},
 	{
 		"name": "Alex Caruso",
@@ -4127,7 +4194,8 @@
 			"Total_Attributes": 2593,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/alex-caruso"
+		"player_url": "https://www.2kratings.com/alex-caruso",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Alex-Caruso-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Coby White",
@@ -4188,7 +4256,8 @@
 			"Total_Attributes": 2552,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/coby-white"
+		"player_url": "https://www.2kratings.com/coby-white",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Coby-White-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Javonte Green",
@@ -4249,7 +4318,8 @@
 			"Total_Attributes": 2598,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/javonte-green"
+		"player_url": "https://www.2kratings.com/javonte-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Javonte-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ayo Dosunmu",
@@ -4310,7 +4380,8 @@
 			"Total_Attributes": 2564,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/ayo-dosunmu"
+		"player_url": "https://www.2kratings.com/ayo-dosunmu",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ayo-Dosunmu-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tristan Thompson",
@@ -4370,7 +4441,8 @@
 			"Total_Attributes": 2411,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/tristan-thompson"
+		"player_url": "https://www.2kratings.com/tristan-thompson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tristan-Thompson-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Tony Bradley",
@@ -4430,7 +4502,8 @@
 			"Total_Attributes": 2369,
 			"Vertical": 51
 		},
-		"player_url": "https://www.2kratings.com/tony-bradley-jr"
+		"player_url": "https://www.2kratings.com/tony-bradley-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tony-Bradley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Patrick Williams",
@@ -4491,7 +4564,8 @@
 			"Total_Attributes": 2442,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/patrick-williams"
+		"player_url": "https://www.2kratings.com/patrick-williams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Patrick-Williams-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Goran Dragic",
@@ -4551,7 +4625,8 @@
 			"Total_Attributes": 2496,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/goran-dragic"
+		"player_url": "https://www.2kratings.com/goran-dragic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Goran-Dragic-Nets-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Derrick Jones Jr.",
@@ -4612,7 +4687,8 @@
 			"Total_Attributes": 2550,
 			"Vertical": 93
 		},
-		"player_url": "https://www.2kratings.com/derrick-jones-jr"
+		"player_url": "https://www.2kratings.com/derrick-jones-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Derrick-Jones-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Matt Thomas",
@@ -4673,7 +4749,8 @@
 			"Total_Attributes": 2334,
 			"Vertical": 64
 		},
-		"player_url": "https://www.2kratings.com/matt-thomas"
+		"player_url": "https://www.2kratings.com/matt-thomas",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Matt-Thomas-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tyler Cook",
@@ -4734,7 +4811,8 @@
 			"Total_Attributes": 2398,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/tyler-cook"
+		"player_url": "https://www.2kratings.com/tyler-cook",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tyler-Cook-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Marko Simonović",
@@ -4795,7 +4873,8 @@
 			"Total_Attributes": 2308,
 			"Vertical": 59
 		},
-		"player_url": "https://www.2kratings.com/marko-simonovic"
+		"player_url": "https://www.2kratings.com/marko-simonovic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Marko-Simonovic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Malcolm Hill",
@@ -4855,7 +4934,8 @@
 			"Total_Attributes": 2200,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/malcolm-hill"
+		"player_url": "https://www.2kratings.com/malcolm-hill",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Malcolm-Hill-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Darius Garland",
@@ -4915,7 +4995,8 @@
 			"Total_Attributes": 2743,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/darius-garland"
+		"player_url": "https://www.2kratings.com/darius-garland",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Darius-Garland-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jarrett Allen",
@@ -4975,7 +5056,8 @@
 			"Total_Attributes": 2762,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/jarrett-allen"
+		"player_url": "https://www.2kratings.com/jarrett-allen",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jarrett-Allen-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Evan Mobley",
@@ -5036,7 +5118,8 @@
 			"Total_Attributes": 2875,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/evan-mobley"
+		"player_url": "https://www.2kratings.com/evan-mobley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Evan-Mobley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kevin Love",
@@ -5097,7 +5180,8 @@
 			"Total_Attributes": 2637,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/kevin-love"
+		"player_url": "https://www.2kratings.com/kevin-love",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kevin-Love-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Collin Sexton",
@@ -5158,7 +5242,8 @@
 			"Total_Attributes": 2591,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/collin-sexton"
+		"player_url": "https://www.2kratings.com/collin-sexton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Collin-Sexton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lauri Markkanen",
@@ -5219,7 +5304,8 @@
 			"Total_Attributes": 2511,
 			"Vertical": 62
 		},
-		"player_url": "https://www.2kratings.com/lauri-markkanen"
+		"player_url": "https://www.2kratings.com/lauri-markkanen",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lauri-Markkanen-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ricky Rubio",
@@ -5279,7 +5365,8 @@
 			"Total_Attributes": 2528,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/ricky-rubio"
+		"player_url": "https://www.2kratings.com/ricky-rubio",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ricky-Rubio-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Caris LeVert",
@@ -5340,7 +5427,8 @@
 			"Total_Attributes": 2670,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/caris-levert"
+		"player_url": "https://www.2kratings.com/caris-levert",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Caris-LeVert-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Isaac Okoro",
@@ -5401,7 +5489,8 @@
 			"Total_Attributes": 2638,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/isaac-okoro"
+		"player_url": "https://www.2kratings.com/isaac-okoro",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaac-Okoro-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cedi Osman",
@@ -5462,7 +5551,8 @@
 			"Total_Attributes": 2526,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/cedi-osman"
+		"player_url": "https://www.2kratings.com/cedi-osman",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cedi-Osman-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Robin Lopez",
@@ -5522,7 +5612,8 @@
 			"Total_Attributes": 2399,
 			"Vertical": 57
 		},
-		"player_url": "https://www.2kratings.com/robin-lopez"
+		"player_url": "https://www.2kratings.com/robin-lopez",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Robin-Lopez-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Rajon Rondo",
@@ -5582,7 +5673,8 @@
 			"Total_Attributes": 2482,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/rajon-rondo"
+		"player_url": "https://www.2kratings.com/rajon-rondo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Rajon-Rondo-Cavs-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Brandon Goodwin",
@@ -5642,7 +5734,8 @@
 			"Total_Attributes": 2505,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/brandon-goodwin"
+		"player_url": "https://www.2kratings.com/brandon-goodwin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brandon-Goodwin-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Lamar Stevens",
@@ -5703,7 +5796,8 @@
 			"Total_Attributes": 2559,
 			"Vertical": 91
 		},
-		"player_url": "https://www.2kratings.com/lamar-stevens"
+		"player_url": "https://www.2kratings.com/lamar-stevens",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lamar-Stevens-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Raul Neto",
@@ -5764,7 +5858,8 @@
 			"Total_Attributes": 2482,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/raul-neto"
+		"player_url": "https://www.2kratings.com/raul-neto",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Raul-Neto-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dean Wade",
@@ -5824,7 +5919,8 @@
 			"Total_Attributes": 2412,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/dean-wade"
+		"player_url": "https://www.2kratings.com/dean-wade",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dean-Wade-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Moses Brown",
@@ -5884,7 +5980,8 @@
 			"Total_Attributes": 2265,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/moses-brown"
+		"player_url": "https://www.2kratings.com/moses-brown",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Moses-Brown-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Dylan Windler",
@@ -5945,7 +6042,8 @@
 			"Total_Attributes": 2385,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/dylan-windler"
+		"player_url": "https://www.2kratings.com/dylan-windler",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dylan-Windler-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ed Davis",
@@ -6006,7 +6104,8 @@
 			"Total_Attributes": 2215,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/ed-davis"
+		"player_url": "https://www.2kratings.com/ed-davis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ed-Davis-2K-Rating-413x300.png"
 	},
 	{
 		"name": "RJ Nembhard Jr.",
@@ -6067,7 +6166,8 @@
 			"Total_Attributes": 2265,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/rj-nembhard"
+		"player_url": "https://www.2kratings.com/rj-nembhard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/RJ-Nembhard-Jr.-2K-Rating-1-411x300.png"
 	},
 	{
 		"name": "Luka Doncic",
@@ -6128,7 +6228,8 @@
 			"Total_Attributes": 3088,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/luka-doncic"
+		"player_url": "https://www.2kratings.com/luka-doncic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Luka-Doncic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Christian Wood",
@@ -6189,7 +6290,8 @@
 			"Total_Attributes": 2672,
 			"Vertical": 59
 		},
-		"player_url": "https://www.2kratings.com/christian-wood"
+		"player_url": "https://www.2kratings.com/christian-wood",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Christian-Wood-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Spencer Dinwiddie",
@@ -6250,7 +6352,8 @@
 			"Total_Attributes": 2597,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/spencer-dinwiddie"
+		"player_url": "https://www.2kratings.com/spencer-dinwiddie",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Spencer-Dinwiddie-2K-Rating-413x300.png"
 	},
 	{
 		"name": "JaVale McGee",
@@ -6310,7 +6413,8 @@
 			"Total_Attributes": 2423,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/javale-mcgee"
+		"player_url": "https://www.2kratings.com/javale-mcgee",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/JaVale-McGee-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dorian Finney-Smith",
@@ -6371,7 +6475,8 @@
 			"Total_Attributes": 2533,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/dorian-finney-smith"
+		"player_url": "https://www.2kratings.com/dorian-finney-smith",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dorian-Finney-Smith-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dwight Powell",
@@ -6432,7 +6537,8 @@
 			"Total_Attributes": 2641,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/dwight-powell"
+		"player_url": "https://www.2kratings.com/dwight-powell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dwight-Powell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tim Hardaway Jr.",
@@ -6493,7 +6599,8 @@
 			"Total_Attributes": 2508,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/tim-hardaway-jr"
+		"player_url": "https://www.2kratings.com/tim-hardaway-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tim-Hardaway-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Josh Green",
@@ -6554,7 +6661,8 @@
 			"Total_Attributes": 2557,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/josh-green"
+		"player_url": "https://www.2kratings.com/josh-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Maxi Kleber",
@@ -6615,7 +6723,8 @@
 			"Total_Attributes": 2475,
 			"Vertical": 56
 		},
-		"player_url": "https://www.2kratings.com/maxi-kleber"
+		"player_url": "https://www.2kratings.com/maxi-kleber",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Maxi-Kleber-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Reggie Bullock",
@@ -6676,7 +6785,8 @@
 			"Total_Attributes": 2326,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/reggie-bullock"
+		"player_url": "https://www.2kratings.com/reggie-bullock",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Reggie-Bullock-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Davis Bertans",
@@ -6736,7 +6846,8 @@
 			"Total_Attributes": 2276,
 			"Vertical": 52
 		},
-		"player_url": "https://www.2kratings.com/davis-bertans"
+		"player_url": "https://www.2kratings.com/davis-bertans",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Davis-Bertans-2K-Rating-1-413x300.png"
 	},
 	{
 		"name": "Frank Ntilikina",
@@ -6797,7 +6908,8 @@
 			"Total_Attributes": 2450,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/frank-ntilikina"
+		"player_url": "https://www.2kratings.com/frank-ntilikina",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Frank-Ntilikina-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Theo Pinson",
@@ -6858,7 +6970,8 @@
 			"Total_Attributes": 2352,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/theo-pinson"
+		"player_url": "https://www.2kratings.com/theo-pinson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Theo-Pinson-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Moses Wright",
@@ -6919,7 +7032,8 @@
 			"Total_Attributes": 2270,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/moses-wright"
+		"player_url": "https://www.2kratings.com/moses-wright",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Moses-Wright-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Nikola Jokic",
@@ -6979,7 +7093,8 @@
 			"Total_Attributes": 3038,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/nikola-jokic"
+		"player_url": "https://www.2kratings.com/nikola-jokic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nikola-Jokic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jamal Murray",
@@ -7040,7 +7155,8 @@
 			"Total_Attributes": 2752,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/jamal-murray"
+		"player_url": "https://www.2kratings.com/jamal-murray",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jamal-Murray-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Michael Porter Jr.",
@@ -7101,7 +7217,8 @@
 			"Total_Attributes": 2622,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/michael-porter-jr"
+		"player_url": "https://www.2kratings.com/michael-porter-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Michael-Porter-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Aaron Gordon",
@@ -7162,7 +7279,8 @@
 			"Total_Attributes": 2735,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/aaron-gordon"
+		"player_url": "https://www.2kratings.com/aaron-gordon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Aaron-Gordon-2K-Rating-411x300.png"
 	},
 	{
 		"name": "DeMarcus Cousins",
@@ -7222,7 +7340,8 @@
 			"Total_Attributes": 2660,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/demarcus-cousins"
+		"player_url": "https://www.2kratings.com/demarcus-cousins",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DeMarcus-Cousins-Nuggets-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Nah’Shon Hyland",
@@ -7283,7 +7402,8 @@
 			"Total_Attributes": 2481,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/nahshon-hyland"
+		"player_url": "https://www.2kratings.com/nahshon-hyland",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/NahShon-Hyland-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Zeke Nnaji",
@@ -7344,7 +7464,8 @@
 			"Total_Attributes": 2488,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/zeke-nnaji"
+		"player_url": "https://www.2kratings.com/zeke-nnaji",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Zeke-Nnaji-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bruce Brown Jr.",
@@ -7405,7 +7526,8 @@
 			"Total_Attributes": 2629,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/bruce-brown-jr"
+		"player_url": "https://www.2kratings.com/bruce-brown-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bruce-Brown-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jeff Green",
@@ -7466,7 +7588,8 @@
 			"Total_Attributes": 2573,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/jeff-green"
+		"player_url": "https://www.2kratings.com/jeff-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jeff-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kentavious Caldwell-Pope",
@@ -7527,7 +7650,8 @@
 			"Total_Attributes": 2590,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/kentavious-caldwell-pope"
+		"player_url": "https://www.2kratings.com/kentavious-caldwell-pope",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kentavious-Caldwell-Pope-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ish Smith",
@@ -7587,7 +7711,8 @@
 			"Total_Attributes": 2383,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/ish-smith"
+		"player_url": "https://www.2kratings.com/ish-smith",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ish-Smith-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Facundo Campazzo",
@@ -7647,7 +7772,8 @@
 			"Total_Attributes": 2459,
 			"Vertical": 58
 		},
-		"player_url": "https://www.2kratings.com/facundo-campazzo"
+		"player_url": "https://www.2kratings.com/facundo-campazzo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Facundo-Campazzo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "DeAndre Jordan",
@@ -7707,7 +7833,8 @@
 			"Total_Attributes": 2255,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/deandre-jordan"
+		"player_url": "https://www.2kratings.com/deandre-jordan",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DeAndre-Jordan-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Davon Reed",
@@ -7767,7 +7894,8 @@
 			"Total_Attributes": 2450,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/davon-reed"
+		"player_url": "https://www.2kratings.com/davon-reed",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Davon-Reed-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Vlatko Cancar",
@@ -7828,7 +7956,8 @@
 			"Total_Attributes": 2254,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/vlatko-cancar"
+		"player_url": "https://www.2kratings.com/vlatko-cancar",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Vlatko-Cancar-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Markus Howard",
@@ -7888,7 +8017,8 @@
 			"Total_Attributes": 2193,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/markus-howard"
+		"player_url": "https://www.2kratings.com/markus-howard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Markus-Howard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cade Cunningham",
@@ -7949,7 +8079,8 @@
 			"Total_Attributes": 2851,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/cade-cunningham"
+		"player_url": "https://www.2kratings.com/cade-cunningham",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cade-Cunningham-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Saddiq Bey",
@@ -8010,7 +8141,8 @@
 			"Total_Attributes": 2641,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/saddiq-bey"
+		"player_url": "https://www.2kratings.com/saddiq-bey",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Saddiq-Bey-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Hamidou Diallo",
@@ -8071,7 +8203,8 @@
 			"Total_Attributes": 2650,
 			"Vertical": 97
 		},
-		"player_url": "https://www.2kratings.com/hamidou-diallo"
+		"player_url": "https://www.2kratings.com/hamidou-diallo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Hamidou-Diallo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kemba Walker",
@@ -8131,7 +8264,8 @@
 			"Total_Attributes": 2495,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/kemba-walker"
+		"player_url": "https://www.2kratings.com/kemba-walker",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kemba-Walker-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Marvin Bagley III",
@@ -8192,7 +8326,8 @@
 			"Total_Attributes": 2560,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/marvin-bagley-iii"
+		"player_url": "https://www.2kratings.com/marvin-bagley-iii",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Marvin-Bagley-III-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Alec Burks",
@@ -8253,7 +8388,8 @@
 			"Total_Attributes": 2652,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/alec-burks"
+		"player_url": "https://www.2kratings.com/alec-burks",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Alec-Burks-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kelly Olynyk",
@@ -8314,7 +8450,8 @@
 			"Total_Attributes": 2519,
 			"Vertical": 55
 		},
-		"player_url": "https://www.2kratings.com/kelly-olynyk"
+		"player_url": "https://www.2kratings.com/kelly-olynyk",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kelly-Olynyk-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaiah Stewart",
@@ -8375,7 +8512,8 @@
 			"Total_Attributes": 2518,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/isaiah-stewart"
+		"player_url": "https://www.2kratings.com/isaiah-stewart",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Stewart-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nerlens Noel",
@@ -8435,7 +8573,8 @@
 			"Total_Attributes": 2460,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/nerlens-noel"
+		"player_url": "https://www.2kratings.com/nerlens-noel",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nerlens-Noel-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Saben Lee",
@@ -8495,7 +8634,8 @@
 			"Total_Attributes": 2502,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/saben-lee"
+		"player_url": "https://www.2kratings.com/saben-lee",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Saben-Lee-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Luka Garza",
@@ -8556,7 +8696,8 @@
 			"Total_Attributes": 2246,
 			"Vertical": 48
 		},
-		"player_url": "https://www.2kratings.com/luka-garza"
+		"player_url": "https://www.2kratings.com/luka-garza",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Luka-Garza-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cory Joseph",
@@ -8617,7 +8758,8 @@
 			"Total_Attributes": 2425,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/cory-joseph"
+		"player_url": "https://www.2kratings.com/cory-joseph",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cory-Joseph-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Frank Jackson",
@@ -8678,7 +8820,8 @@
 			"Total_Attributes": 2381,
 			"Vertical": 95
 		},
-		"player_url": "https://www.2kratings.com/frank-jackson"
+		"player_url": "https://www.2kratings.com/frank-jackson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Frank-Jackson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Killian Hayes",
@@ -8739,7 +8882,8 @@
 			"Total_Attributes": 2495,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/killian-hayes"
+		"player_url": "https://www.2kratings.com/killian-hayes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Killian-Hayes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kevin Knox II",
@@ -8800,7 +8944,8 @@
 			"Total_Attributes": 2429,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/kevin-knox"
+		"player_url": "https://www.2kratings.com/kevin-knox",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kevin-Knox-II-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Isaiah Livers",
@@ -8861,7 +9006,8 @@
 			"Total_Attributes": 2335,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/isaiah-livers"
+		"player_url": "https://www.2kratings.com/isaiah-livers",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Livers-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Rodney McGruder",
@@ -8922,7 +9068,8 @@
 			"Total_Attributes": 2385,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/rodney-mcgruder"
+		"player_url": "https://www.2kratings.com/rodney-mcgruder",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Rodney-McGruder-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Carsen Edwards",
@@ -8983,7 +9130,8 @@
 			"Total_Attributes": 2289,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/carsen-edwards"
+		"player_url": "https://www.2kratings.com/carsen-edwards",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Carsen-Edwards-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jamorko Pickett",
@@ -9043,7 +9191,8 @@
 			"Total_Attributes": 2218,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/jamorko-pickett"
+		"player_url": "https://www.2kratings.com/jamorko-pickett",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jamorko-Pickett-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Braxton Key",
@@ -9104,7 +9253,8 @@
 			"Total_Attributes": 2304,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/braxton-key"
+		"player_url": "https://www.2kratings.com/braxton-key",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Braxton-Key-2K-Rating-413x284.png"
 	},
 	{
 		"name": "Stephen Curry",
@@ -9165,7 +9315,8 @@
 			"Total_Attributes": 2863,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/stephen-curry"
+		"player_url": "https://www.2kratings.com/stephen-curry",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Stephen-Curry-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Klay Thompson",
@@ -9226,7 +9377,8 @@
 			"Total_Attributes": 2724,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/klay-thompson"
+		"player_url": "https://www.2kratings.com/klay-thompson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Klay-Thompson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Andrew Wiggins",
@@ -9287,7 +9439,8 @@
 			"Total_Attributes": 2800,
 			"Vertical": 97
 		},
-		"player_url": "https://www.2kratings.com/andrew-wiggins"
+		"player_url": "https://www.2kratings.com/andrew-wiggins",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Andrew-Wiggins-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Draymond Green",
@@ -9348,7 +9501,8 @@
 			"Total_Attributes": 2777,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/draymond-green"
+		"player_url": "https://www.2kratings.com/draymond-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Draymond-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jordan Poole",
@@ -9409,7 +9563,8 @@
 			"Total_Attributes": 2611,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/jordan-poole"
+		"player_url": "https://www.2kratings.com/jordan-poole",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jordan-Poole-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jonathan Kuminga",
@@ -9470,7 +9625,8 @@
 			"Total_Attributes": 2693,
 			"Vertical": 90
 		},
-		"player_url": "https://www.2kratings.com/jonathan-kuminga"
+		"player_url": "https://www.2kratings.com/jonathan-kuminga",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jonathan-Kuminga-2K-Rating-411x300.png"
 	},
 	{
 		"name": "James Wiseman",
@@ -9531,7 +9687,8 @@
 			"Total_Attributes": 2608,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/james-wiseman"
+		"player_url": "https://www.2kratings.com/james-wiseman",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/James-Wiseman-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kevon Looney",
@@ -9591,7 +9748,8 @@
 			"Total_Attributes": 2548,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/kevon-looney"
+		"player_url": "https://www.2kratings.com/kevon-looney",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kevon-Looney-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Donte DiVincenzo",
@@ -9652,7 +9810,8 @@
 			"Total_Attributes": 2611,
 			"Vertical": 95
 		},
-		"player_url": "https://www.2kratings.com/donte-divincenzo"
+		"player_url": "https://www.2kratings.com/donte-divincenzo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Donte-DiVincenzo-2K-Rating-413x300.png"
 	},
 	{
 		"name": "JaMychal Green",
@@ -9713,7 +9872,8 @@
 			"Total_Attributes": 2526,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/jamychal-green"
+		"player_url": "https://www.2kratings.com/jamychal-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/JaMychal-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Andre Iguodala",
@@ -9774,7 +9934,8 @@
 			"Total_Attributes": 2565,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/andre-iguodala"
+		"player_url": "https://www.2kratings.com/andre-iguodala",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Andre-Iguodala-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Moses Moody",
@@ -9835,7 +9996,8 @@
 			"Total_Attributes": 2496,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/moses-moody"
+		"player_url": "https://www.2kratings.com/moses-moody",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Moses-Moody-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Chris Chiozza",
@@ -9895,7 +10057,8 @@
 			"Total_Attributes": 2339,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/chris-chiozza"
+		"player_url": "https://www.2kratings.com/chris-chiozza",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Chris-Chiozza-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Quinndary Weatherspoon",
@@ -9955,7 +10118,8 @@
 			"Total_Attributes": 2361,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/quinndary-weatherspoon"
+		"player_url": "https://www.2kratings.com/quinndary-weatherspoon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Quinndary-Weatherspoon-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Mac McClung",
@@ -10015,7 +10179,8 @@
 			"Total_Attributes": 2353,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/mac-mcclung"
+		"player_url": "https://www.2kratings.com/mac-mcclung",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mac-McClung-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jalen Green",
@@ -10076,7 +10241,8 @@
 			"Total_Attributes": 2700,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/jalen-green"
+		"player_url": "https://www.2kratings.com/jalen-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jalen-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Alperen Sengun",
@@ -10137,7 +10303,8 @@
 			"Total_Attributes": 2644,
 			"Vertical": 49
 		},
-		"player_url": "https://www.2kratings.com/alperen-sengun"
+		"player_url": "https://www.2kratings.com/alperen-sengun",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Alperen-Sengun-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kevin Porter Jr.",
@@ -10198,7 +10365,8 @@
 			"Total_Attributes": 2595,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/kevin-porter-jr"
+		"player_url": "https://www.2kratings.com/kevin-porter-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kevin-Porter-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jae’Sean Tate",
@@ -10259,7 +10427,8 @@
 			"Total_Attributes": 2746,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jaesean-tate"
+		"player_url": "https://www.2kratings.com/jaesean-tate",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/JaeSean-Tate-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kenyon Martin Jr.",
@@ -10320,7 +10489,8 @@
 			"Total_Attributes": 2509,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/kenyon-martin-jr"
+		"player_url": "https://www.2kratings.com/kenyon-martin-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/KJ-Martin-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dennis Schroder",
@@ -10381,7 +10551,8 @@
 			"Total_Attributes": 2488,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/dennis-schroder"
+		"player_url": "https://www.2kratings.com/dennis-schroder",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dennis-Schroder-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Josh Christopher",
@@ -10442,7 +10613,8 @@
 			"Total_Attributes": 2587,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/josh-christopher"
+		"player_url": "https://www.2kratings.com/josh-christopher",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Christopher-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Eric Gordon",
@@ -10503,7 +10675,8 @@
 			"Total_Attributes": 2497,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/eric-gordon"
+		"player_url": "https://www.2kratings.com/eric-gordon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Eric-Gordon-2K-Rating-411x300.png"
 	},
 	{
 		"name": "David Nwaba",
@@ -10564,7 +10737,8 @@
 			"Total_Attributes": 2537,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/david-nwaba"
+		"player_url": "https://www.2kratings.com/david-nwaba",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/David-Nwaba-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Marquese Chriss",
@@ -10625,7 +10799,8 @@
 			"Total_Attributes": 2538,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/marquese-chriss"
+		"player_url": "https://www.2kratings.com/marquese-chriss",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Marquese-Chriss-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Garrison Mathews",
@@ -10686,7 +10861,8 @@
 			"Total_Attributes": 2371,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/garrison-mathews"
+		"player_url": "https://www.2kratings.com/garrison-mathews",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Garrison-Mathews-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Boban Marjanovic",
@@ -10746,7 +10922,8 @@
 			"Total_Attributes": 2224,
 			"Vertical": 40
 		},
-		"player_url": "https://www.2kratings.com/boban-marjanovic"
+		"player_url": "https://www.2kratings.com/boban-marjanovic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Boban-Marjanovic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Usman Garuba",
@@ -10807,7 +10984,8 @@
 			"Total_Attributes": 2543,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/usman-garuba"
+		"player_url": "https://www.2kratings.com/usman-garuba",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Usman-Garuba-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bruno Fernando",
@@ -10867,7 +11045,8 @@
 			"Total_Attributes": 2376,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/bruno-fernando"
+		"player_url": "https://www.2kratings.com/bruno-fernando",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bruno-Fernando-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Trey Burke",
@@ -10928,7 +11107,8 @@
 			"Total_Attributes": 2355,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/trey-burke"
+		"player_url": "https://www.2kratings.com/trey-burke",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trey-Burke-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Sterling Brown",
@@ -10989,7 +11169,8 @@
 			"Total_Attributes": 2392,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/sterling-brown"
+		"player_url": "https://www.2kratings.com/sterling-brown",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Sterling-Brown-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Anthony Lamb",
@@ -11050,7 +11231,8 @@
 			"Total_Attributes": 2218,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/anthony-lamb"
+		"player_url": "https://www.2kratings.com/anthony-lamb",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Anthony-Lamb-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Daishen Nix",
@@ -11110,7 +11292,8 @@
 			"Total_Attributes": 2333,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/daishen-nix"
+		"player_url": "https://www.2kratings.com/daishen-nix",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Daishen-Nix-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tyrese Haliburton",
@@ -11171,7 +11354,8 @@
 			"Total_Attributes": 2775,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/tyrese-haliburton"
+		"player_url": "https://www.2kratings.com/tyrese-haliburton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tyrese-Haliburton-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Myles Turner",
@@ -11231,7 +11415,8 @@
 			"Total_Attributes": 2631,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/myles-turner"
+		"player_url": "https://www.2kratings.com/myles-turner",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Myles-Turner-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Buddy Hield",
@@ -11292,7 +11477,8 @@
 			"Total_Attributes": 2499,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/buddy-hield"
+		"player_url": "https://www.2kratings.com/buddy-hield",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Buddy-Hield-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Jalen Smith",
@@ -11353,7 +11539,8 @@
 			"Total_Attributes": 2520,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/jalen-smith"
+		"player_url": "https://www.2kratings.com/jalen-smith",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jalen-Smith-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Isaiah Jackson",
@@ -11414,7 +11601,8 @@
 			"Total_Attributes": 2541,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/isaiah-jackson"
+		"player_url": "https://www.2kratings.com/isaiah-jackson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Jackson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Chris Duarte",
@@ -11475,7 +11663,8 @@
 			"Total_Attributes": 2549,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/chris-duarte"
+		"player_url": "https://www.2kratings.com/chris-duarte",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Chris-Duarte-2K-Rating-411x300.png"
 	},
 	{
 		"name": "T.J. McConnell",
@@ -11535,7 +11724,8 @@
 			"Total_Attributes": 2597,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/tj-mcconnell"
+		"player_url": "https://www.2kratings.com/tj-mcconnell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/T.J.-McConnell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lance Stephenson",
@@ -11596,7 +11786,8 @@
 			"Total_Attributes": 2663,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/lance-stephenson"
+		"player_url": "https://www.2kratings.com/lance-stephenson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lance-Stephenson-Indiana-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Goga Bitadze",
@@ -11656,7 +11847,8 @@
 			"Total_Attributes": 2464,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/goga-bitadze"
+		"player_url": "https://www.2kratings.com/goga-bitadze",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Goga-Bitadze-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Oshae Brissett",
@@ -11717,7 +11909,8 @@
 			"Total_Attributes": 2466,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/oshae-brissett"
+		"player_url": "https://www.2kratings.com/oshae-brissett",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Oshae-Brissett-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Daniel Theis",
@@ -11778,7 +11971,8 @@
 			"Total_Attributes": 2474,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/daniel-theis"
+		"player_url": "https://www.2kratings.com/daniel-theis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Daniel-Theis-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Terry Taylor",
@@ -11839,7 +12033,8 @@
 			"Total_Attributes": 2390,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/terry-taylor"
+		"player_url": "https://www.2kratings.com/terry-taylor",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Terry-Taylor-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Aaron Nesmith",
@@ -11900,7 +12095,8 @@
 			"Total_Attributes": 2323,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/aaron-nesmith"
+		"player_url": "https://www.2kratings.com/aaron-nesmith",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Aaron-Nesmith-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Keifer Sykes",
@@ -11960,7 +12156,8 @@
 			"Total_Attributes": 2299,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/keifer-sykes"
+		"player_url": "https://www.2kratings.com/keifer-sykes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Keifer-Sykes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kawhi Leonard",
@@ -12021,7 +12218,8 @@
 			"Total_Attributes": 3189,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/kawhi-leonard"
+		"player_url": "https://www.2kratings.com/kawhi-leonard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kawhi-Leonard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Paul George",
@@ -12082,7 +12280,8 @@
 			"Total_Attributes": 2928,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/paul-george"
+		"player_url": "https://www.2kratings.com/paul-george",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Paul-George-2K-Rating-411x300.png"
 	},
 	{
 		"name": "John Wall",
@@ -12142,7 +12341,8 @@
 			"Total_Attributes": 2762,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/john-wall"
+		"player_url": "https://www.2kratings.com/john-wall",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/John-Wall-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Norman Powell",
@@ -12203,7 +12403,8 @@
 			"Total_Attributes": 2645,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/norman-powell"
+		"player_url": "https://www.2kratings.com/norman-powell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Norman-Powell-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Marcus Morris Sr.",
@@ -12264,7 +12465,8 @@
 			"Total_Attributes": 2553,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/marcus-morris-sr"
+		"player_url": "https://www.2kratings.com/marcus-morris-sr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Marcus-Morris-Sr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ivica Zubac",
@@ -12324,7 +12526,8 @@
 			"Total_Attributes": 2410,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/ivica-zubac"
+		"player_url": "https://www.2kratings.com/ivica-zubac",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ivica-Zubac-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Reggie Jackson",
@@ -12385,7 +12588,8 @@
 			"Total_Attributes": 2580,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/reggie-jackson"
+		"player_url": "https://www.2kratings.com/reggie-jackson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Reggie-Jackson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Luke Kennard",
@@ -12446,7 +12650,8 @@
 			"Total_Attributes": 2415,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/luke-kennard"
+		"player_url": "https://www.2kratings.com/luke-kennard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Luke-Kennard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Terance Mann",
@@ -12507,7 +12712,8 @@
 			"Total_Attributes": 2595,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/terance-mann"
+		"player_url": "https://www.2kratings.com/terance-mann",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Terance-Mann-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nicolas Batum",
@@ -12568,7 +12774,8 @@
 			"Total_Attributes": 2557,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/nicolas-batum"
+		"player_url": "https://www.2kratings.com/nicolas-batum",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nicolas-Batum-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Robert Covington",
@@ -12629,7 +12836,8 @@
 			"Total_Attributes": 2516,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/robert-covington"
+		"player_url": "https://www.2kratings.com/robert-covington",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Robert-Covington-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Amir Coffey",
@@ -12690,7 +12898,8 @@
 			"Total_Attributes": 2422,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/amir-coffey"
+		"player_url": "https://www.2kratings.com/amir-coffey",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Amir-Coffey-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Brandon Boston Jr.",
@@ -12751,7 +12960,8 @@
 			"Total_Attributes": 2362,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/brandon-boston-jr"
+		"player_url": "https://www.2kratings.com/brandon-boston-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brandon-Boston-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jason Preston",
@@ -12812,7 +13022,8 @@
 			"Total_Attributes": 2479,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jason-preston"
+		"player_url": "https://www.2kratings.com/jason-preston",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jason-Preston-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Rodney Hood",
@@ -12873,7 +13084,8 @@
 			"Total_Attributes": 2352,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/rodney-hood"
+		"player_url": "https://www.2kratings.com/rodney-hood",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Rodney-Hood-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Xavier Moon",
@@ -12933,7 +13145,8 @@
 			"Total_Attributes": 2145,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/xavier-moon"
+		"player_url": "https://www.2kratings.com/xavier-moon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Xavier-Moon-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Jay Scrubb",
@@ -12994,7 +13207,8 @@
 			"Total_Attributes": 2297,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/jay-scrubb"
+		"player_url": "https://www.2kratings.com/jay-scrubb",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jay-Scrubb-2K-Rating-411x300.png"
 	},
 	{
 		"name": "LeBron James",
@@ -13055,7 +13269,8 @@
 			"Total_Attributes": 3245,
 			"Vertical": 89
 		},
-		"player_url": "https://www.2kratings.com/lebron-james"
+		"player_url": "https://www.2kratings.com/lebron-james",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/LeBron-James-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Anthony Davis",
@@ -13116,7 +13331,8 @@
 			"Total_Attributes": 3069,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/anthony-davis"
+		"player_url": "https://www.2kratings.com/anthony-davis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Anthony-Davis-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Carmelo Anthony",
@@ -13177,7 +13393,8 @@
 			"Total_Attributes": 2616,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/carmelo-anthony"
+		"player_url": "https://www.2kratings.com/carmelo-anthony",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Carmelo-Anthony-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Thomas Bryant",
@@ -13238,7 +13455,8 @@
 			"Total_Attributes": 2557,
 			"Vertical": 52
 		},
-		"player_url": "https://www.2kratings.com/thomas-bryant"
+		"player_url": "https://www.2kratings.com/thomas-bryant",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Thomas-Bryant-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Russell Westbrook",
@@ -13299,7 +13517,8 @@
 			"Total_Attributes": 2593,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/russell-westbrook"
+		"player_url": "https://www.2kratings.com/russell-westbrook",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Russell-Westbrook-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dwight Howard",
@@ -13359,7 +13578,8 @@
 			"Total_Attributes": 2432,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/dwight-howard"
+		"player_url": "https://www.2kratings.com/dwight-howard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dwight-Howard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kendrick Nunn",
@@ -13420,7 +13640,8 @@
 			"Total_Attributes": 2506,
 			"Vertical": 76
 		},
-		"player_url": "https://www.2kratings.com/kendrick-nunn"
+		"player_url": "https://www.2kratings.com/kendrick-nunn",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kendrick-Nunn-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lonnie Walker IV",
@@ -13481,7 +13702,8 @@
 			"Total_Attributes": 2559,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/lonnie-walker-iv"
+		"player_url": "https://www.2kratings.com/lonnie-walker-iv",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lonnie-Walker-IV-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Talen Horton-Tucker",
@@ -13542,7 +13764,8 @@
 			"Total_Attributes": 2515,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/talen-horton-tucker"
+		"player_url": "https://www.2kratings.com/talen-horton-tucker",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Talen-Horton-Tucker-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Austin Reaves",
@@ -13602,7 +13825,8 @@
 			"Total_Attributes": 2493,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/austin-reaves"
+		"player_url": "https://www.2kratings.com/austin-reaves",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Austin-Reaves-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Stanley Johnson",
@@ -13663,7 +13887,8 @@
 			"Total_Attributes": 2452,
 			"Vertical": 61
 		},
-		"player_url": "https://www.2kratings.com/stanley-johnson"
+		"player_url": "https://www.2kratings.com/stanley-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Stanley-Johnson-2K-Rating-413x300.png"
 	},
 	{
 		"name": "D.J. Augustin",
@@ -13723,7 +13948,8 @@
 			"Total_Attributes": 2341,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/dj-augustin"
+		"player_url": "https://www.2kratings.com/dj-augustin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/D.J.-Augustin-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Juan Toscano-Anderson",
@@ -13784,7 +14010,8 @@
 			"Total_Attributes": 2534,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/juan-toscano-anderson"
+		"player_url": "https://www.2kratings.com/juan-toscano-anderson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Juan-Toscano-Anderson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mason Jones",
@@ -13845,7 +14072,8 @@
 			"Total_Attributes": 2376,
 			"Vertical": 57
 		},
-		"player_url": "https://www.2kratings.com/mason-jones"
+		"player_url": "https://www.2kratings.com/mason-jones",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mason-Jones-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Damian Jones",
@@ -13905,7 +14133,8 @@
 			"Total_Attributes": 2337,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/damian-jones"
+		"player_url": "https://www.2kratings.com/damian-jones",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Damian-Jones-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Avery Bradley",
@@ -13966,7 +14195,8 @@
 			"Total_Attributes": 2423,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/avery-bradley"
+		"player_url": "https://www.2kratings.com/avery-bradley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Avery-Bradley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Trevor Ariza",
@@ -14027,7 +14257,8 @@
 			"Total_Attributes": 2495,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/trevor-ariza"
+		"player_url": "https://www.2kratings.com/trevor-ariza",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trevor-Ariza-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Wayne Ellington",
@@ -14088,7 +14319,8 @@
 			"Total_Attributes": 2294,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/wayne-ellington"
+		"player_url": "https://www.2kratings.com/wayne-ellington",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Wayne-Ellington-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kent Bazemore",
@@ -14149,7 +14381,8 @@
 			"Total_Attributes": 2490,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/kent-bazemore"
+		"player_url": "https://www.2kratings.com/kent-bazemore",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kent-Bazemore-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Troy Brown Jr.",
@@ -14210,7 +14443,8 @@
 			"Total_Attributes": 2459,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/troy-brown-jr"
+		"player_url": "https://www.2kratings.com/troy-brown-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Troy-Brown-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Wenyen Gabriel",
@@ -14271,7 +14505,8 @@
 			"Total_Attributes": 2336,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/wenyen-gabriel"
+		"player_url": "https://www.2kratings.com/wenyen-gabriel",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Wenyen-Gabriel-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ja Morant",
@@ -14331,7 +14566,8 @@
 			"Total_Attributes": 2922,
 			"Vertical": 93
 		},
-		"player_url": "https://www.2kratings.com/ja-morant"
+		"player_url": "https://www.2kratings.com/ja-morant",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ja-Morant-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jaren Jackson Jr.",
@@ -14392,7 +14628,8 @@
 			"Total_Attributes": 2789,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jaren-jackson-jr"
+		"player_url": "https://www.2kratings.com/jaren-jackson-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaren-Jackson-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Desmond Bane",
@@ -14453,7 +14690,8 @@
 			"Total_Attributes": 2728,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/desmond-bane"
+		"player_url": "https://www.2kratings.com/desmond-bane",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Desmond-Bane-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Steven Adams",
@@ -14513,7 +14751,8 @@
 			"Total_Attributes": 2580,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/steven-adams"
+		"player_url": "https://www.2kratings.com/steven-adams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Steven-Adams-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dillon Brooks",
@@ -14574,7 +14813,8 @@
 			"Total_Attributes": 2727,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/dillon-brooks"
+		"player_url": "https://www.2kratings.com/dillon-brooks",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dillon-Brooks-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tyus Jones",
@@ -14634,7 +14874,8 @@
 			"Total_Attributes": 2531,
 			"Vertical": 57
 		},
-		"player_url": "https://www.2kratings.com/tyus-jones"
+		"player_url": "https://www.2kratings.com/tyus-jones",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tyus-Jones-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Brandon Clarke",
@@ -14695,7 +14936,8 @@
 			"Total_Attributes": 2670,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/brandon-clarke"
+		"player_url": "https://www.2kratings.com/brandon-clarke",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brandon-Clarke-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Xavier Tillman",
@@ -14756,7 +14998,8 @@
 			"Total_Attributes": 2619,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/xavier-tillman"
+		"player_url": "https://www.2kratings.com/xavier-tillman",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Xavier-Tillman-Sr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "John Konchar",
@@ -14817,7 +15060,8 @@
 			"Total_Attributes": 2462,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/john-konchar"
+		"player_url": "https://www.2kratings.com/john-konchar",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/John-Konchar-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ziaire Williams",
@@ -14878,7 +15122,8 @@
 			"Total_Attributes": 2499,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/ziaire-williams"
+		"player_url": "https://www.2kratings.com/ziaire-williams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ziaire-Williams-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Danny Green",
@@ -14939,7 +15184,8 @@
 			"Total_Attributes": 2355,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/danny-green"
+		"player_url": "https://www.2kratings.com/danny-green",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Danny-Green-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tyrell Terry",
@@ -15000,7 +15246,8 @@
 			"Total_Attributes": 2247,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/tyrell-terry"
+		"player_url": "https://www.2kratings.com/tyrell-terry",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tyrell-Terry-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Jarrett Culver",
@@ -15061,7 +15308,8 @@
 			"Total_Attributes": 2501,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/jarrett-culver"
+		"player_url": "https://www.2kratings.com/jarrett-culver",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jarrett-Culver-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Santi Aldama",
@@ -15122,7 +15370,8 @@
 			"Total_Attributes": 2284,
 			"Vertical": 59
 		},
-		"player_url": "https://www.2kratings.com/santi-aldama"
+		"player_url": "https://www.2kratings.com/santi-aldama",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Santi-Aldama-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Killian Tillie",
@@ -15183,7 +15432,8 @@
 			"Total_Attributes": 2273,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/killian-tillie"
+		"player_url": "https://www.2kratings.com/killian-tillie",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Killian-Tillie-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jimmy Butler",
@@ -15244,7 +15494,8 @@
 			"Total_Attributes": 3149,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/jimmy-butler"
+		"player_url": "https://www.2kratings.com/jimmy-butler",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jimmy-Butler-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bam Adebayo",
@@ -15304,7 +15555,8 @@
 			"Total_Attributes": 2967,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/bam-adebayo"
+		"player_url": "https://www.2kratings.com/bam-adebayo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bam-Adebayo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tyler Herro",
@@ -15365,7 +15617,8 @@
 			"Total_Attributes": 2667,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/tyler-herro"
+		"player_url": "https://www.2kratings.com/tyler-herro",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tyler-Herro-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kyle Lowry",
@@ -15425,7 +15678,8 @@
 			"Total_Attributes": 2700,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/kyle-lowry"
+		"player_url": "https://www.2kratings.com/kyle-lowry",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kyle-Lowry-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Omer Yurtseven",
@@ -15485,7 +15739,8 @@
 			"Total_Attributes": 2484,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/omer-yurtseven"
+		"player_url": "https://www.2kratings.com/omer-yurtseven",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Omer-Yurtseven-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Caleb Martin",
@@ -15546,7 +15801,8 @@
 			"Total_Attributes": 2565,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/caleb-martin"
+		"player_url": "https://www.2kratings.com/caleb-martin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Caleb-Martin-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Victor Oladipo",
@@ -15607,7 +15863,8 @@
 			"Total_Attributes": 2670,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/victor-oladipo"
+		"player_url": "https://www.2kratings.com/victor-oladipo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Victor-Oladipo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dewayne Dedmon",
@@ -15667,7 +15924,8 @@
 			"Total_Attributes": 2383,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/dewayne-dedmon"
+		"player_url": "https://www.2kratings.com/dewayne-dedmon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dewayne-Dedmon-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Duncan Robinson",
@@ -15728,7 +15986,8 @@
 			"Total_Attributes": 2313,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/duncan-robinson"
+		"player_url": "https://www.2kratings.com/duncan-robinson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Duncan-Robinson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Max Strus",
@@ -15789,7 +16048,8 @@
 			"Total_Attributes": 2397,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/max-strus"
+		"player_url": "https://www.2kratings.com/max-strus",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Max-Strus-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gabe Vincent",
@@ -15850,7 +16110,8 @@
 			"Total_Attributes": 2399,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/gabe-vincent"
+		"player_url": "https://www.2kratings.com/gabe-vincent",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gabe-Vincent-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Markieff Morris",
@@ -15911,7 +16172,8 @@
 			"Total_Attributes": 2327,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/markieff-morris"
+		"player_url": "https://www.2kratings.com/markieff-morris",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Markieff-Morris-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Udonis Haslem",
@@ -15972,7 +16234,8 @@
 			"Total_Attributes": 2243,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/udonis-haslem"
+		"player_url": "https://www.2kratings.com/udonis-haslem",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Udonis-Haslem-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mychal Mulder",
@@ -16033,7 +16296,8 @@
 			"Total_Attributes": 2337,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/mychal-mulder"
+		"player_url": "https://www.2kratings.com/mychal-mulder",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mychal-Mulder-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Marcus Garrett",
@@ -16094,7 +16358,8 @@
 			"Total_Attributes": 2384,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/marcus-garrett"
+		"player_url": "https://www.2kratings.com/marcus-garrett",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Marcus-Garrett-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Haywood Highsmith",
@@ -16155,7 +16420,8 @@
 			"Total_Attributes": 2236,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/haywood-highsmith"
+		"player_url": "https://www.2kratings.com/haywood-highsmith",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Haywood-Highsmith-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Giannis Antetokounmpo",
@@ -16216,7 +16482,8 @@
 			"Total_Attributes": 3294,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/giannis-antetokounmpo"
+		"player_url": "https://www.2kratings.com/giannis-antetokounmpo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Giannis-Antetokounmpo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Khris Middleton",
@@ -16277,7 +16544,8 @@
 			"Total_Attributes": 2830,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/khris-middleton"
+		"player_url": "https://www.2kratings.com/khris-middleton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Khris-Middleton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jrue Holiday",
@@ -16338,7 +16606,8 @@
 			"Total_Attributes": 2747,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/jrue-holiday"
+		"player_url": "https://www.2kratings.com/jrue-holiday",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jrue-Holiday-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bobby Portis",
@@ -16399,7 +16668,8 @@
 			"Total_Attributes": 2678,
 			"Vertical": 64
 		},
-		"player_url": "https://www.2kratings.com/bobby-portis"
+		"player_url": "https://www.2kratings.com/bobby-portis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bobby-Portis-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Brook Lopez",
@@ -16459,7 +16729,8 @@
 			"Total_Attributes": 2501,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/brook-lopez"
+		"player_url": "https://www.2kratings.com/brook-lopez",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brook-Lopez-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Pat Connaughton",
@@ -16520,7 +16791,8 @@
 			"Total_Attributes": 2533,
 			"Vertical": 95
 		},
-		"player_url": "https://www.2kratings.com/pat-connaughton"
+		"player_url": "https://www.2kratings.com/pat-connaughton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Pat-Connaughton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Serge Ibaka",
@@ -16581,7 +16853,8 @@
 			"Total_Attributes": 2514,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/serge-ibaka"
+		"player_url": "https://www.2kratings.com/serge-ibaka",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Serge-Ibaka-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Joe Ingles",
@@ -16642,7 +16915,8 @@
 			"Total_Attributes": 2458,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/joe-ingles"
+		"player_url": "https://www.2kratings.com/joe-ingles",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Joe-Ingles-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Grayson Allen",
@@ -16702,7 +16976,8 @@
 			"Total_Attributes": 2503,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/grayson-allen"
+		"player_url": "https://www.2kratings.com/grayson-allen",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Grayson-Allen-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jevon Carter",
@@ -16763,7 +17038,8 @@
 			"Total_Attributes": 2422,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/jevon-carter"
+		"player_url": "https://www.2kratings.com/jevon-carter",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jevon-Carter-2K-Rating-413x300.png"
 	},
 	{
 		"name": "George Hill",
@@ -16824,7 +17100,8 @@
 			"Total_Attributes": 2477,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/george-hill"
+		"player_url": "https://www.2kratings.com/george-hill",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/George-Hill-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jordan Nwora",
@@ -16885,7 +17162,8 @@
 			"Total_Attributes": 2325,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/jordan-nwora"
+		"player_url": "https://www.2kratings.com/jordan-nwora",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jordan-Nwora-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Thanasis Antetokounmpo",
@@ -16946,7 +17224,8 @@
 			"Total_Attributes": 2446,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/thanasis-antetokounmpo"
+		"player_url": "https://www.2kratings.com/thanasis-antetokounmpo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Thanasis-Antetokounmpo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Wesley Matthews",
@@ -17007,7 +17286,8 @@
 			"Total_Attributes": 2476,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/wesley-matthews"
+		"player_url": "https://www.2kratings.com/wesley-matthews",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Wesley-Matthews-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Sandro Mamukelashvili",
@@ -17067,7 +17347,8 @@
 			"Total_Attributes": 2386,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/sandro-mamukelashvili"
+		"player_url": "https://www.2kratings.com/sandro-mamukelashvili",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Sandro-Mamukelashvili-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lindell Wigginton",
@@ -17127,7 +17408,8 @@
 			"Total_Attributes": 2349,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/lindell-wigginton"
+		"player_url": "https://www.2kratings.com/lindell-wigginton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lindell-Wigginton-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Karl-Anthony Towns",
@@ -17187,7 +17469,8 @@
 			"Total_Attributes": 2934,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/karl-anthony-towns"
+		"player_url": "https://www.2kratings.com/karl-anthony-towns",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Karl-Anthony-Towns-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Rudy Gobert",
@@ -17247,7 +17530,8 @@
 			"Total_Attributes": 2684,
 			"Vertical": 57
 		},
-		"player_url": "https://www.2kratings.com/rudy-gobert"
+		"player_url": "https://www.2kratings.com/rudy-gobert",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Rudy-Gobert-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Anthony Edwards",
@@ -17308,7 +17592,8 @@
 			"Total_Attributes": 2810,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/anthony-edwards"
+		"player_url": "https://www.2kratings.com/anthony-edwards",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Anthony-Edwards-2K-Rating.png"
 	},
 	{
 		"name": "D’Angelo Russell",
@@ -17369,7 +17654,8 @@
 			"Total_Attributes": 2557,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/dangelo-russell"
+		"player_url": "https://www.2kratings.com/dangelo-russell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DAngelo-Russell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kyle Anderson",
@@ -17430,7 +17716,8 @@
 			"Total_Attributes": 2663,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/kyle-anderson"
+		"player_url": "https://www.2kratings.com/kyle-anderson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kyle-Anderson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Naz Reid",
@@ -17491,7 +17778,8 @@
 			"Total_Attributes": 2608,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/naz-reid"
+		"player_url": "https://www.2kratings.com/naz-reid",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Naz-Reid-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jaden McDaniels",
@@ -17552,7 +17840,8 @@
 			"Total_Attributes": 2580,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/jaden-mcdaniels"
+		"player_url": "https://www.2kratings.com/jaden-mcdaniels",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaden-McDaniels-2K-Rating-300x219.png"
 	},
 	{
 		"name": "Jaylen Nowell",
@@ -17613,7 +17902,8 @@
 			"Total_Attributes": 2461,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/jaylen-nowell"
+		"player_url": "https://www.2kratings.com/jaylen-nowell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaylen-Nowell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Taurean Prince",
@@ -17674,7 +17964,8 @@
 			"Total_Attributes": 2605,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/taurean-prince"
+		"player_url": "https://www.2kratings.com/taurean-prince",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Taurean-Prince-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jordan McLaughlin",
@@ -17735,7 +18026,8 @@
 			"Total_Attributes": 2495,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/jordan-mclaughlin"
+		"player_url": "https://www.2kratings.com/jordan-mclaughlin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jordan-McLaughlin-2K-Rating.png"
 	},
 	{
 		"name": "Austin Rivers",
@@ -17796,7 +18088,8 @@
 			"Total_Attributes": 2433,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/austin-rivers"
+		"player_url": "https://www.2kratings.com/austin-rivers",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Austin-Rivers-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bryn Forbes",
@@ -17857,7 +18150,8 @@
 			"Total_Attributes": 2274,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/bryn-forbes"
+		"player_url": "https://www.2kratings.com/bryn-forbes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bryn-Forbes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Greg Monroe",
@@ -17917,7 +18211,8 @@
 			"Total_Attributes": 2337,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/greg-monroe"
+		"player_url": "https://www.2kratings.com/greg-monroe",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Greg-Monroe-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Jake Layman",
@@ -17978,7 +18273,8 @@
 			"Total_Attributes": 2387,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/jake-layman"
+		"player_url": "https://www.2kratings.com/jake-layman",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jake-Layman-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nathan Knight",
@@ -18039,7 +18335,8 @@
 			"Total_Attributes": 2360,
 			"Vertical": 55
 		},
-		"player_url": "https://www.2kratings.com/nathan-knight"
+		"player_url": "https://www.2kratings.com/nathan-knight",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nathan-Knight-2K-Rating-411x300.png"
 	},
 	{
 		"name": "McKinley Wright IV",
@@ -18099,7 +18396,8 @@
 			"Total_Attributes": 2293,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/mckinley-wright-iv"
+		"player_url": "https://www.2kratings.com/mckinley-wright-iv",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/McKinley-Wright-IV-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Zion Williamson",
@@ -18160,7 +18458,8 @@
 			"Total_Attributes": 2963,
 			"Vertical": 99
 		},
-		"player_url": "https://www.2kratings.com/zion-williamson"
+		"player_url": "https://www.2kratings.com/zion-williamson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Zion-Williamson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "C.J. McCollum",
@@ -18221,7 +18520,8 @@
 			"Total_Attributes": 2691,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/cj-mccollum"
+		"player_url": "https://www.2kratings.com/cj-mccollum",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/C.J.-McCollum-Pelicans-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Brandon Ingram",
@@ -18282,7 +18582,8 @@
 			"Total_Attributes": 2771,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/brandon-ingram"
+		"player_url": "https://www.2kratings.com/brandon-ingram",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brandon-Ingram-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jonas Valanciunas",
@@ -18342,7 +18643,8 @@
 			"Total_Attributes": 2596,
 			"Vertical": 54
 		},
-		"player_url": "https://www.2kratings.com/jonas-valanciunas"
+		"player_url": "https://www.2kratings.com/jonas-valanciunas",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jonas-Valanciunas-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Herbert Jones",
@@ -18403,7 +18705,8 @@
 			"Total_Attributes": 2730,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/herbert-jones"
+		"player_url": "https://www.2kratings.com/herbert-jones",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Herbert-Jones-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Larry Nance Jr.",
@@ -18464,7 +18767,8 @@
 			"Total_Attributes": 2654,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/larry-nance-jr"
+		"player_url": "https://www.2kratings.com/larry-nance-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Larry-Nance-Jr.-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Jaxson Hayes",
@@ -18524,7 +18828,8 @@
 			"Total_Attributes": 2471,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jaxson-hayes"
+		"player_url": "https://www.2kratings.com/jaxson-hayes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaxson-Hayes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jose Alvarado",
@@ -18584,7 +18889,8 @@
 			"Total_Attributes": 2547,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/jose-alvarado"
+		"player_url": "https://www.2kratings.com/jose-alvarado",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jose-Alvarado-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Trey Murphy",
@@ -18645,7 +18951,8 @@
 			"Total_Attributes": 2467,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/trey-murphy"
+		"player_url": "https://www.2kratings.com/trey-murphy",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trey-Murphy-III-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Devonte’ Graham",
@@ -18706,7 +19013,8 @@
 			"Total_Attributes": 2492,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/devonte-graham"
+		"player_url": "https://www.2kratings.com/devonte-graham",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Devonte-Graham-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Willy Hernangomez",
@@ -18766,7 +19074,8 @@
 			"Total_Attributes": 2328,
 			"Vertical": 49
 		},
-		"player_url": "https://www.2kratings.com/willy-hernangomez"
+		"player_url": "https://www.2kratings.com/willy-hernangomez",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Willy-Hernangomez-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Naji Marshall",
@@ -18827,7 +19136,8 @@
 			"Total_Attributes": 2512,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/naji-marshall"
+		"player_url": "https://www.2kratings.com/naji-marshall",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Naji-Marshall-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kira Lewis Jr.",
@@ -18887,7 +19197,8 @@
 			"Total_Attributes": 2386,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/kira-lewis"
+		"player_url": "https://www.2kratings.com/kira-lewis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kira-Lewis-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gary Clark",
@@ -18947,7 +19258,8 @@
 			"Total_Attributes": 2427,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/gary-clark"
+		"player_url": "https://www.2kratings.com/gary-clark",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gary-Clark-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Tony Snell",
@@ -19008,7 +19320,8 @@
 			"Total_Attributes": 2346,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/tony-snell"
+		"player_url": "https://www.2kratings.com/tony-snell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tony-Snell-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Garrett Temple",
@@ -19069,7 +19382,8 @@
 			"Total_Attributes": 2360,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/garrett-temple"
+		"player_url": "https://www.2kratings.com/garrett-temple",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Garrett-Temple-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jared Harper",
@@ -19129,7 +19443,8 @@
 			"Total_Attributes": 2306,
 			"Vertical": 91
 		},
-		"player_url": "https://www.2kratings.com/jared-harper"
+		"player_url": "https://www.2kratings.com/jared-harper",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jared-Harper-2K-Rating-411x300.png"
 	},
 	{
 		"name": "R.J. Barrett",
@@ -19190,7 +19505,8 @@
 			"Total_Attributes": 2854,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/rj-barrett"
+		"player_url": "https://www.2kratings.com/rj-barrett",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/RJ-Barrett-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Derrick Rose",
@@ -19251,7 +19567,8 @@
 			"Total_Attributes": 2697,
 			"Vertical": 89
 		},
-		"player_url": "https://www.2kratings.com/derrick-rose"
+		"player_url": "https://www.2kratings.com/derrick-rose",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Derrick-Rose-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Julius Randle",
@@ -19312,7 +19629,8 @@
 			"Total_Attributes": 2824,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/julius-randle"
+		"player_url": "https://www.2kratings.com/julius-randle",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Julius-Randle-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mitchell Robinson",
@@ -19372,7 +19690,8 @@
 			"Total_Attributes": 2582,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/mitchell-robinson"
+		"player_url": "https://www.2kratings.com/mitchell-robinson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mitchell-Robinson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jalen Brunson",
@@ -19432,7 +19751,8 @@
 			"Total_Attributes": 2652,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/jalen-brunson"
+		"player_url": "https://www.2kratings.com/jalen-brunson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jalen-Brunson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Immanuel Quickley",
@@ -19493,7 +19813,8 @@
 			"Total_Attributes": 2609,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/immanuel-quickley"
+		"player_url": "https://www.2kratings.com/immanuel-quickley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Immanuel-Quickley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Obi Toppin",
@@ -19554,7 +19875,8 @@
 			"Total_Attributes": 2557,
 			"Vertical": 90
 		},
-		"player_url": "https://www.2kratings.com/obi-toppin"
+		"player_url": "https://www.2kratings.com/obi-toppin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Obi-Toppin-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cam Reddish",
@@ -19615,7 +19937,8 @@
 			"Total_Attributes": 2660,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/cameron-reddish"
+		"player_url": "https://www.2kratings.com/cameron-reddish",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cam-Reddish-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Evan Fournier",
@@ -19676,7 +19999,8 @@
 			"Total_Attributes": 2436,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/evan-fournier"
+		"player_url": "https://www.2kratings.com/evan-fournier",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Evan-Fournier-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaiah Hartenstein",
@@ -19736,7 +20060,8 @@
 			"Total_Attributes": 2527,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/isaiah-hartenstein"
+		"player_url": "https://www.2kratings.com/isaiah-hartenstein",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Hartenstein-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Quentin Grimes",
@@ -19797,7 +20122,8 @@
 			"Total_Attributes": 2452,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/quentin-grimes"
+		"player_url": "https://www.2kratings.com/quentin-grimes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Quentin-Grimes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Miles McBride",
@@ -19858,7 +20184,8 @@
 			"Total_Attributes": 2428,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/miles-mcbride"
+		"player_url": "https://www.2kratings.com/miles-mcbride",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Miles-McBride-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jericho Sims",
@@ -19918,7 +20245,8 @@
 			"Total_Attributes": 2223,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/jericho-sims"
+		"player_url": "https://www.2kratings.com/jericho-sims",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jericho-Sims-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ryan Arcidiacono",
@@ -19978,7 +20306,8 @@
 			"Total_Attributes": 2243,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/ryan-arcidiacono"
+		"player_url": "https://www.2kratings.com/ryan-arcidiacono",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ryan-Arcidiacono-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Feron Hunt",
@@ -20038,7 +20367,8 @@
 			"Total_Attributes": 2309,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/feron-hunt"
+		"player_url": "https://www.2kratings.com/feron-hunt",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Feron-Hunt-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Shai Gilgeous-Alexander",
@@ -20099,7 +20429,8 @@
 			"Total_Attributes": 2940,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/shai-gilgeous-alexander"
+		"player_url": "https://www.2kratings.com/shai-gilgeous-alexander",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Shai-Gilgeous-Alexander-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Josh Giddey",
@@ -20160,7 +20491,8 @@
 			"Total_Attributes": 2772,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/josh-giddey"
+		"player_url": "https://www.2kratings.com/josh-giddey",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Giddey-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Luguentz Dort",
@@ -20221,7 +20553,8 @@
 			"Total_Attributes": 2641,
 			"Vertical": 87
 		},
-		"player_url": "https://www.2kratings.com/luguentz-dort"
+		"player_url": "https://www.2kratings.com/luguentz-dort",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Luguentz-Dort-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tre Mann",
@@ -20282,7 +20615,8 @@
 			"Total_Attributes": 2526,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/tre-mann"
+		"player_url": "https://www.2kratings.com/tre-mann",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tre-Mann-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Darius Bazley",
@@ -20342,7 +20676,8 @@
 			"Total_Attributes": 2504,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/darius-bazley"
+		"player_url": "https://www.2kratings.com/darius-bazley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Darius-Bazley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Aleksej Pokusevski",
@@ -20403,7 +20738,8 @@
 			"Total_Attributes": 2498,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/aleksej-pokusevski"
+		"player_url": "https://www.2kratings.com/aleksej-pokusevski",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Aleksej-Pokusevski-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Derrick Favors",
@@ -20464,7 +20800,8 @@
 			"Total_Attributes": 2463,
 			"Vertical": 76
 		},
-		"player_url": "https://www.2kratings.com/derrick-favors"
+		"player_url": "https://www.2kratings.com/derrick-favors",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Derrick-Favors-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kenrich Williams",
@@ -20525,7 +20862,8 @@
 			"Total_Attributes": 2526,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/kenrich-williams"
+		"player_url": "https://www.2kratings.com/kenrich-williams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kenrich-Williams-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mike Muscala",
@@ -20586,7 +20924,8 @@
 			"Total_Attributes": 2425,
 			"Vertical": 58
 		},
-		"player_url": "https://www.2kratings.com/mike-muscala"
+		"player_url": "https://www.2kratings.com/mike-muscala",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mike-Muscala-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Theo Maledon",
@@ -20647,7 +20986,8 @@
 			"Total_Attributes": 2441,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/theo-maledon"
+		"player_url": "https://www.2kratings.com/theo-maledon",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Theo-Maledon-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jeremiah Robinson-Earl",
@@ -20707,7 +21047,8 @@
 			"Total_Attributes": 2477,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/jeremiah-robinson-earl"
+		"player_url": "https://www.2kratings.com/jeremiah-robinson-earl",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jeremiah-Robinson-Earl-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Aaron Wiggins",
@@ -20768,7 +21109,8 @@
 			"Total_Attributes": 2348,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/aaron-wiggins"
+		"player_url": "https://www.2kratings.com/aaron-wiggins",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Aaron-Wiggins-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ty Jerome",
@@ -20829,7 +21171,8 @@
 			"Total_Attributes": 2458,
 			"Vertical": 62
 		},
-		"player_url": "https://www.2kratings.com/ty-jerome"
+		"player_url": "https://www.2kratings.com/ty-jerome",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ty-Jerome-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Lindy Waters III",
@@ -20890,7 +21233,8 @@
 			"Total_Attributes": 2274,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/lindy-waters-iii"
+		"player_url": "https://www.2kratings.com/lindy-waters-iii",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Lindy-Waters-III-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Melvin Frazier Jr.",
@@ -20951,7 +21295,8 @@
 			"Total_Attributes": 2339,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/melvin-frazier"
+		"player_url": "https://www.2kratings.com/melvin-frazier",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Melvin-Frazier-Jr.-2K.png"
 	},
 	{
 		"name": "Vit Krejci",
@@ -21011,7 +21356,8 @@
 			"Total_Attributes": 2255,
 			"Vertical": 76
 		},
-		"player_url": "https://www.2kratings.com/vit-krejci"
+		"player_url": "https://www.2kratings.com/vit-krejci",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Vit-Krejci-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jaylen Hoard",
@@ -21072,7 +21418,8 @@
 			"Total_Attributes": 2322,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jaylen-hoard"
+		"player_url": "https://www.2kratings.com/jaylen-hoard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaylen-Hoard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Wendell Carter Jr.",
@@ -21132,7 +21479,8 @@
 			"Total_Attributes": 2754,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/wendell-carter-jr"
+		"player_url": "https://www.2kratings.com/wendell-carter-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Wendell-Carter-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mohamed Bamba",
@@ -21192,7 +21540,8 @@
 			"Total_Attributes": 2595,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/mohamed-bamba"
+		"player_url": "https://www.2kratings.com/mohamed-bamba",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mo-Bamba-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jonathan Isaac",
@@ -21253,7 +21602,8 @@
 			"Total_Attributes": 2683,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/jonathan-isaac"
+		"player_url": "https://www.2kratings.com/jonathan-isaac",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jonathan-Isaac-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Franz Wagner",
@@ -21314,7 +21664,8 @@
 			"Total_Attributes": 2678,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/franz-wagner"
+		"player_url": "https://www.2kratings.com/franz-wagner",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Franz-Wagner-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cole Anthony",
@@ -21375,7 +21726,8 @@
 			"Total_Attributes": 2700,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/cole-anthony"
+		"player_url": "https://www.2kratings.com/cole-anthony",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cole-Anthony-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Markelle Fultz",
@@ -21436,7 +21788,8 @@
 			"Total_Attributes": 2680,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/markelle-fultz"
+		"player_url": "https://www.2kratings.com/markelle-fultz",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Markelle-Fultz-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jalen Suggs",
@@ -21497,7 +21850,8 @@
 			"Total_Attributes": 2684,
 			"Vertical": 90
 		},
-		"player_url": "https://www.2kratings.com/jalen-suggs"
+		"player_url": "https://www.2kratings.com/jalen-suggs",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jalen-Suggs-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Chuma Okeke",
@@ -21558,7 +21912,8 @@
 			"Total_Attributes": 2563,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/chuma-okeke"
+		"player_url": "https://www.2kratings.com/chuma-okeke",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Chuma-Okeke-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Moritz Wagner",
@@ -21619,7 +21974,8 @@
 			"Total_Attributes": 2474,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/moritz-wagner"
+		"player_url": "https://www.2kratings.com/moritz-wagner",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Moritz-Wagner-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Terrence Ross",
@@ -21680,7 +22036,8 @@
 			"Total_Attributes": 2496,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/terrence-ross"
+		"player_url": "https://www.2kratings.com/terrence-ross",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Terrence-Ross-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gary Harris",
@@ -21741,7 +22098,8 @@
 			"Total_Attributes": 2474,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/gary-harris"
+		"player_url": "https://www.2kratings.com/gary-harris",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gary-Harris-2K-Rating-411x300.png"
 	},
 	{
 		"name": "R.J. Hampton",
@@ -21802,7 +22160,8 @@
 			"Total_Attributes": 2566,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/rj-hampton"
+		"player_url": "https://www.2kratings.com/rj-hampton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/R.J.-Hampton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bol Bol",
@@ -21863,7 +22222,8 @@
 			"Total_Attributes": 2395,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/bol-bol"
+		"player_url": "https://www.2kratings.com/bol-bol",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bol-Bol-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Admiral Schofield",
@@ -21924,7 +22284,8 @@
 			"Total_Attributes": 2355,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/admiral-schofield"
+		"player_url": "https://www.2kratings.com/admiral-schofield",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Admiral-Schofield-2K-Rating-1-413x284.png"
 	},
 	{
 		"name": "Devin Cannady",
@@ -21984,7 +22345,8 @@
 			"Total_Attributes": 2194,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/devin-cannady"
+		"player_url": "https://www.2kratings.com/devin-cannady",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Devin-Cannady-2K-Rating.png"
 	},
 	{
 		"name": "Joel Embiid",
@@ -22044,7 +22406,8 @@
 			"Total_Attributes": 3087,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/joel-embiid"
+		"player_url": "https://www.2kratings.com/joel-embiid",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Joel-Embiid-2K-Rating-411x300.png"
 	},
 	{
 		"name": "James Harden",
@@ -22105,7 +22468,8 @@
 			"Total_Attributes": 2988,
 			"Vertical": 87
 		},
-		"player_url": "https://www.2kratings.com/james-harden"
+		"player_url": "https://www.2kratings.com/james-harden",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/James-Harden-76ers-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Tyrese Maxey",
@@ -22166,7 +22530,8 @@
 			"Total_Attributes": 2695,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/tyrese-maxey"
+		"player_url": "https://www.2kratings.com/tyrese-maxey",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tyrese-Maxey-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tobias Harris",
@@ -22227,7 +22592,8 @@
 			"Total_Attributes": 2740,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/tobias-harris"
+		"player_url": "https://www.2kratings.com/tobias-harris",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tobias-Harris-2K-Rating-411x300.png"
 	},
 	{
 		"name": "De’Anthony Melton",
@@ -22288,7 +22654,8 @@
 			"Total_Attributes": 2782,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/deanthony-melton"
+		"player_url": "https://www.2kratings.com/deanthony-melton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DeAnthony-Melton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Matisse Thybulle",
@@ -22349,7 +22716,8 @@
 			"Total_Attributes": 2421,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/matisse-thybulle"
+		"player_url": "https://www.2kratings.com/matisse-thybulle",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Matisse-Thybulle-2K-Rating-411x300.png"
 	},
 	{
 		"name": "P.J. Tucker",
@@ -22410,7 +22778,8 @@
 			"Total_Attributes": 2559,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/pj-tucker"
+		"player_url": "https://www.2kratings.com/pj-tucker",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/P.J.-Tucker-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Paul Millsap",
@@ -22471,7 +22840,8 @@
 			"Total_Attributes": 2497,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/paul-millsap"
+		"player_url": "https://www.2kratings.com/paul-millsap",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Paul-Millsap-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Shake Milton",
@@ -22532,7 +22902,8 @@
 			"Total_Attributes": 2470,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/shake-milton"
+		"player_url": "https://www.2kratings.com/shake-milton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Shake-Milton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Charles Bassey",
@@ -22592,7 +22963,8 @@
 			"Total_Attributes": 2363,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/charles-bassey"
+		"player_url": "https://www.2kratings.com/charles-bassey",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Charles-Bassey-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Furkan Korkmaz",
@@ -22653,7 +23025,8 @@
 			"Total_Attributes": 2430,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/furkan-korkmaz"
+		"player_url": "https://www.2kratings.com/furkan-korkmaz",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Furkan-Korkmaz-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Paul Reed",
@@ -22714,7 +23087,8 @@
 			"Total_Attributes": 2421,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/paul-reed"
+		"player_url": "https://www.2kratings.com/paul-reed",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Paul-Reed-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Georges Niang",
@@ -22775,7 +23149,8 @@
 			"Total_Attributes": 2340,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/georges-niang"
+		"player_url": "https://www.2kratings.com/georges-niang",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Georges-Niang-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Danuel House",
@@ -22836,7 +23211,8 @@
 			"Total_Attributes": 2409,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/danuel-house"
+		"player_url": "https://www.2kratings.com/danuel-house",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Danuel-House-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jaden Springer",
@@ -22897,7 +23273,8 @@
 			"Total_Attributes": 2428,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/jaden-springer"
+		"player_url": "https://www.2kratings.com/jaden-springer",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jaden-Springer-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaiah Joe",
@@ -22958,7 +23335,8 @@
 			"Total_Attributes": 2304,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/isaiah-joe"
+		"player_url": "https://www.2kratings.com/isaiah-joe",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Joe-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Charlie Brown Jr.",
@@ -23019,7 +23397,8 @@
 			"Total_Attributes": 2199,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/charles-brown-jr"
+		"player_url": "https://www.2kratings.com/charles-brown-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Charlie-Brown-Jr.-2K-Rating-1-411x300.png"
 	},
 	{
 		"name": "Trevelin Queen",
@@ -23079,7 +23458,8 @@
 			"Total_Attributes": 2291,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/trevelin-queen"
+		"player_url": "https://www.2kratings.com/trevelin-queen",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trevelin-Queen-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Myles Powell",
@@ -23140,7 +23520,8 @@
 			"Total_Attributes": 2211,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/myles-powell"
+		"player_url": "https://www.2kratings.com/myles-powell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Myles-Powell-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Devin Booker",
@@ -23201,7 +23582,8 @@
 			"Total_Attributes": 2857,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/devin-booker"
+		"player_url": "https://www.2kratings.com/devin-booker",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Devin-Booker-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Chris Paul",
@@ -23261,7 +23643,8 @@
 			"Total_Attributes": 2841,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/chris-paul"
+		"player_url": "https://www.2kratings.com/chris-paul",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Chris-Paul-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Deandre Ayton",
@@ -23321,7 +23704,8 @@
 			"Total_Attributes": 2791,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/deandre-ayton"
+		"player_url": "https://www.2kratings.com/deandre-ayton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Deandre-Ayton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mikal Bridges",
@@ -23382,7 +23766,8 @@
 			"Total_Attributes": 2776,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/mikal-bridges"
+		"player_url": "https://www.2kratings.com/mikal-bridges",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mikal-Bridges-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cameron Johnson",
@@ -23443,7 +23828,8 @@
 			"Total_Attributes": 2586,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/cameron-johnson"
+		"player_url": "https://www.2kratings.com/cameron-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cameron-Johnson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cameron Payne",
@@ -23503,7 +23889,8 @@
 			"Total_Attributes": 2423,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/cameron-payne"
+		"player_url": "https://www.2kratings.com/cameron-payne",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cameron-Payne-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Frank Kaminsky III",
@@ -23564,7 +23951,8 @@
 			"Total_Attributes": 2500,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/frank-kaminsky-iii"
+		"player_url": "https://www.2kratings.com/frank-kaminsky-iii",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Frank-Kaminsky-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dario Saric",
@@ -23625,7 +24013,8 @@
 			"Total_Attributes": 2593,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/dario-saric"
+		"player_url": "https://www.2kratings.com/dario-saric",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dario-Saric-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jae Crowder",
@@ -23686,7 +24075,8 @@
 			"Total_Attributes": 2703,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/jae-crowder"
+		"player_url": "https://www.2kratings.com/jae-crowder",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jae-Crowder-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Landry Shamet",
@@ -23747,7 +24137,8 @@
 			"Total_Attributes": 2400,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/landry-shamet"
+		"player_url": "https://www.2kratings.com/landry-shamet",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Landry-Shamet-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Torrey Craig",
@@ -23808,7 +24199,8 @@
 			"Total_Attributes": 2437,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/torrey-craig"
+		"player_url": "https://www.2kratings.com/torrey-craig",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Torrey-Craig-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Damion Lee",
@@ -23869,7 +24261,8 @@
 			"Total_Attributes": 2438,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/damion-lee"
+		"player_url": "https://www.2kratings.com/damion-lee",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Damion-Lee-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Elfrid Payton",
@@ -23929,7 +24322,8 @@
 			"Total_Attributes": 2529,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/elfrid-payton"
+		"player_url": "https://www.2kratings.com/elfrid-payton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Elfrid-Payton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bismack Biyombo",
@@ -23989,7 +24383,8 @@
 			"Total_Attributes": 2236,
 			"Vertical": 63
 		},
-		"player_url": "https://www.2kratings.com/bismack-biyombo"
+		"player_url": "https://www.2kratings.com/bismack-biyombo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bismack-Biyombo-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Josh Okogie",
@@ -24050,7 +24445,8 @@
 			"Total_Attributes": 2443,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/josh-okogie"
+		"player_url": "https://www.2kratings.com/josh-okogie",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Okogie-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jock Landale",
@@ -24111,7 +24507,8 @@
 			"Total_Attributes": 2327,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jock-landale"
+		"player_url": "https://www.2kratings.com/jock-landale",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jock-Landale-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Ish Wainright",
@@ -24172,7 +24569,8 @@
 			"Total_Attributes": 2434,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/ishmail-wainright"
+		"player_url": "https://www.2kratings.com/ishmail-wainright",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ish-Wainright-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Damian Lillard",
@@ -24232,7 +24630,8 @@
 			"Total_Attributes": 2775,
 			"Vertical": 89
 		},
-		"player_url": "https://www.2kratings.com/damian-lillard"
+		"player_url": "https://www.2kratings.com/damian-lillard",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Damian-Lillard-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jusuf Nurkic",
@@ -24292,7 +24691,8 @@
 			"Total_Attributes": 2656,
 			"Vertical": 50
 		},
-		"player_url": "https://www.2kratings.com/jusuf-nurkic"
+		"player_url": "https://www.2kratings.com/jusuf-nurkic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jusuf-Nurkic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jerami Grant",
@@ -24353,7 +24753,8 @@
 			"Total_Attributes": 2786,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/jerami-grant"
+		"player_url": "https://www.2kratings.com/jerami-grant",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jerami-Grant-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Anfernee Simons",
@@ -24414,7 +24815,8 @@
 			"Total_Attributes": 2574,
 			"Vertical": 90
 		},
-		"player_url": "https://www.2kratings.com/anfernee-simons"
+		"player_url": "https://www.2kratings.com/anfernee-simons",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Anfernee-Simons-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Josh Hart",
@@ -24475,7 +24877,8 @@
 			"Total_Attributes": 2700,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/josh-hart"
+		"player_url": "https://www.2kratings.com/josh-hart",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Hart-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gary Payton II",
@@ -24536,7 +24939,8 @@
 			"Total_Attributes": 2723,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/gary-payton-ii"
+		"player_url": "https://www.2kratings.com/gary-payton-ii",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gary-Payton-II-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nassir Little",
@@ -24597,7 +25001,8 @@
 			"Total_Attributes": 2593,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/nassir-little"
+		"player_url": "https://www.2kratings.com/nassir-little",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nassir-Little-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Justise Winslow",
@@ -24658,7 +25063,8 @@
 			"Total_Attributes": 2625,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/justise-winslow"
+		"player_url": "https://www.2kratings.com/justise-winslow",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Justise-Winslow-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Trendon Watford",
@@ -24719,7 +25125,8 @@
 			"Total_Attributes": 2564,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/trendon-watford"
+		"player_url": "https://www.2kratings.com/trendon-watford",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trendon-Watford-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Drew Eubanks",
@@ -24780,7 +25187,8 @@
 			"Total_Attributes": 2450,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/drew-eubanks"
+		"player_url": "https://www.2kratings.com/drew-eubanks",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Drew-Eubanks-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Kris Dunn",
@@ -24840,7 +25248,8 @@
 			"Total_Attributes": 2591,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/kris-dunn"
+		"player_url": "https://www.2kratings.com/kris-dunn",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kris-Dunn-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Brandon Williams",
@@ -24900,7 +25309,8 @@
 			"Total_Attributes": 2505,
 			"Vertical": 68
 		},
-		"player_url": "https://www.2kratings.com/brandon-williams"
+		"player_url": "https://www.2kratings.com/brandon-williams",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Brandon-Williams-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Ben McLemore",
@@ -24961,7 +25371,8 @@
 			"Total_Attributes": 2431,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/ben-mclemore"
+		"player_url": "https://www.2kratings.com/ben-mclemore",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Ben-McLemore-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Keon Johnson",
@@ -25022,7 +25433,8 @@
 			"Total_Attributes": 2497,
 			"Vertical": 99
 		},
-		"player_url": "https://www.2kratings.com/keon-johnson"
+		"player_url": "https://www.2kratings.com/keon-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Keon-Johnson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Greg Brown III",
@@ -25083,7 +25495,8 @@
 			"Total_Attributes": 2395,
 			"Vertical": 98
 		},
-		"player_url": "https://www.2kratings.com/greg-brown"
+		"player_url": "https://www.2kratings.com/greg-brown",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Greg-Brown-III-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Reggie Perry",
@@ -25144,7 +25557,8 @@
 			"Total_Attributes": 2414,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/reggie-perry"
+		"player_url": "https://www.2kratings.com/reggie-perry",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Reggie-Perry-2K-Rating-411x300.png"
 	},
 	{
 		"name": "C.J. Elleby",
@@ -25205,7 +25619,8 @@
 			"Total_Attributes": 2390,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/cj-elleby"
+		"player_url": "https://www.2kratings.com/cj-elleby",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/CJ-Elleby-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Elijah Hughes",
@@ -25266,7 +25681,8 @@
 			"Total_Attributes": 2652,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/elijah-hughes"
+		"player_url": "https://www.2kratings.com/elijah-hughes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Elijah-Hughes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Keljin Blevins",
@@ -25327,7 +25743,8 @@
 			"Total_Attributes": 2387,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/keljin-blevins"
+		"player_url": "https://www.2kratings.com/keljin-blevins",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Keljin-Blevins-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Didi Louzada",
@@ -25388,7 +25805,8 @@
 			"Total_Attributes": 2326,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/didi-louzada"
+		"player_url": "https://www.2kratings.com/didi-louzada",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Didi-Louzada-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Domantas Sabonis",
@@ -25449,7 +25867,8 @@
 			"Total_Attributes": 2790,
 			"Vertical": 54
 		},
-		"player_url": "https://www.2kratings.com/domantas-sabonis"
+		"player_url": "https://www.2kratings.com/domantas-sabonis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Domantas-Sabonis-2K-Rating-413x300.png"
 	},
 	{
 		"name": "De’Aaron Fox",
@@ -25509,7 +25928,8 @@
 			"Total_Attributes": 2678,
 			"Vertical": 84
 		},
-		"player_url": "https://www.2kratings.com/deaaron-fox"
+		"player_url": "https://www.2kratings.com/deaaron-fox",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/DeAaron-Fox-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Harrison Barnes",
@@ -25570,7 +25990,8 @@
 			"Total_Attributes": 2693,
 			"Vertical": 95
 		},
-		"player_url": "https://www.2kratings.com/harrison-barnes"
+		"player_url": "https://www.2kratings.com/harrison-barnes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Harrison-Barnes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Malik Monk",
@@ -25631,7 +26052,8 @@
 			"Total_Attributes": 2585,
 			"Vertical": 88
 		},
-		"player_url": "https://www.2kratings.com/malik-monk"
+		"player_url": "https://www.2kratings.com/malik-monk",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Malik-Monk-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Terence Davis",
@@ -25692,7 +26114,8 @@
 			"Total_Attributes": 2696,
 			"Vertical": 76
 		},
-		"player_url": "https://www.2kratings.com/terence-davis"
+		"player_url": "https://www.2kratings.com/terence-davis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Terence-Davis-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Davion Mitchell",
@@ -25752,7 +26175,8 @@
 			"Total_Attributes": 2544,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/davion-mitchell"
+		"player_url": "https://www.2kratings.com/davion-mitchell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Davion-Mitchell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Richaun Holmes",
@@ -25812,7 +26236,8 @@
 			"Total_Attributes": 2503,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/richaun-holmes"
+		"player_url": "https://www.2kratings.com/richaun-holmes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Richaun-Holmes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kevin Huerter",
@@ -25873,7 +26298,8 @@
 			"Total_Attributes": 2469,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/kevin-huerter"
+		"player_url": "https://www.2kratings.com/kevin-huerter",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kevin-Huerter-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Trey Lyles",
@@ -25934,7 +26360,8 @@
 			"Total_Attributes": 2476,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/trey-lyles"
+		"player_url": "https://www.2kratings.com/trey-lyles",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trey-Lyles-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Jeremy Lamb",
@@ -25995,7 +26422,8 @@
 			"Total_Attributes": 2507,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/jeremy-lamb"
+		"player_url": "https://www.2kratings.com/jeremy-lamb",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jeremy-Lamb-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Alex Len",
@@ -26055,7 +26483,8 @@
 			"Total_Attributes": 2382,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/alex-len"
+		"player_url": "https://www.2kratings.com/alex-len",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Alex-Len-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Chimezie Metu",
@@ -26116,7 +26545,8 @@
 			"Total_Attributes": 2440,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/chimezie-metu"
+		"player_url": "https://www.2kratings.com/chimezie-metu",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Chimezie-Metu-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Josh Jackson",
@@ -26177,7 +26607,8 @@
 			"Total_Attributes": 2487,
 			"Vertical": 86
 		},
-		"player_url": "https://www.2kratings.com/josh-jackson"
+		"player_url": "https://www.2kratings.com/josh-jackson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Jackson-2K-Rating-413x300.png"
 	},
 	{
 		"name": "KZ Okpala",
@@ -26238,7 +26669,8 @@
 			"Total_Attributes": 2430,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/kz-okpala"
+		"player_url": "https://www.2kratings.com/kz-okpala",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/KZ-Okpala-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Neemias Queta",
@@ -26298,7 +26730,8 @@
 			"Total_Attributes": 2303,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/neemias-queta"
+		"player_url": "https://www.2kratings.com/neemias-queta",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Neemias-Queta-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Keldon Johnson",
@@ -26359,7 +26792,8 @@
 			"Total_Attributes": 2675,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/keldon-johnson"
+		"player_url": "https://www.2kratings.com/keldon-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Keldon-Johnson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jakob Poeltl",
@@ -26419,7 +26853,8 @@
 			"Total_Attributes": 2526,
 			"Vertical": 57
 		},
-		"player_url": "https://www.2kratings.com/jakob-poeltl"
+		"player_url": "https://www.2kratings.com/jakob-poeltl",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jakob-Poeltl-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaiah Roby",
@@ -26480,7 +26915,8 @@
 			"Total_Attributes": 2575,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/isaiah-roby"
+		"player_url": "https://www.2kratings.com/isaiah-roby",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Roby-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Devin Vassell",
@@ -26541,7 +26977,8 @@
 			"Total_Attributes": 2619,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/devin-vassell"
+		"player_url": "https://www.2kratings.com/devin-vassell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Devin-Vassell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Josh Richardson",
@@ -26602,7 +27039,8 @@
 			"Total_Attributes": 2570,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/josh-richardson"
+		"player_url": "https://www.2kratings.com/josh-richardson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Josh-Richardson-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Zach Collins",
@@ -26663,7 +27101,8 @@
 			"Total_Attributes": 2426,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/zach-collins"
+		"player_url": "https://www.2kratings.com/zach-collins",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Zach-Collins-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gorgui Dieng",
@@ -26723,7 +27162,8 @@
 			"Total_Attributes": 2434,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/gorgui-dieng"
+		"player_url": "https://www.2kratings.com/gorgui-dieng",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gorgui-Dieng-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Keita Bates-Diop",
@@ -26784,7 +27224,8 @@
 			"Total_Attributes": 2466,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/keita-bates-diop"
+		"player_url": "https://www.2kratings.com/keita-bates-diop",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Keita-Bates-Diop-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Tre Jones",
@@ -26844,7 +27285,8 @@
 			"Total_Attributes": 2460,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/tre-jones"
+		"player_url": "https://www.2kratings.com/tre-jones",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Tre-Jones-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Doug McDermott",
@@ -26905,7 +27347,8 @@
 			"Total_Attributes": 2327,
 			"Vertical": 67
 		},
-		"player_url": "https://www.2kratings.com/doug-mcdermott"
+		"player_url": "https://www.2kratings.com/doug-mcdermott",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Doug-McDermott-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Joshua Primo",
@@ -26966,7 +27409,8 @@
 			"Total_Attributes": 2427,
 			"Vertical": 71
 		},
-		"player_url": "https://www.2kratings.com/joshua-primo"
+		"player_url": "https://www.2kratings.com/joshua-primo",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Joshua-Primo-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Joe Wieskamp",
@@ -27027,7 +27471,8 @@
 			"Total_Attributes": 2252,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/joe-wieskamp"
+		"player_url": "https://www.2kratings.com/joe-wieskamp",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Joe-Wieskamp-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Robert Woodard II",
@@ -27088,7 +27533,8 @@
 			"Total_Attributes": 2391,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/robert-woodard-ii"
+		"player_url": "https://www.2kratings.com/robert-woodard-ii",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Robert-Woodard-II-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Romeo Langford",
@@ -27149,7 +27595,8 @@
 			"Total_Attributes": 2346,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/romeo-langford"
+		"player_url": "https://www.2kratings.com/romeo-langford",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Romeo-Langford-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Devontae Cacok",
@@ -27210,7 +27657,8 @@
 			"Total_Attributes": 2232,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/devontae-cacok"
+		"player_url": "https://www.2kratings.com/devontae-cacok",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Devontae-Cacok-2K-Rating-413x300.png"
 	},
 	{
 		"name": "D.J. Stewart Jr.",
@@ -27271,7 +27719,8 @@
 			"Total_Attributes": 2399,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/dj-stewart-jr"
+		"player_url": "https://www.2kratings.com/dj-stewart-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/D.J.-Stewart-Jr.-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Pascal Siakam",
@@ -27332,7 +27781,8 @@
 			"Total_Attributes": 3001,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/pascal-siakam"
+		"player_url": "https://www.2kratings.com/pascal-siakam",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Pascal-Siakam-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Fred VanVleet",
@@ -27393,7 +27843,8 @@
 			"Total_Attributes": 2675,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/fred-vanvleet"
+		"player_url": "https://www.2kratings.com/fred-vanvleet",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Fred-VanVleet-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Scottie Barnes",
@@ -27454,7 +27905,8 @@
 			"Total_Attributes": 2864,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/scottie-barnes"
+		"player_url": "https://www.2kratings.com/scottie-barnes",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Scottie-Barnes-2K-Rating-411x300.png"
 	},
 	{
 		"name": "OG Anunoby",
@@ -27515,7 +27967,8 @@
 			"Total_Attributes": 2701,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/og-anunoby"
+		"player_url": "https://www.2kratings.com/og-anunoby",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/OG-Anunoby-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Gary Trent Jr.",
@@ -27576,7 +28029,8 @@
 			"Total_Attributes": 2597,
 			"Vertical": 90
 		},
-		"player_url": "https://www.2kratings.com/gary-trent-jr"
+		"player_url": "https://www.2kratings.com/gary-trent-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Gary-Trent-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Chris Boucher",
@@ -27637,7 +28091,8 @@
 			"Total_Attributes": 2461,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/chris-boucher"
+		"player_url": "https://www.2kratings.com/chris-boucher",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Chris-Boucher-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Precious Achiuwa",
@@ -27698,7 +28153,8 @@
 			"Total_Attributes": 2558,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/precious-achiuwa"
+		"player_url": "https://www.2kratings.com/precious-achiuwa",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Precious-Achiuwa-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Otto Porter Jr.",
@@ -27759,7 +28215,8 @@
 			"Total_Attributes": 2633,
 			"Vertical": 73
 		},
-		"player_url": "https://www.2kratings.com/otto-porter-jr"
+		"player_url": "https://www.2kratings.com/otto-porter-jr",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Otto-Porter-Jr.-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Khem Birch",
@@ -27820,7 +28277,8 @@
 			"Total_Attributes": 2472,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/khem-birch"
+		"player_url": "https://www.2kratings.com/khem-birch",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Khem-Birch-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Thaddeus Young",
@@ -27881,7 +28339,8 @@
 			"Total_Attributes": 2605,
 			"Vertical": 83
 		},
-		"player_url": "https://www.2kratings.com/thaddeus-young"
+		"player_url": "https://www.2kratings.com/thaddeus-young",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Thaddeus-Young-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Sviatoslav Mykhailiuk",
@@ -27942,7 +28401,8 @@
 			"Total_Attributes": 2368,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/sviatoslav-mykhailiuk"
+		"player_url": "https://www.2kratings.com/sviatoslav-mykhailiuk",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Svi-Mykhailiuk-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Malachi Flynn",
@@ -28002,7 +28462,8 @@
 			"Total_Attributes": 2429,
 			"Vertical": 65
 		},
-		"player_url": "https://www.2kratings.com/malachi-flynn"
+		"player_url": "https://www.2kratings.com/malachi-flynn",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Malachi-Flynn-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Armoni Brooks",
@@ -28063,7 +28524,8 @@
 			"Total_Attributes": 2371,
 			"Vertical": 66
 		},
-		"player_url": "https://www.2kratings.com/armoni-brooks"
+		"player_url": "https://www.2kratings.com/armoni-brooks",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Armoni-Brooks-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Juancho Hernangomez",
@@ -28124,7 +28586,8 @@
 			"Total_Attributes": 2425,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/juan-hernangomez"
+		"player_url": "https://www.2kratings.com/juan-hernangomez",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Juancho-Hernangomez-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Dalano Banton",
@@ -28185,7 +28648,8 @@
 			"Total_Attributes": 2489,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/dalano-banton"
+		"player_url": "https://www.2kratings.com/dalano-banton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Dalano-Banton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Yuta Watanabe",
@@ -28246,7 +28710,8 @@
 			"Total_Attributes": 2407,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/yuta-watanabe"
+		"player_url": "https://www.2kratings.com/yuta-watanabe",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Yuta-Watanabe-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaac Bonga",
@@ -28307,7 +28772,8 @@
 			"Total_Attributes": 2324,
 			"Vertical": 77
 		},
-		"player_url": "https://www.2kratings.com/isaac-bonga"
+		"player_url": "https://www.2kratings.com/isaac-bonga",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaac-Bonga-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Justin Champagnie",
@@ -28368,7 +28834,8 @@
 			"Total_Attributes": 2355,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/justin-champagnie"
+		"player_url": "https://www.2kratings.com/justin-champagnie",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Justin-Champagnie-2K-Rating-411x300.png"
 	},
 	{
 		"name": "David Johnson",
@@ -28428,7 +28895,8 @@
 			"Total_Attributes": 2371,
 			"Vertical": 82
 		},
-		"player_url": "https://www.2kratings.com/david-johnson"
+		"player_url": "https://www.2kratings.com/david-johnson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/David-Johnson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jeff Dowtin",
@@ -28488,7 +28956,8 @@
 			"Total_Attributes": 2232,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/jeff-dowtin"
+		"player_url": "https://www.2kratings.com/jeff-dowtin",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jeff-Dowtin-2K-Rating-413x284.png"
 	},
 	{
 		"name": "Donovan Mitchell",
@@ -28549,7 +29018,8 @@
 			"Total_Attributes": 2915,
 			"Vertical": 97
 		},
-		"player_url": "https://www.2kratings.com/donovan-mitchell"
+		"player_url": "https://www.2kratings.com/donovan-mitchell",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Donovan-Mitchell-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Mike Conley",
@@ -28609,7 +29079,8 @@
 			"Total_Attributes": 2640,
 			"Vertical": 92
 		},
-		"player_url": "https://www.2kratings.com/mike-conley"
+		"player_url": "https://www.2kratings.com/mike-conley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Mike-Conley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Bojan Bogdanovic",
@@ -28670,7 +29141,8 @@
 			"Total_Attributes": 2594,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/bojan-bogdanovic"
+		"player_url": "https://www.2kratings.com/bojan-bogdanovic",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bojan-Bogdanovic-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Patrick Beverley",
@@ -28731,7 +29203,8 @@
 			"Total_Attributes": 2594,
 			"Vertical": 91
 		},
-		"player_url": "https://www.2kratings.com/patrick-beverley"
+		"player_url": "https://www.2kratings.com/patrick-beverley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Patrick-Beverley-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jarred Vanderbilt",
@@ -28792,7 +29265,8 @@
 			"Total_Attributes": 2623,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/jarred-vanderbilt"
+		"player_url": "https://www.2kratings.com/jarred-vanderbilt",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jarred-Vanderbilt-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Malik Beasley",
@@ -28853,7 +29327,8 @@
 			"Total_Attributes": 2534,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/malik-beasley"
+		"player_url": "https://www.2kratings.com/malik-beasley",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Malik-Beasley-2K-Rating-300x219.png"
 	},
 	{
 		"name": "Jordan Clarkson",
@@ -28914,7 +29389,8 @@
 			"Total_Attributes": 2509,
 			"Vertical": 85
 		},
-		"player_url": "https://www.2kratings.com/jordan-clarkson"
+		"player_url": "https://www.2kratings.com/jordan-clarkson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jordan-Clarkson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Hassan Whiteside",
@@ -28974,7 +29450,8 @@
 			"Total_Attributes": 2371,
 			"Vertical": 60
 		},
-		"player_url": "https://www.2kratings.com/hassan-whiteside"
+		"player_url": "https://www.2kratings.com/hassan-whiteside",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Hassan-Whiteside-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Eric Paschall",
@@ -29035,7 +29512,8 @@
 			"Total_Attributes": 2534,
 			"Vertical": 87
 		},
-		"player_url": "https://www.2kratings.com/eric-paschall"
+		"player_url": "https://www.2kratings.com/eric-paschall",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Eric-Paschall-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Rudy Gay",
@@ -29096,7 +29574,8 @@
 			"Total_Attributes": 2562,
 			"Vertical": 81
 		},
-		"player_url": "https://www.2kratings.com/rudy-gay"
+		"player_url": "https://www.2kratings.com/rudy-gay",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Rudy-Gay-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jared Butler",
@@ -29157,7 +29636,8 @@
 			"Total_Attributes": 2488,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/jared-butler"
+		"player_url": "https://www.2kratings.com/jared-butler",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jared-Butler-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Nickeil Alexander-Walker",
@@ -29218,7 +29698,8 @@
 			"Total_Attributes": 2589,
 			"Vertical": 70
 		},
-		"player_url": "https://www.2kratings.com/nickeil-alexander-walker"
+		"player_url": "https://www.2kratings.com/nickeil-alexander-walker",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Nickeil-Alexander-Walker-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Udoka Azubuike",
@@ -29278,7 +29759,8 @@
 			"Total_Attributes": 2156,
 			"Vertical": 93
 		},
-		"player_url": "https://www.2kratings.com/udoka-azubuike"
+		"player_url": "https://www.2kratings.com/udoka-azubuike",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Udoka-Azubuike-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Leandro Bolmaro",
@@ -29338,7 +29820,8 @@
 			"Total_Attributes": 2394,
 			"Vertical": 54
 		},
-		"player_url": "https://www.2kratings.com/leandro-bolmaro"
+		"player_url": "https://www.2kratings.com/leandro-bolmaro",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Leandro-Bolmaro-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Trent Forrest",
@@ -29399,7 +29882,8 @@
 			"Total_Attributes": 2539,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/trent-forrest"
+		"player_url": "https://www.2kratings.com/trent-forrest",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Trent-Forrest-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Xavier Sneed",
@@ -29459,7 +29943,8 @@
 			"Total_Attributes": 2314,
 			"Vertical": 98
 		},
-		"player_url": "https://www.2kratings.com/xavier-sneed"
+		"player_url": "https://www.2kratings.com/xavier-sneed",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Xavier-Sneed-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Bradley Beal",
@@ -29520,7 +30005,8 @@
 			"Total_Attributes": 2772,
 			"Vertical": 87
 		},
-		"player_url": "https://www.2kratings.com/bradley-beal"
+		"player_url": "https://www.2kratings.com/bradley-beal",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Bradley-Beal-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Kristaps Porzingis",
@@ -29581,7 +30067,8 @@
 			"Total_Attributes": 2827,
 			"Vertical": 78
 		},
-		"player_url": "https://www.2kratings.com/kristaps-porzingis"
+		"player_url": "https://www.2kratings.com/kristaps-porzingis",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kristaps-Porzingis-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Kyle Kuzma",
@@ -29642,7 +30129,8 @@
 			"Total_Attributes": 2742,
 			"Vertical": 75
 		},
-		"player_url": "https://www.2kratings.com/kyle-kuzma"
+		"player_url": "https://www.2kratings.com/kyle-kuzma",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Kyle-Kuzma-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Monte Morris",
@@ -29703,7 +30191,8 @@
 			"Total_Attributes": 2501,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/monte-morris"
+		"player_url": "https://www.2kratings.com/monte-morris",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Monte-Morris-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Daniel Gafford",
@@ -29763,7 +30252,8 @@
 			"Total_Attributes": 2576,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/daniel-gafford"
+		"player_url": "https://www.2kratings.com/daniel-gafford",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Daniel-Gafford-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Deni Avdija",
@@ -29824,7 +30314,8 @@
 			"Total_Attributes": 2650,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/deni-avdija"
+		"player_url": "https://www.2kratings.com/deni-avdija",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Deni-Avdija-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Will Barton",
@@ -29885,7 +30376,8 @@
 			"Total_Attributes": 2657,
 			"Vertical": 74
 		},
-		"player_url": "https://www.2kratings.com/will-barton"
+		"player_url": "https://www.2kratings.com/will-barton",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Will-Barton-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Rui Hachimura",
@@ -29946,7 +30438,8 @@
 			"Total_Attributes": 2574,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/rui-hachimura"
+		"player_url": "https://www.2kratings.com/rui-hachimura",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Rui-Hachimura-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Delon Wright",
@@ -30007,7 +30500,8 @@
 			"Total_Attributes": 2613,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/delon-wright"
+		"player_url": "https://www.2kratings.com/delon-wright",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Delon-Wright-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Corey Kispert",
@@ -30068,7 +30562,8 @@
 			"Total_Attributes": 2482,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/corey-kispert"
+		"player_url": "https://www.2kratings.com/corey-kispert",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Corey-Kispert-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Taj Gibson",
@@ -30128,7 +30623,8 @@
 			"Total_Attributes": 2443,
 			"Vertical": 58
 		},
-		"player_url": "https://www.2kratings.com/taj-gibson"
+		"player_url": "https://www.2kratings.com/taj-gibson",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Taj-Gibson-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Vernon Carey Jr.",
@@ -30189,7 +30685,8 @@
 			"Total_Attributes": 2386,
 			"Vertical": 72
 		},
-		"player_url": "https://www.2kratings.com/vernon-carey"
+		"player_url": "https://www.2kratings.com/vernon-carey",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Vernon-Carey-Jr.-2K-Rating-413x300.png"
 	},
 	{
 		"name": "Anthony Gill",
@@ -30249,7 +30746,8 @@
 			"Total_Attributes": 2421,
 			"Vertical": 79
 		},
-		"player_url": "https://www.2kratings.com/anthony-gill"
+		"player_url": "https://www.2kratings.com/anthony-gill",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Anthony-Gill-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Isaiah Todd",
@@ -30309,7 +30807,8 @@
 			"Total_Attributes": 2370,
 			"Vertical": 80
 		},
-		"player_url": "https://www.2kratings.com/isaiah-todd-2"
+		"player_url": "https://www.2kratings.com/isaiah-todd-2",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Isaiah-Todd-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Cassius Winston",
@@ -30369,7 +30868,8 @@
 			"Total_Attributes": 2184,
 			"Vertical": 52
 		},
-		"player_url": "https://www.2kratings.com/cassius-winston"
+		"player_url": "https://www.2kratings.com/cassius-winston",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Cassius-Winston-2K-Rating-411x300.png"
 	},
 	{
 		"name": "Jordan Schakel",
@@ -30430,6 +30930,7 @@
 			"Total_Attributes": 2143,
 			"Vertical": 69
 		},
-		"player_url": "https://www.2kratings.com/jordan-schakel"
+		"player_url": "https://www.2kratings.com/jordan-schakel",
+		"player_image_url": "https://www.2kratings.com/wp-content/uploads/Jordan-Schakel-2K-Rating-411x300.png"
 	}
 ]

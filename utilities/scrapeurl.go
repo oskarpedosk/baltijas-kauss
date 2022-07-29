@@ -11,15 +11,16 @@ var sliceOfNBAPlayers []NBAPlayerData
 
 // NBA player
 type NBAPlayerData struct {
-	Name       string         `json:"name"`
-	Team       string         `json:"team"`
-	Archetype  string         `json:"archetype"`
-	Positions  []string       `json:"positions"`
-	Height     int            `json:"height"`
-	Weight     int            `json:"weight"`
-	BadgeCount []int          `json:"badge_count"`
-	Stats      map[string]int `json:"stats"`
-	PlayerURL  string         `json:"player_url"`
+	Name           string         `json:"name"`
+	Team           string         `json:"team"`
+	Archetype      string         `json:"archetype"`
+	Positions      []string       `json:"positions"`
+	Height         int            `json:"height"`
+	Weight         int            `json:"weight"`
+	BadgeCount     []int          `json:"badge_count"`
+	Stats          map[string]int `json:"stats"`
+	PlayerURL      string         `json:"player_url"`
+	PlayerImageURL string         `json:"player_image_url"`
 }
 
 func ScrapeNBA2KData(scrapeUrl string) []NBAPlayerData {
@@ -74,12 +75,18 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 	)
 	c.OnHTML("div.main", func(e *colly.HTMLElement) {
 		// Get player info
+		imageURL := ""
 		playerName := ""
 		playerTeam := ""
 		playerArchetype := ""
 		playerPositionsSlice := []string{}
 		playerHeightInt := 0
 		playerWeightInt := 0
+		// Get player image URL
+		e.ForEach("div.profile-photo", func(_ int, el *colly.HTMLElement) {
+			imageURL = el.ChildAttr("img.header-image", "src")
+		})
+		
 		e.ForEach("div.player-info", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				// Get player name
@@ -158,8 +165,8 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 		e.ForEach("div[id=nav-attributes] div.card-body li.mb-1", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				statsRating := Atoi(strings.SplitN(el.Text, " ", 2)[0])
-				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_") 
-				statsName = strings.ReplaceAll(statsName, "-", "_") 
+				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_")
+				statsName = strings.ReplaceAll(statsName, "-", "_")
 				playerStats[statsName] = statsRating
 			}
 		})
@@ -176,15 +183,16 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 
 		// Add data to struct
 		nbaPlayer := NBAPlayerData{
-			Name:       playerName,
-			Team:       playerTeam,
-			Archetype:  playerArchetype,
-			Positions:  playerPositionsSlice,
-			Height:     playerHeightInt,
-			Weight:     playerWeightInt,
-			BadgeCount: badgeCount,
-			Stats:      playerStats,
-			PlayerURL:  playerURL,
+			Name:           playerName,
+			Team:           playerTeam,
+			Archetype:      playerArchetype,
+			Positions:      playerPositionsSlice,
+			Height:         playerHeightInt,
+			Weight:         playerWeightInt,
+			BadgeCount:     badgeCount,
+			Stats:          playerStats,
+			PlayerURL:      playerURL,
+			PlayerImageURL: imageURL,
 		}
 
 		sliceOfNBAPlayers = append(sliceOfNBAPlayers, nbaPlayer)
