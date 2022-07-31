@@ -86,7 +86,7 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 		e.ForEach("div.profile-photo", func(_ int, el *colly.HTMLElement) {
 			imageURL = el.ChildAttr("img.header-image", "src")
 		})
-		
+
 		e.ForEach("div.player-info", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				// Get player name
