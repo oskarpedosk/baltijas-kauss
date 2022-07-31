@@ -11,16 +11,26 @@ var sliceOfNBAPlayers []NBAPlayerData
 
 // NBA player
 type NBAPlayerData struct {
-	Name           string         `json:"name"`
+	FirstName      string         `json:"first_name"`
+	LastName       string         `json:"last_name"`
 	Team           string         `json:"team"`
 	Archetype      string         `json:"archetype"`
 	Positions      []string       `json:"positions"`
 	Height         int            `json:"height"`
 	Weight         int            `json:"weight"`
-	BadgeCount     []int          `json:"badge_count"`
 	Stats          map[string]int `json:"stats"`
 	PlayerURL      string         `json:"player_url"`
 	PlayerImageURL string         `json:"player_image_url"`
+	BadgeCount     []int          `json:"badge_count"`
+	Badges         []SingleBadge  `json:"badges"`
+}
+
+// NBA player badge
+type SingleBadge struct {
+	BadgeImageURL string
+	Name          string
+	Type          string
+	Info          string
 }
 
 func ScrapeNBA2KData(scrapeUrl string) []NBAPlayerData {
@@ -76,12 +86,13 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 	c.OnHTML("div.main", func(e *colly.HTMLElement) {
 		// Get player info
 		imageURL := ""
-		playerName := ""
-		playerTeam := ""
-		playerArchetype := ""
-		playerPositionsSlice := []string{}
-		playerHeightInt := 0
-		playerWeightInt := 0
+		firstName := ""
+		lastName := ""
+		team := ""
+		archetype := ""
+		positionsSlice := []string{}
+		heightInt := 0
+		weightInt := 0
 		// Get player image URL
 		e.ForEach("div.profile-photo", func(_ int, el *colly.HTMLElement) {
 			imageURL = el.ChildAttr("img.header-image", "src")
@@ -90,19 +101,22 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 		e.ForEach("div.player-info", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				// Get player name
-				playerName = el.ChildText("h1:nth-child(1)")
+				fullName := strings.ReplaceAll(el.ChildText("h1:nth-child(1)"), "’", "'")
+				nameString := strings.SplitN(fullName, " ", 2)
+				firstName = nameString[0]
+				lastName = nameString[1]
 
 				// Get player team, remove "Team: " from the beginning of string
-				playerTeam = strings.Split(el.ChildText("p:nth-child(3)"), ": ")[1]
+				team = strings.Split(el.ChildText("p:nth-child(3)"), ": ")[1]
 
 				// Get player archetype, remove "Archetype: " from the beginning of string
-				playerArchetype = strings.Split(el.ChildText("p:nth-child(4)"), ": ")[1]
+				archetype = strings.Split(el.ChildText("p:nth-child(4)"), ": ")[1]
 				// Get player positions in a slice
 
 				playerPositionsString := strings.Split(el.ChildText("p:nth-child(5)"), ": ")[1]
-				playerPositionsSlice = strings.Split(playerPositionsString, "/")
-				for i := range playerPositionsSlice {
-					playerPositionsSlice[i] = TrimSpace(playerPositionsSlice[i])
+				positionsSlice = strings.Split(playerPositionsString, "/")
+				for i := range positionsSlice {
+					positionsSlice[i] = TrimSpace(positionsSlice[i])
 				}
 
 				heightAndWeightExists := true
@@ -111,35 +125,35 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 				}
 
 				// Get player height
-				playerHeightString := strings.Split(el.ChildText("p:nth-child(6)"), "|")[0]
-				playerHeight := ""
-				for _, char := range playerHeightString {
+				heightString := strings.Split(el.ChildText("p:nth-child(6)"), "|")[0]
+				height := ""
+				for _, char := range heightString {
 					if char == '(' {
-						playerHeight = ""
+						height = ""
 					} else if char == 'c' {
 						break
 					} else {
-						playerHeight += string(char)
+						height += string(char)
 					}
 				}
 				// Convert to int
-				playerHeightInt = Atoi(playerHeight)
+				heightInt = Atoi(height)
 
 				// Get player weight
 				if heightAndWeightExists {
-					playerWeightString := strings.Split(el.ChildText("p:nth-child(6)"), "|")[1]
-					playerWeight := ""
-					for _, char := range playerWeightString {
+					weightString := strings.Split(el.ChildText("p:nth-child(6)"), "|")[1]
+					weight := ""
+					for _, char := range weightString {
 						if char == '(' {
-							playerWeight = ""
+							weight = ""
 						} else if char == 'k' {
 							break
 						} else {
-							playerWeight += string(char)
+							weight += string(char)
 						}
 					}
 					// Convert to int
-					playerWeightInt = Atoi(playerWeight)
+					weightInt = Atoi(weight)
 				}
 			}
 		})
@@ -149,7 +163,7 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 		e.ForEach("span.attribute-box-player", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				overallRating := Atoi(el.Text)
-				playerStats["Overall"] = overallRating
+				playerStats["Overall_Rating"] = overallRating
 			}
 		})
 
@@ -179,20 +193,47 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 				playerStats[statsName] = statsRating
 			}
 		})
-		fmt.Println("Player: " + playerName + " scraping Complete")
+
+		// Get player badges
+		allBadges := []SingleBadge{}
+		e.ForEach("div[id=pills-all] div.badge-card", func(_ int, el *colly.HTMLElement) {
+			badgeImageURL := ""
+			badgeName := ""
+			badgeType := ""
+			badgeInfo := ""
+			if el.Text != "" {
+				badgeImageURL = "https://www.2kratings.com" + el.ChildAttr("img", "data-src")
+				badgeName = el.ChildText("h4")
+				badgeType = el.ChildText("span.badge")
+				badgeInfo = el.ChildText("p.badge-description")
+				
+				singleBadge := SingleBadge{
+					BadgeImageURL: badgeImageURL,
+					Name: badgeName,
+					Type: badgeType,
+					Info: badgeInfo,
+				}
+				allBadges = append(allBadges, singleBadge)
+			}
+		})
+
+
+		fmt.Println("Player: " + firstName + " " + lastName + " scraping Complete")
 
 		// Add data to struct
 		nbaPlayer := NBAPlayerData{
-			Name:           playerName,
-			Team:           playerTeam,
-			Archetype:      playerArchetype,
-			Positions:      playerPositionsSlice,
-			Height:         playerHeightInt,
-			Weight:         playerWeightInt,
-			BadgeCount:     badgeCount,
+			FirstName:      firstName,
+			LastName:       lastName,
+			Team:           team,
+			Archetype:      archetype,
+			Positions:      positionsSlice,
+			Height:         heightInt,
+			Weight:         weightInt,
 			Stats:          playerStats,
 			PlayerURL:      playerURL,
 			PlayerImageURL: imageURL,
+			BadgeCount:     badgeCount,
+			Badges:         allBadges,
 		}
 
 		sliceOfNBAPlayers = append(sliceOfNBAPlayers, nbaPlayer)
