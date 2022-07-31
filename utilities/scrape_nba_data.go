@@ -65,7 +65,9 @@ func scrapePlayerURLFromTeam(teamURL string) []NBAPlayerData {
 				}
 			})
 			firstTable = false
-			fmt.Println("Players scraping Complete")
+			fmt.Println("---------------------------")
+			fmt.Println(teamURL + " scraping complete.")
+			fmt.Println("")
 		}
 	})
 
@@ -175,21 +177,20 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 			}
 		})
 
-		// Get player stats
+		// Get table header stats, intangibles, potential and total attributes
+		e.ForEach("div[id=nav-attributes] div.card-header", func(_ int, el *colly.HTMLElement) {
+			if el.Text != "" {
+				statsRating := Atoi(strings.Replace((strings.SplitN(el.Text, " ", 2)[0]), ",", "", -1))
+				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_")
+				playerStats[statsName] = statsRating
+			}
+		})
+		// Get table body stats
 		e.ForEach("div[id=nav-attributes] div.card-body li.mb-1", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				statsRating := Atoi(strings.SplitN(el.Text, " ", 2)[0])
 				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_")
 				statsName = strings.ReplaceAll(statsName, "-", "_")
-				playerStats[statsName] = statsRating
-			}
-		})
-		// Get player intangibles, potential and total attributes
-		e.ForEach("div[id=nav-attributes] div.card-horizontal h5.card-title", func(_ int, el *colly.HTMLElement) {
-			if el.Text != "" {
-				// Get total attributes without a comma
-				statsRating := Atoi(strings.Replace((strings.SplitN(el.Text, " ", 2)[0]), ",", "", -1))
-				statsName := strings.ReplaceAll(strings.SplitN(el.Text, " ", 2)[1], " ", "_")
 				playerStats[statsName] = statsRating
 			}
 		})
@@ -205,7 +206,7 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 				badgeImageURL = "https://www.2kratings.com" + el.ChildAttr("img", "data-src")
 				badgeName = el.ChildText("h4")
 				badgeType = el.ChildText("span.badge")
-				badgeInfo = el.ChildText("p.badge-description")
+				badgeInfo = strings.ReplaceAll(el.ChildText("p.badge-description"), "’", "'")
 				
 				singleBadge := SingleBadge{
 					BadgeImageURL: badgeImageURL,
