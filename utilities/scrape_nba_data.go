@@ -210,13 +210,13 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 			if el.Text != "" {
 				badgeImageURL = "https://www.2kratings.com" + el.ChildAttr("img", "data-src")
 				if strings.Contains(badgeImageURL, "_bronze") {
-					level = "bronze"
+					level = "Bronze"
 				} else if strings.Contains(badgeImageURL, "_silver") {
-					level = "silver"
+					level = "Silver"
 				} else if strings.Contains(badgeImageURL, "_gold") {
-					level = "gold"
+					level = "Gold"
 				} else if strings.Contains(badgeImageURL, "_hof") {
-					level = "hof"
+					level = "Hof"
 				}
 				badgeName = el.ChildText("h4")
 				badgeType = el.ChildText("span.badge")
