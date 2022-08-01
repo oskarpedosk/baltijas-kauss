@@ -1,0 +1,9 @@
+create_table("nba22_players_badges") {
+    t.Column("id", "integer", {primary: true})
+    t.Column("player_id", "integer", {})
+    t.Column("name", "string", {"default": ""})
+    t.Column("type", "string", {"default": ""})
+    t.Column("info", "string", {"default": ""})
+    t.Column("level", "string", {"default": ""})
+    t.Column("badge_image_url", "string", {"default": ""})
+}

@@ -1,0 +1,1 @@
+drop_foreign_key("nba22_teams", "nba22_teams_users_id_fk", {})

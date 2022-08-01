@@ -1,5 +1,5 @@
 create_table("nba22_players") {
-    t.Column("id", "integer", {primary: true})
+    t.Column("player_id", "integer", {primary: true})
     t.Column("first_name", "string", {"default": ""})
     t.Column("last_name", "string", {"default": ""})
     t.Column("archetype", "string", {"default": ""})
@@ -7,6 +7,7 @@ create_table("nba22_players") {
     t.Column("secondary_position", "string", {"default": ""})
     t.Column("height", "integer", {})
     t.Column("weight", "integer", {})
+    t.Column("team_id", "integer", {"default": "5"})
     t.Column("stats_acceleration", "integer", {})
     t.Column("stats_athleticism", "integer", {})
     t.Column("stats_ball_handle", "integer", {})

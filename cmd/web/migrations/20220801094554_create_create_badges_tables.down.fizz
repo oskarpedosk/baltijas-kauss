@@ -1,0 +1,1 @@
+sql("drop table nba22_players_badges")
