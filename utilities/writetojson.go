@@ -8,7 +8,7 @@ import (
 
 )
 
-func WriteToJson(fileName string, playerData interface{}) {
+func WriteToJson(fileName string, scrapedData interface{}) {
 	// Set file path and type
 	fileName = "../../static/jsondata/" + fileName + ".json"
 
@@ -20,7 +20,7 @@ func WriteToJson(fileName string, playerData interface{}) {
 	defer file.Close()
 
 	// Write scraped data to .json
-	data, err := json.MarshalIndent(playerData, "", "	")
+	data, err := json.MarshalIndent(scrapedData, "", "	")
 	if err != nil {
 		fmt.Println(err.Error())
 	}

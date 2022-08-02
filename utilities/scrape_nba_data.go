@@ -7,8 +7,11 @@ import (
 	"github.com/gocolly/colly"
 )
 
-var sliceOfNBAPlayers []NBAPlayerData
-var i int = 1
+var NBAPlayersSlice []NBAPlayerData
+var playersBadgesSlice []PlayersBadges
+var badgesSlice []Badges
+var playerIndex int = 1
+var badgeIndex int = 1
 
 // NBA player
 type NBAPlayerData struct {
@@ -29,29 +32,58 @@ type NBAPlayerData struct {
 
 // NBA player badge
 type PlayersBadges struct {
-	Name          string `json:"name"`
-	Type          string `json:"type"`
-	Info          string `json:"info"`
-	Level         string `json:"level"`
-	BadgeImageURL string `json:"badge_img_url"`
+	PlayerID int    `json:"player_id"`
+	BadgeID  int    `json:"badge_id"`
+	Name     string `json:"name"`
+	Level    string `json:"level"`
+}
+
+// NBA badges
+type Badges struct {
+	BadgeID        int    `json:"badge_id"`
+	Name           string `json:"name"`
+	Type           string `json:"type"`
+	Info           string `json:"info"`
+	BronzeImageURL string `json:"bronze_img_url"`
+	SilverImageURL string `json:"silver_img_url"`
+	GoldImageURL   string `json:"gold_img_url"`
+	HOFImageURL    string `json:"hof_img_url"`
 }
 
 func ScrapeNBA2KData(scrapeUrl string) []NBAPlayerData {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.2kratings.com"),
 	)
+
+	// Scrape all badges names
+	c.OnHTML("div.sidebar-content ul[id=ui-list-badge] li.sidebar-item", func(e *colly.HTMLElement) {
+		e.ForEach("tr", func(_ int, el *colly.HTMLElement) {
+			if el.Text != "" {
+				badgeName := el.Text
+				singleBadge := Badges {
+					BadgeID: badgeIndex,
+					Name: badgeName,
+				}
+				badgeIndex++
+				badgesSlice = append(badgesSlice, singleBadge)
+			}
+		})
+		fmt.Println("Badges scraping Complete")
+	})
+
+	// Scrape all teams
 	c.OnHTML("div.table-responsive tbody", func(e *colly.HTMLElement) {
 		e.ForEach("tr", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				teamURL := el.ChildAttr("a", "href")
-				sliceOfNBAPlayers = scrapePlayerURLFromTeam(teamURL)
+				NBAPlayersSlice = scrapePlayerURLFromTeam(teamURL)
 			}
 		})
 		fmt.Println("Scraping Complete")
 	})
 	c.Visit(scrapeUrl)
 
-	return sliceOfNBAPlayers
+	return NBAPlayersSlice
 }
 
 func scrapePlayerURLFromTeam(teamURL string) []NBAPlayerData {
@@ -64,8 +96,8 @@ func scrapePlayerURLFromTeam(teamURL string) []NBAPlayerData {
 			e.ForEach("tr", func(_ int, el *colly.HTMLElement) {
 				if el.Text != "" {
 					playerURL := el.ChildAttr("a", "href")
-					sliceOfNBAPlayers = scrapePlayerStats(playerURL)
-					i++
+					NBAPlayersSlice = scrapePlayerStats(playerURL)
+					playerIndex++
 				}
 			})
 			firstTable = false
@@ -82,7 +114,7 @@ func scrapePlayerURLFromTeam(teamURL string) []NBAPlayerData {
 	})
 	c.Visit(teamURL)
 
-	return sliceOfNBAPlayers
+	return NBAPlayersSlice
 }
 
 func scrapePlayerStats(playerURL string) []NBAPlayerData {
@@ -200,7 +232,7 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 		})
 
 		// Get player badges
-		allBadges := []PlayersBadges{}
+		playerBadges := []PlayersBadges{}
 		e.ForEach("div[id=pills-all] div.badge-card", func(_ int, el *colly.HTMLElement) {
 			badgeImageURL := ""
 			badgeName := ""
@@ -209,27 +241,61 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 			level := ""
 			if el.Text != "" {
 				badgeImageURL = "https://www.2kratings.com" + el.ChildAttr("img", "data-src")
-				if strings.Contains(badgeImageURL, "_bronze") {
-					level = "Bronze"
-				} else if strings.Contains(badgeImageURL, "_silver") {
-					level = "Silver"
-				} else if strings.Contains(badgeImageURL, "_gold") {
-					level = "Gold"
-				} else if strings.Contains(badgeImageURL, "_hof") {
-					level = "Hof"
-				}
 				badgeName = el.ChildText("h4")
 				badgeType = el.ChildText("span.badge")
 				badgeInfo = strings.ReplaceAll(el.ChildText("p.badge-description"), "’", "'")
+				tempBadgeIndex := 0
 
-				singleBadge := PlayersBadges{
-					Name:          badgeName,
-					Type:          badgeType,
-					Info:          badgeInfo,
-					Level:         level,
-					BadgeImageURL: badgeImageURL,
+				if strings.Contains(badgeImageURL, "_bronze") {
+					level = "Bronze"
+					for i, value := range badgesSlice {
+						if value.Name == badgeName {
+							value.Type = badgeType
+							value.Info = badgeInfo
+							value.BronzeImageURL = badgeImageURL
+							tempBadgeIndex = i+1
+						}
+					}
+				} else if strings.Contains(badgeImageURL, "_silver") {
+					level = "Silver"
+					for i, value := range badgesSlice {
+						if value.Name == badgeName {
+							value.Type = badgeType
+							value.Info = badgeInfo
+							value.SilverImageURL = badgeImageURL
+							tempBadgeIndex = i+1
+						}
+					}
+				} else if strings.Contains(badgeImageURL, "_gold") {
+					level = "Gold"
+					for i, value := range badgesSlice {
+						if value.Name == badgeName {
+							value.Type = badgeType
+							value.Info = badgeInfo
+							value.GoldImageURL = badgeImageURL
+							tempBadgeIndex = i+1
+						}
+					}
+				} else if strings.Contains(badgeImageURL, "_hof") {
+					level = "HOF"
+					for i, value := range badgesSlice {
+						if value.Name == badgeName {
+							value.Type = badgeType
+							value.Info = badgeInfo
+							value.HOFImageURL = badgeImageURL
+							tempBadgeIndex = i+1
+						}
+					}
 				}
-				allBadges = append(allBadges, singleBadge)
+				
+				singleBadge := PlayersBadges{
+					PlayerID: playerIndex,
+					BadgeID:  tempBadgeIndex,
+					Name:     badgeName,
+					Level:    level,
+				}
+				playerBadges = append(playerBadges, singleBadge)
+				playersBadgesSlice = append(playersBadgesSlice, singleBadge)
 			}
 		})
 
@@ -237,7 +303,7 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 
 		// Add data to struct
 		nbaPlayer := NBAPlayerData{
-			PlayerID:       i,
+			PlayerID:       playerIndex,
 			FirstName:      firstName,
 			LastName:       lastName,
 			Team:           team,
@@ -249,10 +315,10 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 			PlayerURL:      playerURL,
 			PlayerImageURL: imageURL,
 			BadgeCount:     badgeCount,
-			Badges:         allBadges,
+			Badges:         playerBadges,
 		}
 
-		sliceOfNBAPlayers = append(sliceOfNBAPlayers, nbaPlayer)
+		NBAPlayersSlice = append(NBAPlayersSlice, nbaPlayer)
 
 	})
 
@@ -263,5 +329,5 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 	})
 	c.Visit(playerURL)
 
-	return sliceOfNBAPlayers
+	return NBAPlayersSlice
 }

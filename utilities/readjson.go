@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func ReadJson(fileName string) []NBAPlayerData {
+func ReadNBAPlayerData(fileName string) []NBAPlayerData {
 	// Open our jsonFile
 	jsonFile, err := os.Open(fileName)
 	if err != nil {
