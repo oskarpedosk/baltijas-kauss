@@ -3,7 +3,6 @@ package utilities
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 )
 
@@ -23,5 +22,5 @@ func WriteToJson(fileName string, scrapedData interface{}) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	ioutil.WriteFile(fileName, data, 0644)
+	os.WriteFile(fileName, data, 0644)
 }

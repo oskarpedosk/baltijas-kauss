@@ -3,7 +3,7 @@ package utilities
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 )
 
@@ -20,7 +20,7 @@ func ReadNBAPlayerData(fileName string) []NBAPlayerData {
 	defer jsonFile.Close()
 
 	// Read our opened jsonFile as a byte array.
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, _ := io.ReadAll(jsonFile)
 
 	// Initialize our players array
 	var players []NBAPlayerData
