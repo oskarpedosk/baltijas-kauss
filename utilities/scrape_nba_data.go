@@ -337,11 +337,9 @@ func scrapeBadges() []Badges {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.2kratings.com"),
 	)
-	fmt.Println("hello1")
+
 	// Scrape all badges names
 	c.OnHTML("nav#sidebar]", func(e *colly.HTMLElement) {
-		fmt.Println("hello2")
-		fmt.Println(e)
 		e.ForEach("li.sidebar-item", func(_ int, el *colly.HTMLElement) {
 			if el.Text != "" {
 				// Get badge name
@@ -354,7 +352,6 @@ func scrapeBadges() []Badges {
 				badgeIndex++
 				// Append badge to all badges slice
 				badgesSlice = append(badgesSlice, singleBadge)
-				fmt.Println(singleBadge)
 			}
 		})
 		fmt.Println("Badges scraping Complete")
