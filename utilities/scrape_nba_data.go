@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/gocolly/colly"
+	"github.com/gocolly/colly/v2"
 )
 
 var NBAPlayersSlice []NBAPlayerData
@@ -12,6 +12,7 @@ var playersBadgesSlice []PlayersBadges
 var badgesSlice []Badges
 var playerIndex int = 1
 var badgeIndex int = 1
+const nba2KDataURL = "https://www.2kratings.com/current-teams"
 
 // NBA player
 type NBAPlayerData struct {
@@ -50,26 +51,13 @@ type Badges struct {
 	HOFImageURL    string `json:"hof_img_url"`
 }
 
-func ScrapeNBA2KData(scrapeUrl string) []NBAPlayerData {
+func ScrapeNBA2KData() []NBAPlayerData {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.2kratings.com"),
 	)
-
-	// Scrape all badges names
-	c.OnHTML("div.sidebar-content ul[id=ui-list-badge] li.sidebar-item", func(e *colly.HTMLElement) {
-		e.ForEach("tr", func(_ int, el *colly.HTMLElement) {
-			if el.Text != "" {
-				badgeName := el.Text
-				singleBadge := Badges {
-					BadgeID: badgeIndex,
-					Name: badgeName,
-				}
-				badgeIndex++
-				badgesSlice = append(badgesSlice, singleBadge)
-			}
-		})
-		fmt.Println("Badges scraping Complete")
-	})
+	
+	// Get badges
+	badgesSlice = scrapeBadges()
 
 	// Scrape all teams
 	c.OnHTML("div.table-responsive tbody", func(e *colly.HTMLElement) {
@@ -81,7 +69,7 @@ func ScrapeNBA2KData(scrapeUrl string) []NBAPlayerData {
 		})
 		fmt.Println("Scraping Complete")
 	})
-	c.Visit(scrapeUrl)
+	c.Visit(nba2KDataURL)
 
 	return NBAPlayersSlice
 }
@@ -90,6 +78,7 @@ func scrapePlayerURLFromTeam(teamURL string) []NBAPlayerData {
 	c := colly.NewCollector(
 		colly.AllowedDomains("www.2kratings.com"),
 	)
+	
 	firstTable := true
 	c.OnHTML("table.table tbody", func(e *colly.HTMLElement) {
 		if firstTable {
@@ -330,4 +319,33 @@ func scrapePlayerStats(playerURL string) []NBAPlayerData {
 	c.Visit(playerURL)
 
 	return NBAPlayersSlice
+}
+
+func scrapeBadges () []Badges {
+	c := colly.NewCollector(
+		colly.AllowedDomains("www.2kratings.com"),
+	)
+	fmt.Println("hello1")
+	// Scrape all badges names
+	c.OnHTML("nav[id=sidebar]", func(e *colly.HTMLElement) {
+		fmt.Println("hello2")
+		fmt.Println(e)
+		e.ForEach("li.sidebar-item", func(_ int, el *colly.HTMLElement) {
+			if el.Text != "" {
+				badgeName := el.Text
+				singleBadge := Badges {
+					BadgeID: badgeIndex,
+					Name: badgeName,
+				}
+				badgeIndex++
+				badgesSlice = append(badgesSlice, singleBadge)
+				fmt.Println(singleBadge)
+			}
+		})
+		fmt.Println("Badges scraping Complete")
+	})
+	
+	c.Visit(nba2KDataURL)
+
+	return badgesSlice
 }
