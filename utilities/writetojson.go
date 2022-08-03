@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-
 )
 
 func WriteToJson(fileName string, scrapedData interface{}) {
