@@ -53,3 +53,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 		NBAPlayerData: playerData,
 	})
 }
+
+func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "signin.page.tmpl", &models.TemplateData{})
+}
