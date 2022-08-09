@@ -1,182 +1,98 @@
 {{template "base" .}}
 
-{{define "css"}}
-<!--
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
--->
-<style>
-    table {
-        border-spacing: 30;
-        width: 40%;
-        border: 1px solid #ddd;
-        font-size: 12px;
-    }
-
-    th,
-    td {
-        padding: 42px;
-    }
-    th {
-    cursor: pointer;
-    }
-    .text-center {
-        text-align: center;
-    }
-    .position-absolute {
-        position: absolute;
-    }
-    .position-relative {
-        position: relative;
-    }
-    .float-left {
-        float: left;
-    }
-    .badge-count {
-        color: #000;
-        width: 100%;
-        left: 0;
-        top: 43%;
-        transform: translateY(-50%);
-    }
-    .text-dark {
-        color: #343a40;
-    }
-    .text-white {
-         color: #fff !important;
-    }
-    .badges-container {
-        max-width: 285px;
-        margin: 0 auto;
-    }
-    .d-flex {
-        display: -webkit-box;
-        display: flex;
-    }
-    .d-inline-block {
-        display: inline-block;
-    }
-</style>
-{{end}}
-
 {{define "content"}}
-    <div class="container">
+    <div class="container-fluid">
         <h1>2K22 RATINGS</h1>
-        <table class="table align-middle" id="playerData">
-            <thead class="bg-light">
-                <tr>
-                    <th>NAME</th>
-                    <th>OVERALL</th>
-                    <th>HEIGHT</th>
-                    <th>WEIGHT</th>
-                    <th>3PT</th>
-                    <th>FT</th>
-                    <th>PRMD</th>
-                    <th>LTRL</th>
-                    <th>OREB</th>
-                    <th>DREB</th>
-                    <th>BADGES</th>
-                    <th>TOTAL</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                {{range .NBAPlayerData}}
-                <tr>
-                    <td>
-                        <div class="d-flex align-items-center inline-block">
-                            <a href={{.PlayerURL}}>
-                                <img src={{.PlayerImageURL}} alt=""
-                                style="width: 50px; height: 50px;" class="rounded-circle">
-                            </a>
-                            <div class="ms-3 inline-block">
-                                <p class="fw-bold mb-0">{{.FirstName}} {{.LastName}}</p>
-                                <p class="text-muted mb-0" style="font-size: 10px;">{{.Archetype}}</p>
-                                
-                                <p class="text-muted mb-0" style="font-size: 10px;">
-                                    {{range .Positions}}
-                                    {{.}}
-                                    {{end}}
-                                     | {{.Height}}cm | 
-                                    <span class="badge badge-pill bg-secondary">FA</span>
-                                </p>
-                                
-                            </div>
-                        </div>
-                    </td>
-                    <td>{{.Stats.Overall_Rating}}</td>
-                    <td>{{.Height}}</td>
-                    <td>{{.Weight}}</td>
-                    <td>{{.Stats.Three_Point_Shot}}</td>
-                    <td>{{.Stats.Free_Throw}}</td>
-                    <td>
-                        <div>
-                            <span>{{.Stats.Perimeter_Defense}}</span>
-                        </div>
-                        </td>
-                    <td>{{.Stats.Lateral_Quickness}}</td>
-                    <td>{{.Stats.Offensive_Rebound}}</td>
-                    <td>{{.Stats.Defensive_Rebound}}</td>
-                    <td>
-                        <div class="d-flex badges-container">
-                            <div class="d-inline-block position-relative text-dark">
-                                <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="33" heigth="55">
-                                <span class="position-absolute text-center h5 badge-count">{{index .BadgeCount 0}}</span>
-                            </div>
-                            <div class="d-inline-block position-relative float-left text-dark">
-                                <img src="/static/images/2k-silver-badge-count.webp" alt="" width="33" heigth="55">
-                                <span class="position-absolute text-center h5 badge-count">{{index .BadgeCount 1}}</span>
-                            </div>
-                            <div class="d-inline-block position-relative float-left text-dark">
-                                <img src="/static/images/2k-gold-badge-count.webp" alt="" width="33" heigth="55">
-                                <span class="position-absolute text-center h5 badge-count">{{index .BadgeCount 2}}</span>
-                            </div>
-                            <div class="d-inline-block position-relative float-left text-dark">
-                                <img src="/static/images/2k-hof-badge-count.webp" alt="" width="33" heigth="55">
-                                <span class="position-absolute text-center h5 badge-count">{{index .BadgeCount 3}}</span>
-                            </div>
-                            <div class="d-inline-block position-relative float-left text-dark">
-                                <img src="/static/images/2k-total-badge-count.webp" alt="" width="33" heigth="55">
-                                <span class="position-absolute text-center h5 badge-count text-white">{{index .BadgeCount 4}}</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="bg-light">{{.Stats.Total_Attributes}}</span>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-link btn-sm" style="text-decoration: none">
-                            EDIT
-                        </button>
-                    </td>
-                </tr>
-                {{end}}
-            </tbody>
-        </table>
-        
 
-        <!--<p>
-        {{if ne (index .StringMap "remote_ip") ""}}
-        Your remote IP address is {{index .StringMap "remote_ip"}}
-        {{else}}
-        I don't know your IP address yet. Visit the <a href="/">Home page</a> so I can set it.
-        {{end}}
-        /p>-->
+        <h2>Level 2</h2>
+
+        <h3>Level 3</h3>
+
+        <h4>Level 4</h4>
+
+        <h5>Level 5</h5>
+
+        <p><strong>This</strong> is some text. <em>This</em> is some text too. This a link to the <a href="https://www.2kratings.com">2Kratings.com</a>.</p>
+
+        <p>
+            {{if ne (index .StringMap "remote_ip") ""}}
+            Your remote IP address is {{index .StringMap "remote_ip"}}
+            {{else}}
+            I don't know your IP address yet. Visit the <a href="/">Home page</a> so I can set it.
+            {{end}}
+        </p>
+
+        <ul>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ul>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
+
+        <ol>
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three</li>
+        </ol>
 
     </div>
-{{end}}
-
-{{define "js"}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
-<script>
-    $('#playerData').DataTable( {
-        "lengthMenu": [[20, 30, 50, -1], [20, 30, 50, "All"]],
-        "orderMulti": true,
-        "order": [[ 1, 'dsc' ], [ 11, 'dsc' ]],
-    } );    
-</script>
 {{end}}

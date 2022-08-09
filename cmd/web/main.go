@@ -45,7 +45,7 @@ func main() {
 	handlers.NewHandlers(repo)
 	render.NewTemplate(&app)
 
-	needsScraping := true
+	needsScraping := false
 	if needsScraping {
 		scrapedData := utilities.ScrapeNBA2KData()
 		utilities.WriteToJson(nba2KDataFileName, scrapedData)

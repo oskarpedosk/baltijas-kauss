@@ -1,0 +1,41 @@
+.wrapper {
+    display: flex;
+}
+
+.main {
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.sidebar {
+    width: 70px;
+    min-height: 100vh;
+    max-height: 100vh;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+.nav-img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    max-height: 100%;
+    max-width: 100%;
+    padding: 10px;
+}
+
+.footer {
+    height: 100px;
+    align-items: center;
+}
+
+.footer-img {
+    max-height: 50px;
+}
+
+.sidebar .active {
+    background-image: linear-gradient(90deg, #8100ff,#e002ff);
+}
