@@ -17,8 +17,8 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Use(SessionLoad)
 
 	mux.Get("/", handlers.Repo.SignIn)
-	mux.Get("/nba", handlers.Repo.Home)
-	mux.Get("/nba/players", handlers.Repo.Players)
+	mux.Get("/nba", handlers.Repo.NBAHome)
+	mux.Get("/nba/players", handlers.Repo.NBAPlayers)
 
 	fileServer := http.FileServer(http.Dir("../../static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

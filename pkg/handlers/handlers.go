@@ -28,14 +28,14 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
-func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.RenderTemplate(w, "home.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, "nbahome.page.tmpl", &models.TemplateData{})
 }
 
-func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 
 	playerData := make(map[string]interface{})
 	players := utilities.ReadNBAPlayerData("../../static/jsondata/nba2k_player_data.json")
