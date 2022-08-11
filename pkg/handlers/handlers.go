@@ -28,11 +28,15 @@ func NewHandlers(r *Repository) {
 	Repo = r
 }
 
+func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "signin.page.tmpl", &models.TemplateData{})
+}
+
 func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.RenderTemplate(w, "nbahome.page.tmpl", &models.TemplateData{})
+	render.RenderTemplate(w, "nba_home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
@@ -48,12 +52,9 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
 	stringMap["remote_ip"] = remoteIP
 
-	render.RenderTemplate(w, "players.page.tmpl", &models.TemplateData{
+	render.RenderTemplate(w, "nba_players.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
 		NBAPlayerData: playerData,
 	})
 }
 
-func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, "signin.page.tmpl", &models.TemplateData{})
-}
