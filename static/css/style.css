@@ -30,11 +30,12 @@
 
 .footer {
     height: 100px;
-    align-items: center;
+    margin-top: 2em;
 }
 
 .footer-img {
-    max-height: 50px;
+    max-height: 100%;
+    max-width: 200px;
 }
 
 .sidebar ul li.active {
@@ -59,13 +60,5 @@
     bottom: 25px;
     right: 30px;
     width: 70px;
-    z-index: 99;
-    font-size: 18px;
-    border: none;
-    outline: none;
-    background-image: linear-gradient(90deg, #8100ff, #e002ff);
-    color: white;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 25px;
+    z-index: 100;
 }

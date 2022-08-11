@@ -53,6 +53,11 @@
             <img src="/static/images/trophy.png" alt="" class="nav-img">
           </a>
         </li>
+        <li class="border-bottom">
+          <a href="#" data-bs-toggle="tooltip" data-bs-placement="right">
+            <img src="/static/images/fifa22logo.png" alt="" class="nav-img">
+          </a>
+        </li>
       </ul>
       <div class="dropdown border-top">
         <a href="#"
@@ -73,14 +78,14 @@
     <div class="main flex-column d-flex justify-content-between">
       <div class="content container-fluid">
 
-        <button onclick="topFunction()" id="scrollUpButton">Top</button>
+        <button type="button" class="btn btn-outline-primary" onclick="topFunction()" id="scrollUpButton">Top</button>
 
         {{block "content" .}}
 
         {{end}}
       </div>
-      <div class="footer d-flex justify-content-center">
-        <img src="/static/images/BaltijasKausslogo.png" alt="" class="footer-img">
+      <div class="footer d-flex">
+        <img src="/static/images/BaltijasKausslogo.png" alt="" class="footer-img mx-auto d-block">
       </div>
 
     </div>
