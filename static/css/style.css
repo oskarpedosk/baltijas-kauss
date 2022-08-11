@@ -38,12 +38,8 @@
     max-width: 100%;
 }
 
-.sidebar ul li.active {
+.bkcolor {
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
-}
-
-.sidebar ul li.active img {
-    filter: brightness(0) invert(1);
 }
 
 .sidebar ul li:hover {
