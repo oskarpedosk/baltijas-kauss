@@ -58,3 +58,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "nba_teams.page.tmpl", &models.TemplateData{})
+}
+
