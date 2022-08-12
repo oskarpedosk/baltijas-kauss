@@ -50,6 +50,21 @@
     filter: brightness(0) invert(1);
 }
 
+.logo-white {
+    filter: brightness(0) invert(1);
+}
+
+.relative {
+    position: relative;
+}
+
+.position {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 100;
+}
+
 #scrollUpButton {
     display: none;
     position: fixed;
