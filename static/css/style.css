@@ -42,6 +42,23 @@
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
 
+.teamcolor1 {
+    background-image: linear-gradient(-225deg, #A445B2 0%, #D41872 52%, #FF0066 100%);
+}
+
+.teamcolor2 {
+    background-image: linear-gradient(-225deg, #FF057C 0%, #8D0B93 50%, #321575 100%);
+}
+
+.teamcolor3 {
+    background-image: linear-gradient(to top, #cc208e 0%, #6713d2 100%);
+
+}
+
+.teamcolor4 {
+    background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #ff00ae 100%);
+}
+
 .sidebar ul li:hover {
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
@@ -63,6 +80,11 @@
     top: 0px;
     left: 0px;
     z-index: 100;
+}
+
+.player-shadow:hover {
+    cursor: pointer;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.5) 0px 18px 36px -18px;
 }
 
 #scrollUpButton {
