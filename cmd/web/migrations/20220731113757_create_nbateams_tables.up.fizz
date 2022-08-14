@@ -1,8 +1,6 @@
 create_table("nba22_teams") {
     t.Column("team_id", "integer", {primary: true})
     t.Column("name", "string", {"default": ""})
-    t.Column("abbreviation", "string", {"default": "", "size": 4})
-    t.Column("logo_url", "string", {"default": ""})
-    t.Column("team_color", "string", {"default": "#FFFFFF"})
+    t.Column("abbreviation", "string", {"default": "", "size": 3})
     t.Column("owner_id", "integer", {})
 }

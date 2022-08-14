@@ -7,9 +7,9 @@
 
         <div class="col-md-3">
 
-            <div class="p-5 teamcolor2 text-white border rounded-3 lh-1">
+            <div class="p-5 teamcolor1 text-dark border rounded-3 lh-1">
                 <h3>Kreutzwaldi</h3>
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
 
                 <p>Stephen Curry</p>
                 <p>James Harden</p>
@@ -17,7 +17,7 @@
                 <p>Pascal Siakam</p>
                 <p>Anthony Davis</p>
 
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
                 <div class="fw-lighter">
 
                     <p>Trae Young</p>
@@ -25,7 +25,7 @@
                     <p>Zach LaVine</p>
                     <p>Khris Middleton</p>
                     <p>Zion Williamson</p>
-                    <hr class="border border-white border-1 opacity-50">
+                    <hr class="border border-dark border-1 opacity-50">
                     <p>Bradley Beal</p>
                     <p>Andrew Wiggins</p>
 
@@ -34,9 +34,9 @@
         </div>
 
         <div class="col-md-3">
-            <div class="p-5 teamcolor1 text-white border rounded-3 lh-1">
+            <div class="p-5 teamcolor2 text-dark border rounded-3 lh-1">
                 <h3>Hiiu</h3>
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
 
                 <p>Luka Doncic</h5>
                 <p>Klay Thompson</p>
@@ -44,7 +44,7 @@
                 <p>Nikola Jokic</p>
                 <p>Lebron James</p>
 
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
                 <div class="fw-lighter">
 
                     <p>Marcus Smart</p>
@@ -52,7 +52,7 @@
                     <p>Desmond Bane</p>
                     <p>Jaren Jackson Jr.</p>
                     <p>Bam Adebayo</p>
-                    <hr class="border border-white border-1 opacity-50">
+                    <hr class="border border-dark border-1 opacity-50">
                     <p>Russell Westbrook</p>
                     <p>Ben Simmons</p>
 
@@ -61,9 +61,9 @@
         </div>
 
         <div class="col-md-3">
-            <div class="p-5 teamcolor3 text-white border rounded-3 lh-1">
+            <div class="p-5 teamcolor3 text-dark border rounded-3 lh-1">
                 <h3>Jannseni</h3>
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
 
                 <p>Chris Paul</p>
                 <p>Jaylen Brown</p>
@@ -71,7 +71,7 @@
                 <p>Giannis Antetokounmpo</p>
                 <p>Joel Embiid</p>
 
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
                 <div class="fw-lighter">
 
                     <p>Damian Lillard</p>
@@ -79,7 +79,7 @@
                     <p>CJ McCollum</p>
                     <p>John Collins</p>
                     <p>Domantas Sabonis</p>
-                    <hr class="border border-white border-1 opacity-50">
+                    <hr class="border border-dark border-1 opacity-50">
                     <p>OG Anunoby</p>
                     <p>Draymond Green</p>
 
@@ -88,9 +88,9 @@
         </div>
 
         <div class="col-md-3">
-            <div class="p-5 teamcolor4 text-white border rounded-3 lh-1">
+            <div class="p-5 teamcolor4 text-dark border rounded-3 lh-1">
                 <h3>Schnelli</h3>
-                <hr class="border border-white border-1 opacity-50">
+                <hr class="border border-dark border-1 opacity-50">
 
                 <p>Ja Morant</p>
                 <p>Jimmy Butler</p>
@@ -99,14 +99,14 @@
                 <p>Rudy Gobert</p>
 
                 <div class="fw-lighter">
-                    <hr class="border border-white border-1 opacity-50">
+                    <hr class="border border-dark border-1 opacity-50">
 
                     <p>Kyrie Irving</p>
                     <p>Jrue Holiday</p>
                     <p>Brandon Ingram</p>
                     <p>Karl-Anthony Towns</p>
                     <p>Christian Wood</p>
-                    <hr class="border border-white border-1 opacity-50">
+                    <hr class="border border-dark border-1 opacity-50">
                     <p>Dejounte Murray</p>
                     <p>Anthony Edwards</p>
 
@@ -120,18 +120,58 @@
 
         <div class="rounded-3 p-4 bkcolor border text-white">
 
+            <form>
+                <div class="row align-items-md-stretch justify-content-start px-3">
+                    <div class="col-md-2">
+
+                        <div class="mb-3">
+                            <label for="team_name" class="form-label">Team name</label>
+                            <input required type="text" class="form-control" id="team_name"
+                                aria-describedby="teamNameHelp">
+                            <!-- <div id="teamNameHelp">Additional info
+                            </div>
+                            -->
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-2">
+                        <div class="mb-3">
+                            <label for="team_abbreviation" class="form-label">Abbreviation</label>
+                            <input required type="text" class="form-control" id="team_abbreviation"
+                                aria-describedby="teamAbbreviationHelp">
+                            <!-- <div id="teamAbbreviationHelp">1-4 characters
+                            </div>
+                            -->
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="row align-items-md-stretch mb-4 justify-content-start px-3">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-outline-light">Update</button>
+                    </div>
+                </div>
+            </form>
+
             <div class="row align-items-md-stretch justify-content-between px-3">
 
                 <div class="col-md-2 text-center lh-1 dropend">
 
-                    
-                  
+
+
                     <a href="#" class="text-white" data-bs-toggle="dropdown" aria-expanded="false">
-                    <div class="relative player-shadow bkcolor border border-white border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png" alt="">
-                        <h5 class="position p-1">PG</h5>
-                    </div>
-                  </a>
+                        <div
+                            class="relative player-shadow bkcolor border border-white border-2 rounded-3 text-center mb-2">
+                            <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png"
+                                alt="">
+                            <h5 class="position p-1">PG</h5>
+                        </div>
+                    </a>
                     <ul class="dropdown-menu text-small shadow">
                         <li class="dropdown-item">Andre Drummond</li>
                         <li class="dropdown-item">Avery Bradley</li>
@@ -140,29 +180,37 @@
                         <li class="dropdown-item">Zack Randolph</li>
                         <hr class="dropdown-divider">
                         <li class="dropdown-item">Remove player</li>
-                      </ul>
+                    </ul>
                 </div>
                 <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201935.png" alt="">
+                    <div
+                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201935.png"
+                            alt="">
                         <h5 class="position p-1">SG</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201142.png" alt="">
+                    <div
+                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201142.png"
+                            alt="">
                         <h5 class="position p-1">SF</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1627783.png" alt="">
+                    <div
+                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1627783.png"
+                            alt="">
                         <h5 class="position p-1">PF</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203076.png" alt="">
+                    <div
+                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203076.png"
+                            alt="">
                         <h5 class="position p-1">C</h5>
                     </div>
                 </div>
@@ -175,31 +223,36 @@
 
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1629027.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1629027.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">PG</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1626164.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1626164.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">SG</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203897.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203897.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">SF</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203114.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203114.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">PF</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1629627.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1629627.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">C</h5>
                     </div>
                 </div>
@@ -212,21 +265,23 @@
 
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203078.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203078.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">Res</h5>
                     </div>
                 </div>
                 <div class="col-md-2 text-center lh-1">
                     <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203952.png" alt="">
+                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203952.png"
+                            alt="">
                         <h5 class="position text-secondary p-1">Res</h5>
                     </div>
                 </div>
                 <div class="col-md-7 text-center d-flex align-items-center justify-content-center lh-1">
                     <img class="img-fluid logo-white" src="/static/images/BKslogan.png" alt="">
+                </div>
             </div>
-            </div>
-        
+
         </div>
 
     </div>

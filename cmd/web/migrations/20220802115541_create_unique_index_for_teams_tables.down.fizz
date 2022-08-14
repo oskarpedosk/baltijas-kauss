@@ -1,4 +1,3 @@
 drop_index("nba22_teams", "nba22_teams_abbreviation_idx")
-drop_index("nba22_teams", "nba22_teams_logo_url_idx")
 drop_index("nba22_teams", "nba22_teams_name_idx")
 drop_index("nba22_teams", "nba22_teams_owner_id_idx")
