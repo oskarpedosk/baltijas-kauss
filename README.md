@@ -1,6 +1,6 @@
 # Baltijas Kauss™
 
-NBA 2K & FIFA video game draft simulator.
+NBA 2K & FIFA players database and draft simulator.
 
 - Built in Go version 1.18
 - Uses [Colly web scraper](https://github.com/gocolly/colly)
