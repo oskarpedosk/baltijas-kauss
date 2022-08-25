@@ -43,20 +43,20 @@
 }
 
 .teamcolor1 {
-    background-image: linear-gradient(to right, #f78ca0 0%, #f9748f 19%, #fd868c 60%, #fe8b8b 100%);
+    background-image: linear-gradient(90deg, #8100ff, #9700fe);
 }
 
 .teamcolor2 {
-    background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-image: linear-gradient(90deg, #9a01ff, #af00ff);
 }
 
 .teamcolor3 {
-    background-image: linear-gradient(to top, #4481eb 0%, #04befe 100%);
+    background-image: linear-gradient(90deg, #ca03ff, #c801ff);
 
 }
 
 .teamcolor4 {
-    background-image: linear-gradient(-20deg, #00cdac 0%, #8ddad5 100%);
+    background-image: linear-gradient(90deg, #c900ff, #df01ff);
 }
 
 .sidebar ul li:hover {

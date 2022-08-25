@@ -62,3 +62,10 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	render.RenderTemplate(w, "nba_teams.page.tmpl", &models.TemplateData{})
 }
 
+func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Posted to db"))
+}
+
+func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
+	render.RenderTemplate(w, "nba_results.page.tmpl", &models.TemplateData{})
+}

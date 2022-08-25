@@ -1,0 +1,131 @@
+{{template "base" .}}
+
+{{define "content"}}
+<div class="container p-3">
+
+    <div class="row align-items-md-stretch mb-4">
+        <div class="col-md-12">
+            <div class="h-100 p-5 bg-light border border-dark rounded-3">
+                <table class="table text-center">
+                    <thead>
+                        <tr>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col">W</th>
+                            <th scope="col">L</th>
+                            <th scope="col">WIN%</th>
+                            <th scope="col">HOME</th>
+                            <th scope="col">ROAD</th>
+                            <th scope="col">L10</th>
+                            <th scope="col">STRK</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td class="text-start">Hiiu Kalur</td>
+                            <td>23</td>
+                            <td>11</td>
+                            <td>.636</td>
+                            <td>9-6</td>
+                            <td>8-2</td>
+                            <td>6-4</td>
+                            <td>W 2</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td class="text-start">Schnelli Klaas</td>
+                            <td>23</td>
+                            <td>11</td>
+                            <td>.636</td>
+                            <td>9-6</td>
+                            <td>8-2</td>
+                            <td>6-4</td>
+                            <td>W 2</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td class="text-start">Kreutzwaldi Pagar</td>
+                            <td>23</td>
+                            <td>11</td>
+                            <td>.636</td>
+                            <td>9-6</td>
+                            <td>8-2</td>
+                            <td>6-4</td>
+                            <td>W 2</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td class="text-start">Jannseni Metall</td>
+                            <td>23</td>
+                            <td>11</td>
+                            <td>.636</td>
+                            <td>9-6</td>
+                            <td>8-2</td>
+                            <td>6-4</td>
+                            <td>W 2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch mb-4">
+        <div class="col-md-12">
+            <div class="p-5 bg-light border border-dark rounded-3">
+                <h1>Last 10 games</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-md-stretch">
+        <div class="col-md-12">
+            <div class="h-100 p-5 bg-light border border-dark rounded-3">
+
+                <form class="row needs-validation justify-content-center" novalidate>
+                    <div class="col-md-3">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Home team</option>
+                            <option value="1">Hiiu Kalur</option>
+                            <option value="2">Schnelli Klaas</option>
+                            <option value="3">Kreutzwaldi Pagar</option>
+                            <option value="4">Jannseni Metall</option>
+                        </select>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="abbreviation" class="visually-hidden">Last name</label>
+                        <input type="text" class="form-control" id="abbreviation" placeholder="Score" required>
+                        <div class="invalid-feedback text-white">
+                            Maximum 4 characters
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <label for="abbreviation" class="visually-hidden">Last name</label>
+                        <input type="text" class="form-control" id="abbreviation" placeholder="Score" required>
+                        <div class="invalid-feedback text-white">
+                            Maximum 4 characters
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Away team</option>
+                            <option value="1">Hiiu Kalur</option>
+                            <option value="2">Schnelli Klaas</option>
+                            <option value="3">Kreutzwaldi Pagar</option>
+                            <option value="4">Jannseni Metall</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-outline-primary" type="submit">Add game</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+{{end}}
