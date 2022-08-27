@@ -253,15 +253,16 @@
         <div class="rounded-3 p-4 bg-light border border-dark text-dark" id="team_info">
 
             <form action="/nba/teams" method="post" class="row needs-validation" novalidate>
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                 <div class="col-md-3">
-                    <label for="team_name" class="visually-hidden">First name</label>
+                    <label for="team_name" class="visually-hidden">Team name</label>
                     <input type="text" class="form-control" name="team_name" placeholder="Team name" required>
                     <div class="invalid-feedback">
                         Maximum 16 characters
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <label for="abbreviation" class="visually-hidden">Last name</label>
+                    <label for="abbreviation" class="visually-hidden">Abbreviation</label>
                     <input type="text" class="form-control" name="abbreviation" placeholder="Abbreviation" required>
                     <div class="invalid-feedback">
                         Maximum 4 characters
@@ -269,21 +270,16 @@
                 </div>
                 <div class="col-auto">
                     <label for="team_color" class="form-label visually-hidden">Color picker</label>
-                    <input type="color" class="form-control form-control-color" id="team_color" value="#000000"
+                    <input type="color" class="form-control form-control-color" name="team_color" value="#000000"
                         title="Choose your color">
                 </div>
                 <div class="col-auto">
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="team_color"
-                            value="option1" required>
-                        <label class="form-check-label">Light text</label>
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" name="text_color" value="dark">
+                            Dark text
+                        </label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="team_color"
-                            value="option2">
-                        <label class="form-check-label">Dark text</label>
-                    </div>
-
                 </div>
                 <div class="col-auto">
                     <button type="submit" class="btn btn-outline-dark">Update</button>
@@ -294,6 +290,7 @@
         </div>
 
     </div>
+
 
 </div>
 

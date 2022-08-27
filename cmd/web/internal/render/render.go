@@ -1,30 +1,36 @@
 package render
 
 import (
-	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/models"
 	"bytes"
 	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 	"path/filepath"
+
+	"github.com/justinas/nosurf"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
+	"github.com/oskarpedosk/baltijas-kauss/pkg/models"
 )
 
+var pathToTemplates = "../../templates"
 var functions = template.FuncMap{}
 
 var app *config.AppConfig
 
 // NewTemplate sets the config for the template package
-func NewTemplate(a *config.AppConfig) {
+func NewTemplates(a *config.AppConfig) {
 	app = a
 }
 
-func AddDefaultData(tmplData *models.TemplateData) *models.TemplateData {
+// AddDefaultData adds data for all templates
+func AddDefaultData(tmplData *models.TemplateData, r *http.Request) *models.TemplateData {
+	tmplData.CSRFToken = nosurf.Token(r)
 	return tmplData
 }
 
-func RenderTemplate(w http.ResponseWriter, templateName string, tmplData *models.TemplateData) {
+// RenderTemplate renders templates using html/template
+func RenderTemplate(w http.ResponseWriter, r *http.Request, templateName string, tmplData *models.TemplateData) error {
 
 	var templateCache map[string]*template.Template
 	if app.UseCache {
@@ -33,22 +39,25 @@ func RenderTemplate(w http.ResponseWriter, templateName string, tmplData *models
 	} else {
 		templateCache, _ = CreateTemplateCache()
 	}
-
+ 
 	tmpl, ok := templateCache[templateName]
 	if !ok {
 		log.Fatal("Could not get template from template cache")
 	}
 
+	tmplData = AddDefaultData(tmplData, r)
+
 	buf := new(bytes.Buffer)
 
-	tmplData = AddDefaultData(tmplData)
-
-	_ = tmpl.Execute(buf, tmplData)
-
-	_, err := buf.WriteTo(w)
+	err := tmpl.Execute(buf, tmplData)
+	if err != nil {
+		fmt.Println("Error executing template data")
+	}
+	_, err = buf.WriteTo(w)
 	if err != nil {
 		fmt.Println("Error writing template to browser", err)
 	}
+	return nil
 }
 
 func CreateTemplateCache() (map[string]*template.Template, error) {

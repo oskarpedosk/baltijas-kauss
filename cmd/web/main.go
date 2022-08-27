@@ -6,9 +6,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/handlers"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/render"
+	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/handlers"
+	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 	"github.com/oskarpedosk/baltijas-kauss/utilities"
 
 	"github.com/alexedwards/scs/v2"
@@ -43,7 +43,7 @@ func main() {
 
 	repo := handlers.NewRepo(&app)
 	handlers.NewHandlers(repo)
-	render.NewTemplate(&app)
+	render.NewTemplates(&app)
 
 	needsScraping := false
 	if needsScraping {

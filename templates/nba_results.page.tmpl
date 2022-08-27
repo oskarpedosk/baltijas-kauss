@@ -73,51 +73,51 @@
 
     <div class="row align-items-md-stretch mb-4">
         <div class="col-md-12">
-            <div class="p-5 bg-light border border-dark rounded-3">
-                <h1>Last 10 games</h1>
-            </div>
-        </div>
-    </div>
-
-    <div class="row align-items-md-stretch">
-        <div class="col-md-12">
             <div class="h-100 p-5 bg-light border border-dark rounded-3">
 
-                <form class="row needs-validation justify-content-center" novalidate>
+                <form action="/nba/results" method="post" class="row needs-validation justify-content-center"
+                    novalidate>
+                    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Home team</option>
-                            <option value="1">Hiiu Kalur</option>
-                            <option value="2">Schnelli Klaas</option>
-                            <option value="3">Kreutzwaldi Pagar</option>
-                            <option value="4">Jannseni Metall</option>
+                        <select class="form-select" aria-label="Home team" name="home_team" required >
+                            <option selected disabled value="">Home team</option>
+                            <option>Hiiu Kalur</option>
+                            <option>Schnelli Klaas</option>
+                            <option>Kreutzwaldi Pagar</option>
+                            <option>Jannseni Metall</option>
                         </select>
-                    </div>
-                    <div class="col-md-1">
-                        <label for="abbreviation" class="visually-hidden">Last name</label>
-                        <input type="text" class="form-control" id="abbreviation" placeholder="Score" required>
-                        <div class="invalid-feedback text-white">
-                            Maximum 4 characters
+                        <div class="invalid-feedback">
+                            Please select a team
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <label for="abbreviation" class="visually-hidden">Last name</label>
-                        <input type="text" class="form-control" id="abbreviation" placeholder="Score" required>
-                        <div class="invalid-feedback text-white">
-                            Maximum 4 characters
+                    <div class="col-md-2">
+                        <label for="home_score" class="visually-hidden">Home score</label>
+                        <input type="number" class="form-control" name="home_score" placeholder="Score" required>
+                        <div class="invalid-feedback">
+                            Enter score
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="away_score" class="visually-hidden">Away score</label>
+                        <input type="number" class="form-control" name="away_score" placeholder="Score" required>
+                        <div class="invalid-feedback">
+                            Enter score
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Away team</option>
-                            <option value="1">Hiiu Kalur</option>
-                            <option value="2">Schnelli Klaas</option>
-                            <option value="3">Kreutzwaldi Pagar</option>
-                            <option value="4">Jannseni Metall</option>
+                        <select class="form-select" aria-label="Away team" name="away_team" required>
+                            <option selected disabled value="">Away team</option>
+                            <option>Hiiu Kalur</option>
+                            <option>Schnelli Klaas</option>
+                            <option>Kreutzwaldi Pagar</option>
+                            <option>Jannseni Metall</option>
                         </select>
+                        <div class="invalid-feedback">
+                            Please select a team
+                        </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-auto">
                         <button class="btn btn-outline-primary" type="submit">Add game</button>
                     </div>
 
@@ -126,6 +126,41 @@
         </div>
     </div>
 
+    <div class="row align-items-md-stretch">
+        <div class="col-md-12">
+            <div class="p-5 bg-light border border-dark rounded-3">
+                <h1>Last 10 games</h1>
+            </div>
+        </div>
+    </div>
+
 
 </div>
+{{end}}
+
+{{define "js"}}
+
+
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (() => {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        const forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
 {{end}}
