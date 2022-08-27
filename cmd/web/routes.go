@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/handlers"
+	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/handlers"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"

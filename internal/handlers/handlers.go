@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/models"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/render"
+	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/models"
+	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 	"github.com/oskarpedosk/baltijas-kauss/utilities"
 )
 

@@ -9,8 +9,8 @@ import (
 	"path/filepath"
 
 	"github.com/justinas/nosurf"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/config"
-	"github.com/oskarpedosk/baltijas-kauss/pkg/models"
+	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 )
 
 var pathToTemplates = "../../templates"
