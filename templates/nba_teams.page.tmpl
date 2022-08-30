@@ -252,31 +252,34 @@
 
         <div class="rounded-3 p-4 bg-light border border-dark text-dark" id="team_info">
 
-            <form action="/nba/teams" method="post" class="row needs-validation" novalidate>
+
+            {{$res := index .Data "teamInfo"}}
+
+            <form action="/nba/teams" method="post" class="row" novalidate>
                 <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                 <div class="col-md-3">
                     <label for="team_name" class="visually-hidden">Team name</label>
-                    <input type="text" class="form-control" name="team_name" placeholder="Team name" required>
-                    <div class="invalid-feedback">
-                        Maximum 16 characters
-                    </div>
+                    <input type="text" class="form-control {{with .Form.Errors.Get "team_name"}} is-invalid {{end}}" name="team_name" placeholder="Team name" value="{{$res.TeamName}}" required>
+                    {{with .Form.Errors.Get "team_name"}}
+                    <label class="text-danger">{{.}}</label>
+                {{end}}
                 </div>
                 <div class="col-md-3">
                     <label for="abbreviation" class="visually-hidden">Abbreviation</label>
-                    <input type="text" class="form-control" name="abbreviation" placeholder="Abbreviation" required>
-                    <div class="invalid-feedback">
-                        Maximum 4 characters
-                    </div>
+                    <input type="text" class="form-control {{with .Form.Errors.Get "abbreviation"}} is-invalid {{end}}" name="abbreviation" placeholder="Abbreviation" value="{{$res.Abbreviation}}" required>
+                    {{with .Form.Errors.Get "abbreviation"}}
+                    <label class="text-danger">{{.}}</label>
+                {{end}}
                 </div>
                 <div class="col-auto">
                     <label for="team_color" class="form-label visually-hidden">Color picker</label>
-                    <input type="color" class="form-control form-control-color" name="team_color" value="#000000"
+                    <input type="color" class="form-control form-control-color" name="team_color" value="{{$res.TeamColor}}"
                         title="Choose your color">
                 </div>
                 <div class="col-auto">
                     <div class="form-check form-check-inline">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="text_color" value="dark">
+                            <input class="form-check-input" type="checkbox" name="text_color" value="true">
                             Dark text
                         </label>
                     </div>
@@ -318,6 +321,7 @@
             }, false)
         })
     })()
+
 </script>
 
 {{end}}

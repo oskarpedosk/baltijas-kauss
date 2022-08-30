@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 	"github.com/oskarpedosk/baltijas-kauss/utilities"
@@ -57,16 +58,53 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	stringMap["remote_ip"] = remoteIP
 
 	render.RenderTemplate(w, r, "nba_players.page.tmpl", &models.TemplateData{
-		StringMap:     stringMap,
-		NBAPlayerData: playerData,
+		StringMap: stringMap,
+		Data:      playerData,
 	})
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "nba_teams.page.tmpl", &models.TemplateData{})
+	var emptyTeamInfo models.TeamInfo
+	data := make(map[string]interface{})
+	data["teamInfo"] = emptyTeamInfo
+
+	render.RenderTemplate(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+		Data: data,
+	})
 }
 
 func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	
+	teamInfo := models.TeamInfo{
+		TeamName:     r.Form.Get("team_name"),
+		Abbreviation: r.Form.Get("abbreviation"),
+		TeamColor:    r.Form.Get("team_color"),
+		DarkText:     r.Form.Get("text_color"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Required("team_name", "abbreviation")
+	form.MaxLength("abbreviation", 4, r)
+
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["teamInfo"] = teamInfo
+
+		render.RenderTemplate(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
 	team_name := r.Form.Get("team_name")
 	abbreviation := r.Form.Get("abbreviation")
 	team_color := r.Form.Get("team_color")
@@ -82,7 +120,7 @@ type jsonResponse struct {
 // Handles request for availability and sends JSON response
 func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Request) {
 	resp := jsonResponse{
-		OK: true,
+		OK:      true,
 		Message: "Available!",
 	}
 
