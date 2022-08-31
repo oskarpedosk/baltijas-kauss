@@ -17,9 +17,7 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Use(SessionLoad)
 
 	mux.Get("/", handlers.Repo.SignIn)
-
 	mux.Get("/nba", handlers.Repo.NBAHome)
-
 	mux.Get("/nba/players", handlers.Repo.NBAPlayers)
 
 	mux.Get("/nba/teams", handlers.Repo.NBATeams)

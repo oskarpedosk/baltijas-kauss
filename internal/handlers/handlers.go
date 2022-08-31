@@ -10,7 +10,6 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
-	"github.com/oskarpedosk/baltijas-kauss/utilities"
 )
 
 // Repo the repository used by the handlers
@@ -45,21 +44,12 @@ func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
-
-	playerData := make(map[string]interface{})
-	players := utilities.ReadNBAPlayerData("../../static/jsondata/nba2k_player_data.json")
-
-	for i := 0; i < len(players); i++ {
-		playerData[players[i].FirstName+players[i].LastName] = players[i]
-	}
-
 	stringMap := make(map[string]string)
 	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
 	stringMap["remote_ip"] = remoteIP
 
 	render.RenderTemplate(w, r, "nba_players.page.tmpl", &models.TemplateData{
 		StringMap: stringMap,
-		Data:      playerData,
 	})
 }
 
