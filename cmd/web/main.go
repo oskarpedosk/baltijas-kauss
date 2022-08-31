@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/gob"
 	"fmt"
 	"log"
 	"net/http"
@@ -8,8 +9,8 @@ import (
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/handlers"
+	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
-	"github.com/oskarpedosk/baltijas-kauss/utilities"
 
 	"github.com/alexedwards/scs/v2"
 )
@@ -21,6 +22,25 @@ var app config.AppConfig
 var session *scs.SessionManager
 
 func main() {
+	err := run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("Starting application on port%s\n", portNumber)
+
+	serve := &http.Server{
+		Addr:    portNumber,
+		Handler: routes(&app),
+	}
+
+	err = serve.ListenAndServe()
+	log.Fatal(err)
+}
+
+func run() error {
+	// What am I going to put in the session
+	gob.Register(models.TeamInfo{})
 
 	// Change this to true when in production
 	app.InProduction = false
@@ -36,6 +56,7 @@ func main() {
 	templateCache, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("Cannot create template cache")
+		return err
 	}
 
 	app.TemplateCache = templateCache
@@ -45,19 +66,5 @@ func main() {
 	handlers.NewHandlers(repo)
 	render.NewTemplates(&app)
 
-	needsScraping := false
-	if needsScraping {
-		scrapedData := utilities.ScrapeNBA2KData()
-		utilities.WriteToJson(nba2KDataFileName, scrapedData)
-	}
-
-	fmt.Printf("Starting application on port%s\n", portNumber)
-
-	serve := &http.Server{
-		Addr:    portNumber,
-		Handler: routes(&app),
-	}
-
-	err = serve.ListenAndServe()
-	log.Fatal(err)
+	return nil
 }

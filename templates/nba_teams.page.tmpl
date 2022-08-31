@@ -259,22 +259,24 @@
                 <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                 <div class="col-md-3">
                     <label for="team_name" class="visually-hidden">Team name</label>
-                    <input type="text" class="form-control {{with .Form.Errors.Get "team_name"}} is-invalid {{end}}" name="team_name" placeholder="Team name" value="{{$res.TeamName}}" required>
+                    <input type="text" class="form-control {{with .Form.Errors.Get " team_name"}} is-invalid {{end}}"
+                        name="team_name" placeholder="Team name" value="{{$res.TeamName}}" required>
                     {{with .Form.Errors.Get "team_name"}}
                     <label class="text-danger">{{.}}</label>
-                {{end}}
+                    {{end}}
                 </div>
                 <div class="col-md-3">
                     <label for="abbreviation" class="visually-hidden">Abbreviation</label>
-                    <input type="text" class="form-control {{with .Form.Errors.Get "abbreviation"}} is-invalid {{end}}" name="abbreviation" placeholder="Abbreviation" value="{{$res.Abbreviation}}" required>
+                    <input type="text" class="form-control {{with .Form.Errors.Get " abbreviation"}} is-invalid {{end}}"
+                        name="abbreviation" placeholder="Abbreviation" value="{{$res.Abbreviation}}" required>
                     {{with .Form.Errors.Get "abbreviation"}}
                     <label class="text-danger">{{.}}</label>
-                {{end}}
+                    {{end}}
                 </div>
                 <div class="col-auto">
                     <label for="team_color" class="form-label visually-hidden">Color picker</label>
-                    <input type="color" class="form-control form-control-color" name="team_color" value="{{$res.TeamColor}}"
-                        title="Choose your color">
+                    <input type="color" class="form-control form-control-color" name="team_color"
+                        value="{{$res.TeamColor}}" title="Choose your color">
                 </div>
                 <div class="col-auto">
                     <div class="form-check form-check-inline">
@@ -285,10 +287,24 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-outline-dark">Update</button>
+                    <button type="submit" id="liveToastBtn" class="btn btn-outline-dark">Update</button>
                 </div>
 
             </form>
+
+            <div class="toast-container position-fixed bottom-0 end-0 p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="..." class="rounded me-2" alt="...">
+                        <strong class="me-auto">Bootstrap</strong>
+                        <small>11 mins ago</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Hello, world! This is a toast message.
+                    </div>
+                </div>
+            </div>
 
         </div>
 
@@ -321,6 +337,17 @@
             }, false)
         })
     })()
+
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
+    if (toastTrigger) {
+        toastTrigger.addEventListener('click', () => {
+            const toast = new bootstrap.Toast(toastLiveExample)
+
+            toast.show()
+        })
+    }
+
 
 </script>
 

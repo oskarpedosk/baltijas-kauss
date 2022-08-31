@@ -105,6 +105,10 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	m.App.Session.Put(r.Context(), "team_info", teamInfo)
+
+	http.Redirect(w, r, "/nba/team-info-summary", http.StatusSeeOther)
+
 	team_name := r.Form.Get("team_name")
 	abbreviation := r.Form.Get("abbreviation")
 	team_color := r.Form.Get("team_color")
@@ -131,6 +135,24 @@ func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Req
 
 	w.Header().Set("Content-type", "application/json")
 	w.Write(out)
+}
+
+func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) {
+	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.TeamInfo)
+	if !ok {
+		log.Println("Cannot get item from session")
+		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
+		http.Redirect(w, r, "/nba/teams", http.StatusTemporaryRedirect)
+		return
+	}
+
+	m.App.Session.Remove(r.Context(), "team_info")
+	data := make(map[string]interface{})
+	data["team_info"] = teamInfo
+
+	render.RenderTemplate(w, r, "nba_team_info.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
 
 func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
