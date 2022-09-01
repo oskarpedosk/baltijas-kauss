@@ -81,7 +81,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 	form := forms.New(r.PostForm)
 
 	form.Required("team_name", "abbreviation")
-	form.MaxLength("abbreviation", 4, r)
+	form.MaxLength("abbreviation", 4)
 
 
 	if !form.Valid() {
@@ -99,11 +99,11 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/nba/team-info-summary", http.StatusSeeOther)
 
-	team_name := r.Form.Get("team_name")
-	abbreviation := r.Form.Get("abbreviation")
-	team_color := r.Form.Get("team_color")
-	text_color := r.Form.Get("text_color")
-	w.Write([]byte(fmt.Sprintf("team name is: %s and abbreviation is: %s and team color is: %s and text color is %s", team_name, abbreviation, team_color, text_color)))
+	//team_name := r.Form.Get("team_name")
+	//abbreviation := r.Form.Get("abbreviation")
+	//team_color := r.Form.Get("team_color")
+	//text_color := r.Form.Get("text_color")
+	//w.Write([]byte(fmt.Sprintf("team name is: %s and abbreviation is: %s and team color is: %s and text color is %s", team_name, abbreviation, team_color, text_color)))
 }
 
 type jsonResponse struct {

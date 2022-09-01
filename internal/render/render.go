@@ -45,7 +45,7 @@ func RenderTemplate(w http.ResponseWriter, r *http.Request, templateName string,
  
 	tmpl, ok := templateCache[templateName]
 	if !ok {
-		return errors.New("Can't get template from cache")
+		return errors.New("can't get template from cache")
 	}
 
 	tmplData = AddDefaultData(tmplData, r)

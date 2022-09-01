@@ -1,0 +1,25 @@
+mode: set
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:22.40,24.2 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:27.90,33.2 5 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:36.119,39.18 2 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:46.2,47.9 2 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:51.2,56.16 4 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:59.2,60.16 2 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:64.2,64.12 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:39.18,42.3 1 0
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:42.8,44.3 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:47.9,49.3 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:56.16,58.3 1 0
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:60.16,63.3 2 0
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:67.67,72.16 3 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:77.2,77.29 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:99.2,99.21 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:72.16,74.3 1 0
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:77.29,80.17 3 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:84.3,85.17 2 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:89.3,89.23 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:96.3,96.30 1 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:80.17,82.4 1 0
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:85.17,87.4 1 0
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:89.23,91.18 2 1
+github.com/oskarpedosk/baltijas-kauss/internal/render/render.go:91.18,93.5 1 0
