@@ -71,6 +71,10 @@
     filter: brightness(0) invert(1);
 }
 
+.logo-black {
+    filter: brightness(0);
+}
+
 .relative {
     position: relative;
 }

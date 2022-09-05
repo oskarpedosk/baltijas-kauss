@@ -1,3 +1,0 @@
-add_index("nba22_teams", "name", {"unique": true})
-add_index("nba22_teams", "abbreviation", {"unique": true})
-add_index("nba22_teams", "owner_id", {"unique": true})

@@ -239,8 +239,23 @@
                         <h5 class="position text-secondary p-1">Res</h5>
                     </div>
                 </div>
-                <div class="col-md-7 text-center d-flex align-items-center justify-content-center lh-1">
-                    <img class="img-fluid logo-white" src="/static/images/BKslogan.png" alt="">
+                <div class="col-md-2 text-center lh-1">
+                    <div class="h-100 player-shadow border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
+                        <img class="img-fluid" style="max-height: 50px" src="/static/images/add.png"
+                            alt="">
+                    </div>
+                </div>
+                <div class="col-md-2 lh-1">
+                    <div class="h-100 player-shadow border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
+                        <img class="img-fluid" style="max-height: 50px" src="/static/images/remove.png"
+                            alt="">
+                    </div>
+                </div>
+                <div class="col-md-2 lh-1">
+                    <div class="h-100 player-shadow border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
+                        <img class="img-fluid" style="max-height: 50px" src="/static/images/settings.png"
+                            alt="">
+                    </div>
                 </div>
             </div>
 
@@ -250,7 +265,7 @@
 
     <div class="align-items-md-stretch mb-4 rounded-3">
 
-        <div class="rounded-3 p-4 bg-light border border-dark text-dark" id="team_info">
+        <div class="rounded-3 p-4 bkcolor text-white" id="team_info">
 
 
             {{$res := index .Data "teamInfo"}}
@@ -262,7 +277,7 @@
                     <input type="text" class="form-control {{with .Form.Errors.Get " team_name"}} is-invalid {{end}}"
                         name="team_name" placeholder="Team name" value="{{$res.TeamName}}" required>
                     {{with .Form.Errors.Get "team_name"}}
-                    <label class="text-danger">{{.}}</label>
+                    <label class="text-white">{{.}}</label>
                     {{end}}
                 </div>
                 <div class="col-md-3">
@@ -270,7 +285,7 @@
                     <input type="text" class="form-control {{with .Form.Errors.Get " abbreviation"}} is-invalid {{end}}"
                         name="abbreviation" placeholder="Abbreviation" value="{{$res.Abbreviation}}" required>
                     {{with .Form.Errors.Get "abbreviation"}}
-                    <label class="text-danger">{{.}}</label>
+                    <label class="text-white">{{.}}</label>
                     {{end}}
                 </div>
                 <div class="col-auto">
@@ -287,7 +302,10 @@
                     </div>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" id="liveToastBtn" class="btn btn-outline-dark">Update</button>
+                    <button type="submit" id="liveToastBtn" class="btn btn-outline-light">Update</button>
+                </div>
+                <div class="col-md-2 text-center d-flex align-items-center justify-content-center lh-1">
+                    <img class="img-fluid" src="/static/images/BKslogan.png" alt="">
                 </div>
 
             </form>

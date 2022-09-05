@@ -1,9 +1,0 @@
-add_foreign_key("nba22_players_badges", "player_id", {"nba22_players": ["player_id"]}, {
-    "on_delete": "cascade",
-    "on_update": "cascade",
-})
-
-add_foreign_key("nba22_players_badges", "badge_id", {"nba22_badges": ["badge_id"]}, {
-    "on_delete": "cascade",
-    "on_update": "cascade",
-})

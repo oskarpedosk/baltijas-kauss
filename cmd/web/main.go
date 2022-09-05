@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"encoding/gob"
 	"fmt"
 	"log"
@@ -15,6 +16,7 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 
 	"github.com/alexedwards/scs/v2"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 const portNumber = ":8080"
@@ -26,7 +28,30 @@ var infoLog *log.Logger
 var errorLog *log.Logger
 
 func main() {
-	err := run()
+	// Connect to database
+	conn, err := sql.Open("pgx", "host=localhost port=5432 dbname=baltijas_kauss user=op password=")
+	if err != nil {
+		log.Fatalf(fmt.Sprintf("Unable to connect: %v\n", err))
+	}
+	defer conn.Close()
+
+	log.Println("Connected to database!")
+
+	// Test connection
+	err = conn.Ping()
+	if err != nil {
+		log.Fatal("Cannot ping database!")
+	}
+
+	log.Println("Pinged database!")
+
+	// Get rows from table
+	err = getAllRows(conn)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = run()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,6 +66,36 @@ func main() {
 	err = serve.ListenAndServe()
 	log.Fatal(err)
 }
+
+func getAllRows(conn *sql.DB) error {
+	rows, err := conn.Query("select player_id, first_name, last_name from nba23_players where nba_team='Golden State Warriors'")
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+	defer rows.Close()
+
+	var firstName, lastName string
+	var id int
+
+	for rows.Next() {
+		err := rows.Scan(&id, &firstName, &lastName)
+		if err != nil {
+			log.Println(err)
+			return err
+		}
+		fmt.Println("Record is", id, firstName, lastName)
+	}
+
+	if err = rows.Err(); err != nil {
+		log.Fatal("Error scanning rows", err)
+	}
+
+	fmt.Println("---------------------------")
+
+	return nil
+}
+
 
 func run() error {
 	// What am I going to put in the session

@@ -14,14 +14,6 @@
 <p><strong>This</strong> is some text. <em>This</em> is some text too. This a link to the <a
         href="https://www.2kratings.com">2Kratings.com</a>.</p>
 
-<p>
-    {{if ne (index .StringMap "remote_ip") ""}}
-    Your remote IP address is {{index .StringMap "remote_ip"}}
-    {{else}}
-    I don't know your IP address yet. Visit the <a href="/">Home page</a> so I can set it.
-    {{end}}
-</p>
-
 <ul>
     <li>Item one</li>
     <li>Item two</li>

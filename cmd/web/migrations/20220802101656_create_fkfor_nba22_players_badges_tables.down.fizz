@@ -1,0 +1,3 @@
+drop_foreign_key("nba23_players_badges", "nba23_players_badges_nba23_players_player_id_fk", {})
+
+drop_foreign_key("nba23_players_badges", "nba23_players_badges_nba23_badges_badge_id_fk", {})

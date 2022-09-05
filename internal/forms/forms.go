@@ -57,6 +57,17 @@ func (f *Form) MaxLength(field string, length int) bool {
 	return true
 }
 
+func (f *Form) IsDuplicate(field string, field2 string, msg string) bool {
+	x := f.Get(field)
+	y := f.Get(field2)
+	if x == y {
+		f.Errors.Add(field, msg)
+		f.Errors.Add(field2, msg)
+		return false
+	}
+	return true
+}
+
 // IsEmail checks for valid e-mail address
 func (f *Form) IsEmail(field string) {
 	if !govalidator.IsEmail(f.Get(field)) {

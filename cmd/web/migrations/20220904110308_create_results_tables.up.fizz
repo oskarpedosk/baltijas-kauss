@@ -1,0 +1,6 @@
+create_table("nba_results", {timestamps: false}) {
+    t.Column("home_team_id", "integer", {})
+    t.Column("home_score", "integer", {})
+    t.Column("away_score", "integer", {})
+    t.Column("away_team_id", "integer", {})
+}

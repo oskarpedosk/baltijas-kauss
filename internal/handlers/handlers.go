@@ -2,14 +2,14 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
+	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
+	"github.com/oskarpedosk/baltijas-kauss/utilities"
 )
 
 // Repo the repository used by the handlers
@@ -44,13 +44,7 @@ func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
-	stringMap := make(map[string]string)
-	remoteIP := m.App.Session.GetString(r.Context(), "remote_ip")
-	stringMap["remote_ip"] = remoteIP
-
-	render.RenderTemplate(w, r, "nba_players.page.tmpl", &models.TemplateData{
-		StringMap: stringMap,
-	})
+	render.RenderTemplate(w, r, "nba_players.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
@@ -67,10 +61,10 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
 		return
 	}
-	
+
 	teamInfo := models.TeamInfo{
 		TeamName:     r.Form.Get("team_name"),
 		Abbreviation: r.Form.Get("abbreviation"),
@@ -82,7 +76,6 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 
 	form.Required("team_name", "abbreviation")
 	form.MaxLength("abbreviation", 4)
-
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
@@ -120,7 +113,8 @@ func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Req
 
 	out, err := json.MarshalIndent(resp, "", "     ")
 	if err != nil {
-		log.Println(err)
+		helpers.ServerError(w, err)
+		return
 	}
 
 	w.Header().Set("Content-type", "application/json")
@@ -130,7 +124,7 @@ func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Req
 func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) {
 	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.TeamInfo)
 	if !ok {
-		log.Println("Cannot get item from session")
+		m.App.ErrorLog.Println("Can't get error from session")
 		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
 		http.Redirect(w, r, "/nba/teams", http.StatusTemporaryRedirect)
 		return
@@ -146,13 +140,45 @@ func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) 
 }
 
 func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "nba_results.page.tmpl", &models.TemplateData{})
+	var emptyResult models.Result
+	data := make(map[string]interface{})
+	data["result"] = emptyResult
+
+	render.RenderTemplate(w, r, "nba_results.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+		Data: data,
+	})
 }
 
 func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
-	home_team := r.Form.Get("home_team")
-	home_score := r.Form.Get("home_score")
-	away_team := r.Form.Get("away_team")
-	away_score := r.Form.Get("away_score")
-	w.Write([]byte(fmt.Sprintf("home is: %s and away is: %s and home score is: %s and away score is %s", home_team, away_team, home_score, away_score)))
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	result := models.Result{
+		HomeTeam:  r.Form.Get("home_team"),
+		HomeScore: utilities.Atoi(r.Form.Get("home_score")),
+		AwayScore: utilities.Atoi(r.Form.Get("away_score")),
+		AwayTeam:  r.Form.Get("away_team"),
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Required("home_team", "home_score", "away_score", "away_team")
+	form.IsDuplicate("home_team", "away_team", "Home and away have to be different")
+	form.IsDuplicate("home_score", "away_score", "Score can't be a draw")
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["result"] = result
+
+		render.RenderTemplate(w, r, "nba_results.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+	
 }

@@ -1,1 +1,0 @@
-drop_foreign_key("nba22_players", "nba22_players_pkey", {})

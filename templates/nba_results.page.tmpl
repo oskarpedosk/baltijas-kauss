@@ -75,46 +75,52 @@
         <div class="col-md-12">
             <div class="h-100 p-5 bg-light border border-dark rounded-3">
 
-                <form action="/nba/results" method="post" class="row needs-validation justify-content-center"
-                    novalidate>
+                {{$res := index .Data "result"}}
+
+                <form action="/nba/results" method="post" class="row justify-content-center" novalidate>
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Home team" name="home_team" required >
+                        <select class="form-select {{with .Form.Errors.Get "home_team"}} is-invalid {{end}}" aria-label="Home team" name="home_team" required>
                             <option selected disabled value="">Home team</option>
                             <option>Hiiu Kalur</option>
                             <option>Schnelli Klaas</option>
                             <option>Kreutzwaldi Pagar</option>
                             <option>Jannseni Metall</option>
                         </select>
-                        <div class="invalid-feedback">
-                            Please select a team
-                        </div>
+                        {{with .Form.Errors.Get "home_team"}}
+                        <label class="text-danger">{{.}}</label>
+                        {{end}}
                     </div>
+
                     <div class="col-md-2">
                         <label for="home_score" class="visually-hidden">Home score</label>
-                        <input type="number" min="0" class="form-control" name="home_score" placeholder="Score" required>
-                        <div class="invalid-feedback">
-                            Enter score
-                        </div>
+                        <input type="number" min="0" class="form-control {{with .Form.Errors.Get "home_score"}} is-invalid {{end}}" name="home_score" placeholder="Score" value="{{$res.HomeScore}}"
+                            required>
+                        {{with .Form.Errors.Get "home_score"}}
+                        <label class="text-danger">{{.}}</label>
+                        {{end}}
                     </div>
+
                     <div class="col-md-2">
                         <label for="away_score" class="visually-hidden">Away score</label>
-                        <input type="number" min="0" class="form-control" name="away_score" placeholder="Score" required>
-                        <div class="invalid-feedback">
-                            Enter score
-                        </div>
+                        <input type="number" min="0" class="form-control {{with .Form.Errors.Get "away_score"}} is-invalid {{end}}" name="away_score" placeholder="Score" value="{{$res.AwayScore}}"
+                            required>
+                        {{with .Form.Errors.Get "away_score"}}
+                        <label class="text-danger">{{.}}</label>
+                        {{end}}
                     </div>
+
                     <div class="col-md-3">
-                        <select class="form-select" aria-label="Away team" name="away_team" required>
+                        <select class="form-select {{with .Form.Errors.Get "away_team"}} is-invalid {{end}}" aria-label="Away team" name="away_team" required>
                             <option selected disabled value="">Away team</option>
                             <option>Hiiu Kalur</option>
                             <option>Schnelli Klaas</option>
                             <option>Kreutzwaldi Pagar</option>
                             <option>Jannseni Metall</option>
                         </select>
-                        <div class="invalid-feedback">
-                            Please select a team
-                        </div>
+                        {{with .Form.Errors.Get "away_team"}}
+                        <label class="text-danger">{{.}}</label>
+                        {{end}}
                     </div>
 
                     <div class="col-auto">
@@ -133,7 +139,6 @@
             </div>
         </div>
     </div>
-
 
 </div>
 {{end}}

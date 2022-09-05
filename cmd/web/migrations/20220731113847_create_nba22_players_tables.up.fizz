@@ -1,16 +1,16 @@
-create_table("nba22_players") {
+create_table("nba23_players", {timestamps: false}) {
     t.Column("player_id", "integer", {primary: true})
     t.Column("first_name", "string", {"default": ""})
     t.Column("last_name", "string", {"default": ""})
     t.Column("primary_position", "string", {"default": ""})
-    t.Column("secondary_position", "string", {"default": ""})
+    t.Column("secondary_position", "string", {"default": "", "null": true})
     t.Column("archetype", "string", {"default": ""})
     t.Column("nba_team", "string", {"default": ""})
     t.Column("height", "integer", {})
-    t.Column("weight", "integer", {})
+    t.Column("weight", "integer", {"null": true})
     t.Column("img_url", "string", {"default": ""})
     t.Column("player_url", "string", {"default": ""})
-    t.Column("team_id", "integer", {})
+    t.Column("team_id", "integer", {"null": true})
     t.Column("stats/Overall", "integer", {})
     t.Column("stats/Outside Scoring", "integer", {})
     t.Column("stats/Athleticism", "integer", {})
@@ -62,4 +62,5 @@ create_table("nba22_players") {
     t.Column("gold_badges", "integer", {})
     t.Column("hof_badges", "integer", {})
     t.Column("total_badges", "integer", {})
+    t.Column("assigned", "bool", {"default": false})
 }
