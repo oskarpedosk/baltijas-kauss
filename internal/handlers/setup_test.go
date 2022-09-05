@@ -25,7 +25,7 @@ var pathToTemplates = "../../templates"
 var functions = template.FuncMap{}
 
 func getRoutes() http.Handler {
-	gob.Register(models.TeamInfo{})
+	gob.Register(models.NBATeamInfo{})
 
 	// Change this to true when in production
 	app.InProduction = false
@@ -54,7 +54,7 @@ func getRoutes() http.Handler {
 
 	repo := NewRepo(&app)
 	NewHandlers(repo)
-	render.NewTemplates(&app)
+	render.NewTRenderer(&app)
 
 	mux := chi.NewRouter()
 

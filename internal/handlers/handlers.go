@@ -1,11 +1,11 @@
 package handlers
 
 import (
-	"database/sql/driver"
 	"encoding/json"
 	"net/http"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
 	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
@@ -38,26 +38,26 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "signin.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "signin.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.RenderTemplate(w, r, "nba_home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "nba_home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
-	render.RenderTemplate(w, r, "nba_players.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "nba_players.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
-	var emptyTeamInfo models.TeamInfo
+	var emptyTeamInfo models.NBATeamInfo
 	data := make(map[string]interface{})
 	data["teamInfo"] = emptyTeamInfo
 
-	render.RenderTemplate(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -70,7 +70,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	teamInfo := models.TeamInfo{
+	teamInfo := models.NBATeamInfo{
 		TeamName:     r.Form.Get("team_name"),
 		Abbreviation: r.Form.Get("abbreviation"),
 		TeamColor:    r.Form.Get("team_color"),
@@ -86,7 +86,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		data := make(map[string]interface{})
 		data["teamInfo"] = teamInfo
 
-		render.RenderTemplate(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
@@ -127,7 +127,7 @@ func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Req
 }
 
 func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) {
-	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.TeamInfo)
+	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.NBATeamInfo)
 	if !ok {
 		m.App.ErrorLog.Println("Can't get error from session")
 		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
@@ -139,7 +139,7 @@ func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) 
 	data := make(map[string]interface{})
 	data["team_info"] = teamInfo
 
-	render.RenderTemplate(w, r, "nba_team_info.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "nba_team_info.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -149,7 +149,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["result"] = emptyResult
 
-	render.RenderTemplate(w, r, "nba_results.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -179,7 +179,7 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		data := make(map[string]interface{})
 		data["result"] = result
 
-		render.RenderTemplate(w, r, "nba_results.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})

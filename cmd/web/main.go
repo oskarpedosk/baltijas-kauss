@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"encoding/gob"
 	"fmt"
 	"log"
@@ -29,28 +28,29 @@ var infoLog *log.Logger
 var errorLog *log.Logger
 
 func main() {
-	// Connect to database
-	conn, err := sql.Open("pgx", "host=localhost port=5432 dbname=baltijas_kauss user=op password=")
-	if err != nil {
-		log.Fatalf(fmt.Sprintf("Unable to connect: %v\n", err))
-	}
-	defer conn.Close()
+	/*
+		// Connect to database
+		conn, err := sql.Open("pgx", "host=localhost port=5432 dbname=baltijas_kauss user=op password=")
+		if err != nil {
+			log.Fatalf(fmt.Sprintf("Unable to connect: %v\n", err))
+		}
+		defer conn.Close()
 
-	log.Println("Connected to database!")
+		log.Println("Connected to database!")
 
-	// Test connection
-	err = conn.Ping()
-	if err != nil {
-		log.Fatal("Cannot ping database!")
-	}
+		// Test connection
+		err = conn.Ping()
+		if err != nil {
+			log.Fatal("Cannot ping database!")
+		}
 
-	log.Println("Pinged database!")
+		log.Println("Pinged database!")
 
-	// Get rows from table
-	err = getAllRows(conn)
-	if err != nil {
-		log.Fatal(err)
-	}
+		// Get rows from table
+		err = getAllRows(conn)
+		if err != nil {
+			log.Fatal(err)
+		}*/
 
 	db, err := run()
 	if err != nil {
@@ -69,7 +69,7 @@ func main() {
 	log.Fatal(err)
 }
 
-func getAllRows(conn *sql.DB) error {
+/*func getAllRows(conn *sql.DB) error {
 	rows, err := conn.Query("select player_id, first_name, last_name from nba23_players where nba_team='Golden State Warriors'")
 	if err != nil {
 		log.Println(err)
@@ -96,12 +96,18 @@ func getAllRows(conn *sql.DB) error {
 	fmt.Println("---------------------------")
 
 	return nil
-}
-
+}*/
 
 func run() (*driver.DB, error) {
 	// What am I going to put in the session
-	gob.Register(models.TeamInfo{})
+	gob.Register(models.User{})
+	gob.Register(models.Badge{})
+	gob.Register(models.PlayersBadges{})
+	gob.Register(models.NBAPlayer{})
+	gob.Register(models.NBATeam{})
+	gob.Register(models.NBATeamInfo{})
+	gob.Register(models.NBAStandings{})
+	gob.Register(models.Result{})
 
 	// Change this to true when in production
 	app.InProduction = false
@@ -136,9 +142,9 @@ func run() (*driver.DB, error) {
 	app.TemplateCache = templateCache
 	app.UseCache = false
 
-	repo := handlers.NewRepo(&app)
+	repo := handlers.NewRepo(&app, db)
 	handlers.NewHandlers(repo)
-	render.NewTemplates(&app)
+	render.NewTRenderer(&app)
 	helpers.NewHelpers(&app)
 
 	return db, nil

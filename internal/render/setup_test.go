@@ -17,7 +17,7 @@ var session *scs.SessionManager
 var testApp config.AppConfig
 
 func TestMain(m *testing.M) {
-	gob.Register(models.TeamInfo{})
+	gob.Register(models.NBATeamInfo{})
 
 	// Change this to true when in production
 	testApp.InProduction = false
