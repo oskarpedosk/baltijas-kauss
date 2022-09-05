@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
 	"github.com/oskarpedosk/baltijas-kauss/internal/handlers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
@@ -51,10 +52,11 @@ func main() {
 		log.Fatal(err)
 	}
 
-	err = run()
+	db, err := run()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.SQL.Close()
 
 	fmt.Printf("Starting application on port%s\n", portNumber)
 
@@ -97,7 +99,7 @@ func getAllRows(conn *sql.DB) error {
 }
 
 
-func run() error {
+func run() (*driver.DB, error) {
 	// What am I going to put in the session
 	gob.Register(models.TeamInfo{})
 
@@ -118,10 +120,17 @@ func run() error {
 
 	app.Session = session
 
+	// Connect to database
+	log.Println("Connecting to database...")
+	db, err := driver.ConnectSQL("host=localhost port=5432 dbname=baltijas_kauss user=op password=")
+	if err != nil {
+		log.Fatal("Cannot connect to database")
+	}
+
 	templateCache, err := render.CreateTemplateCache()
 	if err != nil {
 		log.Fatal("Cannot create template cache")
-		return err
+		return nil, err
 	}
 
 	app.TemplateCache = templateCache
@@ -132,5 +141,5 @@ func run() error {
 	render.NewTemplates(&app)
 	helpers.NewHelpers(&app)
 
-	return nil
+	return db, nil
 }

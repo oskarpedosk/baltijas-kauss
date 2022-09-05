@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql/driver"
 	"encoding/json"
 	"net/http"
 
@@ -9,6 +10,8 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
+	"github.com/oskarpedosk/baltijas-kauss/internal/repository"
+	"github.com/oskarpedosk/baltijas-kauss/internal/repository/dbrepo"
 	"github.com/oskarpedosk/baltijas-kauss/utilities"
 )
 
@@ -18,12 +21,14 @@ var Repo *Repository
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
+	DB  repository.DatabaseRepo
 }
 
 // NewRepo creates a new repository
-func NewRepo(a *config.AppConfig) *Repository {
+func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
+		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
 	}
 }
 
@@ -180,5 +185,5 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-	
+
 }
