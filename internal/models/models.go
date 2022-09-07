@@ -4,8 +4,8 @@ type NBATeamInfo struct {
 	ID           int
 	Name         string
 	Abbreviation string
-	TeamColor    string
-	DarkText     bool
+	Color        string
+	DarkText     string
 }
 
 // User is the users model
@@ -31,17 +31,17 @@ type NBATeam struct {
 
 // NBAResults is the NBA results model
 type NBAResults struct {
-	HomeTeam  string
+	HomeTeam  int
 	HomeScore int
 	AwayScore int
-	AwayTeam  string
+	AwayTeam  int
 }
 
 type Result struct {
-	HomeTeam  string
+	HomeTeam  int
 	HomeScore int
 	AwayScore int
-	AwayTeam  string
+	AwayTeam  int
 }
 
 // NBAPlayer is the NBA player model

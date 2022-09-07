@@ -13,7 +13,6 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 	"github.com/oskarpedosk/baltijas-kauss/internal/repository"
 	"github.com/oskarpedosk/baltijas-kauss/internal/repository/dbrepo"
-	"github.com/oskarpedosk/baltijas-kauss/utilities"
 )
 
 // Repo the repository used by the handlers
@@ -71,11 +70,10 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	text := r.Form.Get("text_color")
-	darkText := false
-
+	text := r.Form.Get("dark_text")
+	darkText := "false"
 	if text == "true" {
-		darkText = true
+		darkText = "true"
 	}
 
 	teamID, err := strconv.Atoi(r.Form.Get("team_id"))
@@ -87,7 +85,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		ID:           teamID,
 		Name:         r.Form.Get("team_name"),
 		Abbreviation: r.Form.Get("abbreviation"),
-		TeamColor:    r.Form.Get("team_color"),
+		Color:        r.Form.Get("team_color"),
 		DarkText:     darkText,
 	}
 
@@ -107,7 +105,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = m.DB.UpdateTeamInfo(teamInfo)
+	err = m.DB.UpdateNBATeamInfo(teamInfo)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -175,11 +173,28 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	homeTeam, err := strconv.Atoi(r.Form.Get("home_team"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	homeScore, err := strconv.Atoi(r.Form.Get("home_score"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	awayScore, err := strconv.Atoi(r.Form.Get("away_score"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	awayTeam, err := strconv.Atoi(r.Form.Get("away_team"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
 	result := models.Result{
-		HomeTeam:  r.Form.Get("home_team"),
-		HomeScore: utilities.Atoi(r.Form.Get("home_score")),
-		AwayScore: utilities.Atoi(r.Form.Get("away_score")),
-		AwayTeam:  r.Form.Get("away_team"),
+		HomeTeam:  homeTeam,
+		HomeScore: homeScore,
+		AwayScore: awayScore,
+		AwayTeam:  awayTeam,
 	}
 
 	form := forms.New(r.PostForm)
@@ -190,7 +205,7 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 
 	if !form.Valid() {
 		data := make(map[string]interface{})
-		data["result"] = result
+		data["NBAresult"] = result
 
 		render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
 			Form: form,
@@ -199,4 +214,12 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = m.DB.AddNBAResult(result)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	m.App.Session.Put(r.Context(), "nba_result", result)
+
+	http.Redirect(w, r, "/nba/results", http.StatusSeeOther)
 }

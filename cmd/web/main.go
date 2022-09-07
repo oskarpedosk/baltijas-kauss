@@ -118,6 +118,7 @@ func run() (*driver.DB, error) {
 	errorLog = log.New(os.Stdout, "ERROR\t", log.Ldate|log.Ltime|log.Lshortfile)
 	app.ErrorLog = errorLog
 
+	// Set up the session
 	session = scs.New()
 	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
@@ -132,6 +133,8 @@ func run() (*driver.DB, error) {
 	if err != nil {
 		log.Fatal("Cannot connect to database")
 	}
+
+	log.Println("Connected to database!")
 
 	templateCache, err := render.CreateTemplateCache()
 	if err != nil {

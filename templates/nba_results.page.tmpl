@@ -73,7 +73,7 @@
 
     <div class="row align-items-md-stretch mb-4">
         <div class="col-md-12">
-            <div class="h-100 p-5 bg-light border border-dark rounded-3">
+            <div class="h-100 p-5 bg-light border border-dark rounded-3" id="nba_result">
 
                 {{$res := index .Data "result"}}
 
@@ -82,10 +82,10 @@
                     <div class="col-md-3">
                         <select class="form-select {{with .Form.Errors.Get "home_team"}} is-invalid {{end}}" aria-label="Home team" name="home_team" required>
                             <option selected disabled value="">Home team</option>
-                            <option>Hiiu Kalur</option>
-                            <option>Schnelli Klaas</option>
-                            <option>Kreutzwaldi Pagar</option>
-                            <option>Jannseni Metall</option>
+                            <option value="1">Hiiu Kalur</option>
+                            <option value="2">Schnelli Klaas</option>
+                            <option value="3">Kreutzwaldi Pagar</option>
+                            <option value="4">Jannseni Metall</option>
                         </select>
                         {{with .Form.Errors.Get "home_team"}}
                         <label class="text-danger">{{.}}</label>
@@ -113,10 +113,10 @@
                     <div class="col-md-3">
                         <select class="form-select {{with .Form.Errors.Get "away_team"}} is-invalid {{end}}" aria-label="Away team" name="away_team" required>
                             <option selected disabled value="">Away team</option>
-                            <option>Hiiu Kalur</option>
-                            <option>Schnelli Klaas</option>
-                            <option>Kreutzwaldi Pagar</option>
-                            <option>Jannseni Metall</option>
+                            <option value="1">Hiiu Kalur</option>
+                            <option value="2">Schnelli Klaas</option>
+                            <option value="3">Kreutzwaldi Pagar</option>
+                            <option value="4">Jannseni Metall</option>
                         </select>
                         {{with .Form.Errors.Get "away_team"}}
                         <label class="text-danger">{{.}}</label>
