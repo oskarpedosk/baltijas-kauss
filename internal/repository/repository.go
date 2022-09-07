@@ -7,4 +7,5 @@ type DatabaseRepo interface {
 
 	UpdateNBATeamInfo(res models.NBATeamInfo) error
 	AddNBAResult(res models.Result) error
+	DisplayNBAPlayers() ([]models.NBAPlayer, error)
 }

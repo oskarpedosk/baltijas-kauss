@@ -33,7 +33,7 @@ func (m *postgresDBRepo) UpdateNBATeamInfo(res models.NBATeamInfo) error {
 	return nil
 }
 
-// Updates NBA team info
+// Adds a result to NBA results table
 func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -53,4 +53,43 @@ func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 	}
 
 	return nil
+}
+
+// Display all NBA players
+func (m *postgresDBRepo) DisplayNBAPlayers() ([]models.NBAPlayer, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var players []models.NBAPlayer
+
+	query := `
+	select 
+		player_id, first_name, last_name, nba_team 
+	from 
+		nba23_players`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return players, err
+	}
+
+	for rows.Next() {
+		var player models.NBAPlayer
+		err := rows.Scan(
+			&player.PlayerID,
+			&player.FirstName,
+			&player.LastName,
+			&player.NBATeam,
+		)
+		if err != nil {
+			return players, err
+		}
+		players = append(players, player)
+	}
+
+	if err = rows.Err(); err != nil {
+		return players, err
+	}
+
+	return players, nil
 }

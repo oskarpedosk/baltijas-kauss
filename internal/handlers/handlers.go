@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -49,7 +50,22 @@ func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "nba_players.page.tmpl", &models.TemplateData{})
+	players, err := m.DB.DisplayNBAPlayers()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	data := make(map[string]interface{})
+	data["nba_players"] = players
+
+
+	for _, i := range players {
+		fmt.Println(i.PlayerID, i.FirstName, i.LastName, i.NBATeam, i.Archetype)
+	}
+
+	render.Template(w, r, "nba_players.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {

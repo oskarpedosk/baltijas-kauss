@@ -1,90 +1,33 @@
 {{template "base" .}}
 
 {{define "content"}}
-<h1>2K22 RATINGS</h1>
 
-<h2>Level 2</h2>
+{{$res := index .Data "nba_players"}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5">Team info summary</h1>
 
-<h3>Level 3</h3>
+            <hr>
 
-<h4>Level 4</h4>
+            <table class="table table-striped">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td>Team ID:</td>
+                        <td>{{$res.FirstName}}</td>
+                    </tr>
+                    <tr>
+                        <td>Team name:</td>
+                        <td>{{$res.LastName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-<h5>Level 5</h5>
 
-<p><strong>This</strong> is some text. <em>This</em> is some text too. This a link to the <a
-        href="https://www.2kratings.com">2Kratings.com</a>.</p>
-
-<ul>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ul>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
-
-<ol>
-    <li>Item one</li>
-    <li>Item two</li>
-    <li>Item three</li>
-</ol>
 
 {{end}}
 
