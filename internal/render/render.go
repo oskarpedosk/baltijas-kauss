@@ -19,7 +19,7 @@ var functions = template.FuncMap{}
 var app *config.AppConfig
 
 // NewRenderer sets the config for the template package
-func NewTRenderer(a *config.AppConfig) {
+func NewRenderer(a *config.AppConfig) {
 	app = a
 }
 

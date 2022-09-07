@@ -1,10 +1,12 @@
 mode: set
-github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:24.13,26.16 2 0
-github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:30.2,38.16 4 0
-github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:26.16,28.3 1 0
-github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:41.18,57.16 10 1
-github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:62.2,69.12 6 1
-github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:57.16,60.3 2 0
 github.com/oskarpedosk/baltijas-kauss/cmd/web/middleware.go:10.45,20.2 3 1
 github.com/oskarpedosk/baltijas-kauss/cmd/web/middleware.go:23.50,25.2 1 1
-github.com/oskarpedosk/baltijas-kauss/cmd/web/routes.go:12.49,37.2 16 1
+github.com/oskarpedosk/baltijas-kauss/cmd/web/routes.go:12.49,35.2 15 1
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:30.13,56.16 2 0
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:59.2,69.16 5 0
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:56.16,58.3 1 0
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:101.32,132.16 22 1
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:136.2,137.16 2 1
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:142.2,150.16 7 1
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:132.16,134.3 1 0
+github.com/oskarpedosk/baltijas-kauss/cmd/web/main.go:137.16,140.3 2 0

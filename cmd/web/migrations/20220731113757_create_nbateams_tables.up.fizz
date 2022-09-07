@@ -3,6 +3,6 @@ create_table("nba_teams", {timestamps: false}) {
     t.Column("name", "string", {"default": ""})
     t.Column("abbreviation", "string", {"default": "", "size": 4})
     t.Column("team_color", "string", {"default": ""})
-    t.Column("text_color", "string", {"default": ""})
+    t.Column("dark_text", "bool", {"default": false})
     t.Column("owner_id", "integer", {})
 }

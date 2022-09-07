@@ -272,6 +272,7 @@
 
             <form action="/nba/teams" method="post" class="row" novalidate>
                 <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                <input type="hidden" name="team_id" value="1">
                 <div class="col-md-3">
                     <label for="team_name" class="visually-hidden">Team name</label>
                     <input type="text" class="form-control {{with .Form.Errors.Get " team_name"}} is-invalid {{end}}"

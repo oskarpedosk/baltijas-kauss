@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
@@ -70,11 +71,24 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	text := r.Form.Get("text_color")
+	darkText := false
+
+	if text == "true" {
+		darkText = true
+	}
+
+	teamID, err := strconv.Atoi(r.Form.Get("team_id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
 	teamInfo := models.NBATeamInfo{
-		TeamName:     r.Form.Get("team_name"),
+		ID:           teamID,
+		Name:         r.Form.Get("team_name"),
 		Abbreviation: r.Form.Get("abbreviation"),
 		TeamColor:    r.Form.Get("team_color"),
-		DarkText:     r.Form.Get("text_color"),
+		DarkText:     darkText,
 	}
 
 	form := forms.New(r.PostForm)
@@ -93,15 +107,14 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = m.DB.UpdateTeamInfo(teamInfo)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
 	m.App.Session.Put(r.Context(), "team_info", teamInfo)
 
 	http.Redirect(w, r, "/nba/team-info-summary", http.StatusSeeOther)
-
-	//team_name := r.Form.Get("team_name")
-	//abbreviation := r.Form.Get("abbreviation")
-	//team_color := r.Form.Get("team_color")
-	//text_color := r.Form.Get("text_color")
-	//w.Write([]byte(fmt.Sprintf("team name is: %s and abbreviation is: %s and team color is: %s and text color is %s", team_name, abbreviation, team_color, text_color)))
 }
 
 type jsonResponse struct {

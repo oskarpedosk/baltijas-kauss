@@ -1,10 +1,11 @@
 package models
 
 type NBATeamInfo struct {
-	TeamName     string
+	ID           int
+	Name         string
 	Abbreviation string
 	TeamColor    string
-	DarkText     string
+	DarkText     bool
 }
 
 // User is the users model
@@ -144,5 +145,5 @@ type NBAStandings struct {
 	LastTen        string
 	Streak         int
 	BasketsFor     int
-	BasketsAgaints int
+	BasketsAgainst int
 }
