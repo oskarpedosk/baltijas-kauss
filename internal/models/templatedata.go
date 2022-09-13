@@ -6,6 +6,7 @@ import "github.com/oskarpedosk/baltijas-kauss/internal/forms"
 type TemplateData struct {
 	StringMap map[string]string
 	IntMap    map[string]int
+	FuncMap   map[string]any
 	Data      map[string]interface{}
 	CSRFToken string
 	Flash     string

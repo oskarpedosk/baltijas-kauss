@@ -70,7 +70,7 @@ func main() {
 }
 
 /*func getAllRows(conn *sql.DB) error {
-	rows, err := conn.Query("select player_id, first_name, last_name from nba23_players where nba_team='Golden State Warriors'")
+	rows, err := conn.Query("select player_id, first_name, last_name from nba_players where nba_team='Golden State Warriors'")
 	if err != nil {
 		log.Println(err)
 		return err

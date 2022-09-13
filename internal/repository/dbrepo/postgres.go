@@ -12,18 +12,18 @@ func (m *postgresDBRepo) AllUsers() bool {
 }
 
 // Updates NBA team info
-func (m *postgresDBRepo) UpdateNBATeamInfo(res models.NBATeamInfo) error {
+func (m *postgresDBRepo) UpdateNBATeamInfo(team models.NBATeamInfo) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	stmt := `update nba_teams set name = $2, abbreviation = $3, team_color = $4, dark_text = $5 where team_id = $1`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.ID,
-		res.Name,
-		res.Abbreviation,
-		res.Color,
-		res.DarkText,
+		team.ID,
+		team.Name,
+		team.Abbreviation,
+		team.Color,
+		team.DarkText,
 	)
 
 	if err != nil {
@@ -55,6 +55,32 @@ func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 	return nil
 }
 
+// Updates NBA player team
+func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	update 
+		nba_players
+	set 
+		team_id = $2
+	where
+		player_id = $1
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		player.PlayerID,
+		player.TeamID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Display all NBA players
 func (m *postgresDBRepo) DisplayNBAPlayers() ([]models.NBAPlayer, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -64,22 +90,86 @@ func (m *postgresDBRepo) DisplayNBAPlayers() ([]models.NBAPlayer, error) {
 
 	query := `
 	select 
-		player_id, first_name, last_name, nba_team 
+		*
 	from 
-		nba23_players`
+		nba_players
+	order by
+		"stats/Overall" desc,
+		"stats/Total Attributes" desc`
 
 	rows, err := m.DB.QueryContext(ctx, query)
 	if err != nil {
 		return players, err
 	}
 
+	defer rows.Close()
 	for rows.Next() {
 		var player models.NBAPlayer
 		err := rows.Scan(
 			&player.PlayerID,
 			&player.FirstName,
 			&player.LastName,
+			&player.PrimaryPosition,
+			&player.SecondaryPosition,
+			&player.Archetype,
 			&player.NBATeam,
+			&player.Height,
+			&player.Weight,
+			&player.ImgUrl,
+			&player.PlayerUrl,
+			&player.TeamID,
+			&player.StatsOverall,
+			&player.StatsOutsideScoring,
+			&player.StatsAthleticism,
+			&player.StatsInsideScoring,
+			&player.StatsPlaymaking,
+			&player.StatsDefending,
+			&player.StatsRebounding,
+			&player.StatsCloseShot,
+			&player.StatsMidRangeShot,
+			&player.StatsThreePointShot,
+			&player.StatsFreeThrow,
+			&player.StatsShotIQ,
+			&player.StatsOffensiveConsistency,
+			&player.StatsSpeed,
+			&player.StatsAcceleration,
+			&player.StatsStrength,
+			&player.StatsVertical,
+			&player.StatsStamina,
+			&player.StatsHustle,
+			&player.StatsOverallDurability,
+			&player.StatsLayup,
+			&player.StatsStandingDunk,
+			&player.StatsDrivingDunk,
+			&player.StatsPostHook,
+			&player.StatsPostFade,
+			&player.StatsPostControl,
+			&player.StatsDrawFoul,
+			&player.StatsHands,
+			&player.StatsPassAccuracy,
+			&player.StatsBallHandle,
+			&player.StatsSpeedWithBall,
+			&player.StatsPassIQ,
+			&player.StatsPassVision,
+			&player.StatsInteriorDefense,
+			&player.StatsPerimeterDefense,
+			&player.StatsSteal,
+			&player.StatsBlock,
+			&player.StatsLateralQuickness,
+			&player.StatsHelpDefenseIQ,
+			&player.StatsPassPerception,
+			&player.StatsDefensiveConsistency,
+			&player.StatsOffensiveRebound,
+			&player.StatsDefensiveRebound,
+			&player.StatsIntangibles,
+			&player.StatsPotential,
+			&player.StatsTotalAttributes,
+			&player.BronzeBadges,
+			&player.SilverBadges,
+			&player.GoldBadges,
+			&player.HOFBadges,
+			&player.TotalBadges,
+			&player.Assigned,
 		)
 		if err != nil {
 			return players, err
@@ -92,4 +182,47 @@ func (m *postgresDBRepo) DisplayNBAPlayers() ([]models.NBAPlayer, error) {
 	}
 
 	return players, nil
+}
+
+// Display all NBA players
+func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var teams []models.NBATeam
+
+	query := `
+	select 
+		*
+	from 
+		nba_teams
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return teams, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var team models.NBATeam
+		err := rows.Scan(
+			&team.TeamID,
+			&team.Name,
+			&team.Abbreviation,
+			&team.Color,
+			&team.Text,
+			&team.OwnerID,
+		)
+		if err != nil {
+			return teams, err
+		}
+		teams = append(teams, team)
+	}
+
+	if err = rows.Err(); err != nil {
+		return teams, err
+	}
+
+	return teams, nil
 }

@@ -26,7 +26,7 @@ type NBATeam struct {
 	Color        string
 	Text         string
 	OwnerID      int
-	Player       NBAPlayer
+	Players      []NBAPlayer
 }
 
 // NBAResults is the NBA results model
@@ -54,13 +54,13 @@ type NBAPlayer struct {
 	Archetype                 string
 	NBATeam                   string
 	Height                    int
-	Weight                    int
+	Weight                    *int
 	ImgUrl                    string
 	PlayerUrl                 string
-	TeamID                    int
+	TeamID                    *int
 	StatsOverall              int
 	StatsOutsideScoring       int
-	StatsAtheliticism         int
+	StatsAthleticism          int
 	StatsInsideScoring        int
 	StatsPlaymaking           int
 	StatsDefending            int

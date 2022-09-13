@@ -54,6 +54,7 @@ func Template(w http.ResponseWriter, r *http.Request, templateName string, tmplD
 
 	err := tmpl.Execute(buf, tmplData)
 	if err != nil {
+		fmt.Println(err)
 		fmt.Println("Error executing template data")
 	}
 	_, err = buf.WriteTo(w)

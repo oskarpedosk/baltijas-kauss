@@ -1,4 +1,4 @@
-create_table("nba23_players_badges", {timestamps: false}) {
+create_table("nba_players_badges", {timestamps: false}) {
     t.Column("player_id", "integer", {})
     t.Column("first_name", "string", {"default": ""})
     t.Column("last_name", "string", {"default": ""})

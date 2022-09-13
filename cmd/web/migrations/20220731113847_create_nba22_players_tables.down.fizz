@@ -1,1 +1,1 @@
-sql("drop table nba23_players")
+sql("drop table nba_players")
