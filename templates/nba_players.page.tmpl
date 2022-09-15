@@ -82,16 +82,18 @@
                                             {{$players.PrimaryPosition}}
                                             {{$players.SecondaryPosition}}
                                             | {{$players.Height}}cm | {{$players.Weight}}kg
-                                        <p class="badge rounded-pill bkcolor my-0 ms-1" class="dropdown-toggle"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
 
                                             {{if $players.TeamID.Int64}}
                                                 {{range $teamInfo := index $.Data "nba_teams"}}
                                                     {{if eq $teamInfo.TeamID $players.TeamID}}
+                                                        <p class="badge rounded-pill my-0 ms-1" class="dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false" style="background-color: {{$teamInfo.Color}}">
                                                         {{$teamInfo.Abbreviation}}
                                                     {{end}}
                                                 {{end}}
                                             {{else}}
+                                            <p class="badge rounded-pill bkcolor my-0 ms-1" class="dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
                                                 FA
                                             {{end}}
 
