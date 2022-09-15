@@ -85,24 +85,28 @@
                                         <p class="badge rounded-pill bkcolor my-0 ms-1" class="dropdown-toggle"
                                             data-bs-toggle="dropdown" aria-expanded="false">
 
-                                            {{if $players.TeamID}}
-                                            {{$players.TeamID}}
+                                            {{if $players.TeamID.Int64}}
+                                                {{range $teamInfo := index $.Data "nba_teams"}}
+                                                    {{if eq $teamInfo.TeamID $players.TeamID}}
+                                                        {{$teamInfo.Abbreviation}}
+                                                    {{end}}
+                                                {{end}}
                                             {{else}}
-                                            FA
+                                                FA
                                             {{end}}
 
                                         <form id="teamSelect_{{$index}}" action="/nba/players" method="post">
                                             <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
                                             <input type="hidden" name="index" value="{{$index}}">
                                             <input type="hidden" name="player_id" value="{{$players.PlayerID}}">
-                                            <select class="dropdown-menu form-select" name="team_id">
+                                            <select class="dropdown-menu" name="team_id">
                                                 {{range $teams := index $.Data "nba_teams"}}
-                                                <option class="dropdown-item" value="{{$teams.TeamID}}"
+                                                <option class="dropdown-item" value="{{$teams.TeamID.Int64}}"
                                                     onclick="document.getElementById('teamSelect_{{$index}}').submit()">
-                                                    {{$teams.Name}}</option>
+                                                    {{$teams.Abbreviation}} {{$teams.Name}}</option>
                                                 {{end}}
                                                 <hr class="dropdown-divider">
-                                                <option class="dropdown-item" value="0"
+                                                <option class="dropdown-item" value=null
                                                     onclick="document.getElementById('teamSelect_{{$index}}').submit()">
                                                     Free Agency</option>
                                             </select>

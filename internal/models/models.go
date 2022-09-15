@@ -1,5 +1,7 @@
 package models
 
+import "database/sql"
+
 type NBATeamInfo struct {
 	ID           int
 	Name         string
@@ -20,7 +22,7 @@ type User struct {
 
 // NBATeam is the NBA teams model
 type NBATeam struct {
-	TeamID       int
+	TeamID       sql.NullInt64
 	Name         string
 	Abbreviation string
 	Color        string
@@ -57,7 +59,7 @@ type NBAPlayer struct {
 	Weight                    *int
 	ImgUrl                    string
 	PlayerUrl                 string
-	TeamID                    *int
+	TeamID                    sql.NullInt64
 	StatsOverall              int
 	StatsOutsideScoring       int
 	StatsAthleticism          int

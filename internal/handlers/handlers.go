@@ -1,8 +1,9 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -76,38 +77,24 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for key, values := range r.PostForm {
-		fmt.Println("key:", key)
-		fmt.Println("values:", values)
-	}
-
 	playerID, err := strconv.Atoi(r.Form.Get("player_id"))
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
 
+	nullInt := true
+
 	teamID, err := strconv.Atoi(r.Form.Get("team_id"))
 	if err != nil {
-		helpers.ServerError(w, err)
+		log.Println(err)
+		nullInt = false
+		// helpers.ServerError(w, err)
 	}
 
-	player := models.NBAPlayer {}
-
-	if teamID == 0 {
-		player = models.NBAPlayer {
-			PlayerID: playerID,
-			TeamID: nil,
-		}
-	} else {
-		player = models.NBAPlayer {
-			PlayerID: playerID,
-			TeamID: &teamID,
-		}
+	player := models.NBAPlayer{
+		PlayerID: playerID,
+		TeamID:   sql.NullInt64{int64(teamID), nullInt},
 	}
-	
-	fmt.Println("player ID:", playerID)
-	fmt.Println("team ID:", teamID)
-	fmt.Println("-----------------------")
 
 	err = m.DB.UpdateNBAPlayer(player)
 	if err != nil {
