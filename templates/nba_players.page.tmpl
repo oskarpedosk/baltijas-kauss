@@ -86,7 +86,7 @@
                                             {{if $players.TeamID.Int64}}
                                                 {{range $teamInfo := index $.Data "nba_teams"}}
                                                     {{if eq $teamInfo.TeamID $players.TeamID}}
-                                                        <p class="badge rounded-pill my-0 ms-1" class="dropdown-toggle"
+                                                        <p class="badge rounded-pill my-0 ms-1 {{if eq $teamInfo.Text "true"}}text-dark{{end}}" class="dropdown-toggle"
                                                         data-bs-toggle="dropdown" aria-expanded="false" style="background-color: {{$teamInfo.Color}}">
                                                         {{$teamInfo.Abbreviation}}
                                                     {{end}}
