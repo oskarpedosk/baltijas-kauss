@@ -15,13 +15,14 @@ func (m *postgresDBRepo) UpdateNBATeamInfo(team models.NBATeamInfo) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `update nba_teams set name = $2, abbreviation = $3, team_color = $4, dark_text = $5 where team_id = $1`
+	stmt := `update nba_teams set name = $2, abbreviation = $3, team_color1 = $4, team_color2 = $5, dark_text = $6 where team_id = $1`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		team.ID,
 		team.Name,
 		team.Abbreviation,
-		team.Color,
+		team.Color1,
+		team.Color2,
 		team.DarkText,
 	)
 
@@ -63,7 +64,8 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 	update 
 		nba_players
 	set 
-		team_id = $2
+		team_id = $2,
+		assigned = $3
 	where
 		player_id = $1
 	`
@@ -71,6 +73,7 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 	_, err := m.DB.ExecContext(ctx, stmt,
 		player.PlayerID,
 		player.TeamID,
+		player.Assigned,
 	)
 
 	if err != nil {
@@ -81,7 +84,7 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 }
 
 // Display all NBA players
-func (m *postgresDBRepo) DisplayNBAPlayers() ([]models.NBAPlayer, error) {
+func (m *postgresDBRepo) GetNBAPlayers() ([]models.NBAPlayer, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -94,7 +97,8 @@ func (m *postgresDBRepo) DisplayNBAPlayers() ([]models.NBAPlayer, error) {
 		nba_players
 	order by
 		"stats/Overall" desc,
-		"stats/Total Attributes" desc`
+		"stats/Total Attributes" desc
+	`
 
 	rows, err := m.DB.QueryContext(ctx, query)
 	if err != nil {
@@ -195,6 +199,8 @@ func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 		*
 	from 
 		nba_teams
+	order by
+		"team_id" asc
 	`
 
 	rows, err := m.DB.QueryContext(ctx, query)
@@ -209,8 +215,9 @@ func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 			&team.TeamID,
 			&team.Name,
 			&team.Abbreviation,
-			&team.Color,
-			&team.Text,
+			&team.Color1,
+			&team.Color2,
+			&team.DarkText,
 			&team.OwnerID,
 		)
 		if err != nil {

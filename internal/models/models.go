@@ -6,7 +6,8 @@ type NBATeamInfo struct {
 	ID           int
 	Name         string
 	Abbreviation string
-	Color        string
+	Color1       string
+	Color2       string
 	DarkText     string
 }
 
@@ -25,8 +26,9 @@ type NBATeam struct {
 	TeamID       sql.NullInt64
 	Name         string
 	Abbreviation string
-	Color        string
-	Text         string
+	Color1       string
+	Color2       string
+	DarkText     string
 	OwnerID      int
 	Players      []NBAPlayer
 }

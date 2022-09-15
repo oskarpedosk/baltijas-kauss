@@ -56,7 +56,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
-	players, err := m.DB.DisplayNBAPlayers()
+	players, err := m.DB.GetNBAPlayers()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -94,6 +94,7 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 	player := models.NBAPlayer{
 		PlayerID: playerID,
 		TeamID:   sql.NullInt64{int64(teamID), nullInt},
+		Assigned: false,
 	}
 
 	err = m.DB.UpdateNBAPlayer(player)
@@ -109,7 +110,22 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	var emptyTeamInfo models.NBATeamInfo
 	data := make(map[string]interface{})
+
+	teams, err := m.DB.GetNBATeamInfo()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	players, err := m.DB.GetNBAPlayers()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
 	data["teamInfo"] = emptyTeamInfo
+	data["nba_players"] = players
+	data["nba_teams"] = teams
 
 	render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
@@ -139,7 +155,8 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		ID:           teamID,
 		Name:         r.Form.Get("team_name"),
 		Abbreviation: r.Form.Get("abbreviation"),
-		Color:        r.Form.Get("team_color"),
+		Color1:       r.Form.Get("team_color1"),
+		Color2:       r.Form.Get("team_color2"),
 		DarkText:     darkText,
 	}
 
@@ -166,7 +183,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "team_info", teamInfo)
 
-	http.Redirect(w, r, "/nba/team-info-summary", http.StatusSeeOther)
+	http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
 }
 
 type jsonResponse struct {
