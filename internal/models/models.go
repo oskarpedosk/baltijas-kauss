@@ -113,7 +113,7 @@ type NBAPlayer struct {
 	GoldBadges                int
 	HOFBadges                 int
 	TotalBadges               int
-	Assigned                  bool
+	Assigned                  int
 }
 
 // Badge is the NBA badge model

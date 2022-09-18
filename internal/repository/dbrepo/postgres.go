@@ -83,6 +83,35 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 	return nil
 }
 
+// Assigns NBA player to a position
+func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	update 
+		nba_players
+	set 
+		assigned = $3
+	where
+		player_id = $1
+	and
+		team_id = $2
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		player.PlayerID,
+		player.TeamID,
+		player.Assigned,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Display all NBA players
 func (m *postgresDBRepo) GetNBAPlayers() ([]models.NBAPlayer, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

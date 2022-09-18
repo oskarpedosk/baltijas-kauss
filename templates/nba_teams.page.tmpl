@@ -7,10 +7,10 @@
 
         {{range $teamInfo := index .Data "nba_teams"}}
 
-        <div class="col-md-3 {{$teamInfo.TeamID.Int64}}" onClick="open_div('{{$teamInfo.TeamID.Int64}}')">
+        <div class="col-md-3" onClick="open_div('{{$teamInfo.TeamID.Int64}}')">
 
             <div class="p-5 teamcolor1 border rounded-3 lh-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}"
-                style="background-image: linear-gradient(90deg, '{{$teamInfo.Color1}}', '{{$teamInfo.Color2}}');">
+                style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
                 <h3>{{$teamInfo.Name}}</h3>
                 <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-1
                     opacity-50">
@@ -40,6 +40,7 @@
         </div>
 
         {{end}}
+
     </div>
 
     {{range $teamInfo := index .Data "nba_teams"}}
@@ -47,29 +48,52 @@
     <div id="team_{{$teamInfo.TeamID.Int64}}" style="display: none;" class="align-items-md-stretch mb-4 rounded-3">
 
         <div class="rounded-3 p-4 border text-white"
-            style="background-image: linear-gradient(90deg, '{{$teamInfo.Color1}}', '{{$teamInfo.Color2}}')">
+            style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
 
             <div class="row align-items-md-stretch justify-content-between px-3">
 
                 <div class="col-md-2 text-center lh-1 dropend">
-                    
-                    <a href="#" class="text-white" data-bs-toggle="dropdown" aria-expanded="false">
+
+                    <a href="#" class="{{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}" data-bs-toggle="dropdown" aria-expanded="false">
                         <div
-                            class="relative player-shadow bkcolor border border-white border-2 rounded-3 text-center mb-2">
-                            <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201939.png"
-                                alt="">
+                            class="relative player-shadow border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-2 rounded-3 text-center mb-2"
+                            style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
+                            {{range $player1 := index $.Data "nba_players"}}
+                                {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $player1.Assigned 1}}
+                                        <img class="img-fluid" src="{{$player1.ImgUrl}}"
+                                        alt="">
+                                    {{end}}
+                                {{end}}
+                            {{end}}
                             <h5 class="position p-1">PG</h5>
                         </div>
                     </a>
-                    <ul class="dropdown-menu text-small shadow">
-                        <li class="dropdown-item">Andre Drummond</li>
-                        <li class="dropdown-item">Avery Bradley</li>
-                        <li class="dropdown-item">LeBron James</li>
-                        <li class="dropdown-item">Luka Doncic</li>
-                        <li class="dropdown-item">Zack Randolph</li>
-                        <hr class="dropdown-divider">
-                        <li class="dropdown-item">Remove player</li>
-                    </ul>
+                    
+                    <form id="submit_player_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post">
+                        <input type="hidden" name="player_form" value="true">
+                        <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                        <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
+                        <select class="form-select text-small shadow" name="player_id">
+                            {{range $player2 := index $.Data "nba_players"}}
+                                {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $player2.Assigned 0}}
+                                        <option value="{{$player2.PlayerID}}_1"
+                                        onclick="document.getElementById('submit_player_{{$teamInfo.TeamID.Int64}}').submit()">{{$player2.FirstName}} {{$player2.LastName}}</option>
+                                    {{end}}
+                                {{end}}
+                            {{end}}
+                            {{range $player1 := index $.Data "nba_players"}}
+                                {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $player1.Assigned 1}}
+                                        <hr class="dropdown-divider">
+                                        <option value="{{$player1.PlayerID}}_0"
+                                        onclick="document.getElementById('submit_player_{{$teamInfo.TeamID.Int64}}').submit()">Remove player</option>
+                                    {{end}}
+                                {{end}}
+                            {{end}}
+                        </select>
+                    </form>
                 </div>
                 <div class="col-md-2 text-center lh-1">
                     <div
@@ -180,7 +204,7 @@
                             src="/static/images/remove.png" alt="">
                     </div>
                 </div>
-                <div class="col-md-2 lh-1">
+                <div class="col-md-2 lh-1" onClick="open_settings('{{$teamInfo.TeamID.Int64}}')">
                     <div
                         class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
                         <img class="img-fluid logo-white opacity-50" style="max-height: 50px"
@@ -195,59 +219,56 @@
 
     </div>
 
-    {{end}}
+    
 
-    <div class="align-items-md-stretch mb-4 rounded-3">
+    <div id="teamInfo_{{$teamInfo.TeamID.Int64}}" class="align-items-md-stretch mb-4 rounded-3" style="display: none;">
 
-        <div class="rounded-3 p-4 bkcolor text-white">
+        <div class="rounded-3 p-4 {{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
 
 
-            {{$res := index .Data "teamInfo"}}
+            {{$res := index $.Data "teamInfo"}}
 
-            <form action="/nba/teams" method="post" class="row" novalidate>
-                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-                <input type="hidden" name="team_id" value="1">
+            <form id="teamInfo_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post" class="row" novalidate>
+                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
                 <div class="col-md-3">
-                    <label for="team_name" class="visually-hidden">Team name</label>
-                    <input type="text" class="form-control {{with .Form.Errors.Get " team_name"}} is-invalid {{end}}"
-                        name="team_name" placeholder="Team name" value="{{$res.Name}}" required>
-                    {{with .Form.Errors.Get "team_name"}}
-                    <label class="text-white">{{.}}</label>
+                    <label for="team_name">Team name</label>
+                    <input type="text" class="form-control {{with $.Form.Errors.Get "team_name"}} is-invalid {{end}}"
+                        name="team_name" placeholder="{{$teamInfo.Name}}" value="{{if eq $teamInfo.TeamID.Int64 $res.ID}}{{$res.Name}}{{else}}{{end}}" required>
+                    {{with $.Form.Errors.Get "team_name"}}
+                    <label class="text-{{if eq $teamInfo.DarkText "true"}}dark{{else}}white{{end}}">{{.}}</label>
                     {{end}}
                 </div>
                 <div class="col-md-3">
-                    <label for="abbreviation" class="visually-hidden">Abbreviation</label>
-                    <input type="text" class="form-control {{with .Form.Errors.Get " abbreviation"}} is-invalid {{end}}"
-                        name="abbreviation" placeholder="Abbreviation" value="{{$res.Abbreviation}}" required>
-                    {{with .Form.Errors.Get "abbreviation"}}
-                    <label class="text-white">{{.}}</label>
+                    <label for="abbreviation">Abbreviation</label>
+                    <input type="text" class="form-control {{with $.Form.Errors.Get " abbreviation"}} is-invalid {{end}}"
+                        name="abbreviation" placeholder="{{$teamInfo.Abbreviation}}" value="{{if eq $teamInfo.TeamID.Int64 $res.ID}}{{$res.Abbreviation}}{{else}}{{end}}" required>
+                    {{with $.Form.Errors.Get "abbreviation"}}
+                    <label class="text-{{if eq $teamInfo.DarkText "true"}}dark{{else}}white{{end}}">{{.}}</label>
                     {{end}}
                 </div>
                 <div class="col-auto">
-                    <label for="team_color1" class="form-label visually-hidden">Color picker</label>
+                    <label for="team_color1">Color 1</label>
                     <input type="color" class="form-control form-control-color" name="team_color1"
-                        value="{{$res.Color1}}" title="Choose your color">
+                    value="{{if eq $teamInfo.TeamID.Int64 $res.ID}}{{$res.Color1}}{{else}}{{$teamInfo.Color1}}{{end}}" title="Choose your color">
                 </div>
                 <div class="col-auto">
-                    <label for="team_color2" class="form-label visually-hidden">Color picker</label>
+                    <label for="team_color2">Color 2</label>
                     <input type="color" class="form-control form-control-color" name="team_color2"
-                        value="{{$res.Color2}}" title="Choose your color">
+                    value="{{if eq $teamInfo.TeamID.Int64 $res.ID}}{{$res.Color2}}{{else}}{{$teamInfo.Color2}}{{end}}" title="Choose your color">
                 </div>
                 <div class="col-auto">
                     <div class="form-check form-check-inline">
-                        <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" name="dark_text" value="true">
-                            Dark text
-                        </label>
+                        <label class="form-check-label">Dark text</label>
+                            <input class="form-check-input" type="checkbox" name="dark_text" value="true" {{if eq $teamInfo.DarkText "true"}}checked{{else}}{{end}}>
                     </div>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-outline-light">Update</button>
+                    <button type="submit" class="btn btn-outline-{{if eq $teamInfo.DarkText "true"}}dark{{else}}light{{end}}">Update</button>
                 </div>
                 <div class="col-md-2 text-center d-flex align-items-center justify-content-center lh-1">
                     <img class="img-fluid" src="/static/images/BKslogan.png" alt="">
                 </div>
-
             </form>
 
 
@@ -255,6 +276,8 @@
         </div>
 
     </div>
+
+    {{end}}
 
 
 </div>
@@ -285,9 +308,24 @@
     })()
 
     function open_div(clicked_id) {
-        const str = '#team_' + (clicked_id);
-        $(str).toggle();
-    };
+        const str = 'team_' + (clicked_id);
+        const settings = 'teamInfo_' + (clicked_id);
+        $('#' + str).toggle();
+
+        var x = document.getElementById(str);
+        var y = document.getElementById(settings);
+        if (x.style.display === 'none') {
+            y.style.display = 'none';
+        };
+    }
+
+    function open_settings(clicked_id) {
+        const str = 'teamInfo_' + (clicked_id);
+        $('#' + str).toggle();
+    }
+
+    
+
 </script>
 
 {{end}}

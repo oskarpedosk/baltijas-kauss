@@ -3,9 +3,11 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
@@ -94,7 +96,7 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 	player := models.NBAPlayer{
 		PlayerID: playerID,
 		TeamID:   sql.NullInt64{int64(teamID), nullInt},
-		Assigned: false,
+		Assigned: 0,
 	}
 
 	err = m.DB.UpdateNBAPlayer(player)
@@ -140,50 +142,109 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	text := r.Form.Get("dark_text")
-	darkText := "false"
-	if text == "true" {
-		darkText = "true"
+	if r.Form.Get("player_form") == "true" {
+		fmt.Println("player form submitted")
+
+		playerIDAndAssigned := r.Form.Get("player_id")
+
+		playerIDAndAssignedSlice := strings.Split(playerIDAndAssigned, "_")
+
+		playerID, err := strconv.Atoi(playerIDAndAssignedSlice[0])
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		
+		teamID, err := strconv.Atoi(r.Form.Get("team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		
+		assigned, err := strconv.Atoi(playerIDAndAssignedSlice[1])
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		fmt.Println(r.Form.Get("player_id"))
+		fmt.Println(r.Form.Get("team_id"))
+		fmt.Println(playerID)
+		fmt.Println(assigned)
+
+		player := models.NBAPlayer{
+			PlayerID: playerID,
+			TeamID: sql.NullInt64{int64(teamID), true},
+			Assigned: assigned,
+		}
+		err = m.DB.AssignNBAPlayer(player)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		// render template with data
+
+		m.App.Session.Put(r.Context(), "player", player)
+
+		http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
+	} else {
+		text := r.Form.Get("dark_text")
+		darkText := "false"
+		if text == "true" {
+			darkText = "true"
+		}
+
+		teamID, err := strconv.Atoi(r.Form.Get("team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		teamInfo := models.NBATeamInfo{
+			ID:           teamID,
+			Name:         r.Form.Get("team_name"),
+			Abbreviation: r.Form.Get("abbreviation"),
+			Color1:       r.Form.Get("team_color1"),
+			Color2:       r.Form.Get("team_color2"),
+			DarkText:     darkText,
+		}
+
+		form := forms.New(r.PostForm)
+
+		form.Required("team_name", "abbreviation")
+		form.MaxLength("abbreviation", 4)
+
+		if !form.Valid() {
+			data := make(map[string]interface{})
+
+			teams, err := m.DB.GetNBATeamInfo()
+			if err != nil {
+				helpers.ServerError(w, err)
+				return
+			}
+
+			players, err := m.DB.GetNBAPlayers()
+			if err != nil {
+				helpers.ServerError(w, err)
+				return
+			}
+
+			data["nba_players"] = players
+			data["nba_teams"] = teams
+			data["teamInfo"] = teamInfo
+
+			render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+				Form: form,
+				Data: data,
+			})
+			return
+		}
+
+		err = m.DB.UpdateNBATeamInfo(teamInfo)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		m.App.Session.Put(r.Context(), "team_info", teamInfo)
+
+		http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
 	}
-
-	teamID, err := strconv.Atoi(r.Form.Get("team_id"))
-	if err != nil {
-		helpers.ServerError(w, err)
-	}
-
-	teamInfo := models.NBATeamInfo{
-		ID:           teamID,
-		Name:         r.Form.Get("team_name"),
-		Abbreviation: r.Form.Get("abbreviation"),
-		Color1:       r.Form.Get("team_color1"),
-		Color2:       r.Form.Get("team_color2"),
-		DarkText:     darkText,
-	}
-
-	form := forms.New(r.PostForm)
-
-	form.Required("team_name", "abbreviation")
-	form.MaxLength("abbreviation", 4)
-
-	if !form.Valid() {
-		data := make(map[string]interface{})
-		data["teamInfo"] = teamInfo
-
-		render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
-			Form: form,
-			Data: data,
-		})
-		return
-	}
-
-	err = m.DB.UpdateNBATeamInfo(teamInfo)
-	if err != nil {
-		helpers.ServerError(w, err)
-	}
-
-	m.App.Session.Put(r.Context(), "team_info", teamInfo)
-
-	http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
 }
 
 type jsonResponse struct {

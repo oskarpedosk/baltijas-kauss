@@ -10,4 +10,5 @@ type DatabaseRepo interface {
 	GetNBAPlayers() ([]models.NBAPlayer, error)
 	GetNBATeamInfo() ([]models.NBATeam, error)
 	UpdateNBAPlayer(player models.NBAPlayer) error 
+	AssignNBAPlayer(player models.NBAPlayer) error
 }
