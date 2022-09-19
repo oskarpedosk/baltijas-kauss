@@ -15,39 +15,185 @@
                 <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-1
                     opacity-50">
 
-                {{range $playersIndex, $players := index $.Data "nba_players"}}
-                    {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
-                        {{if eq $players.Assigned 1}}
-                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                    {{range $position := index $.Data "positions"}}
+                        {{if eq $position.Number 1}}
+                            {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $position.Number $players.Assigned}}
+                                        <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                        {{break}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $playersIndex 359}}
+                                    <p><br></p>
+                                {{end}}
+                            {{end}}
                         {{end}}
-                        {{if eq $players.Assigned 2}}
-                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{if eq $position.Number 2}}
+                            {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $position.Number $players.Assigned}}
+                                        <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                        {{break}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $playersIndex 359}}
+                                    <p><br></p>
+                                {{end}}
+                            {{end}}
                         {{end}}
-                        {{if eq $players.Assigned 3}}
-                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{if eq $position.Number 3}}
+                            {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $position.Number $players.Assigned}}
+                                        <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                        {{break}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $playersIndex 359}}
+                                    <p><br></p>
+                                {{end}}
+                            {{end}}
                         {{end}}
-                        {{if eq $players.Assigned 4}}
-                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{if eq $position.Number 4}}
+                            {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $position.Number $players.Assigned}}
+                                        <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                        {{break}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $playersIndex 359}}
+                                    <p><br></p>
+                                {{end}}
+                            {{end}}
                         {{end}}
-                        {{if eq $players.Assigned 5}}
-                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{if eq $position.Number 5}}
+                            {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                    {{if eq $position.Number $players.Assigned}}
+                                        <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                        {{break}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $playersIndex 359}}
+                                    <p><br></p>
+                                {{end}} 
+                            {{end}}
                         {{end}}
                     {{end}}
-                {{end}}
 
                 <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-1
                     opacity-50">
                 <div class="fw-lighter">
 
-                    <p>Trae Young</p>
-                    <p>Devin Booker</p>
-                    <p>Zach LaVine</p>
-                    <p>Khris Middleton</p>
-                    <p>Zion Williamson</p>
+                    {{range $position := index $.Data "positions"}}
+                        {{if gt $position.Number 5}}
+                            {{if lt $position.Number 11}}
+                                {{if eq $position.Number 6}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $position.Number 7}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $position.Number 8}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $position.Number 9}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $position.Number 10}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}} 
+                                    {{end}}
+                                {{end}}
+                            {{end}}
+                        {{end}}
+                    {{end}}
+
                     <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}}
                         border-1 opacity-50">
-                    <p>Bradley Beal</p>
-                    <p>Andrew Wiggins</p>
+                    
+                        {{range $position := index $.Data "positions"}}
+                        {{if gt $position.Number 10}}
+                            {{if lt $position.Number 13}}
+                                {{if eq $position.Number 11}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}}
+                                    {{end}}
+                                {{end}}
+                                {{if eq $position.Number 12}}
+                                    {{range $playersIndex, $players := index $.Data "nba_players"}}
+                                        {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $position.Number $players.Assigned}}
+                                                <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playersIndex 359}}
+                                            <p><br></p>
+                                        {{end}}
+                                    {{end}}
+                                {{end}}
+                            {{end}}
+                        {{end}}
+                    {{end}}
 
                 </div>
             </div>
@@ -198,20 +344,67 @@
 
             <div class="row align-items-md-stretch justify-content-between px-3">
 
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203078.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">Res</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203952.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">Res</h5>
-                    </div>
-                </div>
+                {{range $position := index $.Data "positions"}}
+                    {{if gt $position.Number 10}}
+                        {{if lt $position.Number 13}}
+                            <div class="col-md-2 text-center lh-1 dropend">
+
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div
+                                        class="relative player-shadow bg-dark text-secondary border border-dark border-2 rounded-3 text-center mb-2">
+                                        {{range $playerIndex, $player1 := index $.Data "nba_players"}}
+                                            {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                                {{if eq $player1.Assigned $position.Number}}
+                                                    <img class="img-fluid" src="{{$player1.ImgUrl}}"
+                                                    alt="">
+                                                    {{break}}
+                                                {{end}}
+                                            {{end}}
+                                            {{if eq $playerIndex 359}}
+                                                        <img class="img-fluid" src="/static/images/blackProfile.png"
+                                                        alt="">
+                                            {{end}}
+                                        {{end}}
+                                        <h5 class="position p-1">{{$position.Name}}</h5>
+                                    </div>
+                                </a>
+                                
+                                <form id="submit_player_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post">
+                                    <input type="hidden" name="assign_player" value="true">
+                                    <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                    <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
+                                    <input type="hidden" id="assigned_position{{$teamInfo.TeamID.Int64}}" name="assigned" value="">
+                                    <input type="hidden" id="assigned_player_id{{$teamInfo.TeamID.Int64}}" name="player_id" value="">
+
+                                    <div class="dropdown-menu">
+                                        {{range $player2 := index $.Data "nba_players"}}
+                                            {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                                {{if eq $player2.Assigned 0}}
+                                                <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                    {{$player2.StatsOverall}} {{$player2.FirstName}} {{$player2.LastName}}
+                                                </li>
+                                                {{end}}
+                                            {{end}}
+                                        {{end}}
+                                        {{range $player1 := index $.Data "nba_players"}}
+                                            {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                                {{if eq $player1.Assigned $position.Number}}
+                                                    <hr class="dropdown-divider">
+                                                    <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                    Remove player
+                                                    </li>
+                                                {{end}}
+                                            {{end}}
+                                        {{end}}
+                                    </div>
+
+                                </form>
+                            </div>
+                        {{end}}
+                    {{end}}
+                {{end}}
+
+
                 <div class="col-md-2 text-center lh-1">
                     <div
                         class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
