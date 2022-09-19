@@ -15,11 +15,25 @@
                 <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-1
                     opacity-50">
 
-                <p>Stephen Curry</p>
-                <p>James Harden</p>
-                <p>Kevin Durant</p>
-                <p>Pascal Siakam</p>
-                <p>Anthony Davis</p>
+                {{range $playersIndex, $players := index $.Data "nba_players"}}
+                    {{if eq $players.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                        {{if eq $players.Assigned 1}}
+                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{end}}
+                        {{if eq $players.Assigned 2}}
+                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{end}}
+                        {{if eq $players.Assigned 3}}
+                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{end}}
+                        {{if eq $players.Assigned 4}}
+                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{end}}
+                        {{if eq $players.Assigned 5}}
+                            <p>{{$players.FirstName}} {{$players.LastName}}</p>
+                        {{end}}
+                    {{end}}
+                {{end}}
 
                 <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-1
                     opacity-50">
@@ -47,86 +61,70 @@
 
     <div id="team_{{$teamInfo.TeamID.Int64}}" style="display: none;" class="align-items-md-stretch mb-4 rounded-3">
 
-        <div class="rounded-3 p-4 border text-white"
+
+        <div class="rounded-3 p-4 border"
             style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
 
             <div class="row align-items-md-stretch justify-content-between px-3">
 
-                <div class="col-md-2 text-center lh-1 dropend">
+                {{range $position := index $.Data "positions"}}
+                    {{if lt $position.Number 6}}
+                        <div class="col-md-2 text-center lh-1 dropend">
 
-                    <a href="#" class="{{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div
-                            class="relative player-shadow border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-2 rounded-3 text-center mb-2"
-                            style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
-                            {{range $player1 := index $.Data "nba_players"}}
-                                {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
-                                    {{if eq $player1.Assigned 1}}
-                                        <img class="img-fluid" src="{{$player1.ImgUrl}}"
-                                        alt="">
+                            <a href="#" class="{{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}" data-bs-toggle="dropdown" aria-expanded="false">
+                                <div
+                                    class="relative player-shadow border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-2 rounded-3 text-center mb-2"
+                                    style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
+                                    {{range $playerIndex, $player1 := index $.Data "nba_players"}}
+                                        {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $player1.Assigned $position.Number}}
+                                                <img class="img-fluid" src="{{$player1.ImgUrl}}"
+                                                alt="">
+                                                {{break}}
+                                            {{end}}
+                                        {{end}}
+                                        {{if eq $playerIndex 359}}
+                                                    <img class="img-fluid" src="/static/images/blackProfile.png"
+                                                    alt="">
+                                        {{end}}
                                     {{end}}
-                                {{end}}
-                            {{end}}
-                            <h5 class="position p-1">PG</h5>
+                                    <h5 class="position p-1">{{$position.Name}}</h5>
+                                </div>
+                            </a>
+                            
+                            <form id="submit_player_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post">
+                                <input type="hidden" name="assign_player" value="true">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
+                                <input type="hidden" id="assigned_position{{$teamInfo.TeamID.Int64}}" name="assigned" value="">
+                                <input type="hidden" id="assigned_player_id{{$teamInfo.TeamID.Int64}}" name="player_id" value="">
+
+                                <div class="dropdown-menu">
+                                    {{range $player2 := index $.Data "nba_players"}}
+                                        {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $player2.Assigned 0}}
+                                            <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                {{$player2.StatsOverall}} {{$player2.FirstName}} {{$player2.LastName}}
+                                            </li>
+                                            {{end}}
+                                        {{end}}
+                                    {{end}}
+                                    {{range $player1 := index $.Data "nba_players"}}
+                                        {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                            {{if eq $player1.Assigned $position.Number}}
+                                                <hr class="dropdown-divider">
+                                                <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                Remove player
+                                                </li>
+                                            {{end}}
+                                        {{end}}
+                                    {{end}}
+                                </div>
+
+                            </form>
                         </div>
-                    </a>
-                    
-                    <form id="submit_player_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post">
-                        <input type="hidden" name="player_form" value="true">
-                        <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-                        <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
-                        <select class="form-select text-small shadow" name="player_id">
-                            {{range $player2 := index $.Data "nba_players"}}
-                                {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
-                                    {{if eq $player2.Assigned 0}}
-                                        <option value="{{$player2.PlayerID}}_1"
-                                        onclick="document.getElementById('submit_player_{{$teamInfo.TeamID.Int64}}').submit()">{{$player2.FirstName}} {{$player2.LastName}}</option>
-                                    {{end}}
-                                {{end}}
-                            {{end}}
-                            {{range $player1 := index $.Data "nba_players"}}
-                                {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
-                                    {{if eq $player1.Assigned 1}}
-                                        <hr class="dropdown-divider">
-                                        <option value="{{$player1.PlayerID}}_0"
-                                        onclick="document.getElementById('submit_player_{{$teamInfo.TeamID.Int64}}').submit()">Remove player</option>
-                                    {{end}}
-                                {{end}}
-                            {{end}}
-                        </select>
-                    </form>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div
-                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201935.png"
-                            alt="">
-                        <h5 class="position p-1">SG</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div
-                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/201142.png"
-                            alt="">
-                        <h5 class="position p-1">SF</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div
-                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1627783.png"
-                            alt="">
-                        <h5 class="position p-1">PF</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div
-                        class="relative player-shadow bkcolor border border-white  border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203076.png"
-                            alt="">
-                        <h5 class="position p-1">C</h5>
-                    </div>
-                </div>
+                    {{end}}
+                {{end}}
 
             </div>
 
@@ -134,42 +132,66 @@
 
             <div class="row align-items-md-stretch justify-content-between px-3">
 
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1629027.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">PG</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1626164.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">SG</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203897.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">SF</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/203114.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">PF</h5>
-                    </div>
-                </div>
-                <div class="col-md-2 text-center lh-1">
-                    <div class="relative player-shadow bg-dark border border-dark border-2 rounded-3 text-center mb-2">
-                        <img class="img-fluid" src="https://cdn.nba.com/headshots/nba/latest/1040x760/1629627.png"
-                            alt="">
-                        <h5 class="position text-secondary p-1">C</h5>
-                    </div>
-                </div>
+                {{range $position := index $.Data "positions"}}
+                    {{if gt $position.Number 5}}
+                        {{if lt $position.Number 11}}
+                            <div class="col-md-2 text-center lh-1 dropend">
 
+                                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div
+                                        class="relative player-shadow bg-dark text-secondary border border-dark border-2 rounded-3 text-center mb-2">
+                                        {{range $playerIndex, $player1 := index $.Data "nba_players"}}
+                                            {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                                {{if eq $player1.Assigned $position.Number}}
+                                                    <img class="img-fluid" src="{{$player1.ImgUrl}}"
+                                                    alt="">
+                                                    {{break}}
+                                                {{end}}
+                                            {{end}}
+                                            {{if eq $playerIndex 359}}
+                                                        <img class="img-fluid" src="/static/images/blackProfile.png"
+                                                        alt="">
+                                            {{end}}
+                                        {{end}}
+                                        <h5 class="position p-1">{{$position.Name}}</h5>
+                                    </div>
+                                </a>
+                                
+                                <form id="submit_player_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post">
+                                    <input type="hidden" name="assign_player" value="true">
+                                    <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                    <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
+                                    <input type="hidden" id="assigned_position{{$teamInfo.TeamID.Int64}}" name="assigned" value="">
+                                    <input type="hidden" id="assigned_player_id{{$teamInfo.TeamID.Int64}}" name="player_id" value="">
+
+                                    <div class="dropdown-menu">
+                                        {{range $player2 := index $.Data "nba_players"}}
+                                            {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                                {{if eq $player2.Assigned 0}}
+                                                <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                    {{$player2.StatsOverall}} {{$player2.FirstName}} {{$player2.LastName}}
+                                                </li>
+                                                {{end}}
+                                            {{end}}
+                                        {{end}}
+                                        {{range $player1 := index $.Data "nba_players"}}
+                                            {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
+                                                {{if eq $player1.Assigned $position.Number}}
+                                                    <hr class="dropdown-divider">
+                                                    <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                    Remove player
+                                                    </li>
+                                                {{end}}
+                                            {{end}}
+                                        {{end}}
+                                    </div>
+
+                                </form>
+                            </div>
+                        {{end}}
+                    {{end}}
+                {{end}}
+            
             </div>
 
             <hr class="border border-1 opacity-0 mt-2">
@@ -214,8 +236,6 @@
             </div>
 
         </div>
-
-
 
     </div>
 
@@ -324,7 +344,11 @@
         $('#' + str).toggle();
     }
 
-    
+    function submitForm(teamID, playerID, assigned_position, formID) {
+        document.getElementById('assigned_position' + teamID).value = assigned_position;
+        document.getElementById('assigned_player_id' + teamID).value = playerID;
+        document.getElementById(formID).submit();
+   }
 
 </script>
 

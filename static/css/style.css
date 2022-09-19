@@ -42,23 +42,6 @@
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
 
-.teamcolor1 {
-    background-image: linear-gradient(90deg, #8100ff, #9700fe);
-}
-
-.teamcolor2 {
-    background-image: linear-gradient(90deg, #9a01ff, #af00ff);
-}
-
-.teamcolor3 {
-    background-image: linear-gradient(90deg, #ca03ff, #c801ff);
-
-}
-
-.teamcolor4 {
-    background-image: linear-gradient(90deg, #c900ff, #df01ff);
-}
-
 .sidebar ul li:hover {
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }

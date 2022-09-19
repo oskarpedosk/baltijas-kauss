@@ -116,6 +116,12 @@ type NBAPlayer struct {
 	Assigned                  int
 }
 
+
+type NBAPosition struct {
+	Name   string
+	Number int
+}
+
 // Badge is the NBA badge model
 type Badge struct {
 	BadgeID   int

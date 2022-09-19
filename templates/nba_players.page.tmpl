@@ -97,23 +97,24 @@
                                                 FA
                                             {{end}}
 
-                                        <form id="teamSelect_{{$index}}" action="/nba/players" method="post">
-                                            <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-                                            <input type="hidden" name="index" value="{{$index}}">
-                                            <input type="hidden" name="player_id" value="{{$players.PlayerID}}">
-                                            <select class="dropdown-menu" name="team_id">
-                                                {{range $teams := index $.Data "nba_teams"}}
-                                                <option class="dropdown-item" value="{{$teams.TeamID.Int64}}"
-                                                    onclick="document.getElementById('teamSelect_{{$index}}').submit()">
-                                                    {{$teams.Abbreviation}} {{$teams.Name}}</option>
-                                                {{end}}
-                                                <hr class="dropdown-divider">
-                                                <option class="dropdown-item" value=null
-                                                    onclick="document.getElementById('teamSelect_{{$index}}').submit()">
-                                                    Free Agency</option>
-                                            </select>
-                                        </form>
-                                        </p>
+                                                <form id="teamSelect_{{$index}}" action="/nba/players" method="post">
+                                                    <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                                    <input type="hidden" name="index" value="{{$index}}">
+                                                    <input type="hidden" name="player_id" value="{{$players.PlayerID}}">
+                                                    <div class="dropdown-menu">
+                                                        {{range $teams := index $.Data "nba_teams"}}
+                                                        <input type="hidden" id="field_{{$index}}" name="team_id" value="">
+                                                            <li class="dropdown-item" onclick="submitForm('{{$teams.TeamID.Int64}}', 'field_{{$index}}', 'teamSelect_{{$index}}')">
+                                                                {{$teams.Abbreviation}} {{$teams.Name}}
+                                                            </li>
+                                                        {{end}}
+                                                        <hr class="dropdown-divider">
+                                                        <li class="dropdown-item" onclick="submitForm('null', 'field_{{$index}}', 'teamSelect_{{$index}}')"><input type="hidden" name="team_id" value="">
+                                                            Free Agency
+                                                        </li>
+                                                    </div>
+                                                </form>
+                                            </p>
                                         </p>
                                     </div>
 
@@ -238,6 +239,12 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
+
+    function submitForm(teamID, fieldID, formID) {
+        document.getElementById(fieldID).value = teamID;
+        document.getElementById(formID).submit();
+   }
+
 </script>
 
 {{end}}

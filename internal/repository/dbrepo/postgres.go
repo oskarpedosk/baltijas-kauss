@@ -88,7 +88,29 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
+	// Remove previous player from position
 	stmt := `
+	update 
+		nba_players
+	set 
+		assigned = 0
+	where
+		team_id = $1
+	and
+		assigned = $2
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		player.TeamID,
+		player.Assigned,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	// Add new player to position
+	stmt = `
 	update 
 		nba_players
 	set 
@@ -99,7 +121,7 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 		team_id = $2
 	`
 
-	_, err := m.DB.ExecContext(ctx, stmt,
+	_, err = m.DB.ExecContext(ctx, stmt,
 		player.PlayerID,
 		player.TeamID,
 		player.Assigned,

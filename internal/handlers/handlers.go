@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
@@ -93,6 +92,9 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 		// helpers.ServerError(w, err)
 	}
 
+	fmt.Println(playerID)
+	fmt.Println(teamID)
+
 	player := models.NBAPlayer{
 		PlayerID: playerID,
 		TeamID:   sql.NullInt64{int64(teamID), nullInt},
@@ -113,6 +115,57 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	var emptyTeamInfo models.NBATeamInfo
 	data := make(map[string]interface{})
 
+	positionss := []models.NBAPosition{
+		{
+			Name:   "PG",
+			Number: 1,
+		},
+		{
+			Name:   "SG",
+			Number: 2,
+		},
+		{
+			Name:   "SF",
+			Number: 3,
+		},
+		{
+			Name:   "PF",
+			Number: 4,
+		},
+		{
+			Name:   "C",
+			Number: 5,
+		},
+		{
+			Name:   "PG",
+			Number: 6,
+		},
+		{
+			Name:   "SG",
+			Number: 7,
+		},
+		{
+			Name:   "SF",
+			Number: 8,
+		},
+		{
+			Name:   "PF",
+			Number: 9,
+		},
+		{
+			Name:   "C",
+			Number: 10,
+		},
+		{
+			Name:   "Res",
+			Number: 11,
+		},
+		{
+			Name:   "Res",
+			Number: 12,
+		},
+	}
+
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -128,6 +181,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	data["teamInfo"] = emptyTeamInfo
 	data["nba_players"] = players
 	data["nba_teams"] = teams
+	data["positions"] = positionss
 
 	render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
@@ -136,42 +190,47 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("test")
 	err := r.ParseForm()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	if r.Form.Get("player_form") == "true" {
+	if r.Form.Get("assign_player") == "true" {
 		fmt.Println("player form submitted")
 
-		playerIDAndAssigned := r.Form.Get("player_id")
+		if err := r.ParseForm(); err != nil {
+			fmt.Println(err)
+		}
 
-		playerIDAndAssignedSlice := strings.Split(playerIDAndAssigned, "_")
+		for key, values := range r.PostForm {
+			fmt.Println("key=", key)
+			fmt.Println("values=", values)
+		}
 
-		playerID, err := strconv.Atoi(playerIDAndAssignedSlice[0])
+		playerID, err := strconv.Atoi(r.Form.Get("player_id"))
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
-		
+
 		teamID, err := strconv.Atoi(r.Form.Get("team_id"))
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
-		
-		assigned, err := strconv.Atoi(playerIDAndAssignedSlice[1])
+
+		assigned, err := strconv.Atoi(r.Form.Get("assigned"))
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
 
 		fmt.Println(r.Form.Get("player_id"))
 		fmt.Println(r.Form.Get("team_id"))
-		fmt.Println(playerID)
-		fmt.Println(assigned)
+		fmt.Println(r.Form.Get("assigned"))
 
 		player := models.NBAPlayer{
 			PlayerID: playerID,
-			TeamID: sql.NullInt64{int64(teamID), true},
+			TeamID:   sql.NullInt64{int64(teamID), true},
 			Assigned: assigned,
 		}
 		err = m.DB.AssignNBAPlayer(player)
