@@ -20,6 +20,56 @@ import (
 
 // Repo the repository used by the handlers
 var Repo *Repository
+var positions = []models.NBAPosition{
+	{
+		Name:   "PG",
+		Number: 1,
+	},
+	{
+		Name:   "SG",
+		Number: 2,
+	},
+	{
+		Name:   "SF",
+		Number: 3,
+	},
+	{
+		Name:   "PF",
+		Number: 4,
+	},
+	{
+		Name:   "C",
+		Number: 5,
+	},
+	{
+		Name:   "PG",
+		Number: 6,
+	},
+	{
+		Name:   "SG",
+		Number: 7,
+	},
+	{
+		Name:   "SF",
+		Number: 8,
+	},
+	{
+		Name:   "PF",
+		Number: 9,
+	},
+	{
+		Name:   "C",
+		Number: 10,
+	},
+	{
+		Name:   "Res",
+		Number: 11,
+	},
+	{
+		Name:   "Res",
+		Number: 12,
+	},
+}
 
 // Repository is the repository type
 type Repository struct {
@@ -112,59 +162,32 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
+	if r.FormValue("player_id") != "" {
+		playerID, err := strconv.Atoi(r.FormValue("player_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		teamID, err := strconv.Atoi(r.FormValue("team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		assigned, err := strconv.Atoi(r.FormValue("assigned"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		player := models.NBAPlayer{
+			PlayerID: playerID,
+			TeamID:   sql.NullInt64{int64(teamID), true},
+			Assigned: assigned,
+		}
+		err = m.DB.AssignNBAPlayer(player)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+	}
+	
 	var emptyTeamInfo models.NBATeamInfo
 	data := make(map[string]interface{})
-
-	positionss := []models.NBAPosition{
-		{
-			Name:   "PG",
-			Number: 1,
-		},
-		{
-			Name:   "SG",
-			Number: 2,
-		},
-		{
-			Name:   "SF",
-			Number: 3,
-		},
-		{
-			Name:   "PF",
-			Number: 4,
-		},
-		{
-			Name:   "C",
-			Number: 5,
-		},
-		{
-			Name:   "PG",
-			Number: 6,
-		},
-		{
-			Name:   "SG",
-			Number: 7,
-		},
-		{
-			Name:   "SF",
-			Number: 8,
-		},
-		{
-			Name:   "PF",
-			Number: 9,
-		},
-		{
-			Name:   "C",
-			Number: 10,
-		},
-		{
-			Name:   "Res",
-			Number: 11,
-		},
-		{
-			Name:   "Res",
-			Number: 12,
-		},
-	}
 
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
@@ -181,7 +204,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	data["teamInfo"] = emptyTeamInfo
 	data["nba_players"] = players
 	data["nba_teams"] = teams
-	data["positions"] = positionss
+	data["positions"] = positions
 
 	render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
@@ -190,7 +213,6 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("test")
 	err := r.ParseForm()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -287,6 +309,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 			data["nba_players"] = players
 			data["nba_teams"] = teams
 			data["teamInfo"] = teamInfo
+			data["positions"] = positions
 
 			render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
 				Form: form,

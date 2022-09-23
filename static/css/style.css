@@ -99,7 +99,7 @@
     display: flex;
 }
 
-.team-pill-row p{
+.team-pill-row p {
     display: inline-block;
     align-self: center;
 }
@@ -115,4 +115,8 @@
     right: 30px;
     width: 70px;
     z-index: 100;
+}
+
+.active {
+    display: none;
 }

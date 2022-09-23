@@ -58,7 +58,7 @@ type NBAPlayer struct {
 	Archetype                 string
 	NBATeam                   string
 	Height                    int
-	Weight                    *int
+	Weight                    int
 	ImgUrl                    string
 	PlayerUrl                 string
 	TeamID                    sql.NullInt64

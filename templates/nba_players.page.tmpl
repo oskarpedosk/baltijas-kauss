@@ -152,11 +152,29 @@
                         <td>{{$players.StatsAthleticism}}</td>
                         <td>{{$players.StatsInsideScoring}}</td>
                         <td>{{$players.StatsPlaymaking}}</td>
-                        <td>{{$players.StatsDefending}}</td>
-                        <td>{{$players.StatsRebounding}}</td>
+                        <td>
+                            {{if gt $players.StatsDefending 85}}
+                            <span class="badge rounded-pill bg-success text-white">{{$players.StatsDefending}}</span>
+                            {{else}}
+                            {{$players.StatsDefending}}
+                            {{end}}
+                        </td>
+                        <td>
+                            {{if gt $players.StatsRebounding 85}}
+                            <span class="badge rounded-pill bg-success text-white">{{$players.StatsRebounding}}</span>
+                            {{else}}
+                            {{$players.StatsRebounding}}
+                            {{end}}
+                        </td>
                         <td>{{$players.StatsCloseShot}}</td>
                         <td>{{$players.StatsMidRangeShot}}</td>
-                        <td>{{$players.StatsThreePointShot}}</td>
+                        <td>
+                            {{if gt $players.StatsThreePointShot 85}}
+                            <span class="badge rounded-pill bg-success text-white">{{$players.StatsThreePointShot}}</span>
+                            {{else}}
+                            {{$players.StatsThreePointShot}}
+                            {{end}}
+                        </td>
                         <td>{{$players.StatsFreeThrow}}</td>
                         <td>{{$players.StatsShotIQ}}</td>
                         <td>{{$players.StatsOffensiveConsistency}}</td>

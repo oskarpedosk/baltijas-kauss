@@ -3,7 +3,8 @@
 {{define "content"}}
 <div class="container p-3">
 
-    <div class="row align-items-md-stretch text-dark mb-4">
+    <div id="allteams">
+        <div id="allteamsreload" class="row align-items-md-stretch text-dark mb-4">
 
         {{range $teamInfo := index .Data "nba_teams"}}
 
@@ -200,12 +201,12 @@
         </div>
 
         {{end}}
-
+        </div>
     </div>
 
     {{range $teamInfo := index .Data "nba_teams"}}
 
-    <div id="team_{{$teamInfo.TeamID.Int64}}" style="display: none;" class="align-items-md-stretch mb-4 rounded-3">
+    <div id="team_{{$teamInfo.TeamID.Int64}}" class="align-items-md-stretch mb-4 rounded-3">
 
 
         <div class="rounded-3 p-4 border"
@@ -239,18 +240,15 @@
                             </a>
                             
                             <form id="submit_player_{{$teamInfo.TeamID.Int64}}" action="/nba/teams" method="post">
-                                <input type="hidden" name="assign_player" value="true">
                                 <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-                                <input type="hidden" name="team_id" value="{{$teamInfo.TeamID.Int64}}">
-                                <input type="hidden" id="assigned_position{{$teamInfo.TeamID.Int64}}" name="assigned" value="">
-                                <input type="hidden" id="assigned_player_id{{$teamInfo.TeamID.Int64}}" name="player_id" value="">
 
                                 <div class="dropdown-menu">
                                     {{range $player2 := index $.Data "nba_players"}}
                                         {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                             {{if eq $player2.Assigned 0}}
-                                            <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
-                                                {{$player2.StatsOverall}} {{$player2.FirstName}} {{$player2.LastName}}
+                                            <!-- <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')"> -->
+                                            <li class="dropdown-item" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}')">
+                                                {{$player2.FirstName}} {{$player2.LastName}} {{$player2.StatsOverall}}
                                             </li>
                                             {{end}}
                                         {{end}}
@@ -258,8 +256,7 @@
                                     {{range $player1 := index $.Data "nba_players"}}
                                         {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                             {{if eq $player1.Assigned $position.Number}}
-                                                <hr class="dropdown-divider">
-                                                <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                <li class="dropdown-item text-secondary" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0')">
                                                 Remove player
                                                 </li>
                                             {{end}}
@@ -314,7 +311,7 @@
                                         {{range $player2 := index $.Data "nba_players"}}
                                             {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                 {{if eq $player2.Assigned 0}}
-                                                <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                <li class="dropdown-item" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}')">
                                                     {{$player2.StatsOverall}} {{$player2.FirstName}} {{$player2.LastName}}
                                                 </li>
                                                 {{end}}
@@ -323,8 +320,7 @@
                                         {{range $player1 := index $.Data "nba_players"}}
                                             {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                 {{if eq $player1.Assigned $position.Number}}
-                                                    <hr class="dropdown-divider">
-                                                    <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                    <li class="dropdown-item text-secondary" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0')">
                                                     Remove player
                                                     </li>
                                                 {{end}}
@@ -380,7 +376,7 @@
                                         {{range $player2 := index $.Data "nba_players"}}
                                             {{if eq $player2.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                 {{if eq $player2.Assigned 0}}
-                                                <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                <li class="dropdown-item" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player2.PlayerID}}', '{{$position.Number}}')">
                                                     {{$player2.StatsOverall}} {{$player2.FirstName}} {{$player2.LastName}}
                                                 </li>
                                                 {{end}}
@@ -389,8 +385,7 @@
                                         {{range $player1 := index $.Data "nba_players"}}
                                             {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                 {{if eq $player1.Assigned $position.Number}}
-                                                    <hr class="dropdown-divider">
-                                                    <li class="dropdown-item" onclick="submitForm('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0', 'submit_player_{{$teamInfo.TeamID.Int64}}')">
+                                                    <li class="dropdown-item text-secondary" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0')">
                                                     Remove player
                                                     </li>
                                                 {{end}}
@@ -523,7 +518,7 @@
     function open_div(clicked_id) {
         const str = 'team_' + (clicked_id);
         const settings = 'teamInfo_' + (clicked_id);
-        $('#' + str).toggle();
+        $('#' + str).toggleClass("active");
 
         var x = document.getElementById(str);
         var y = document.getElementById(settings);
@@ -537,11 +532,30 @@
         $('#' + str).toggle();
     }
 
-    function submitForm(teamID, playerID, assigned_position, formID) {
-        document.getElementById('assigned_position' + teamID).value = assigned_position;
-        document.getElementById('assigned_player_id' + teamID).value = playerID;
-        document.getElementById(formID).submit();
-   }
+    function sendData(teamID, playerID, assigned_position) {
+        var assigned = document.getElementById('assigned_position' + teamID).value = assigned_position;
+        var player_id = document.getElementById('assigned_player_id' + teamID).value = playerID;
+        var str = '#team_' + (teamID);
+        console.log("position", assigned);
+        console.log("player_id", player_id);
+        console.log("team_id", teamID);
+        $.ajax({
+            type: 'GET',
+            dataType: 'html',
+            data : { 
+                ajax_post_data: 'hello',
+                assigned: assigned,
+                player_id: player_id,
+                team_id: teamID,
+            },
+            success: function(data) {
+                console.log("success");
+                $( '#allteams' ).load(window.location.href + ' #allteamsreload' );
+                $( '#team_' + teamID ).load(window.location.href + ' #team_' + teamID );
+            }
+        });
+    }
+    
 
 </script>
 
