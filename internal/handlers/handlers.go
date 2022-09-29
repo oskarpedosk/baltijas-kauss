@@ -219,54 +219,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if r.Form.Get("assign_player") == "true" {
-		fmt.Println("player form submitted")
-
-		if err := r.ParseForm(); err != nil {
-			fmt.Println(err)
-		}
-
-		for key, values := range r.PostForm {
-			fmt.Println("key=", key)
-			fmt.Println("values=", values)
-		}
-
-		playerID, err := strconv.Atoi(r.Form.Get("player_id"))
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-
-		teamID, err := strconv.Atoi(r.Form.Get("team_id"))
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-
-		assigned, err := strconv.Atoi(r.Form.Get("assigned"))
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-
-		fmt.Println(r.Form.Get("player_id"))
-		fmt.Println(r.Form.Get("team_id"))
-		fmt.Println(r.Form.Get("assigned"))
-
-		player := models.NBAPlayer{
-			PlayerID: playerID,
-			TeamID:   sql.NullInt64{int64(teamID), true},
-			Assigned: assigned,
-		}
-		err = m.DB.AssignNBAPlayer(player)
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-
-		// render template with data
-
-		m.App.Session.Put(r.Context(), "player", player)
-
-		http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
-	} else {
-		text := r.Form.Get("dark_text")
+	text := r.Form.Get("dark_text")
 		darkText := "false"
 		if text == "true" {
 			darkText = "true"
@@ -326,7 +279,6 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		m.App.Session.Put(r.Context(), "team_info", teamInfo)
 
 		http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
-	}
 }
 
 type jsonResponse struct {
@@ -370,9 +322,30 @@ func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) 
 }
 
 func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
-	var emptyResult models.Result
+	var emptyStandings models.Result
 	data := make(map[string]interface{})
-	data["result"] = emptyResult
+
+	teams, err := m.DB.GetNBATeamInfo()
+			if err != nil {
+				helpers.ServerError(w, err)
+				return
+			}
+	standings, err := m.DB.GetNBAStandings()
+		if err != nil {
+			helpers.ServerError(w, err)
+			return
+		}
+	lastResults, err := m.DB.GetLastResults(10)
+		if err != nil {
+			helpers.ServerError(w, err)
+			return
+		}
+	
+	data["result"] = emptyStandings
+	data["teams"] = teams
+	data["standings"] = standings
+	data["last_results"] = lastResults
+	
 
 	render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),

@@ -5,63 +5,33 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1 class="mt-5">NBA players</h1>
+            <h1 class="mt-5">2K23</h1>
 
-            <hr>
             <input class="form-control" id="myInput" type="text" placeholder="Search..">
             <br>
-            <table id="nba_players_table" class="table table-sm table-responsive">
+            <table class="table table-sm table-responsive">
                 <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col" style="text-align: start;">Player</th>
-                        <th scope="col"></th>
-                        <th scope="col">Overall</th>
+                        <th scope="col">Team</th>
                         <th scope="col">Badges</th>
-                        <th scope="col">Outside Scoring</th>
-                        <th scope="col">Athleticism</th>
-                        <th scope="col">Inside Scoring</th>
-                        <th scope="col">Playmaking</th>
-                        <th scope="col">Defending</th>
-                        <th scope="col">Rebounding</th>
-                        <th scope="col">Close Shot</th>
-                        <th scope="col">Mid Range Shot</th>
-                        <th scope="col">3 Point Shot</th>
-                        <th scope="col">Free Throw</th>
-                        <th scope="col">Shot IQ</th>
-                        <th scope="col">Offensive Consistency</th>
+                        <th scope="col">Overall</th>
+                        <th scope="col">DEF</th>
+                        <th scope="col">3PT</th>
+                        <th scope="col">FT</th>
                         <th scope="col">Speed</th>
                         <th scope="col">Acceleration</th>
                         <th scope="col">Strength</th>
                         <th scope="col">Vertical</th>
-                        <th scope="col">Stamina</th>
-                        <th scope="col">Hustle</th>
-                        <th scope="col">Overall Durability</th>
-                        <th scope="col">Layup</th>
-                        <th scope="col">Standing Dunk</th>
                         <th scope="col">Driving Dunk</th>
-                        <th scope="col">Post Hook</th>
-                        <th scope="col">Post Fade</th>
-                        <th scope="col">Post Control</th>
                         <th scope="col">Draw Foul</th>
-                        <th scope="col">Hands</th>
-                        <th scope="col">Pass Accuracy</th>
-                        <th scope="col">Ball Handle</th>
-                        <th scope="col">Speed With Ball</th>
-                        <th scope="col">Pass IQ</th>
-                        <th scope="col">Pass Vision</th>
-                        <th scope="col">Interior Defense</th>
-                        <th scope="col">Perimeter Defense</th>
-                        <th scope="col">Steal</th>
-                        <th scope="col">Block</th>
-                        <th scope="col">Lateral Quickness</th>
-                        <th scope="col">Help Defense IQ</th>
-                        <th scope="col">Pass Perception</th>
-                        <th scope="col">Defensive Consistency</th>
-                        <th scope="col">Offensive Rebound</th>
-                        <th scope="col">Defensive Rebound</th>
-                        <th scope="col">Intangibles</th>
-                        <th scope="col">Potential</th>
+                        <th scope="col">INT D</th>
+                        <th scope="col">PER D</th>
+                        <th scope="col">STL</th>
+                        <th scope="col">BLK</th>
+                        <th scope="col">OREB</th>
+                        <th scope="col">DREB</th>
                         <th scope="col">Total Attributes</th>
                     </tr>
                 </thead>
@@ -69,51 +39,19 @@
 
                     {{range $index, $players := index .Data "nba_players"}}
                     <tr>
-                        <td>{{$index}}</td>
+                        <td>{{add $index 1}}</td>
                         <td>
                             <div class="d-flex player-card">
                                 <img src="{{$players.ImgUrl}}"
-                                    alt="" class="header-image rounded-circle align-middle">
-                                <div class="ms-2 p-0">
-                                    <p class="fw-bold my-0">{{$players.FirstName}} {{$players.LastName}}</p>
+                                    alt="" class="header-image rounded-circle inline-block mt-1">
+                                <div class="ms-2 p-0 inline-block">
+                                    <p class="my-0">{{$players.FirstName}} {{$players.LastName}}</p>
                                     <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
                                     <div class="team-pill-row my-0">
                                         <p class="text-muted my-0" style="font-size: 10px;">
                                             {{$players.PrimaryPosition}}
                                             {{$players.SecondaryPosition}}
                                             | {{$players.Height}}cm | {{$players.Weight}}kg
-
-                                            {{if $players.TeamID.Int64}}
-                                                {{range $teamInfo := index $.Data "nba_teams"}}
-                                                    {{if eq $teamInfo.TeamID $players.TeamID}}
-                                                        <p class="badge rounded-pill my-0 ms-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
-                                                        data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
-                                                        {{$teamInfo.Abbreviation}}
-                                                    {{end}}
-                                                {{end}}
-                                            {{else}}
-                                            <p class="badge rounded-pill bkcolor my-0 ms-1" class="dropdown-toggle"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                                FA
-                                            {{end}}
-
-                                                <form id="teamSelect_{{$index}}" action="/nba/players" method="post">
-                                                    <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-                                                    <input type="hidden" name="index" value="{{$index}}">
-                                                    <input type="hidden" name="player_id" value="{{$players.PlayerID}}">
-                                                    <div class="dropdown-menu">
-                                                        {{range $teams := index $.Data "nba_teams"}}
-                                                        <input type="hidden" id="field_{{$index}}" name="team_id" value="">
-                                                            <li class="dropdown-item" onclick="submitForm('{{$teams.TeamID.Int64}}', 'field_{{$index}}', 'teamSelect_{{$index}}')">
-                                                                {{$teams.Abbreviation}} {{$teams.Name}}
-                                                            </li>
-                                                        {{end}}
-                                                        <hr class="dropdown-divider">
-                                                        <li class="dropdown-item" onclick="submitForm('null', 'field_{{$index}}', 'teamSelect_{{$index}}')"><input type="hidden" name="team_id" value="">
-                                                            Free Agency
-                                                        </li>
-                                                    </div>
-                                                </form>
                                             </p>
                                         </p>
                                     </div>
@@ -121,10 +59,43 @@
                                 </div>
                             </div>
                         </td>
-                        <td style="font-size: 10px; white-space: normal; text-align: start;">{{.NBATeam}}</td>
-                        <td><span class="badge badge-pill bg-dark">{{.StatsOverall}}</span></td>
                         <td>
-                            <div class="d-flex badges-container mt-2 ms-2 me-2">
+                            {{if $players.TeamID.Int64}}
+                            {{range $teamInfo := index $.Data "nba_teams"}}
+                                {{if eq $teamInfo.TeamID $players.TeamID}}
+                                    <p class="badge badgehover badge-pill my-0 ms-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
+                                    data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:70px">
+                                    {{$teamInfo.Abbreviation}}
+                                    </p>
+                                {{end}}
+                            {{end}}
+                        {{else}}
+                        <p style="display:inline-block; width:70px" class="badge badgehover badge-pill border bg-light text-dark my-0 ms-1" class="dropdown-toggle"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                            FA
+                        </p>
+                        {{end}}
+
+                            <form id="teamSelect_{{$index}}" action="/nba/players" method="post">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <input type="hidden" name="index" value="{{$index}}">
+                                <input type="hidden" name="player_id" value="{{$players.PlayerID}}">
+                                <div class="dropdown-menu">
+                                    {{range $teams := index $.Data "nba_teams"}}
+                                    <input type="hidden" id="field_{{$index}}" name="team_id" value="">
+                                        <li class="dropdown-item" onclick="submitForm('{{$teams.TeamID.Int64}}', 'field_{{$index}}', 'teamSelect_{{$index}}')">
+                                            {{$teams.Abbreviation}} {{$teams.Name}}
+                                        </li>
+                                    {{end}}
+                                    <hr class="dropdown-divider">
+                                    <li class="dropdown-item" onclick="submitForm('null', 'field_{{$index}}', 'teamSelect_{{$index}}')"><input type="hidden" name="team_id" value="">
+                                        Free Agency
+                                    </li>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <div class="d-flex mt-2 ms-2">
                                 <div class="d-inline-block position-relative text-dark">
                                     <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
                                     <p class="position-absolute text-center badge-count">{{$players.BronzeBadges}}</p>
@@ -148,70 +119,38 @@
                                 </div>
                             </div>
                         </td>
-                        <td>{{$players.StatsOutsideScoring}}</td>
-                        <td>{{$players.StatsAthleticism}}</td>
-                        <td>{{$players.StatsInsideScoring}}</td>
-                        <td>{{$players.StatsPlaymaking}}</td>
-                        <td>
-                            {{if gt $players.StatsDefending 85}}
-                            <span class="badge rounded-pill bg-success text-white">{{$players.StatsDefending}}</span>
+                        <td><span style="font-size: 12px;" class="badge badge-pill 
+                            {{if ge $players.StatsOverall 80}}
+                                {{if ge $players.StatsOverall 85}}
+                                    {{if ge $players.StatsOverall 90}}
+                                        bkcolor
+                                    {{else}}
+                                        badgecolor1
+                                    {{end}}
+                                {{else}}
+                                    badgecolor2
+                                {{end}}
                             {{else}}
-                            {{$players.StatsDefending}}
+                            bg-light border text-dark
                             {{end}}
-                        </td>
-                        <td>
-                            {{if gt $players.StatsRebounding 85}}
-                            <span class="badge rounded-pill bg-success text-white">{{$players.StatsRebounding}}</span>
-                            {{else}}
-                            {{$players.StatsRebounding}}
-                            {{end}}
-                        </td>
-                        <td>{{$players.StatsCloseShot}}</td>
-                        <td>{{$players.StatsMidRangeShot}}</td>
-                        <td>
-                            {{if gt $players.StatsThreePointShot 85}}
-                            <span class="badge rounded-pill bg-success text-white">{{$players.StatsThreePointShot}}</span>
-                            {{else}}
-                            {{$players.StatsThreePointShot}}
-                            {{end}}
-                        </td>
+                        ">{{.StatsOverall}}</span></td>
+                        <td>{{$players.StatsDefending}}</td>
+                        <td>{{$players.StatsThreePointShot}}</td>
                         <td>{{$players.StatsFreeThrow}}</td>
-                        <td>{{$players.StatsShotIQ}}</td>
-                        <td>{{$players.StatsOffensiveConsistency}}</td>
                         <td>{{$players.StatsSpeed}}</td>
                         <td>{{$players.StatsAcceleration}}</td>
                         <td>{{$players.StatsStrength}}</td>
                         <td>{{$players.StatsVertical}}</td>
-                        <td>{{$players.StatsStamina}}</td>
-                        <td>{{$players.StatsHustle}}</td>
-                        <td>{{$players.StatsOverallDurability}}</td>
-                        <td>{{$players.StatsLayup}}</td>
-                        <td>{{$players.StatsStandingDunk}}</td>
                         <td>{{$players.StatsDrivingDunk}}</td>
-                        <td>{{$players.StatsPostHook}}</td>
-                        <td>{{$players.StatsPostFade}}</td>
-                        <td>{{$players.StatsPostControl}}</td>
                         <td>{{$players.StatsDrawFoul}}</td>
-                        <td>{{$players.StatsHands}}</td>
-                        <td>{{$players.StatsPassAccuracy}}</td>
-                        <td>{{$players.StatsBallHandle}}</td>
-                        <td>{{$players.StatsSpeedWithBall}}</td>
-                        <td>{{$players.StatsPassIQ}}</td>
-                        <td>{{$players.StatsPassVision}}</td>
                         <td>{{$players.StatsInteriorDefense}}</td>
                         <td>{{$players.StatsPerimeterDefense}}</td>
                         <td>{{$players.StatsSteal}}</td>
                         <td>{{$players.StatsBlock}}</td>
-                        <td>{{$players.StatsLateralQuickness}}</td>
-                        <td>{{$players.StatsHelpDefenseIQ}}</td>
-                        <td>{{$players.StatsPassPerception}}</td>
-                        <td>{{$players.StatsDefensiveConsistency}}</td>
                         <td>{{$players.StatsOffensiveRebound}}</td>
                         <td>{{$players.StatsDefensiveRebound}}</td>
-                        <td>{{$players.StatsIntangibles}}</td>
-                        <td>{{$players.StatsPotential}}</td>
                         <td>
-                            <span class="bkcolor badge badge-pill">{{$players.StatsTotalAttributes}}</span>
+                            <span class="badge badge-pill text-dark border bg-light">{{$players.StatsTotalAttributes}}</span>
                         </td>
                     </tr>
                     {{end}}

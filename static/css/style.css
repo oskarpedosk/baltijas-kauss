@@ -42,6 +42,14 @@
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
 
+.badgecolor1 {
+    background-image: linear-gradient(90deg, #0004ff, #0274ff);
+}
+
+.badgecolor2 {
+    background-image: linear-gradient(90deg, #007d17, #0bab30);
+}
+
 .sidebar ul li:hover {
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
@@ -104,7 +112,7 @@
     align-self: center;
 }
 
-.team-pill-row:hover {
+.badgehover:hover {
     cursor: pointer;
 }
 
@@ -119,4 +127,13 @@
 
 .active {
     display: none;
+}
+
+.dot {
+    display: inline-block;
+    vertical-align: middle;
+    width: 6px;
+    height: 6px;
+    margin: 3px;
+    border-radius: 50%;
 }

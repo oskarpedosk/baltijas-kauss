@@ -14,7 +14,7 @@ import (
 )
 
 var pathToTemplates = "../../templates"
-var functions = template.FuncMap{}
+var functions = template.FuncMap{"add": add} 
 
 var app *config.AppConfig
 
@@ -98,4 +98,8 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 	}
 
 	return myCache, nil
+}
+
+func add(x, y int) int {
+    return x + y
 }

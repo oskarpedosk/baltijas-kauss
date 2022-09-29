@@ -33,14 +33,6 @@ type NBATeam struct {
 	Players      []NBAPlayer
 }
 
-// NBAResults is the NBA results model
-type NBAResults struct {
-	HomeTeam  int
-	HomeScore int
-	AwayScore int
-	AwayTeam  int
-}
-
 type Result struct {
 	HomeTeam  int
 	HomeScore int
@@ -116,7 +108,6 @@ type NBAPlayer struct {
 	Assigned                  int
 }
 
-
 type NBAPosition struct {
 	Name   string
 	Number int
@@ -146,14 +137,19 @@ type PlayersBadges struct {
 
 type NBAStandings struct {
 	TeamID         int
+	WinPercentage  int
 	TotalWins      int
 	TotalLosses    int
 	HomeWins       int
 	HomeLosses     int
-	RoadWins       int
-	RoadLosses     int
-	LastTen        string
-	Streak         int
+	AwayWins       int
+	AwayLosses     int
+	Streak         string
+	StreakCount    int
 	BasketsFor     int
 	BasketsAgainst int
+	BasketsSum     int
+	ForAvg         float64
+	AgainstAvg     float64
+	LastFive       []string
 }

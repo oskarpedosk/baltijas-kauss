@@ -16,55 +16,60 @@
                             <th scope="col">WIN%</th>
                             <th scope="col">HOME</th>
                             <th scope="col">ROAD</th>
-                            <th scope="col">L10</th>
+                            <th scope="col">LAST 5</th>
                             <th scope="col">STRK</th>
+                            <th scope="col">FOR</th>
+                            <th scope="col">AGT</th>
+                            <th scope="col">+-</th>
+                            <th scope="col">FA</th>
+                            <th scope="col">AA</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td class="text-start">Hiiu Kalur</td>
-                            <td>23</td>
-                            <td>11</td>
-                            <td>.636</td>
-                            <td>9-6</td>
-                            <td>8-2</td>
-                            <td>6-4</td>
-                            <td>W 2</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td class="text-start">Schnelli Klaas</td>
-                            <td>23</td>
-                            <td>11</td>
-                            <td>.636</td>
-                            <td>9-6</td>
-                            <td>8-2</td>
-                            <td>6-4</td>
-                            <td>W 2</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td class="text-start">Kreutzwaldi Pagar</td>
-                            <td>23</td>
-                            <td>11</td>
-                            <td>.636</td>
-                            <td>9-6</td>
-                            <td>8-2</td>
-                            <td>6-4</td>
-                            <td>W 2</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td class="text-start">Jannseni Metall</td>
-                            <td>23</td>
-                            <td>11</td>
-                            <td>.636</td>
-                            <td>9-6</td>
-                            <td>8-2</td>
-                            <td>6-4</td>
-                            <td>W 2</td>
-                        </tr>
+                        {{range $index, $standings := index .Data "standings"}}
+                                <tr>
+                                    <th scope="row">{{add $index 1}}</th>
+                                    <td class="text-start">
+                                        {{range $teamInfo := index $.Data "teams"}}
+                                            {{if eq $standings.TeamID $teamInfo.TeamID.Int64}}
+                                                {{$teamInfo.Name}}
+                                            {{end}}
+                                        {{end}}
+                                    </td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.TotalWins}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.TotalLosses}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">
+                                        .{{if lt $standings.WinPercentage 100}}0{{end}}{{$standings.WinPercentage}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.HomeWins}}-{{$standings.HomeLosses}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.AwayWins}}-{{$standings.AwayLosses}}</td>
+                                    <td>
+                                        <div style="margin: 0 auto;">
+                                            {{range $lastFive := $standings.LastFive}}
+                                                {{if eq $lastFive "W"}}
+                                                    <div class="dot bg-success"></div>
+                                                {{end}}
+                                                {{if eq $lastFive "L"}}
+                                                    <div class="dot bg-danger"></div>
+                                                {{end}}
+                                                {{if eq $lastFive ""}}
+                                                    <div class="dot bg-secondary"></div>
+                                                {{end}}
+                                            {{end}}
+                                        </div>
+                                    </td>
+                                    <td style="font-variant-numeric: tabular-nums;">
+                                        {{if ne $standings.Streak ""}}
+                                            {{$standings.StreakCount}} {{$standings.Streak}}
+                                        {{end}}
+                                    </td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.BasketsFor}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.BasketsAgainst}}</td>
+                                    <td>{{$standings.BasketsSum}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.ForAvg}}</td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.AgainstAvg}}</td>
+                                </tr>
+
+                        {{end}}
                     </tbody>
                 </table>
             </div>
@@ -73,26 +78,25 @@
 
     <div class="row align-items-md-stretch mb-4">
         <div class="col-md-12">
-            <div class="h-100 p-5 bg-light border border-dark rounded-3" id="nba_result">
+            <div class="h-100 p-5 bg-dark rounded-3" id="nba_result">
 
                 {{$res := index .Data "result"}}
 
                 <form action="/nba/results" method="post" class="row justify-content-center" novalidate>
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-select {{with .Form.Errors.Get "home_team"}} is-invalid {{end}}" aria-label="Home team" name="home_team" required>
                             <option selected disabled value="">Home team</option>
-                            <option value="1">Hiiu Kalur</option>
-                            <option value="2">Schnelli Klaas</option>
-                            <option value="3">Kreutzwaldi Pagar</option>
-                            <option value="4">Jannseni Metall</option>
+                            {{range $teamInfo := index $.Data "teams"}}
+                                <option value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
+                            {{end}}
                         </select>
                         {{with .Form.Errors.Get "home_team"}}
                         <label class="text-danger">{{.}}</label>
                         {{end}}
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label for="home_score" class="visually-hidden">Home score</label>
                         <input type="number" min="0" class="form-control {{with .Form.Errors.Get "home_score"}} is-invalid {{end}}" name="home_score" placeholder="Score" value="{{$res.HomeScore}}"
                             required>
@@ -101,7 +105,7 @@
                         {{end}}
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         <label for="away_score" class="visually-hidden">Away score</label>
                         <input type="number" min="0" class="form-control {{with .Form.Errors.Get "away_score"}} is-invalid {{end}}" name="away_score" placeholder="Score" value="{{$res.AwayScore}}"
                             required>
@@ -110,21 +114,20 @@
                         {{end}}
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <select class="form-select {{with .Form.Errors.Get "away_team"}} is-invalid {{end}}" aria-label="Away team" name="away_team" required>
                             <option selected disabled value="">Away team</option>
-                            <option value="1">Hiiu Kalur</option>
-                            <option value="2">Schnelli Klaas</option>
-                            <option value="3">Kreutzwaldi Pagar</option>
-                            <option value="4">Jannseni Metall</option>
+                            {{range $teamInfo := index $.Data "teams"}}
+                                <option value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
+                            {{end}}
                         </select>
                         {{with .Form.Errors.Get "away_team"}}
                         <label class="text-danger">{{.}}</label>
                         {{end}}
                     </div>
 
-                    <div class="col-auto">
-                        <button class="btn btn-outline-primary" type="submit">Add game</button>
+                    <div class="col-md-2">
+                        <button class="btn btn-outline-light" type="submit">Add game</button>
                     </div>
 
                 </form>
@@ -135,7 +138,49 @@
     <div class="row align-items-md-stretch">
         <div class="col-md-12">
             <div class="p-5 bg-light border border-dark rounded-3">
-                <h1>Last 10 games</h1>
+                <table class="table text-center">
+                    {{range $results := index $.Data "last_results"}}
+                    <tr>
+                        <td>
+                            {{range $teamInfo := index $.Data "teams"}}
+                                {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}
+                                    {{$teamInfo.Name}}
+                                {{end}}
+                            {{end}}
+                        </td>
+                        <td>
+                            {{$results.HomeScore}}-{{$results.AwayScore}}
+                        </td>
+                        <td>
+                            {{range $teamInfo := index $.Data "teams"}}
+                                {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}
+                                    <p class="font-weight-italic">{{$teamInfo.Name}}</p>
+                                {{end}}
+                            {{end}}
+                        </td>
+                    </tr>
+                    {{end}}
+                </table>
+                {{range $results := index $.Data "last_results"}}
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        {{range $teamInfo := index $.Data "teams"}}
+                            {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}
+                                {{$teamInfo.Name}}
+                            {{end}}
+                        {{end}}
+                    </div>
+                    <div class="col-md-1 {{if gt $results.HomeScore $results.AwayScore}}badge bg-success{{end}}">{{$results.HomeScore}}</div>
+                    <div class="col-md-1"><p>{{$results.AwayScore}}</p></div>
+                    <div class="col-md-3">
+                        {{range $teamInfo := index $.Data "teams"}}
+                            {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}
+                                {{$teamInfo.Name}}
+                            {{end}}
+                        {{end}}
+                    </div>
+                </div>
+                {{end}}
             </div>
         </div>
     </div>

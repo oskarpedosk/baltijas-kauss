@@ -2,7 +2,9 @@ package dbrepo
 
 import (
 	"context"
+	"math"
 	"time"
+
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 )
 
@@ -238,7 +240,7 @@ func (m *postgresDBRepo) GetNBAPlayers() ([]models.NBAPlayer, error) {
 	return players, nil
 }
 
-// Display all NBA players
+// Get team info
 func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -282,4 +284,201 @@ func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 	}
 
 	return teams, nil
+}
+
+// Display all NBA standings
+func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var standingsSlice []models.NBAStandings
+
+	for i := 1; i < 5; i++ {
+		homeWins := 0
+		homeLosses := 0
+		awayWins := 0
+		awayLosses := 0
+		basketsFor := 0
+		basketsAgainst := 0
+		games := ""
+		query := `
+			select 
+				*
+			from 
+				nba_results
+			where
+				"home_team_id" = $1 or "away_team_id" = $1
+			`
+
+		rows, err := m.DB.QueryContext(ctx, query, i)
+		if err != nil {
+			return standingsSlice, err
+		}
+
+		var singleGame models.Result
+		defer rows.Close()
+		for rows.Next() {
+			err := rows.Scan(
+				&singleGame.HomeTeam,
+				&singleGame.HomeScore,
+				&singleGame.AwayScore,
+				&singleGame.AwayTeam,
+			)
+			if err != nil {
+				return standingsSlice, err
+			}
+
+			if singleGame.HomeTeam == i {
+				basketsFor += singleGame.HomeScore
+				basketsAgainst += singleGame.AwayScore
+				if singleGame.HomeScore > singleGame.AwayScore {
+					homeWins += 1
+					games += "W"
+				} else {
+					homeLosses += 1
+					games += "L"
+				}
+			} else {
+				basketsFor += singleGame.AwayScore
+				basketsAgainst += singleGame.HomeScore
+				if singleGame.AwayScore > singleGame.HomeScore {
+					awayWins += 1
+					games += "W"
+				} else {
+					awayLosses += 1
+					games += "L"
+				}
+			}
+		}
+
+		lastGamesCount := 5
+		x := lastGamesCount
+		chars := []rune(games)
+		if len(chars) < lastGamesCount {
+			x = len(chars)
+		}
+
+		lastGames := []string{}
+
+		for i := len(chars) - x; i < len(chars); i++ {
+			char := string(chars[i])
+			lastGames = append(lastGames, char)
+		}
+		for j := 0; j < lastGamesCount; j++ {
+			if len(lastGames) < lastGamesCount {
+				lastGames = append(lastGames, "0")
+			} else {
+				break
+			}
+		}
+
+		streak := ""
+		streakCount := 1
+
+		if games != "" {
+			streak = string(chars[len(chars)-1])
+			if len(chars) > 1 {
+				for i := len(chars) - 2; i >= 0; i-- {
+					if string(chars[i]) != streak {
+						break
+					} else {
+						streakCount += 1
+					}
+				}
+			}
+		}
+
+		if err = rows.Err(); err != nil {
+			return standingsSlice, err
+		}
+
+		teamStandings := models.NBAStandings{
+			TeamID:         i,
+			WinPercentage:  ((homeWins + awayWins) * 1000) / (homeWins + homeLosses + awayWins + awayLosses),
+			TotalWins:      homeWins + awayWins,
+			TotalLosses:    homeLosses + awayLosses,
+			HomeWins:       homeWins,
+			HomeLosses:     homeLosses,
+			AwayWins:       awayWins,
+			AwayLosses:     awayLosses,
+			Streak:         streak,
+			StreakCount:    streakCount,
+			BasketsFor:     basketsFor,
+			BasketsAgainst: basketsAgainst,
+			BasketsSum:     basketsFor - basketsAgainst,
+			ForAvg:         toFixed(float64(basketsFor)/float64(homeWins+homeLosses+awayWins+awayLosses), 1),
+			AgainstAvg:     toFixed(float64(basketsAgainst)/float64(homeWins+homeLosses+awayWins+awayLosses), 1),
+			LastFive:       lastGames,
+		}
+		standingsSlice = append(standingsSlice, teamStandings)
+	}
+
+	orderedSlice := order(standingsSlice)
+	return orderedSlice, nil
+}
+
+func round(num float64) int {
+	return int(num + math.Copysign(0.5, num))
+}
+
+func toFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(round(num*output)) / output
+}
+
+func order(slice []models.NBAStandings) []models.NBAStandings {
+	for i := 0; i < len(slice)-1; i++ {
+		if slice[i].WinPercentage < slice[i+1].WinPercentage {
+			slice[i], slice[i+1] = slice[i+1], slice[i]
+			order(slice)
+		}
+		if slice[i].WinPercentage == slice[i+1].WinPercentage {
+			if slice[i].BasketsSum < slice[i+1].BasketsSum {
+				slice[i], slice[i+1] = slice[i+1], slice[i]
+			}
+		}
+
+	}
+	return slice
+}
+
+// Display however many last games
+func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var resultsSlice []models.Result
+
+	query := `
+			select 
+				*
+			from 
+				nba_results
+			`
+
+		rows, err := m.DB.QueryContext(ctx, query)
+		if err != nil {
+			return resultsSlice, err
+		}
+
+		var singleGame models.Result
+		defer rows.Close()
+		for rows.Next() {
+			err := rows.Scan(
+				&singleGame.HomeTeam,
+				&singleGame.HomeScore,
+				&singleGame.AwayScore,
+				&singleGame.AwayTeam,
+			)
+			if err != nil {
+				return resultsSlice, err
+			}
+			resultsSlice = append(resultsSlice, singleGame)
+		}
+
+		if err = rows.Err(); err != nil {
+			return resultsSlice, err
+		}
+
+	return resultsSlice, nil
 }
