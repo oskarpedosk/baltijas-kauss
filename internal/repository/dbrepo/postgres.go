@@ -40,8 +40,8 @@ func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `insert into nba_results (home_team_id, home_score, away_score, away_team_id) 
-	values ($1, $2, $3, $4)`
+	stmt := `insert into nba_results (home_team_id, home_score, away_score, away_team_id, timestamp) 
+	values ($1, $2, $3, $4, CURRENT_TIMESTAMP)`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		res.HomeTeam,
@@ -323,6 +323,7 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 				&singleGame.HomeScore,
 				&singleGame.AwayScore,
 				&singleGame.AwayTeam,
+				&singleGame.Time,
 			)
 			if err != nil {
 				return standingsSlice, err
@@ -333,58 +334,54 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 				basketsAgainst += singleGame.AwayScore
 				if singleGame.HomeScore > singleGame.AwayScore {
 					homeWins += 1
-					games += "W"
+					games = "W" + games
 				} else {
 					homeLosses += 1
-					games += "L"
+					games = "L" + games
 				}
 			} else {
 				basketsFor += singleGame.AwayScore
 				basketsAgainst += singleGame.HomeScore
 				if singleGame.AwayScore > singleGame.HomeScore {
 					awayWins += 1
-					games += "W"
+					games = "W" + games
 				} else {
 					awayLosses += 1
-					games += "L"
+					games = "L" + games
 				}
 			}
 		}
 
-		lastGamesCount := 5
-		x := lastGamesCount
+		x := 5
 		chars := []rune(games)
-		if len(chars) < lastGamesCount {
+
+		if len(chars) < x {
 			x = len(chars)
 		}
 
-		lastGames := []string{}
+		lastGames := []string{"", "", "", "", ""}
+		y := 0
 
-		for i := len(chars) - x; i < len(chars); i++ {
-			char := string(chars[i])
-			lastGames = append(lastGames, char)
-		}
-		for j := 0; j < lastGamesCount; j++ {
-			if len(lastGames) < lastGamesCount {
-				lastGames = append(lastGames, "0")
-			} else {
-				break
-			}
+		for i := x; i > 0; i-- {
+			lastGames[i-1] = string(chars[y])
+			y++
 		}
 
 		streak := ""
-		streakCount := 1
+		streakCount := 0
 
 		if games != "" {
-			streak = string(chars[len(chars)-1])
+			streak = string(chars[0])
 			if len(chars) > 1 {
-				for i := len(chars) - 2; i >= 0; i-- {
+				for i := 0; i < x; i++ {
 					if string(chars[i]) != streak {
 						break
 					} else {
 						streakCount += 1
 					}
 				}
+			} else {
+				streakCount = 1
 			}
 		}
 
@@ -392,9 +389,23 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 			return standingsSlice, err
 		}
 
+		totalWins := (homeWins + awayWins)
+		totalGames := (homeWins + homeLosses + awayWins + awayLosses)
+		winPercentage := 0
+
+		forAvg := 0.0
+		againstAvg := 0.0
+
+		if totalGames != 0 {
+			winPercentage = totalWins * 1000 / totalGames
+			forAvg = toFixed(float64(basketsFor)/float64(totalGames), 1)
+			againstAvg = toFixed(float64(basketsAgainst)/float64(totalGames), 1)
+		}
+
 		teamStandings := models.NBAStandings{
 			TeamID:         i,
-			WinPercentage:  ((homeWins + awayWins) * 1000) / (homeWins + homeLosses + awayWins + awayLosses),
+			WinPercentage:  winPercentage,
+			Played:         totalGames,
 			TotalWins:      homeWins + awayWins,
 			TotalLosses:    homeLosses + awayLosses,
 			HomeWins:       homeWins,
@@ -406,8 +417,8 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 			BasketsFor:     basketsFor,
 			BasketsAgainst: basketsAgainst,
 			BasketsSum:     basketsFor - basketsAgainst,
-			ForAvg:         toFixed(float64(basketsFor)/float64(homeWins+homeLosses+awayWins+awayLosses), 1),
-			AgainstAvg:     toFixed(float64(basketsAgainst)/float64(homeWins+homeLosses+awayWins+awayLosses), 1),
+			ForAvg:         float64(forAvg),
+			AgainstAvg:     float64(againstAvg),
 			LastFive:       lastGames,
 		}
 		standingsSlice = append(standingsSlice, teamStandings)
@@ -456,29 +467,41 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 				nba_results
 			`
 
-		rows, err := m.DB.QueryContext(ctx, query)
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return resultsSlice, err
+	}
+
+	var singleGame models.Result
+	defer rows.Close()
+	for rows.Next() {
+		err := rows.Scan(
+			&singleGame.HomeTeam,
+			&singleGame.HomeScore,
+			&singleGame.AwayScore,
+			&singleGame.AwayTeam,
+			&singleGame.Time,
+		)
 		if err != nil {
 			return resultsSlice, err
 		}
 
-		var singleGame models.Result
-		defer rows.Close()
-		for rows.Next() {
-			err := rows.Scan(
-				&singleGame.HomeTeam,
-				&singleGame.HomeScore,
-				&singleGame.AwayScore,
-				&singleGame.AwayTeam,
-			)
-			if err != nil {
-				return resultsSlice, err
-			}
-			resultsSlice = append(resultsSlice, singleGame)
+		layout := "02/01/2006 15:04"
+
+		result := models.Result{
+			HomeTeam:   singleGame.HomeTeam,
+			HomeScore:  singleGame.HomeScore,
+			AwayScore:  singleGame.AwayScore,
+			AwayTeam:   singleGame.AwayTeam,
+			TimeString: singleGame.Time.Round(15 * time.Minute).Format(layout),
 		}
 
-		if err = rows.Err(); err != nil {
-			return resultsSlice, err
-		}
+		resultsSlice = append([]models.Result{result}, resultsSlice...)
+	}
+
+	if err = rows.Err(); err != nil {
+		return resultsSlice, err
+	}
 
 	return resultsSlice, nil
 }

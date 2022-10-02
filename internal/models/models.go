@@ -1,6 +1,9 @@
 package models
 
-import "database/sql"
+import (
+	"database/sql"
+	"time"
+)
 
 type NBATeamInfo struct {
 	ID           int
@@ -34,10 +37,12 @@ type NBATeam struct {
 }
 
 type Result struct {
-	HomeTeam  int
-	HomeScore int
-	AwayScore int
-	AwayTeam  int
+	HomeTeam   int
+	HomeScore  int
+	AwayScore  int
+	AwayTeam   int
+	Time       time.Time
+	TimeString string
 }
 
 // NBAPlayer is the NBA player model
@@ -138,6 +143,7 @@ type PlayersBadges struct {
 type NBAStandings struct {
 	TeamID         int
 	WinPercentage  int
+	Played         int
 	TotalWins      int
 	TotalLosses    int
 	HomeWins       int

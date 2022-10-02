@@ -5,12 +5,13 @@
 
     <div class="row align-items-md-stretch mb-4">
         <div class="col-md-12">
-            <div class="h-100 p-5 bg-light border border-dark rounded-3">
+            <div class="h-100 p-5 rounded-3 bg-light border border-dark border-1">
                 <table class="table text-center">
                     <thead>
                         <tr>
                             <th scope="col"></th>
                             <th scope="col"></th>
+                            <th scope="col">P</th>
                             <th scope="col">W</th>
                             <th scope="col">L</th>
                             <th scope="col">WIN%</th>
@@ -36,10 +37,14 @@
                                             {{end}}
                                         {{end}}
                                     </td>
+                                    <td style="font-variant-numeric: tabular-nums;">{{$standings.Played}}</td>
                                     <td style="font-variant-numeric: tabular-nums;">{{$standings.TotalWins}}</td>
                                     <td style="font-variant-numeric: tabular-nums;">{{$standings.TotalLosses}}</td>
                                     <td style="font-variant-numeric: tabular-nums;">
-                                        .{{if lt $standings.WinPercentage 100}}0{{end}}{{$standings.WinPercentage}}</td>
+                                        {{if eq $standings.WinPercentage 1000}}
+                                            1.000
+                                        {{else}}
+                                            .{{if lt $standings.WinPercentage 100}}0{{if eq $standings.WinPercentage 0}}0{{end}}{{end}}{{$standings.WinPercentage}}{{end}}</td>
                                     <td style="font-variant-numeric: tabular-nums;">{{$standings.HomeWins}}-{{$standings.HomeLosses}}</td>
                                     <td style="font-variant-numeric: tabular-nums;">{{$standings.AwayWins}}-{{$standings.AwayLosses}}</td>
                                     <td>
@@ -76,15 +81,17 @@
         </div>
     </div>
 
-    <div class="row align-items-md-stretch mb-4">
+
+    <div class="row align-items-md-stretch">
         <div class="col-md-12">
-            <div class="h-100 p-5 bg-dark rounded-3" id="nba_result">
+            <div class="p-5 bg-light border border-dark rounded-3">
 
                 {{$res := index .Data "result"}}
 
                 <form action="/nba/results" method="post" class="row justify-content-center" novalidate>
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-                    <div class="col-md-2">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-3">
                         <select class="form-select {{with .Form.Errors.Get "home_team"}} is-invalid {{end}}" aria-label="Home team" name="home_team" required>
                             <option selected disabled value="">Home team</option>
                             {{range $teamInfo := index $.Data "teams"}}
@@ -114,7 +121,7 @@
                         {{end}}
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <select class="form-select {{with .Form.Errors.Get "away_team"}} is-invalid {{end}}" aria-label="Away team" name="away_team" required>
                             <option selected disabled value="">Away team</option>
                             {{range $teamInfo := index $.Data "teams"}}
@@ -127,59 +134,63 @@
                     </div>
 
                     <div class="col-md-2">
-                        <button class="btn btn-outline-light" type="submit">Add game</button>
+                        <button class="btn btn-outline-dark" type="submit">Add game</button>
                     </div>
 
                 </form>
-            </div>
-        </div>
-    </div>
 
-    <div class="row align-items-md-stretch">
-        <div class="col-md-12">
-            <div class="p-5 bg-light border border-dark rounded-3">
-                <table class="table text-center">
-                    {{range $results := index $.Data "last_results"}}
-                    <tr>
-                        <td>
-                            {{range $teamInfo := index $.Data "teams"}}
-                                {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}
+
+                    {{range $index2, $results := index $.Data "last_results"}}
+                    <hr class="{{if eq $index2 0}}mt-5{{end}} mb-4">
+                    <div class="row text-center justify-content-center align-items-center">
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-3 text-end">
+                                {{range $teamInfo := index $.Data "teams"}}
+                                    {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}
+                                    <p class="mb-0 p-2 fw-semibold badge {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" 
+                                    style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%">
                                     {{$teamInfo.Name}}
+                                    </p>
+                                    {{end}}
                                 {{end}}
-                            {{end}}
-                        </td>
-                        <td>
-                            {{$results.HomeScore}}-{{$results.AwayScore}}
-                        </td>
-                        <td>
-                            {{range $teamInfo := index $.Data "teams"}}
-                                {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}
-                                    <p class="font-weight-italic">{{$teamInfo.Name}}</p>
+
+                        </div>
+                        <div class="col-md-1">
+                            <p class="mb-0 p-2 bg-white badge border text-dark {{if lt $results.HomeScore $results.AwayScore}}fw-normal{{end}}" style="font-size: 18px; width: 100%;">{{$results.HomeScore}}</p>
+                        </div>
+                        <div class="col-md-1">
+                            
+                            <p class="mb-0 p-2 bg-white badge border text-dark {{if lt $results.AwayScore $results.HomeScore}}fw-normal{{end}}" style="font-size: 18px; width: 100%;">{{$results.AwayScore}}</p>
+                        </div>
+                        <div class="col-md-3 text-start">
+
+                                {{range $teamInfo := index $.Data "teams"}}
+                                    {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}
+                                    <p class="mb-0 p-2 fw-semibold badge {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" 
+                                    style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%">
+                                    {{$teamInfo.Name}}
+                                    </p>
+                                    {{end}}
                                 {{end}}
-                            {{end}}
-                        </td>
-                    </tr>
-                    {{end}}
-                </table>
-                {{range $results := index $.Data "last_results"}}
-                <div class="row text-center">
-                    <div class="col-md-3">
-                        {{range $teamInfo := index $.Data "teams"}}
-                            {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}
-                                {{$teamInfo.Name}}
-                            {{end}}
-                        {{end}}
+
+                        </div>
+                        <div class="col-md-2 d-flex justify-content-end pe-4">
+                            <div class="btn-link text-decoration-none" class="dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">EDIT
+                            </div>
+                            <form id="xx" action="/nba/results" method="post">
+                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                <div class="dropdown-menu">
+                                    <input type="hidden" id="yy" name="team_id" value="">
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <div class="col-md-1 {{if gt $results.HomeScore $results.AwayScore}}badge bg-success{{end}}">{{$results.HomeScore}}</div>
-                    <div class="col-md-1"><p>{{$results.AwayScore}}</p></div>
-                    <div class="col-md-3">
-                        {{range $teamInfo := index $.Data "teams"}}
-                            {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}
-                                {{$teamInfo.Name}}
-                            {{end}}
-                        {{end}}
+                    <div class="row text-center">
+                        <p class="mt-1 mb-1" style="font-size: 12px;">{{$results.TimeString}}</p>
                     </div>
-                </div>
                 {{end}}
             </div>
         </div>
