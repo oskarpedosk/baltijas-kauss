@@ -177,15 +177,54 @@
 
                         </div>
                         <div class="col-md-2 d-flex justify-content-end pe-4">
-                            <div class="btn-link text-decoration-none" class="dropdown-toggle"
-                            data-bs-toggle="dropdown" aria-expanded="false">EDIT
+                            <div class="btn-link text-decoration-none" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                EDIT
                             </div>
-                            <form id="xx" action="/nba/results" method="post">
-                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-                                <div class="dropdown-menu">
-                                    <input type="hidden" id="yy" name="team_id" value="">
+                                <div class="dropdown-menu my-3 col-md-3 p-5 bkcolor" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.5) 0px 18px 36px -18px;">
+                                    <form id="edit_result" action="/nba/results" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
+                                        <input type="hidden" name="timestamp" value="{{$results.Time}}">
+                                        <input type="hidden" name="edit_result" value="true">
+                                            <div class="row mb-4">
+                                                <div class="col-md-8">
+                                                    <select class="form-select" aria-label="Home team" name="home_team" required>
+                                                        {{range $teamInfo := index $.Data "teams"}}
+                                                            <option {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}selected{{end}} value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
+                                                        {{end}}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="home_score" class="visually-hidden">Home score</label>
+                                                    <input type="number" min="0" class="form-control" name="home_score" placeholder="Score" value="{{$results.HomeScore}}"
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-4">
+                                                <div class="col-md-8">
+                                                    <select class="form-select" aria-label="Away team" name="away_team" required>
+                                                        {{range $teamInfo := index $.Data "teams"}}
+                                                            <option {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}selected{{end}} value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
+                                                        {{end}}
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="away_score" class="visually-hidden">Away score</label>
+                                                    <input type="number" min="0" class="form-control" name="away_score" placeholder="Score" value="{{$results.AwayScore}}"
+                                                        required>
+                                                </div>
+                                            </div>
+                            
+                                            <div class="row justify-content-center">
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-outline-light" type="submit" name="update" value="clicked_update" style="width: 100%;">Update</button>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <button class="btn btn-outline-light" type="submit" name="delete" value="clicked_delete" style="width: 100%;">Delete</button>
+                                                </div>
+                                            </div>
+                                    </form>
                                 </div>
-                            </form>
                         </div>
                     </div>
                     <div class="row text-center">

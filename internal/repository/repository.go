@@ -13,4 +13,6 @@ type DatabaseRepo interface {
 	AssignNBAPlayer(player models.NBAPlayer) error
 	GetNBAStandings() ([]models.NBAStandings, error)
 	GetLastResults(count int) ([]models.Result, error)
+	UpdateNBAResult(res models.Result) error
+	DeleteNBAResult(res models.Result) error
 }

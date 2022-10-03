@@ -57,6 +57,61 @@ func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 	return nil
 }
 
+// Update NBA result
+func (m *postgresDBRepo) UpdateNBAResult(res models.Result) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	update 
+		nba_results
+	set 
+		home_team_id = $1,
+		home_score = $2,
+		away_score = $3,
+		away_team_id = $4
+	where
+		timestamp = $5
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		res.HomeTeam,
+		res.HomeScore,
+		res.AwayScore,
+		res.AwayTeam,
+		res.Time,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Delete NBA result from database
+func (m *postgresDBRepo) DeleteNBAResult(res models.Result) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	delete from 
+		nba_results
+	where
+		timestamp = $1
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt,
+		res.Time,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // Updates NBA player team
 func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -308,6 +363,8 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 				nba_results
 			where
 				"home_team_id" = $1 or "away_team_id" = $1
+			order by
+				timestamp asc
 			`
 
 		rows, err := m.DB.QueryContext(ctx, query, i)
@@ -465,6 +522,8 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 				*
 			from 
 				nba_results
+			order by
+				timestamp asc
 			`
 
 	rows, err := m.DB.QueryContext(ctx, query)
@@ -493,6 +552,7 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 			HomeScore:  singleGame.HomeScore,
 			AwayScore:  singleGame.AwayScore,
 			AwayTeam:   singleGame.AwayTeam,
+			Time:       singleGame.Time,
 			TimeString: singleGame.Time.Round(15 * time.Minute).Format(layout),
 		}
 

@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
@@ -185,7 +186,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 	}
-	
+
 	var emptyTeamInfo models.NBATeamInfo
 	data := make(map[string]interface{})
 
@@ -220,65 +221,65 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 	}
 
 	text := r.Form.Get("dark_text")
-		darkText := "false"
-		if text == "true" {
-			darkText = "true"
-		}
+	darkText := "false"
+	if text == "true" {
+		darkText = "true"
+	}
 
-		teamID, err := strconv.Atoi(r.Form.Get("team_id"))
+	teamID, err := strconv.Atoi(r.Form.Get("team_id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	teamInfo := models.NBATeamInfo{
+		ID:           teamID,
+		Name:         r.Form.Get("team_name"),
+		Abbreviation: r.Form.Get("abbreviation"),
+		Color1:       r.Form.Get("team_color1"),
+		Color2:       r.Form.Get("team_color2"),
+		DarkText:     darkText,
+	}
+
+	form := forms.New(r.PostForm)
+
+	form.Required("team_name", "abbreviation")
+	form.MaxLength("abbreviation", 4)
+
+	if !form.Valid() {
+		data := make(map[string]interface{})
+
+		teams, err := m.DB.GetNBATeamInfo()
 		if err != nil {
 			helpers.ServerError(w, err)
-		}
-
-		teamInfo := models.NBATeamInfo{
-			ID:           teamID,
-			Name:         r.Form.Get("team_name"),
-			Abbreviation: r.Form.Get("abbreviation"),
-			Color1:       r.Form.Get("team_color1"),
-			Color2:       r.Form.Get("team_color2"),
-			DarkText:     darkText,
-		}
-
-		form := forms.New(r.PostForm)
-
-		form.Required("team_name", "abbreviation")
-		form.MaxLength("abbreviation", 4)
-
-		if !form.Valid() {
-			data := make(map[string]interface{})
-
-			teams, err := m.DB.GetNBATeamInfo()
-			if err != nil {
-				helpers.ServerError(w, err)
-				return
-			}
-
-			players, err := m.DB.GetNBAPlayers()
-			if err != nil {
-				helpers.ServerError(w, err)
-				return
-			}
-
-			data["nba_players"] = players
-			data["nba_teams"] = teams
-			data["teamInfo"] = teamInfo
-			data["positions"] = positions
-
-			render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
-				Form: form,
-				Data: data,
-			})
 			return
 		}
 
-		err = m.DB.UpdateNBATeamInfo(teamInfo)
+		players, err := m.DB.GetNBAPlayers()
 		if err != nil {
 			helpers.ServerError(w, err)
+			return
 		}
 
-		m.App.Session.Put(r.Context(), "team_info", teamInfo)
+		data["nba_players"] = players
+		data["nba_teams"] = teams
+		data["teamInfo"] = teamInfo
+		data["positions"] = positions
 
-		http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
+		render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
+	}
+
+	err = m.DB.UpdateNBATeamInfo(teamInfo)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	m.App.Session.Put(r.Context(), "team_info", teamInfo)
+
+	http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
 }
 
 type jsonResponse struct {
@@ -326,26 +327,25 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 
 	teams, err := m.DB.GetNBATeamInfo()
-			if err != nil {
-				helpers.ServerError(w, err)
-				return
-			}
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
 	standings, err := m.DB.GetNBAStandings()
-		if err != nil {
-			helpers.ServerError(w, err)
-			return
-		}
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
 	lastResults, err := m.DB.GetLastResults(10)
-		if err != nil {
-			helpers.ServerError(w, err)
-			return
-		}
-	
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
 	data["result"] = emptyStandings
 	data["teams"] = teams
 	data["standings"] = standings
 	data["last_results"] = lastResults
-	
 
 	render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
@@ -376,7 +376,6 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
-
 	result := models.Result{
 		HomeTeam:  homeTeam,
 		HomeScore: homeScore,
@@ -384,29 +383,65 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		AwayTeam:  awayTeam,
 	}
 
-	form := forms.New(r.PostForm)
+	if r.Form.Get("edit_result") == "true" {
 
-	form.Required("home_team", "home_score", "away_score", "away_team")
-	form.IsDuplicate("home_team", "away_team", "Home and away have to be different")
-	form.IsDuplicate("home_score", "away_score", "Score can't be a draw")
+		timeStampString := r.Form.Get("timestamp")
+		layout := "2006-01-02 15:04:05 -0700 MST"
+		timeStamp, err := time.Parse(layout, timeStampString)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
 
-	if !form.Valid() {
-		data := make(map[string]interface{})
-		data["NBAresult"] = result
+		if r.Form.Get("update") == "clicked_update" {
+			fmt.Println("clicked UPDATE")
+			result = models.Result{
+				HomeTeam:  homeTeam,
+				HomeScore: homeScore,
+				AwayScore: awayScore,
+				AwayTeam:  awayTeam,
+				Time:      timeStamp,
+			}
+			err = m.DB.UpdateNBAResult(result)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
 
-		render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
-			Form: form,
-			Data: data,
-		})
-		return
+		} else if r.Form.Get("delete") == "clicked_delete" {
+			fmt.Println("clicked DELETE")
+			result = models.Result{
+				Time: timeStamp,
+			}
+			err = m.DB.DeleteNBAResult(result)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+		}
+	} else {
+
+		form := forms.New(r.PostForm)
+
+		form.Required("home_team", "home_score", "away_score", "away_team")
+		form.IsDuplicate("home_team", "away_team", "Home and away have to be different")
+		form.IsDuplicate("home_score", "away_score", "Score can't be a draw")
+
+		if !form.Valid() {
+			data := make(map[string]interface{})
+			data["NBAresult"] = result
+
+			render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
+				Form: form,
+				Data: data,
+			})
+			return
+		}
+
+		err = m.DB.AddNBAResult(result)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		m.App.Session.Put(r.Context(), "nba_result", result)
 	}
-
-	err = m.DB.AddNBAResult(result)
-	if err != nil {
-		helpers.ServerError(w, err)
-	}
-
-	m.App.Session.Put(r.Context(), "nba_result", result)
 
 	http.Redirect(w, r, "/nba/results", http.StatusSeeOther)
 }
