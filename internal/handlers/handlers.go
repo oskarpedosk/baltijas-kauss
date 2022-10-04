@@ -323,6 +323,61 @@ func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) 
 }
 
 func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
+	if r.FormValue("action") == "update" {
+		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		homeScore, err := strconv.Atoi(r.FormValue("home_score"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		awayScore, err := strconv.Atoi(r.FormValue("away_score"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		awayTeam, err := strconv.Atoi(r.FormValue("away_team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		timestampString := r.FormValue("timestamp")
+		layout := "2006-01-02 15:04:05 -0700 MST"
+		timestamp, err := time.Parse(layout, timestampString)
+		if err != nil {
+			helpers.ServerError(w, err)
+			return
+		}
+
+		result := models.Result{
+			HomeTeam:  homeTeam,
+			HomeScore: homeScore,
+			AwayScore: awayScore,
+			AwayTeam:  awayTeam,
+			Time:      timestamp,
+		}
+		err = m.DB.UpdateNBAResult(result)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+	} else if r.FormValue("action") == "delete" {
+		timestampString := r.FormValue("timestamp")
+		layout := "2006-01-02 15:04:05 -0700 MST"
+		timestamp, err := time.Parse(layout, timestampString)
+		if err != nil {
+			helpers.ServerError(w, err)
+			return
+		}
+		fmt.Println(timestamp)
+		result := models.Result{
+			Time: timestamp,
+		}
+		err = m.DB.DeleteNBAResult(result)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+	}
+
 	var emptyStandings models.Result
 	data := make(map[string]interface{})
 
@@ -385,21 +440,20 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 
 	if r.Form.Get("edit_result") == "true" {
 
-		timeStampString := r.Form.Get("timestamp")
+		timestampString := r.Form.Get("timestamp")
 		layout := "2006-01-02 15:04:05 -0700 MST"
-		timeStamp, err := time.Parse(layout, timeStampString)
+		timestamp, err := time.Parse(layout, timestampString)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
 
 		if r.Form.Get("update") == "clicked_update" {
-			fmt.Println("clicked UPDATE")
 			result = models.Result{
 				HomeTeam:  homeTeam,
 				HomeScore: homeScore,
 				AwayScore: awayScore,
 				AwayTeam:  awayTeam,
-				Time:      timeStamp,
+				Time:      timestamp,
 			}
 			err = m.DB.UpdateNBAResult(result)
 			if err != nil {
@@ -407,9 +461,8 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 			}
 
 		} else if r.Form.Get("delete") == "clicked_delete" {
-			fmt.Println("clicked DELETE")
 			result = models.Result{
-				Time: timeStamp,
+				Time: timestamp,
 			}
 			err = m.DB.DeleteNBAResult(result)
 			if err != nil {
