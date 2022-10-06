@@ -137,3 +137,11 @@
     margin: 3px;
     border-radius: 50%;
 }
+
+.pointer:hover {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+  }

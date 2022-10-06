@@ -35,7 +35,7 @@
                         <th scope="col">Total Attributes</th>
                     </tr>
                 </thead>
-                <tbody id="nbaPlayersTable" style="white-space: nowrap; text-align: center; vertical-align: middle;">
+                <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
 
                     {{range $index, $players := index .Data "nba_players"}}
                     <tr>
@@ -60,39 +60,37 @@
                             </div>
                         </td>
                         <td>
-                            {{if $players.TeamID.Int64}}
-                            {{range $teamInfo := index $.Data "nba_teams"}}
-                                {{if eq $teamInfo.TeamID $players.TeamID}}
-                                    <p class="badge badgehover badge-pill my-0 ms-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:70px">
-                                    {{$teamInfo.Abbreviation}}
-                                    </p>
-                                {{end}}
-                            {{end}}
-                        {{else}}
-                        <p style="display:inline-block; width:70px" class="badge badgehover badge-pill border bg-light text-dark my-0 ms-1" class="dropdown-toggle"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                            FA
-                        </p>
-                        {{end}}
-
-                            <form id="teamSelect_{{$index}}" action="/nba/players" method="post">
-                                <input type="hidden" name="csrf_token" value="{{$.CSRFToken}}">
-                                <input type="hidden" name="index" value="{{$index}}">
-                                <input type="hidden" name="player_id" value="{{$players.PlayerID}}">
-                                <div class="dropdown-menu">
-                                    {{range $teams := index $.Data "nba_teams"}}
-                                    <input type="hidden" id="field_{{$index}}" name="team_id" value="">
-                                        <li class="dropdown-item" onclick="submitForm('{{$teams.TeamID.Int64}}', 'field_{{$index}}', 'teamSelect_{{$index}}')">
-                                            {{$teams.Abbreviation}} {{$teams.Name}}
-                                        </li>
+                            <div id="player_{{$index}}">
+                                <div id="player_reload_{{$index}}">
+                                    {{if $players.TeamID.Int64}}
+                                    {{range $teamInfo := index $.Data "nba_teams"}}
+                                        {{if eq $teamInfo.TeamID $players.TeamID}}
+                                            <p class="badge badgehover badge-pill my-0 ms-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:70px">
+                                            {{$teamInfo.Abbreviation}}
+                                            </p>
+                                        {{end}}
                                     {{end}}
-                                    <hr class="dropdown-divider">
-                                    <li class="dropdown-item" onclick="submitForm('null', 'field_{{$index}}', 'teamSelect_{{$index}}')"><input type="hidden" name="team_id" value="">
-                                        Free Agency
-                                    </li>
+                                    {{else}}
+                                        <p style="display:inline-block; width:70px" class="badge badgehover badge-pill border bg-light text-dark my-0 ms-1" class="dropdown-toggle"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                            FA
+                                        </p>
+                                    {{end}}
+
+                                    <div class="dropdown-menu">
+                                        {{range $teams := index $.Data "nba_teams"}}
+                                            <li class="dropdown-item" onclick="updateTeam('{{$index}}', '{{$players.PlayerID}}', '{{$teams.TeamID.Int64}}')">
+                                                {{$teams.Abbreviation}} {{$teams.Name}}
+                                            </li>
+                                        {{end}}
+                                        <hr class="dropdown-divider">
+                                        <li class="dropdown-item" onclick="updateTeam('{{$index}}', '{{$players.PlayerID}}', 'null')">
+                                            Free Agency
+                                        </li>
+                                    </div>
                                 </div>
-                            </form>
+                            </div>
                         </td>
                         <td>
                             <div class="d-flex mt-2 ms-2">
@@ -120,9 +118,9 @@
                             </div>
                         </td>
                         <td><span style="font-size: 12px;" class="badge badge-pill 
-                            {{if ge $players.StatsOverall 80}}
-                                {{if ge $players.StatsOverall 85}}
-                                    {{if ge $players.StatsOverall 90}}
+                            {{if ge $players.StatsOverall 81}}
+                                {{if ge $players.StatsOverall 86}}
+                                    {{if ge $players.StatsOverall 91}}
                                         bkcolor
                                     {{else}}
                                         badgecolor1
@@ -180,11 +178,11 @@
     // Get the button
     var mybutton = document.getElementById("scrollUpButton");
 
-    // When the user scrolls down 20px from the top of the document, show the button
+    // When the user scrolls down x px from the top of the document, show the button
     window.onscroll = function () { scrollFunction() };
 
     function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
             mybutton.style.display = "block";
         } else {
             mybutton.style.display = "none";
@@ -197,10 +195,24 @@
         document.documentElement.scrollTop = 0;
     }
 
-    function submitForm(teamID, fieldID, formID) {
-        document.getElementById(fieldID).value = teamID;
-        document.getElementById(formID).submit();
-   }
+   function updateTeam(index, playerID, teamID) {
+        console.log(index)
+        console.log(playerID)
+        console.log(teamID)
+        $.ajax({
+            type: 'GET',
+            dataType: 'html',
+            data : {
+                action: "update",
+                player_id: playerID,
+                team_id: teamID,
+            },
+            success: function(data) {
+                console.log("success");
+                $( '#player_' + index).load(window.location.href + ' #player_reload_' + index );
+            }
+        });
+    }
 
 </script>
 

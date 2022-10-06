@@ -103,6 +103,33 @@ func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
+	if r.FormValue("action") == "update" {
+		playerID, err := strconv.Atoi(r.FormValue("player_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		nullInt := true
+
+		teamID, err := strconv.Atoi(r.FormValue("team_id"))
+		if err != nil {
+			log.Println(err)
+			nullInt = false
+			// helpers.ServerError(w, err)
+		}
+
+		player := models.NBAPlayer{
+			PlayerID: playerID,
+			TeamID:   sql.NullInt64{int64(teamID), nullInt},
+			Assigned: 0,
+		}
+
+		err = m.DB.UpdateNBAPlayer(player)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+	}
+
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -438,63 +465,29 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		AwayTeam:  awayTeam,
 	}
 
-	if r.Form.Get("edit_result") == "true" {
+	form := forms.New(r.PostForm)
 
-		timestampString := r.Form.Get("timestamp")
-		layout := "2006-01-02 15:04:05 -0700 MST"
-		timestamp, err := time.Parse(layout, timestampString)
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
+	form.Required("home_team", "home_score", "away_score", "away_team")
+	form.IsDuplicate("home_team", "away_team", "Home and away have to be different")
+	form.IsDuplicate("home_score", "away_score", "Score can't be a draw")
 
-		if r.Form.Get("update") == "clicked_update" {
-			result = models.Result{
-				HomeTeam:  homeTeam,
-				HomeScore: homeScore,
-				AwayScore: awayScore,
-				AwayTeam:  awayTeam,
-				Time:      timestamp,
-			}
-			err = m.DB.UpdateNBAResult(result)
-			if err != nil {
-				helpers.ServerError(w, err)
-			}
+	if !form.Valid() {
+		data := make(map[string]interface{})
+		data["NBAresult"] = result
 
-		} else if r.Form.Get("delete") == "clicked_delete" {
-			result = models.Result{
-				Time: timestamp,
-			}
-			err = m.DB.DeleteNBAResult(result)
-			if err != nil {
-				helpers.ServerError(w, err)
-			}
-		}
-	} else {
-
-		form := forms.New(r.PostForm)
-
-		form.Required("home_team", "home_score", "away_score", "away_team")
-		form.IsDuplicate("home_team", "away_team", "Home and away have to be different")
-		form.IsDuplicate("home_score", "away_score", "Score can't be a draw")
-
-		if !form.Valid() {
-			data := make(map[string]interface{})
-			data["NBAresult"] = result
-
-			render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
-				Form: form,
-				Data: data,
-			})
-			return
-		}
-
-		err = m.DB.AddNBAResult(result)
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-
-		m.App.Session.Put(r.Context(), "nba_result", result)
+		render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
+			Form: form,
+			Data: data,
+		})
+		return
 	}
+
+	err = m.DB.AddNBAResult(result)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	m.App.Session.Put(r.Context(), "nba_result", result)
 
 	http.Redirect(w, r, "/nba/results", http.StatusSeeOther)
 }

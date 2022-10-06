@@ -430,7 +430,7 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 		if games != "" {
 			streak = string(chars[0])
 			if len(chars) > 1 {
-				for i := 0; i < x; i++ {
+				for i := 0; i < len(chars); i++ {
 					if string(chars[i]) != streak {
 						break
 					} else {
