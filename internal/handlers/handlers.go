@@ -350,7 +350,34 @@ func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) 
 }
 
 func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("action") == "update" {
+	if r.FormValue("action") == "add" {
+		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		homeScore, err := strconv.Atoi(r.FormValue("home_score"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		awayScore, err := strconv.Atoi(r.FormValue("away_score"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		awayTeam, err := strconv.Atoi(r.FormValue("away_team_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		result := models.Result{
+			HomeTeam:  homeTeam,
+			HomeScore: homeScore,
+			AwayScore: awayScore,
+			AwayTeam:  awayTeam,
+		}
+		err = m.DB.AddNBAResult(result)
+		if err != nil {
+			helpers.ServerError(w, err)
+	}
+	} else if r.FormValue("action") == "update" {
 		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
 		if err != nil {
 			helpers.ServerError(w, err)

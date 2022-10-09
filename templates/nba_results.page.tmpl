@@ -90,56 +90,41 @@
 
                     {{$res := index .Data "result"}}
 
-                    <form action="/nba/results" method="post" class="row justify-content-center" novalidate>
-                        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                    <div class="row justify-content-center">
                         <div class="col-md-2"></div>
                         <div class="col-md-3">
-                            <select class="form-select {{with .Form.Errors.Get "home_team"}} is-invalid {{end}}" aria-label="Home team" name="home_team" required>
-                                <option selected disabled value="">Home team</option>
+                            <select id="home_team" class="form-select">
+                                <option selected disabled value=0>Home team</option>
                                 {{range $teamInfo := index $.Data "teams"}}
                                     <option value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
                                 {{end}}
                             </select>
-                            {{with .Form.Errors.Get "home_team"}}
-                            <label class="text-danger">{{.}}</label>
-                            {{end}}
                         </div>
 
                         <div class="col-md-1">
                             <label for="home_score" class="visually-hidden">Home score</label>
-                            <input type="number" min="0" class="form-control {{with .Form.Errors.Get "home_score"}} is-invalid {{end}}" name="home_score" placeholder="Score" value="{{$res.HomeScore}}"
-                                required>
-                            {{with .Form.Errors.Get "home_score"}}
-                            <label class="text-danger">{{.}}</label>
-                            {{end}}
+                            <input id="home_score" type="number" min="0" class="form-control" value=0>
                         </div>
 
                         <div class="col-md-1">
                             <label for="away_score" class="visually-hidden">Away score</label>
-                            <input type="number" min="0" class="form-control {{with .Form.Errors.Get "away_score"}} is-invalid {{end}}" name="away_score" placeholder="Score" value="{{$res.AwayScore}}"
-                                required>
-                            {{with .Form.Errors.Get "away_score"}}
-                            <label class="text-danger">{{.}}</label>
-                            {{end}}
+                            <input id="away_score" type="number" min="0" class="form-control" value=0>
                         </div>
 
                         <div class="col-md-3">
-                            <select class="form-select {{with .Form.Errors.Get "away_team"}} is-invalid {{end}}" aria-label="Away team" name="away_team" required>
-                                <option selected disabled value="">Away team</option>
+                            <select id="away_team" class="form-select">
+                                <option selected disabled value=0>Away team</option>
                                 {{range $teamInfo := index $.Data "teams"}}
                                     <option value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
                                 {{end}}
                             </select>
-                            {{with .Form.Errors.Get "away_team"}}
-                            <label class="text-danger">{{.}}</label>
-                            {{end}}
                         </div>
 
                         <div class="col-md-2">
-                            <button class="btn btn-outline-dark" type="submit">Add game</button>
+                            <button class="btn btn-outline-dark" onclick=addResult()>Add game</button>
                         </div>
 
-                    </form>
+                    </div>
 
 
                         {{range $index2, $results := index $.Data "last_results"}}
@@ -179,7 +164,7 @@
 
                             </div>
                             <div class="col-md-2 d-flex justify-content-end pe-4">
-                                <button class="btn " onclick="editResult('{{$index2}}')" style="font-size: 12px;">EDIT</button>
+                                <div class="pointer" onclick="editResult('{{$index2}}')" style="font-size: 12px;">EDIT</div>
                                 <!-- <div class="btn-link text-decoration-none" class="dropdown-toggle" data-target="#drop22" data-bs-toggle="dropdown" aria-expanded="false">
                                     EDIT
                                 </div>
@@ -243,7 +228,7 @@
                                 <div class="col-md-2"></div>
 
                                 <div class="col-md-3">
-                                    <select id="home_team{{$index2}}" class="form-select" aria-label="Home team" name="home_team" required>
+                                    <select id="home_team{{$index2}}" class="form-select" aria-label="Home team" name="home_team">
                                         {{range $teamInfo := index $.Data "teams"}}
                                             <option {{if eq $results.HomeTeam $teamInfo.TeamID.Int64}}selected{{end}} value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
                                         {{end}}
@@ -263,7 +248,7 @@
                                 </div>
         
                                 <div class="col-md-3">
-                                    <select id="away_team{{$index2}}" class="form-select" aria-label="Away team" name="away_team" required>
+                                    <select id="away_team{{$index2}}" class="form-select" aria-label="Away team" name="away_team">
                                         {{range $teamInfo := index $.Data "teams"}}
                                             <option {{if eq $results.AwayTeam $teamInfo.TeamID.Int64}}selected{{end}} value="{{$teamInfo.TeamID.Int64}}">{{$teamInfo.Name}}</option>
                                         {{end}}
@@ -283,6 +268,36 @@
                         </div>
                     {{end}}
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="error" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body">
+                <p id="errorid" class="m-0"></p>
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="success" class="toast align-items-center bkcolor text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body">
+                <p id="successid" class="m-0"></p>
+              </div>
+              <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="confirm" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+              <div class="toast-body">
+                <button id="confirmbutton" type="button" class="btn btn-outline-white btn-sm me-2">Confirm</button>
+              </div>
+              <button type="button" class="btn-close btn-close-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
         </div>
     </div>
@@ -314,14 +329,69 @@
     })()
 
     function editResult(index) {
-        const str = '#edit_result_' + (index);
-        $(str).toggle();
-        window.addEventListener('mousedown', function(event){
-            const isClickedInside = (event.target === str) || (event.target.parentElement === str)
-            if(!isClickedInside){
-                $(str).toggle();
+        const str = 'edit_result_' + (index);
+        // const element = document.getElementById(str);
+        $('#' + str).toggle();
+        /* console.log(str);
+        document.addEventListener('click', function(event) {
+            if (event.target !== element && !element.contains(event.target)) {
+                console.log("clicked outside")
             }
-            }, {once : true})
+            if (event.target === element || element.contains(event.target)) {
+                console.log("clicked inside")
+            }
+        }, { once: true }); */
+    }
+
+    function addResult() {
+        var home_team_id = document.getElementById('home_team').value;
+        var home_score = document.getElementById('home_score').value;
+        var away_score = document.getElementById('away_score').value;
+        var away_team_id = document.getElementById('away_team').value;
+
+        const error = document.getElementById('error')
+        const errorToast = new bootstrap.Toast(error)
+
+        const success = document.getElementById('success')
+        const successToast = new bootstrap.Toast(success)
+
+        if (home_team_id === '0') {
+            msg = "Please select home team";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else if (away_team_id === '0') {
+            msg = "Please select away team";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        }  else if (away_team_id === home_team_id) {
+            msg = "Home and away team have to be different";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else if (home_score === away_score) {
+            msg = "Score can't be a draw";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else {
+            $.ajax({
+            type: 'GET',
+            dataType: 'html',
+            data : {
+                action: "add",
+                home_team_id: home_team_id,
+                home_score: home_score,
+                away_score: away_score,
+                away_team_id: away_team_id,
+            },
+            success: function(data) {
+                msg = "Result successfully added!";
+                document.getElementById("successid").innerHTML = msg;
+                successToast.show()
+                console.log("success");
+                $( '#results' ).load(window.location.href + ' #resultsreload' );
+                $( '#standings' ).load(window.location.href + ' #standingsreload' );
+            }
+        });
+        }
     }
 
     function updateResult(index, timestamp) {
@@ -329,11 +399,23 @@
         var home_score = document.getElementById('home_score' + index).value;
         var away_score = document.getElementById('away_score' + index).value;
         var away_team_id = document.getElementById('away_team' + index).value;
-        console.log(home_team_id)
-        console.log(home_score)
-        console.log(away_score)
-        console.log(away_team_id)
-        $.ajax({
+
+        const error = document.getElementById('error')
+        const errorToast = new bootstrap.Toast(error)
+
+        const success = document.getElementById('success')
+        const successToast = new bootstrap.Toast(success)
+
+        if (away_team_id === home_team_id) {
+            msg = "Home and away team have to be different";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else if (home_score === away_score) {
+            msg = "Score can't be a draw";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        }  else {
+            $.ajax({
             type: 'GET',
             dataType: 'html',
             data : {
@@ -345,16 +427,30 @@
                 timestamp: timestamp,
             },
             success: function(data) {
+                msg = "Result successfully updated!";
+                document.getElementById("successid").innerHTML = msg;
+                successToast.show()
                 console.log("success");
                 $( '#results' ).load(window.location.href + ' #resultsreload' );
                 $( '#standings' ).load(window.location.href + ' #standingsreload' );
             }
         });
+        }
     }
 
     function deleteResult(timestamp) {
-        console.log("timestamp = ", timestamp);
-        $.ajax({
+        const confirm = document.getElementById('confirm');
+        const confirmToast = new bootstrap.Toast(confirm);
+        confirmToast.show();
+
+        const confirmButton = document.getElementById('confirmbutton');
+
+        confirmButton.addEventListener("click", () => {
+            alert('hello');
+            confirmButton.removeEventListener("click", () => {})
+        });
+
+        /* $.ajax({
             type: 'GET',
             dataType: 'html',
             data : {
@@ -366,27 +462,7 @@
                 $( '#results' ).load(window.location.href + ' #resultsreload' );
                 $( '#standings' ).load(window.location.href + ' #standingsreload' );
             }
-        });
-    }
-
-    // Get the button
-    var mybutton = document.getElementById("scrollUpButton");
-
-    // When the user scrolls down x px from the top of the document, show the button
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
+        });*/
     }
 
 </script>
