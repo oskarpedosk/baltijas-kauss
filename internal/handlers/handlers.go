@@ -376,7 +376,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 		err = m.DB.AddNBAResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
-	}
+		}
 	} else if r.FormValue("action") == "update" {
 		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
 		if err != nil {
@@ -422,7 +422,6 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 			return
 		}
-		fmt.Println(timestamp)
 		result := models.Result{
 			Time: timestamp,
 		}
