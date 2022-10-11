@@ -78,7 +78,7 @@
     <div class="main flex-column d-flex justify-content-between">
       <div class="content container-fluid">
 
-        <button type="button" class="btn btn-dark" onclick="topFunction()" id="scrollUpButton">Top</button>
+        <button type="button" class="badge bkcolor text-white p-0" style="border: none;" onclick="topFunction()" id="scrollUpButton">↑</button>
 
         {{block "content" .}}
 
@@ -112,6 +112,26 @@
         new bootstrap.Tooltip(tooltipTriggerEl)
       })
     })()
+
+    // Get the button
+    var mybutton = document.getElementById("scrollUpButton");
+
+    // When the user scrolls down x px from the top of the document, show the button
+    window.onscroll = function () { scrollFunction() };
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 1500 || document.documentElement.scrollTop > 1500) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
   </script>
 
 </body>

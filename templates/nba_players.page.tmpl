@@ -4,47 +4,65 @@
 
 <div class="container">
     <div class="row">
-        <div class="col">
-            <h1 class="mt-5">2K23</h1>
+        <div id="players_table" class="col">
+            <h1>2K23</h1>
 
             <input class="form-control" id="myInput" type="text" placeholder="Search..">
             <br>
             <table class="table table-sm table-responsive">
                 <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col" style="text-align: start;">Player</th>
-                        <th scope="col">Team</th>
-                        <th scope="col">Badges</th>
-                        <th scope="col">Overall</th>
-                        <th scope="col">DEF</th>
-                        <th scope="col">3PT</th>
-                        <th scope="col">FT</th>
-                        <th scope="col">Speed</th>
-                        <th scope="col">Acceleration</th>
-                        <th scope="col">Strength</th>
-                        <th scope="col">Vertical</th>
-                        <th scope="col">Driving Dunk</th>
-                        <th scope="col">Draw Foul</th>
-                        <th scope="col">INT D</th>
-                        <th scope="col">PER D</th>
-                        <th scope="col">STL</th>
-                        <th scope="col">BLK</th>
-                        <th scope="col">OREB</th>
-                        <th scope="col">DREB</th>
-                        <th scope="col">Total Attributes</th>
+                    <tr style="background-color: white;">
+                        <th>#</th>
+                        <th></th>
+                        <th class="ps-2" style="text-align: start;">Player</th>
+                        <th>Team</th>
+                        <th>Badges</th>
+                        <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
+                        <th title="Close Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">CLOSE</th>
+                        <th title="Mid-Range Shot " data-bs-toggle="tooltip" data-bs-placement="bottom">MID</th>
+                        <th title="Three-Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
+                        <th title="Free Throw" data-bs-toggle="tooltip" data-bs-placement="bottom">FT</th>
+                        <th title="Acceleration" data-bs-toggle="tooltip" data-bs-placement="bottom">ACCL</th>
+                        <th title="Speed" data-bs-toggle="tooltip" data-bs-placement="bottom">SPD</th>
+                        <th title="Strength" data-bs-toggle="tooltip" data-bs-placement="bottom">STR</th>
+                        <th title="Vertical" data-bs-toggle="tooltip" data-bs-placement="bottom">VERT</th>
+                        <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
+                        <th title="Draw Foul" data-bs-toggle="tooltip" data-bs-placement="bottom">FOUL</th>
+                        <th title="Steal" data-bs-toggle="tooltip" data-bs-placement="bottom">STL</th>
+                        <th title="Block" data-bs-toggle="tooltip" data-bs-placement="bottom">BLK</th>
+                        <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
+                        <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
+                        <th title="Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">DEF</th>
+                        <th title="Offensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">OREB</th>
+                        <th title="Defensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">DREB</th>
+                        <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
                     </tr>
                 </thead>
                 <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
 
                     {{range $index, $players := index .Data "nba_players"}}
                     <tr>
-                        <td>{{add $index 1}}</td>
-                        <td>
+                        <td class="p-0">{{add $index 1}}</td>
+                        <td class="p-0">
+                            <div id="playerimg_{{$index}}">
+                                <div id="playerimgreload_{{$index}}">
+                                {{if $players.TeamID.Int64}}
+                                        {{range $teamInfo := index $.Data "nba_teams"}}
+                                            {{if eq $teamInfo.TeamID $players.TeamID}}
+                                                <img src="{{if ne $players.ImgUrl ""}}{{$players.ImgUrl}}{{else}}/static/images/lightProfile.png{{end}}"
+                                                alt="" class="header-image rounded-circle inline-block" style="border-style: none; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
+                                            {{end}}
+                                        {{end}}
+                                        {{else}}
+                                            <img src="{{if ne $players.ImgUrl ""}}{{$players.ImgUrl}}{{else}}/static/images/lightProfile.png{{end}}"
+                                            alt="" class="header-image rounded-circle bg-light border">
+                                        {{end}}
+                                </div>
+                            </div>
+                    </td>
+                        <td class="p-0 ps-2">
                             <div class="d-flex player-card">
-                                <img src="{{$players.ImgUrl}}"
-                                    alt="" class="header-image rounded-circle inline-block mt-1">
-                                <div class="ms-2 p-0 inline-block">
+                                <div class="p-0 inline-block">
                                     <p class="my-0">{{$players.FirstName}} {{$players.LastName}}</p>
                                     <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
                                     <div class="team-pill-row my-0">
@@ -59,13 +77,15 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
+
+                        
+                        <td class="p-0">
                             <div id="player_{{$index}}">
                                 <div id="player_reload_{{$index}}">
                                     {{if $players.TeamID.Int64}}
                                     {{range $teamInfo := index $.Data "nba_teams"}}
                                         {{if eq $teamInfo.TeamID $players.TeamID}}
-                                            <p class="badge badgehover badge-pill my-0 ms-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
+                                            <p class="badge badgehover badge-pill my-0 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
                                             data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:70px">
                                             {{$teamInfo.Abbreviation}}
                                             </p>
@@ -92,32 +112,33 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            <div class="d-flex mt-2 ms-2">
+                        <td class="px-0">
+                            <div class="mt-2" style="font-size: 0px;">
                                 <div class="d-inline-block position-relative text-dark">
                                     <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count">{{$players.BronzeBadges}}</p>
+                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadges}}</p>
                                 </div>
                                 <div class="d-inline-block position-relative float-left text-dark">
                                     <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count">{{$players.SilverBadges}}</p>
+                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadges}}</p>
                                 </div>
                                 <div class="d-inline-block position-relative float-left text-dark">
                                     <img src="/static/images/2k-gold-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count">{{$players.GoldBadges}}</p>
+                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadges}}</p>
                                 </div>
                                 <div class="d-inline-block position-relative float-left text-dark">
                                     <img src="/static/images/2k-hof-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count">{{$players.HOFBadges}}</p>
+                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadges}}</p>
                                 </div>
                                 <div class="d-inline-block position-relative float-left text-dark">
                                     <img src="/static/images/2k-total-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count text-white">
+                                    <p class="position-absolute text-center badge-count text-white" style="font-size: 16px;">
                                         {{$players.TotalBadges}}</p>
                                 </div>
                             </div>
                         </td>
-                        <td><span style="font-size: 12px;" class="badge badge-pill 
+                        <td>
+                            <span style="font-size: 16px;" class="badge badge-pill p-1 fw-semibold
                             {{if ge $players.StatsOverall 81}}
                                 {{if ge $players.StatsOverall 86}}
                                     {{if ge $players.StatsOverall 91}}
@@ -132,19 +153,21 @@
                             bg-light border text-dark
                             {{end}}
                         ">{{.StatsOverall}}</span></td>
-                        <td>{{$players.StatsDefending}}</td>
+                        <td>{{$players.StatsCloseShot}}</td>
+                        <td>{{$players.StatsMidRangeShot}}</td>
                         <td>{{$players.StatsThreePointShot}}</td>
                         <td>{{$players.StatsFreeThrow}}</td>
-                        <td>{{$players.StatsSpeed}}</td>
                         <td>{{$players.StatsAcceleration}}</td>
+                        <td>{{$players.StatsSpeed}}</td>
                         <td>{{$players.StatsStrength}}</td>
                         <td>{{$players.StatsVertical}}</td>
                         <td>{{$players.StatsDrivingDunk}}</td>
                         <td>{{$players.StatsDrawFoul}}</td>
-                        <td>{{$players.StatsInteriorDefense}}</td>
-                        <td>{{$players.StatsPerimeterDefense}}</td>
                         <td>{{$players.StatsSteal}}</td>
                         <td>{{$players.StatsBlock}}</td>
+                        <td>{{$players.StatsPerimeterDefense}}</td>
+                        <td>{{$players.StatsInteriorDefense}}</td>
+                        <td>{{$players.StatsDefending}}</td>
                         <td>{{$players.StatsOffensiveRebound}}</td>
                         <td>{{$players.StatsDefensiveRebound}}</td>
                         <td>
@@ -169,31 +192,11 @@
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#nbaPlayersTable tr").filter(function () {
+            $("#players_table tr").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
     });
-
-    // Get the button
-    var mybutton = document.getElementById("scrollUpButton");
-
-    // When the user scrolls down x px from the top of the document, show the button
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 40 || document.documentElement.scrollTop > 40) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
 
    function updateTeam(index, playerID, teamID) {
         console.log(index)
@@ -209,6 +212,7 @@
             },
             success: function(data) {
                 console.log("success");
+                $( '#playerimg_' + index).load(window.location.href + ' #playerimgreload_' + index );
                 $( '#player_' + index).load(window.location.href + ' #player_reload_' + index );
             }
         });
