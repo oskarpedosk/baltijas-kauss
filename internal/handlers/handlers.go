@@ -517,3 +517,9 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/nba/results", http.StatusSeeOther)
 }
+
+func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{
+
+	})
+}

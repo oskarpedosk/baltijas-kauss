@@ -30,6 +30,8 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Get("/nba/results", handlers.Repo.NBAResults)
 	mux.Post("/nba/results", handlers.Repo.PostNBAResults)
 
+	mux.Get("/nba/draft", handlers.Repo.NBADraft)
+
 	fileServer := http.FileServer(http.Dir("../../static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))
 
