@@ -2,6 +2,7 @@ package dbrepo
 
 import (
 	"context"
+	"fmt"
 	"math"
 	"time"
 
@@ -564,4 +565,147 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 	}
 
 	return resultsSlice, nil
+}
+
+// Drop NBA player from a team
+func (m *postgresDBRepo) DropNBAPlayer(playerID int) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	// Remove team and position
+	stmt := `
+	update 
+		nba_players
+	set 
+		team_id = null,
+		assigned = 0
+	where
+		player_id = $1
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt, playerID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Add NBA player directly to a team
+func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	fmt.Println(teamID)
+	fmt.Println(playerID)
+	
+	// Remove team and position
+	stmt := `
+	update 
+		nba_players
+	set 
+		team_id = $1,
+		assigned = 0
+	where
+		player_id = $2
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt, teamID, playerID,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Get all NBA badges
+func (m *postgresDBRepo) GetNBABadges() ([]models.Badge, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var badges []models.Badge
+
+	query := `
+	select 
+		*
+	from 
+		nba_badges
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return badges, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var badge models.Badge
+		err := rows.Scan(
+			&badge.BadgeID,
+			&badge.Name,
+			&badge.Type,
+			&badge.Info,
+			&badge.BronzeUrl,
+			&badge.SilverUrl,
+			&badge.GoldUrl,
+			&badge.HOFUrl,
+		)
+		if err != nil {
+			return badges, err
+		}
+		badges = append(badges, badge)
+	}
+
+	if err = rows.Err(); err != nil {
+		return badges, err
+	}
+
+	return badges, nil
+}
+
+// Get all NBA badges
+func (m *postgresDBRepo) GetNBAPlayersBadges() ([]models.PlayersBadges, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var playersBadges []models.PlayersBadges
+
+	query := `
+	select 
+		*
+	from 
+		nba_players_badges
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return playersBadges, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var playersBadge models.PlayersBadges
+		err := rows.Scan(
+			&playersBadge.PlayerID,
+			&playersBadge.FirstName,
+			&playersBadge.LastName,
+			&playersBadge.BadgeID,
+			&playersBadge.Name,
+			&playersBadge.Level,
+		)
+		if err != nil {
+			return playersBadges, err
+		}
+		playersBadges = append(playersBadges, playersBadge)
+	}
+
+	if err = rows.Err(); err != nil {
+		return playersBadges, err
+	}
+
+	return playersBadges, nil
 }

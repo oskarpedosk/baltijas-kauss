@@ -63,14 +63,13 @@
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
                                 <div class="p-0 inline-block">
-                                    <p class="my-0">{{$players.FirstName}} {{$players.LastName}}</p>
+                                    <p class="m-0">{{$players.FirstName}} {{$players.LastName}}</p>
                                     <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
-                                    <div class="team-pill-row my-0">
+                                    <div class="my-0">
                                         <p class="text-muted my-0" style="font-size: 10px;">
                                             {{$players.PrimaryPosition}}
                                             {{$players.SecondaryPosition}}
                                             | {{$players.Height}}cm | {{$players.Weight}}kg
-                                            </p>
                                         </p>
                                     </div>
 
@@ -112,11 +111,25 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="px-0">
-                            <div class="mt-2" style="font-size: 0px;">
-                                <div class="d-inline-block position-relative text-dark">
+                        <td class="p-0 py-1">
+                            <div class="mt-2 dropend" style="font-size: 0px;">
+                                <div class="d-inline-block position-relative text-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
                                     <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadges}}</p>
+                                    <div class="dropdown-menu">
+                                        <li><h6 class="dropdown-header">Bronze badges</h6></li>
+                                        {{range $playersBadges := index $.Data "nba_players_badges"}}
+                                            {{if eq $players.PlayerID $playersBadges.PlayerID}}
+                                                {{range $badge := index $.Data "nba_badges"}}
+                                                    {{if eq $playersBadges.BadgeID }}
+                                                {{end}}
+                                            {{end}}
+                                        {{end}}
+                                        <li>hello</li>
+                                        <li>hello</li>
+                                        data["nba_badges"] = badges
+	                                    data["nba_players_badges"] = playersBadges
+                                </div>
                                 </div>
                                 <div class="d-inline-block position-relative float-left text-dark">
                                     <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">

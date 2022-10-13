@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 .wrapper {
     display: flex;
 }
@@ -102,16 +106,6 @@
     vertical-align: middle;
 }
 
-.team-pill-row {
-    font-size: 10px;
-    display: flex;
-}
-
-.team-pill-row p {
-    display: inline-block;
-    align-self: center;
-}
-
 .badgehover:hover {
     cursor: pointer;
 }
@@ -120,7 +114,7 @@
     display: none;
     position: fixed;
     bottom: 25px;
-    right: 30px;
+    right: 25px;
     width: 30px;
     height: 30px;
     z-index: 100;

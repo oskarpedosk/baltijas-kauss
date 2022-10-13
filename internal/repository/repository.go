@@ -15,4 +15,8 @@ type DatabaseRepo interface {
 	GetLastResults(count int) ([]models.Result, error)
 	UpdateNBAResult(res models.Result) error
 	DeleteNBAResult(res models.Result) error
+	DropNBAPlayer(playerID int) error
+	AddNBAPlayer(teamID, playerID int) error
+	GetNBAPlayersBadges() ([]models.PlayersBadges, error)
+	GetNBABadges() ([]models.Badge, error)
 }

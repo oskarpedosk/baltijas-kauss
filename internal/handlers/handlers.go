@@ -3,7 +3,6 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -140,9 +139,21 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
+	badges, err := m.DB.GetNBABadges()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	playersBadges, err := m.DB.GetNBAPlayersBadges()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
 	data := make(map[string]interface{})
 	data["nba_players"] = players
 	data["nba_teams"] = teams
+	data["nba_badges"] = badges
+	data["nba_players_badges"] = playersBadges
 
 	render.Template(w, r, "nba_players.page.tmpl", &models.TemplateData{
 		Data: data,
@@ -170,9 +181,6 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 		// helpers.ServerError(w, err)
 	}
 
-	fmt.Println(playerID)
-	fmt.Println(teamID)
-
 	player := models.NBAPlayer{
 		PlayerID: playerID,
 		TeamID:   sql.NullInt64{int64(teamID), nullInt},
@@ -190,6 +198,32 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
+	if r.FormValue("action") == "drop" {
+		playerID, err := strconv.Atoi(r.FormValue("playerID"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		err = m.DB.DropNBAPlayer(playerID)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+	} else if r.FormValue("action") == "add" {
+		playerID, err := strconv.Atoi(r.FormValue("playerID"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		teamID, err := strconv.Atoi(r.FormValue("teamID"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		err = m.DB.AddNBAPlayer(playerID, teamID)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+	}
+
 	if r.FormValue("player_id") != "" {
 		playerID, err := strconv.Atoi(r.FormValue("player_id"))
 		if err != nil {
@@ -519,7 +553,5 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{
-
-	})
+	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{})
 }
