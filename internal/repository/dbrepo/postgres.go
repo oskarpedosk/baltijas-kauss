@@ -276,21 +276,109 @@ func (m *postgresDBRepo) GetNBAPlayers() ([]models.NBAPlayer, error) {
 			&player.StatsIntangibles,
 			&player.StatsPotential,
 			&player.StatsTotalAttributes,
-			&player.BronzeBadges,
-			&player.SilverBadges,
-			&player.GoldBadges,
-			&player.HOFBadges,
-			&player.TotalBadges,
+			&player.BronzeBadgesCount,
+			&player.SilverBadgesCount,
+			&player.GoldBadgesCount,
+			&player.HOFBadgesCount,
+			&player.TotalBadgesCount,
 			&player.Assigned,
 		)
 		if err != nil {
 			return players, err
 		}
-		players = append(players, player)
-	}
 
-	if err = rows.Err(); err != nil {
-		return players, err
+		query2 := `
+		select 
+			"badge_id", "level"
+		from 
+			nba_players_badges
+		where
+			"player_id" = $1
+		`
+
+		rows, err := m.DB.QueryContext(ctx, query2, player.PlayerID)
+		if err != nil {
+			return players, err
+		}
+
+		bronzeBadges := player.BronzeBadges
+		silverBadges := player.SilverBadges
+		goldBadges := player.GoldBadges
+		hofBadges := player.HOFBadges
+
+		defer rows.Close()
+		for rows.Next() {
+			var badge models.PlayersBadges
+			err := rows.Scan(
+				&badge.BadgeID,
+				&badge.Level,
+			)
+			if err != nil {
+				return players, err
+			}
+			
+			query3 := `
+			select 
+				*
+			from 
+				nba_badges
+			where
+				"badge_id" = $1
+			`
+
+			rows, err := m.DB.QueryContext(ctx, query3, badge.BadgeID)
+			if err != nil {
+				return players, err
+			}
+
+			defer rows.Close()
+			for rows.Next() {
+				var playerBadge models.Badge
+				err := rows.Scan(
+					&playerBadge.BadgeID,
+					&playerBadge.Name,
+					&playerBadge.Type,
+					&playerBadge.Info,
+					&playerBadge.BronzeUrl,
+					&playerBadge.SilverUrl,
+					&playerBadge.GoldUrl,
+					&playerBadge.HOFUrl,
+				)
+				if err != nil {
+					return players, err
+				}
+				
+				if badge.Level == "Bronze" {
+					bronzeBadges = append(bronzeBadges, playerBadge)
+				}
+				if badge.Level == "Silver" {
+					silverBadges = append(silverBadges, playerBadge)
+				}
+				if badge.Level == "Gold" {
+					goldBadges = append(goldBadges, playerBadge)
+				}
+				if badge.Level == "HOF" {
+					hofBadges = append(hofBadges, playerBadge)
+				}
+
+			}
+
+			player.BronzeBadges = bronzeBadges
+			player.SilverBadges = silverBadges
+			player.GoldBadges = goldBadges
+			player.HOFBadges = hofBadges
+
+			if err = rows.Err(); err != nil {
+				return players, err
+			}
+
+
+		}
+
+		if err = rows.Err(); err != nil {
+			return players, err
+		}
+		players = append(players, player)
 	}
 
 	return players, nil

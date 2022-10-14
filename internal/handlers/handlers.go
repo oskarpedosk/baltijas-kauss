@@ -139,7 +139,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
-	badges, err := m.DB.GetNBABadges()
+	/* badges, err := m.DB.GetNBABadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -148,12 +148,12 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
-	}
+	} */
 	data := make(map[string]interface{})
 	data["nba_players"] = players
 	data["nba_teams"] = teams
-	data["nba_badges"] = badges
-	data["nba_players_badges"] = playersBadges
+	// data["nba_badges"] = badges
+	// data["nba_players_badges"] = playersBadges
 
 	render.Template(w, r, "nba_players.page.tmpl", &models.TemplateData{
 		Data: data,

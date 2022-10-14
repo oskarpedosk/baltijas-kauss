@@ -112,46 +112,115 @@
                             </div>
                         </td>
                         <td class="p-0 py-1">
-                            <div class="mt-2 dropend" style="font-size: 0px;">
-                                <div class="d-inline-block position-relative text-dark dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadges}}</p>
-                                    <div class="dropdown-menu">
-                                        <li><h6 class="dropdown-header" style="color: #9f6124;">Bronze badges</h6></li>
-                                        {{range $playersBadges := index $.Data "nba_players_badges"}}
-                                            {{if eq $players.PlayerID $playersBadges.PlayerID}}
-                                                {{if eq $playersBadges.Level "Bronze"}}
-                                                    {{range $badge := index $.Data "nba_badges"}}
-                                                        {{if eq $playersBadges.BadgeID $badge.BadgeID}}
-                                                            <li class="dropdown-item disabled text-dark">
-                                                                <div>
-                                                                    <p class="p-0 mb-0">{{$badge.Name}}</p>
-                                                                    <p class="p-0 mb-0" style="font-size: 10px; overflow-wrap: anywhere;">{{$badge.Info}}</p>
-                                                                </div>
-                                                            </li>
-                                                        {{end}}
-                                                    {{end}}
-                                                {{end}}
+                            <div class="mt-2" style="font-size: 0px;">
+                                <div class="d-inline-block position-relative dropend">
+                                    <div class="text-dark dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
+                                        <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadgesCount}}</p>
+                                        <div class="dropdown-menu badge-menu">
+                                            {{$counter := 0}}
+                                            {{$length := len $players.BronzeBadges}}
+                                            {{range $bronze := $players.BronzeBadges}}
+                                                <li class="dropdown-item disabled text-dark" style="word-wrap: break-word; width: 300px; white-space: normal; ">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-3 justify-content-center">
+                                                            <img class="img-fluid" src="/static/images/nba_badges/{{$bronze.Name}}_Bronze.png" alt="" width="50px">
+                                                        </div>
+                                                        <div class="col-md-9 px-0">
+                                                            <p class="p-0 mb-0 fw-semibold" style="color: #9f6124;">{{$bronze.Name}}</p>
+                                                            <p class="p-0 mb-0 fw-bold" style="font-size: 8px;">{{$bronze.Type}}</p>
+                                                            <p class="p-0 mb-0" style="font-size: 10px; overflow-wrap: anywhere;">{{$bronze.Info}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {{$counter = add $counter 1}}
+                                            {{if lt $counter $length}}<li><hr class="dropdown-divider"></li>{{end}}
                                             {{end}}
-                                        {{end}}
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="d-inline-block position-relative dropend">
+                                    <div class="text-dark dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">
+                                        <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadgesCount}}</p>
+                                        <div class="dropdown-menu badge-menu">
+                                            {{$counter := 0}}
+                                            {{$length := len $players.SilverBadges}}
+                                            {{range $silver := $players.SilverBadges}}
+                                                <li class="dropdown-item disabled text-dark" style="word-wrap: break-word; width: 300px; white-space: normal;">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-3 justify-content-center">
+                                                            <img class="img-fluid" src="/static/images/nba_badges/{{$silver.Name}}_Silver.png" alt="" width="50px">
+                                                        </div>
+                                                        <div class="col-md-9 px-0">
+                                                            <p class="p-0 mb-0 fw-semibold" style="color: #646464;">{{$silver.Name}}</p>
+                                                            <p class="p-0 mb-0 fw-bold" style="font-size: 8px;">{{$silver.Type}}</p>
+                                                            <p class="p-0 mb-0" style="font-size: 10px; overflow-wrap: anywhere;">{{$silver.Info}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {{$counter = add $counter 1}}
+                                            {{if lt $counter $length}}<li><hr class="dropdown-divider"></li>{{end}}
+                                            {{end}}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="d-inline-block position-relative float-left text-dark">
-                                    <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadges}}</p>
+                                <div class="d-inline-block position-relative dropend">
+                                    <div class="text-dark dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/static/images/2k-gold-badge-count.webp" alt="" width="30">
+                                        <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadgesCount}}</p>
+                                        <div class="dropdown-menu badge-menu">
+                                            {{$counter := 0}}
+                                            {{$length := len $players.GoldBadges}}
+                                            {{range $gold := $players.GoldBadges}}
+                                                <li class="dropdown-item disabled text-dark" style="word-wrap: break-word; width: 300px; white-space: normal;">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-3 justify-content-center">
+                                                            <img class="img-fluid" src="/static/images/nba_badges/{{$gold.Name}}_Gold.png" alt="" width="50px">
+                                                        </div>
+                                                        <div class="col-md-9 px-0">
+                                                            <p class="p-0 mb-0 fw-semibold" style="color: #e7b435;">{{$gold.Name}}</p>
+                                                            <p class="p-0 mb-0 fw-bold" style="font-size: 8px;">{{$gold.Type}}</p>
+                                                            <p class="p-0 mb-0" style="font-size: 10px; overflow-wrap: anywhere;">{{$gold.Info}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {{$counter = add $counter 1}}
+                                            {{if lt $counter $length}}<li><hr class="dropdown-divider"></li>{{end}}
+                                            {{end}}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="d-inline-block position-relative float-left text-dark">
-                                    <img src="/static/images/2k-gold-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadges}}</p>
-                                </div>
-                                <div class="d-inline-block position-relative float-left text-dark">
-                                    <img src="/static/images/2k-hof-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadges}}</p>
+                                <div class="d-inline-block position-relative dropend">
+                                    <div class="text-dark dropdown-toggle pointer" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="/static/images/2k-hof-badge-count.webp" alt="" width="30">
+                                        <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadgesCount}}</p>
+                                        <div class="dropdown-menu badge-menu">
+                                            {{$counter := 0}}
+                                            {{$length := len $players.HOFBadges}}
+                                            {{range $hof := $players.HOFBadges}}
+                                                <li class="dropdown-item disabled text-dark" style="word-wrap: break-word; width: 300px; white-space: normal;">
+                                                    <div class="row align-items-center">
+                                                        <div class="col-md-3 justify-content-center">
+                                                            <img class="img-fluid" src="/static/images/nba_badges/{{$hof.Name}}_HOF.png" alt="" width="50px">
+                                                        </div>
+                                                        <div class="col-md-9 px-0">
+                                                            <p class="p-0 mb-0 fw-semibold" style="color: #9902d4;">{{$hof.Name}}</p>
+                                                            <p class="p-0 mb-0 fw-bold" style="font-size: 8px;">{{$hof.Type}}</p>
+                                                            <p class="p-0 mb-0" style="font-size: 10px; overflow-wrap: anywhere;">{{$hof.Info}}</p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {{$counter = add $counter 1}}
+                                            {{if lt $counter $length}}<li><hr class="dropdown-divider"></li>{{end}}
+                                            {{end}}
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="d-inline-block position-relative float-left text-dark">
                                     <img src="/static/images/2k-total-badge-count.webp" alt="" width="30">
                                     <p class="position-absolute text-center badge-count text-white" style="font-size: 16px;">
-                                        {{$players.TotalBadges}}</p>
+                                        {{$players.TotalBadgesCount}}</p>
                                 </div>
                             </div>
                         </td>

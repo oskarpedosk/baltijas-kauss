@@ -105,12 +105,16 @@ type NBAPlayer struct {
 	StatsIntangibles          int
 	StatsPotential            int
 	StatsTotalAttributes      int
-	BronzeBadges              int
-	SilverBadges              int
-	GoldBadges                int
-	HOFBadges                 int
-	TotalBadges               int
+	BronzeBadgesCount         int
+	SilverBadgesCount         int
+	GoldBadgesCount           int
+	HOFBadgesCount            int
+	TotalBadgesCount          int
 	Assigned                  int
+	BronzeBadges              []Badge
+	SilverBadges              []Badge
+	GoldBadges                []Badge
+	HOFBadges                 []Badge
 }
 
 type NBAPosition struct {
