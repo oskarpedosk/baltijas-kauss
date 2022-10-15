@@ -553,5 +553,17 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{})
+	data := make(map[string]interface{})
+
+	teams, err := m.DB.GetNBATeamInfo()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data["nba_teams"] = teams
+
+	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }

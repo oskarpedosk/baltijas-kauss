@@ -1,42 +1,56 @@
 {{template "base" .}}
 
 {{define "content"}}
-
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1 class="mt-5">Team info summary</h1>
-
-            <hr>
-
-            <table class="table table-striped">
-                <thead></thead>
-                <tbody>
-                    <tr>
-                        <td><p>some text</p></td>
-                        <td><p>some text</p></td>
-                    </tr>
-                    <tr>
-                        <td><p>some text</p></td>
-                        <td><p>some text</p></td>
-                    </tr>
-                    <tr>
-                        <td><p>some text</p></td>
-                        <td><p>some text</p></td>
-                    </tr>
-                    <tr>
-                        <td><p>some text</p></td>
-                        <td><p>some text</p></td>
-                    </tr>
-                    <tr>
-                        <td><p>some text</p></td>
-                        <td><p>some text</p></td>
-                    </tr>
-                </tbody>
-            </table>
+<div class="container p-3">
+    <div class="row align-items-md-stretch">
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-info border rounded-3">
+            {{range $teamInfo := index $.Data "nba_teams"}}
+                <p class="mb-0 p-2 fw-semibold badge {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" 
+                style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%">
+                {{$teamInfo.Name}}
+                </p>
+            {{end}}
+          <h2>Hiiu Grilli pommitamine</h2>
+          <p>Kurikuulsa öölokaali Hiiu Grilli pommitamises suri legendaarne Goa trance/acid-house DJ produtsent Ricard-Rihard. Hiiu LGBTQ+ kogukond on leinas. Hiiu Rimi ette on toodud tuhandeid lilli.</p>
+          <button class="btn btn-outline-dark" type="button">Randomize draft order</button>
         </div>
+      </div>
+      <div class="col-md-6">
+        <div class="h-100 p-5 text-bg-danger border rounded-3">
+          <h2>Nikola Jokic</h2>
+          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
+          <button class="btn btn-outline-light" type="button">Read more</button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="h-100 p-5 text-bg-danger border rounded-3">
+          <h2>Nikola Jokic</h2>
+          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
+          <button class="btn btn-outline-light" type="button">Read more</button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="h-100 p-5 text-bg-danger border rounded-3">
+          <h2>Nikola Jokic</h2>
+          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
+          <button class="btn btn-outline-light" type="button">Read more</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="h-100 p-5 text-bg-danger border rounded-3">
+          <h2>Nikola Jokic</h2>
+          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
+          <button class="btn btn-outline-light" type="button">Read more</button>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="h-100 p-5 text-bg-danger border rounded-3">
+          <h2>Nikola Jokic</h2>
+          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
+          <button class="btn btn-outline-light" type="button">Read more</button>
+        </div>
+      </div>
     </div>
 </div>
-
-
 {{end}}
