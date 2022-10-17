@@ -155,4 +155,13 @@ html {
 
 .badge-menu::-webkit-scrollbar {
     display: none;
-  }
+}
+
+.draftbutton:hover {
+    background-image: linear-gradient(90deg, #8100ff, #e002ff);
+    border-style: hidden;
+}
+
+.draftbutton:hover img {
+    filter: brightness(0) invert(1);
+}

@@ -2,55 +2,81 @@
 
 {{define "content"}}
 <div class="container p-3">
-    <div class="row align-items-md-stretch">
-      <div class="col-md-6">
-        <div class="h-100 p-5 text-bg-info border rounded-3">
-            {{range $teamInfo := index $.Data "nba_teams"}}
-                <p class="mb-0 p-2 fw-semibold badge {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" 
-                style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%">
+  <div class="row align-items-md-stretch mb-4 bg-light border border-dark rounded-3 p-5">
+    <div class="col-md-12">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="p-1 rounded-3 draftbutton" style="font-size: 24px;" onclick="randomize()">
+              <img src="/static/images/BKslogan2.png" style="max-width: 100%;" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="draftpicks" class="hidden">
+        <div id="draftpicksrefresh" class="row">
+          {{range $index, $teamInfo := index $.Data "nba_teams"}}
+          <div class="col-md-3 justify-content-center text-center p-5">
+            <div class="row">
+              <p style="font-size: 24px;">Pick {{add $index 1}}</p>
+            </div>
+            <div class="row pointer" style="position: relative;">
+              <div class="fw-semibold badge {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}"
+                style="font-size: 20px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); position: absolute;"
+                onclick="revealPick('{{$index}}')">
                 {{$teamInfo.Name}}
-                </p>
-            {{end}}
-          <h2>Hiiu Grilli pommitamine</h2>
-          <p>Kurikuulsa öölokaali Hiiu Grilli pommitamises suri legendaarne Goa trance/acid-house DJ produtsent Ricard-Rihard. Hiiu LGBTQ+ kogukond on leinas. Hiiu Rimi ette on toodud tuhandeid lilli.</p>
-          <button class="btn btn-outline-dark" type="button">Randomize draft order</button>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="h-100 p-5 text-bg-danger border rounded-3">
-          <h2>Nikola Jokic</h2>
-          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
-          <button class="btn btn-outline-light" type="button">Read more</button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="h-100 p-5 text-bg-danger border rounded-3">
-          <h2>Nikola Jokic</h2>
-          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
-          <button class="btn btn-outline-light" type="button">Read more</button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="h-100 p-5 text-bg-danger border rounded-3">
-          <h2>Nikola Jokic</h2>
-          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
-          <button class="btn btn-outline-light" type="button">Read more</button>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="h-100 p-5 text-bg-danger border rounded-3">
-          <h2>Nikola Jokic</h2>
-          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
-          <button class="btn btn-outline-light" type="button">Read more</button>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="h-100 p-5 text-bg-danger border rounded-3">
-          <h2>Nikola Jokic</h2>
-          <p>Named Baltijas Kauss Most Average Player: "I think I can be even more average next year."</p>
-          <button class="btn btn-outline-light" type="button">Read more</button>
+              </div>
+              <div id="pick_{{$index}}" class="badge bkcolor pointer" style="font-size: 20px; position: absolute;"
+                onclick="revealPick('{{$index}}')">
+                ?
+              </div>
+              <div class="badge bkcolor" style="font-size: 20px;" style="position: absolute;">?</div>
+            </div>
+          </div>
+          {{end}}
         </div>
       </div>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 p-0 justify-content-center d-flex">
+      <img class="img-fluid rounded-3" style="max-height: 500px;" src="/static/images/Bryant.png" alt="">
+    </div>
+  </div>
 </div>
+{{end}}
+
+{{define "js"}}
+
+<script>
+  function revealPick(index) {
+    const str = 'pick_' + (index);
+    $('#' + str).toggleClass("hidden");
+  }
+
+  function randomize() {
+    var audio = new Audio('/static/mp3/Draft Chime.mp3');    
+    audio.play();
+    const str = 'draftpicks';
+    $('#' + str).removeClass("hidden");
+    $.ajax({
+      type: 'GET',
+      dataType: 'html',
+      data: {
+      },
+      success: function (data) {
+        console.log("success");
+        $('#draftpicks').load(window.location.href + ' #draftpicksrefresh');
+      }
+    });
+  }
+
+  function stopAllAudio(){
+    allAudios.forEach(function(audio){
+    audio.pause();
+  });
+}
+
+</script>
+
 {{end}}

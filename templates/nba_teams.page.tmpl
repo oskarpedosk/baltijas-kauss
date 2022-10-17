@@ -268,6 +268,7 @@
                                                     {{end}}
                                                 {{end}}
                                             {{end}}
+                                            {{if eq $counter 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
                                         </div>
 
                                     </form>
@@ -332,6 +333,7 @@
                                                         {{end}}
                                                     {{end}}
                                                 {{end}}
+                                                {{if eq $counter 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
                                             </div>
 
                                         </form>
@@ -397,6 +399,7 @@
                                                         {{end}}
                                                     {{end}}
                                                 {{end}}
+                                                {{if eq $counter 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
                                             </div>
 
                                         </form>
@@ -407,7 +410,7 @@
 
 
                         <div class="col-md-2 text-center lh-1 dropend">
-                                <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+                                <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
                                     <img class="img-fluid logo-white opacity-50" style="max-height: 50px"
                                         src="/static/images/add.png" alt="">
                                 </div>
@@ -435,7 +438,7 @@
                                 </div>
                         </div>
                         <div class="col-md-2 lh-1 dropend">
-                            <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img class="img-fluid logo-white opacity-50" style="max-height: 50px"
                                     src="/static/images/remove.png" alt="">
                             </div>

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"log"
+	"math/rand"
 	"net/http"
 	"strconv"
 	"time"
@@ -560,6 +561,10 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
+
+	// Shuffle teams
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(teams), func(i, j int) { teams[i], teams[j] = teams[j], teams[i] })
 
 	data["nba_teams"] = teams
 

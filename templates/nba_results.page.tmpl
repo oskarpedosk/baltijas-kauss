@@ -295,7 +295,7 @@
         <div id="confirm" class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
               <div class="toast-body">
-                <p id="confirmbutton" class="m-0 pointer" data-bs-dismiss="toast" aria-label="Close">Click to confirm</p>
+                <p id="confirmbutton" class="m-0 pointer" data-bs-dismiss="toast" aria-label="Close">Click text to confirm</p>
               </div>
               <button type="button" class="btn-close btn-close-dark me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
@@ -363,7 +363,15 @@
             msg = "Please select away team";
             document.getElementById("errorid").innerHTML = msg;
             errorToast.show()
-        }  else if (away_team_id === home_team_id) {
+        } else if ((typeof home_score != 'number') || (typeof away_score != 'number')) {
+            msg = "Score can only be a number";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else if ((home_score < 0) || (away_score < 0)) {
+            msg = "Score can only be positive";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else if (away_team_id === home_team_id) {
             msg = "Home and away team have to be different";
             document.getElementById("errorid").innerHTML = msg;
             errorToast.show()
@@ -410,11 +418,19 @@
             msg = "Home and away team have to be different";
             document.getElementById("errorid").innerHTML = msg;
             errorToast.show()
+        } else if ((typeof home_score != 'number') || (typeof away_score != 'number')) {
+            msg = "Score can only be a number";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
+        } else if ((home_score < 0) || (away_score < 0)) {
+            msg = "Score can only be positive";
+            document.getElementById("errorid").innerHTML = msg;
+            errorToast.show()
         } else if (home_score === away_score) {
             msg = "Score can't be a draw";
             document.getElementById("errorid").innerHTML = msg;
             errorToast.show()
-        }  else {
+        } else {
             $.ajax({
             type: 'GET',
             dataType: 'html',
