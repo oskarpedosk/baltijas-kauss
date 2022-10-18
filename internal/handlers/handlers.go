@@ -92,7 +92,54 @@ func NewHandlers(r *Repository) {
 }
 
 func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "signin.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "signin.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+// Handles logging in the user
+func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
+	_ = m.App.Session.RenewToken(r.Context())
+
+	err := r.ParseForm()
+	if err != nil {
+		log.Println(err)
+	}
+
+	form := forms.New(r.PostForm)
+	form.Required("email", "password")
+	form.IsEmail("email")
+	if !form.Valid() {
+		render.Template(w, r, "signin.page.tmpl", &models.TemplateData{
+			Form: form,
+		})
+		return
+	}
+
+	email := r.Form.Get("email")
+	password := r.Form.Get("password")
+
+	id, _, err := m.DB.Authenticate(email, password)
+
+	if err != nil {
+		log.Println(err)
+
+		m.App.Session.Put(r.Context(), "error", "Invalid login credentials")
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	m.App.Session.Put(r.Context(), "user_id", id)
+	m.App.Session.Put(r.Context(), "flash", "Logged in successfully")
+	http.Redirect(w, r, "/nba", http.StatusSeeOther)
+}
+
+// Logout logs a user out
+func (m *Repository) Logout(w http.ResponseWriter, r *http.Request) {
+	_ = m.App.Session.Destroy(r.Context())
+	_ = m.App.Session.RenewToken(r.Context())
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
 func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
@@ -571,4 +618,8 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
+}
+
+func (m *Repository) AdminDashboard(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-dashboard.page.tmpl", &models.TemplateData{})
 }

@@ -53,11 +53,13 @@
             <img src="/static/images/trophy.png" alt="" class="nav-img">
           </a>
         </li>
-        <li class="border-bottom">
-          <a href="#" data-bs-toggle="tooltip" data-bs-placement="right">
-            <img src="/static/images/fifa22logo.png" alt="" class="nav-img">
-          </a>
-        </li>
+        {{if eq .IsAuthenticated 1}}
+          <li class="border-bottom">
+            <a href="#" data-bs-toggle="tooltip" data-bs-placement="right">
+              <img src="/static/images/fifa22logo.png" alt="" class="nav-img">
+            </a>
+          </li>
+        {{end}}
       </ul>
       <div class="dropdown border-top">
         <a href="#"
@@ -71,7 +73,7 @@
           <li>
             <hr class="dropdown-divider">
           </li>
-          <li><a class="dropdown-item" href="/">Sign out</a></li>
+          <li><a class="dropdown-item" href="/logout">Sign out</a></li>
         </ul>
       </div>
     </div>
