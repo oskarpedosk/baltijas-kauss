@@ -1,0 +1,60 @@
+{{template "admin" .}}
+
+{{define "css"}}
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" type="text/css">
+{{end}}
+
+{{define "page-title"}}
+    NBA Players
+{{end}}
+
+{{define "content"}}
+    <div class="col-md-12">
+        <table class="table table-lg table-striped table-hover" id="all-players">
+            <thead>
+                <tr>
+                    <th>Player ID</th>
+                    <th>Image</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Primary Position</th>
+                    <th>Secondary Position</th>
+                    <th>Archetype</th>
+                    <th>NBA Team</th>
+                    <th>Height</th>
+                    <th>Weight</th>
+                    <th>Team ID</th>
+                    <th>Overall Rating</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range $index, $players := index .Data "nba_players"}}
+                <tr>
+                    <td>{{$players.PlayerID}}</td>
+                    <td><img src="{{$players.ImgUrl}}" alt=""></td>
+                    <td>{{$players.FirstName}}</td>
+                    <td>{{$players.LastName}}</td>
+                    <td>{{$players.PrimaryPosition}}</td>
+                    <td>{{$players.SecondaryPosition}}</td>
+                    <td>{{$players.Archetype}}</td>
+                    <td>{{$players.NBATeam}}</td>
+                    <td>{{$players.Height}}</td>
+                    <td>{{$players.Weight}}</td>
+                    <td>{{$players.TeamID.Int64}}</td>
+                    <td>{{$players.StatsOverall}}</td>
+                </tr>
+                {{end}}
+            </tbody>
+        </table>
+    </div>
+{{end}}
+
+{{define "js"}}
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
+    <script>
+        const dataTable = new simpleDatatables.DataTable("#all-players", {
+            searchable: true,
+            fixedHeight: true,
+        })
+    </script>
+{{end}}

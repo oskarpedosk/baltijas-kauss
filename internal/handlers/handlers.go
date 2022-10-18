@@ -623,3 +623,26 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) AdminDashboard(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "admin-dashboard.page.tmpl", &models.TemplateData{})
 }
+
+func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-nba-teams.page.tmpl", &models.TemplateData{})
+}
+
+func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
+	players, err := m.DB.GetNBAPlayers()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["nba_players"] = players
+
+	render.Template(w, r, "admin-nba-players.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
+}
+
+func (m *Repository) AdminNBAResults(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-nba-results.page.tmpl", &models.TemplateData{})
+}
