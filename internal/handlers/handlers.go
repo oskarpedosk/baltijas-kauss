@@ -7,6 +7,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
@@ -645,4 +646,34 @@ func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
 
 func (m *Repository) AdminNBAResults(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "admin-nba-results.page.tmpl", &models.TemplateData{})
+}
+
+// Shows a single players stats
+func (m *Repository) AdminShowNBAPlayer(w http.ResponseWriter, r *http.Request) {
+	exploded := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(exploded[3])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	player, err := m.DB.GetNBAPlayerByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	teams, err := m.DB.GetNBATeamInfo()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["nba_player"] = player
+	data["nba_teams"] = teams
+
+	render.Template(w, r, "admin-nba-player.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }

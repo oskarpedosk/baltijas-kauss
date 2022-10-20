@@ -14,34 +14,22 @@
             <thead>
                 <tr>
                     <th>Player ID</th>
-                    <th>Image</th>
+                    <th>Rank</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Primary Position</th>
-                    <th>Secondary Position</th>
-                    <th>Archetype</th>
-                    <th>NBA Team</th>
-                    <th>Height</th>
-                    <th>Weight</th>
-                    <th>Team ID</th>
                     <th>Overall Rating</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
                 {{range $index, $players := index .Data "nba_players"}}
                 <tr>
                     <td>{{$players.PlayerID}}</td>
-                    <td><img src="{{$players.ImgUrl}}" alt=""></td>
+                    <td>{{add $index 1}}</td>
                     <td>{{$players.FirstName}}</td>
                     <td>{{$players.LastName}}</td>
-                    <td>{{$players.PrimaryPosition}}</td>
-                    <td>{{$players.SecondaryPosition}}</td>
-                    <td>{{$players.Archetype}}</td>
-                    <td>{{$players.NBATeam}}</td>
-                    <td>{{$players.Height}}</td>
-                    <td>{{$players.Weight}}</td>
-                    <td>{{$players.TeamID.Int64}}</td>
                     <td>{{$players.StatsOverall}}</td>
+                    <td><a href="/admin/nba_players/{{$players.PlayerID}}">EDIT</a></td>
                 </tr>
                 {{end}}
             </tbody>
@@ -53,6 +41,7 @@
     <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" type="text/javascript"></script>
     <script>
         const dataTable = new simpleDatatables.DataTable("#all-players", {
+            filters: {"Primary Position": ["PG", "SG", "SF", "PF", "C"], "Secondary Position": ["PG", "SG", "SF", "PF", "C"]}, 
             searchable: true,
             fixedHeight: true,
         })

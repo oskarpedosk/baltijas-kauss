@@ -1,0 +1,260 @@
+{{template "admin" .}}
+
+{{define "page-title"}}
+    Edit Player
+{{end}}
+
+{{define "content"}}
+    {{$player := index .Data "nba_player"}}
+    <div class="col-md-12">
+        <form method="post" action="/admin/nba_players/{{$player.PlayerID}}" novalidate>
+            <input type="hidden" name="player_id" value="{{$player.PlayerID}}">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" name="first_name" value="{{$player.FirstName}}">
+                    </div>
+                    <div class="col">
+                        <label>Last Name</label>
+                        <input type="text" class="form-control" name="last_name" value="{{$player.LastName}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <label>Primary Position</label>
+                        <select class="form-select" name="primary_position" aria-label="Default select example">
+                            <option {{if eq $player.PrimaryPosition "PG"}}selected{{end}} value="PG">PG</option>
+                            <option {{if eq $player.PrimaryPosition "SG"}}selected{{end}} value="SG">SG</option>
+                            <option {{if eq $player.PrimaryPosition "SF"}}selected{{end}} value="SF">SF</option>
+                            <option {{if eq $player.PrimaryPosition "PF"}}selected{{end}} value="PF">PF</option>
+                            <option {{if eq $player.PrimaryPosition "C"}}selected{{end}} value="C">C</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Secondary Position</label>
+                        <select class="form-select" name="secondary_position" aria-label="Default select example">
+                            <option {{if eq $player.SecondaryPosition ""}}selected{{end}} value="">-</option>
+                            <option {{if eq $player.SecondaryPosition "PG"}}selected{{end}} value="PG">PG</option>
+                            <option {{if eq $player.SecondaryPosition "SG"}}selected{{end}} value="SG">SG</option>
+                            <option {{if eq $player.SecondaryPosition "SF"}}selected{{end}} value="SF">SF</option>
+                            <option {{if eq $player.SecondaryPosition "PF"}}selected{{end}} value="PF">PF</option>
+                            <option {{if eq $player.SecondaryPosition "C"}}selected{{end}} value="C">C</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>Height</label>
+                        <input type="number" class="form-control" name="height" value="{{$player.Height}}">
+                    </div>
+                    <div class="col">
+                        <label>Weight</label>
+                        <input type="number" class="form-control" name="weight" value="{{$player.Weight}}">
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="hidden" name="assigned" value="0">
+                    <div class="col">
+                        <label>Team</label>
+                        <select class="form-select" name="team_id" aria-label="Default select example">
+                            {{range $teamInfo := index $.Data "nba_teams"}}
+                                <option {{if eq $player.TeamID.Int64 $teamInfo.TeamID.Int64}}selected{{end}} value="{{$teamInfo.Name}}">{{$teamInfo.Name}}</option>
+                            {{end}}
+                            <option {{if eq $player.TeamID.Valid false}}selected{{end}} value="null">Free Agency</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label>NBA Team</label>
+                        <select class="form-select" name="nba_team" aria-label="Default select example">
+                            <option {{if eq $player.NBATeam "Atlanta Hawks"}}selected{{end}} value="Atlanta Hawks">Atlanta Hawks</option>
+                            <option {{if eq $player.NBATeam "Boston Celtics"}}selected{{end}} value="Boston Celtics">Boston Celtics</option>
+                            <option {{if eq $player.NBATeam "Brooklyn Nets"}}selected{{end}} value="Brooklyn Nets">Brooklyn Nets</option>
+                            <option {{if eq $player.NBATeam "Charlotte Hornets"}}selected{{end}} value="Charlotte Hornets">Charlotte Hornets</option>
+                            <option {{if eq $player.NBATeam "Chicago Bulls"}}selected{{end}} value="Chicago Bulls">Chicago Bulls</option>
+                            <option {{if eq $player.NBATeam "Cleveland Cavaliers"}}selected{{end}} value="Cleveland Cavaliers">Cleveland Cavaliers</option>
+                            <option {{if eq $player.NBATeam "Dallas Mavericks"}}selected{{end}} value="Dallas Mavericks">Dallas Mavericks</option>
+                            <option {{if eq $player.NBATeam "Denver Nuggets"}}selected{{end}} value="Denver Nuggets">Denver Nuggets</option>
+                            <option {{if eq $player.NBATeam "Detroit Pistons"}}selected{{end}} value="Detroit Pistons">Detroit Pistons</option>
+                            <option {{if eq $player.NBATeam "Golden State Warriors"}}selected{{end}} value="Golden State Warriors">Golden State Warriors</option>
+                            <option {{if eq $player.NBATeam "Houston Rockets"}}selected{{end}} value="Houston Rockets">Houston Rockets</option>
+                            <option {{if eq $player.NBATeam "Indiana Pacers"}}selected{{end}} value="Indiana Pacers">Indiana Pacers</option>
+                            <option {{if eq $player.NBATeam "Los Angeles Clippers"}}selected{{end}} value="Los Angeles Clippers">Los Angeles Clippers</option>
+                            <option {{if eq $player.NBATeam "Los Angeles Lakers"}}selected{{end}} value="Los Angeles Lakers">Los Angeles Lakers</option>
+                            <option {{if eq $player.NBATeam "Memphis Grizzlies"}}selected{{end}} value="Memphis Grizzlies">Memphis Grizzlies</option>
+                            <option {{if eq $player.NBATeam "Miami Heat"}}selected{{end}} value="Miami Heat">Miami Heat</option>
+                            <option {{if eq $player.NBATeam "Milwaukee Bucks"}}selected{{end}} value="Milwaukee Bucks">Milwaukee Bucks</option>
+                            <option {{if eq $player.NBATeam "Minnesota Timberwolves"}}selected{{end}} value="Minnesota Timberwolves">Minnesota Timberwolves</option>
+                            <option {{if eq $player.NBATeam "New Orleans Pelicans"}}selected{{end}} value="New Orleans Pelicans">New Orleans Pelicans</option>
+                            <option {{if eq $player.NBATeam "New York Knicks"}}selected{{end}} value="New York Knicks">New York Knicks</option>
+                            <option {{if eq $player.NBATeam "Oklahoma City Thunder"}}selected{{end}} value="Oklahoma City Thunder">Oklahoma City Thunder</option>
+                            <option {{if eq $player.NBATeam "Orlando Magic"}}selected{{end}} value="Orlando Magic">Orlando Magic</option>
+                            <option {{if eq $player.NBATeam "Philadelphia 76ers"}}selected{{end}} value="Philadelphia 76ers">Philadelphia 76ers</option>
+                            <option {{if eq $player.NBATeam "Phoenix Suns"}}selected{{end}} value="Phoenix Suns">Phoenix Suns</option>
+                            <option {{if eq $player.NBATeam "Portland Trail Blazers"}}selected{{end}} value="Portland Trail Blazers">Portland Trail Blazers</option>
+                            <option {{if eq $player.NBATeam "Sacramento Kings"}}selected{{end}} value="Sacramento Kings">Sacramento Kings</option>
+                            <option {{if eq $player.NBATeam "San Antonio Spurs"}}selected{{end}} value="San Antonio Spurs">San Antonio Spurs</option>
+                            <option {{if eq $player.NBATeam "Toronto Raptors"}}selected{{end}} value="Toronto Raptors">Toronto Raptors</option>
+                            <option {{if eq $player.NBATeam "Utah Jazz"}}selected{{end}} value="Utah Jazz">Utah Jazz</option>
+                            <option {{if eq $player.NBATeam "Washington Wizards"}}selected{{end}} value="Washington Wizards">Washington Wizards</option>
+                            <option {{if eq $player.NBATeam "Free Agent"}}selected{{end}} value="Free Agent">Free Agent</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Arcehtype</label>
+                <input type="text" class="form-control" name="archetype" value="{{$player.Archetype}}">
+                <label>2K Ratings URL</label>
+                <input type="url" class="form-control" name="player_url" value="{{$player.PlayerUrl}}">
+                <label>Player Image URL</label>
+                <input type="url" class="form-control" name="img_url" value="{{$player.ImgUrl}}">
+                <label>Overall Rating</label>
+                <input type="number" class="form-control" name="stats_overall" value="{{$player.StatsOverall}}">
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label><strong>Outside Scoring</strong></label>
+                        <input type="number" class="form-control" name="stats_outside_scoring" value="{{$player.StatsOutsideScoring}}">
+                        <label>Close Shot</label>
+                        <input type="number" class="form-control" name="stats_close_shot" value="{{$player.StatsCloseShot}}">
+                        <label>Mid-Range Shot</label>
+                        <input type="number" class="form-control" name="stats_mid_range" value="{{$player.StatsMidRangeShot}}">
+                        <label>Three Point Shot</label>
+                        <input type="number" class="form-control" name="stats_three_point" value="{{$player.StatsThreePointShot}}">
+                        <label>Free Throw</label>
+                        <input type="number" class="form-control" name="stats_free_throw" value="{{$player.StatsFreeThrow}}">
+                        <label>Shot IQ</label>
+                        <input type="number" class="form-control" name="stats_shot_iq" value="{{$player.StatsShotIQ}}">
+                        <label>Offensive Consistency</label>
+                        <input type="number" class="form-control" name="stats_offensive_consistency" value="{{$player.StatsOffensiveConsistency}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Athleticism</strong></label>
+                        <input type="number" class="form-control" name="stats_atheleticism" value="{{$player.StatsAthleticism}}">
+                        <label>Speed</label>
+                        <input type="number" class="form-control" name="stats_speed" value="{{$player.StatsSpeed}}">
+                        <label>Acceleration</label>
+                        <input type="number" class="form-control" name="stats_acceleration" value="{{$player.StatsAcceleration}}">
+                        <label>Strength</label>
+                        <input type="number" class="form-control" name="stats_strength" value="{{$player.StatsStrength}}">
+                        <label>Vertical</label>
+                        <input type="number" class="form-control" name="stats_vertical" value="{{$player.StatsVertical}}">
+                        <label>Stamina</label>
+                        <input type="number" class="form-control" name="stats_stamina" value="{{$player.StatsStamina}}">
+                        <label>Hustle</label>
+                        <input type="number" class="form-control" name="stats_hustle" value="{{$player.StatsHustle}}">
+                        <label>Overall Durability</label>
+                        <input type="number" class="form-control" name="stats_overall_durability" value="{{$player.StatsOverallDurability}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Inside Scoring</strong></label>
+                        <input type="number" class="form-control" name="stats_inside_scoring" value="{{$player.StatsInsideScoring}}">
+                        <label>Layup</label>
+                        <input type="number" class="form-control" name="stats_layup" value="{{$player.StatsLayup}}">
+                        <label>Standing Dunk</label>
+                        <input type="number" class="form-control" name="stats_standing_dunk" value="{{$player.StatsStandingDunk}}">
+                        <label>Driving Dunk</label>
+                        <input type="number" class="form-control" name="stats_driving_dunk" value="{{$player.StatsDrivingDunk}}">
+                        <label>Post Hook</label>
+                        <input type="number" class="form-control" name="stats_post_hook" value="{{$player.StatsPostHook}}">
+                        <label>Post Fade</label>
+                        <input type="number" class="form-control" name="stats_post_fade" value="{{$player.StatsPostFade}}">
+                        <label>Post Control</label>
+                        <input type="number" class="form-control" name="stats_post_control" value="{{$player.StatsPostControl}}">
+                        <label>Draw Foul</label>
+                        <input type="number" class="form-control" name="stats_draw_foul" value="{{$player.StatsDrawFoul}}">
+                        <label>Hands</label>
+                        <input type="number" class="form-control" name="stats_hands" value="{{$player.StatsHands}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Playmaking</strong></label>
+                        <input type="number" class="form-control" name="stats_playmaking" value="{{$player.StatsPlaymaking}}">
+                        <label>Pass Accuracy</label>
+                        <input type="number" class="form-control" name="stats_pass_accuracy" value="{{$player.StatsPassAccuracy}}">
+                        <label>Ball Handle</label>
+                        <input type="number" class="form-control" name="stats_ball_handle" value="{{$player.StatsBallHandle}}">
+                        <label>Speed With Ball</label>
+                        <input type="number" class="form-control" name="stats_speed_with_ball" value="{{$player.StatsSpeedWithBall}}">
+                        <label>Pass IQ</label>
+                        <input type="number" class="form-control" name="stats_pass_iq" value="{{$player.StatsPassIQ}}">
+                        <label>Pass Vision</label>
+                        <input type="number" class="form-control" name="stats_pass_vision" value="{{$player.StatsPassVision}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Defending</strong></label>
+                        <input type="number" class="form-control" name="stats_defending" value="{{$player.StatsDefending}}">
+                        <label>Interior Defense</label>
+                        <input type="number" class="form-control" name="stats_interior_defense" value="{{$player.StatsInteriorDefense}}">
+                        <label>Perimeter Defense</label>
+                        <input type="number" class="form-control" name="stats_perimeter_defense" value="{{$player.StatsPerimeterDefense}}">
+                        <label>Steal</label>
+                        <input type="number" class="form-control" name="stats_steal" value="{{$player.StatsSteal}}">
+                        <label>Block</label>
+                        <input type="number" class="form-control" name="stats_block" value="{{$player.StatsBlock}}">
+                        <label>Lateral Quickness</label>
+                        <input type="number" class="form-control" name="stats_lateral_quickness" value="{{$player.StatsLateralQuickness}}">
+                        <label>Help Defense IQ</label>
+                        <input type="number" class="form-control" name="stats_help_defense_iq" value="{{$player.StatsHelpDefenseIQ}}">
+                        <label>Pass Perception</label>
+                        <input type="number" class="form-control" name="stats_pass_perception" value="{{$player.StatsPassPerception}}">
+                        <label>Defensive Consistency</label>
+                        <input type="number" class="form-control" name="stats_defensive_consistency" value="{{$player.StatsDefensiveConsistency}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Rebounding</strong></label>
+                        <input type="number" class="form-control" name="stats_rebounding" value="{{$player.StatsRebounding}}">
+                        <label>Offensive Rebound</label>
+                        <input type="number" class="form-control" name="stats_offensive_rebound" value="{{$player.StatsOffensiveRebound}}">
+                        <label>Defensive Rebound</label>
+                        <input type="number" class="form-control" name="stats_defensive_rebound" value="{{$player.StatsDefensiveRebound}}">
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label><strong>Intangibles</strong></label>
+                        <input type="number" class="form-control" name="stats_intangibles" value="{{$player.StatsIntangibles}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Potential</strong></label>
+                        <input type="number" class="form-control" name="stats_potential" value="{{$player.StatsPotential}}">
+                    </div>
+                    <div class="col">
+                        <label><strong>Total Attributes</strong></label>
+                        <input type="number" class="form-control" name="stats_total_attributes" value="{{$player.StatsTotalAttributes}}">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col">
+                        <label>Bronze Badges Count</label>
+                        <input type="number" class="form-control" name="bronze_badge_count" value="{{$player.BronzeBadgesCount}}">
+                    </div>
+                    <div class="col">
+                        <label>Silver Badges Count</label>
+                        <input type="number" class="form-control" name="silver_badge_count" value="{{$player.SilverBadgesCount}}">
+                    </div>
+                    <div class="col">
+                        <label>Gold Badges Count</label>
+                        <input type="number" class="form-control" name="gold_badge_count" value="{{$player.GoldBadgesCount}}">
+                    </div>
+                    <div class="col">
+                        <label>HOF Badges Count</label>
+                        <input type="number" class="form-control" name="hof_badge_count" value="{{$player.HOFBadgesCount}}">
+                    </div>
+                    <div class="col">
+                        <label>Total Badges Count</label>
+                        <input type="number" class="form-control" name="total_badge_count" value="{{$player.TotalBadgesCount}}">
+                    </div>
+                </div>                
+            </div>
+            <input type="submit" class="btn btn-primary" value="Save">
+            <a href="/admin/nba_players" class="btn btn-warning">Cancel</a>
+            <a href="/admin/nba_players" class="btn btn-danger">Delete Player</a>
+        </form>
+    </div>
+{{end}}

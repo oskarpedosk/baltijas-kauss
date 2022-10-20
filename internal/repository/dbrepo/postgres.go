@@ -884,3 +884,99 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 
 	return id, hashedPassword, nil
 }
+
+// Display NBA player by ID
+func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.NBAPlayer, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	select 
+		*
+	from 
+		nba_players
+	where
+		"player_id" = $1
+	`
+	var player models.NBAPlayer
+
+	row, err := m.DB.QueryContext(ctx, query, id)
+	if err != nil {
+		return player, err
+	}
+
+	defer row.Close()
+	for row.Next() {
+		err := row.Scan(
+			&player.PlayerID,
+			&player.FirstName,
+			&player.LastName,
+			&player.PrimaryPosition,
+			&player.SecondaryPosition,
+			&player.Archetype,
+			&player.NBATeam,
+			&player.Height,
+			&player.Weight,
+			&player.ImgUrl,
+			&player.PlayerUrl,
+			&player.TeamID,
+			&player.StatsOverall,
+			&player.StatsOutsideScoring,
+			&player.StatsAthleticism,
+			&player.StatsInsideScoring,
+			&player.StatsPlaymaking,
+			&player.StatsDefending,
+			&player.StatsRebounding,
+			&player.StatsCloseShot,
+			&player.StatsMidRangeShot,
+			&player.StatsThreePointShot,
+			&player.StatsFreeThrow,
+			&player.StatsShotIQ,
+			&player.StatsOffensiveConsistency,
+			&player.StatsSpeed,
+			&player.StatsAcceleration,
+			&player.StatsStrength,
+			&player.StatsVertical,
+			&player.StatsStamina,
+			&player.StatsHustle,
+			&player.StatsOverallDurability,
+			&player.StatsLayup,
+			&player.StatsStandingDunk,
+			&player.StatsDrivingDunk,
+			&player.StatsPostHook,
+			&player.StatsPostFade,
+			&player.StatsPostControl,
+			&player.StatsDrawFoul,
+			&player.StatsHands,
+			&player.StatsPassAccuracy,
+			&player.StatsBallHandle,
+			&player.StatsSpeedWithBall,
+			&player.StatsPassIQ,
+			&player.StatsPassVision,
+			&player.StatsInteriorDefense,
+			&player.StatsPerimeterDefense,
+			&player.StatsSteal,
+			&player.StatsBlock,
+			&player.StatsLateralQuickness,
+			&player.StatsHelpDefenseIQ,
+			&player.StatsPassPerception,
+			&player.StatsDefensiveConsistency,
+			&player.StatsOffensiveRebound,
+			&player.StatsDefensiveRebound,
+			&player.StatsIntangibles,
+			&player.StatsPotential,
+			&player.StatsTotalAttributes,
+			&player.BronzeBadgesCount,
+			&player.SilverBadgesCount,
+			&player.GoldBadgesCount,
+			&player.HOFBadgesCount,
+			&player.TotalBadgesCount,
+			&player.Assigned,
+		)
+		if err != nil {
+			return player, err
+		}
+	}
+
+	return player, nil
+}
