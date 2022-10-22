@@ -1,0 +1,1 @@
+drop_foreign_key("nba_players", "nba_players_nba_teams_team_id_fk", {})

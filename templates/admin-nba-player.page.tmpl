@@ -101,6 +101,7 @@
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <label>Arcehtype</label>
                 <input type="text" class="form-control" name="archetype" value="{{$player.Archetype}}">
@@ -108,10 +109,11 @@
                 <input type="url" class="form-control" name="player_url" value="{{$player.PlayerUrl}}">
                 <label>Player Image URL</label>
                 <input type="url" class="form-control" name="img_url" value="{{$player.ImgUrl}}">
+            </div>
+            <hr>
+            <div class="form-group">
                 <label>Overall Rating</label>
                 <input type="number" class="form-control" name="stats_overall" value="{{$player.StatsOverall}}">
-            </div>
-            <div class="form-group">
                 <div class="row">
                     <div class="col">
                         <label><strong>Outside Scoring</strong></label>
@@ -210,8 +212,8 @@
                         <input type="number" class="form-control" name="stats_defensive_rebound" value="{{$player.StatsDefensiveRebound}}">
                     </div>
                 </div>
-
             </div>
+            <hr>
             <div class="form-group">
                 <div class="row">
                     <div class="col">
@@ -228,6 +230,7 @@
                     </div>
                 </div>
             </div>
+            <hr>
             <div class="form-group">
                 <div class="row">
                     <div class="col">
@@ -252,9 +255,15 @@
                     </div>
                 </div>                
             </div>
-            <input type="submit" class="btn btn-primary" value="Save">
-            <a href="/admin/nba_players" class="btn btn-warning">Cancel</a>
-            <a href="/admin/nba_players" class="btn btn-danger">Delete Player</a>
+            <hr>
+            <div class="float-start">
+                <input type="submit" class="btn btn-primary" value="Save">
+                <a href="/admin/nba_players" class="btn btn-warning">Cancel</a>
+            </div>
+            <div class="float-end">
+                <a href="/admin/nba_players" class="btn btn-danger float-right">Delete Player</a>
+            </div>
+            <div class="clearfix"></div>
         </form>
     </div>
 {{end}}

@@ -33,6 +33,7 @@ func AddDefaultData(tmplData *models.TemplateData, r *http.Request) *models.Temp
 	tmplData.CSRFToken = nosurf.Token(r)
 	if app.Session.Exists(r.Context(), "user_id") {
 		tmplData.IsAuthenticated = 1
+		tmplData.AccessLevel = app.Session.Get(r.Context(), "access_level").(int)
 	}
 	return tmplData
 }

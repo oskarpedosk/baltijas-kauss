@@ -258,6 +258,7 @@
                                                     {{end}}
                                                 {{end}}
                                             {{end}}
+                                            {{$counter2 := 0}}
                                             {{range $player1 := index $.Data "nba_players"}}
                                                 {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                     {{if eq $player1.Assigned $position.Number}}
@@ -265,10 +266,11 @@
                                                         <li class="dropdown-item" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0')">
                                                         Remove player
                                                         </li>
+                                                        {{$counter2 = add $counter 1}}
                                                     {{end}}
                                                 {{end}}
                                             {{end}}
-                                            {{if eq $counter 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
+                                            {{if eq $counter2 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
                                         </div>
 
                                     </form>
@@ -323,6 +325,7 @@
                                                         {{end}}
                                                     {{end}}
                                                 {{end}}
+                                                {{$counter2 := 0}}
                                                 {{range $player1 := index $.Data "nba_players"}}
                                                     {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                         {{if eq $player1.Assigned $position.Number}}
@@ -330,10 +333,11 @@
                                                             <li class="dropdown-item" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0')">
                                                             Remove player
                                                             </li>
+                                                            {{$counter2 = add $counter 1}}
                                                         {{end}}
                                                     {{end}}
                                                 {{end}}
-                                                {{if eq $counter 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
+                                                {{if eq $counter2 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
                                             </div>
 
                                         </form>
@@ -389,6 +393,7 @@
                                                         {{end}}
                                                     {{end}}
                                                 {{end}}
+                                                {{$counter2 := 0}}
                                                 {{range $player1 := index $.Data "nba_players"}}
                                                     {{if eq $player1.TeamID.Int64 $teamInfo.TeamID.Int64}}
                                                         {{if eq $player1.Assigned $position.Number}}
@@ -396,10 +401,11 @@
                                                             <li class="dropdown-item" onclick="sendData('{{$teamInfo.TeamID.Int64}}', '{{$player1.PlayerID}}', '0')">
                                                             Remove player
                                                             </li>
+                                                            {{$counter2 = add $counter 1}}
                                                         {{end}}
                                                     {{end}}
                                                 {{end}}
-                                                {{if eq $counter 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
+                                                {{if eq $counter2 0}}<li class="dropdown-item disabled">No unassigned players</li>{{end}}
                                             </div>
 
                                         </form>

@@ -1,8 +1,0 @@
-create_table("nba_players_badges", {timestamps: false}) {
-    t.Column("player_id", "integer", {})
-    t.Column("first_name", "string", {"default": ""})
-    t.Column("last_name", "string", {"default": ""})
-    t.Column("badge_id", "integer", {})
-    t.Column("name", "string", {"default": ""})
-    t.Column("level", "string", {"default": ""})
-}

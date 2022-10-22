@@ -1,0 +1,9 @@
+create_table("nba_teams", {timestamps: false}) {
+    t.Column("team_id", "integer", {primary: true})
+    t.Column("name", "string", {"default": ""})
+    t.Column("abbreviation", "string", {"default": "", "size": 4})
+    t.Column("team_color1", "string", {"default": ""})
+    t.Column("team_color2", "string", {"default": ""})
+    t.Column("dark_text", "bool", {"default": false})
+    t.Column("owner_id", "integer", {})
+}

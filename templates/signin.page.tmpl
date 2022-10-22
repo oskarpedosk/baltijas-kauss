@@ -21,9 +21,9 @@
 
     <main class="form-signin w-100 m-auto text-center">
         <div class="row justify-content-center">
-            <div class="col-md-2">
+            <div class="col" style="max-width: 350px;">
                 <form method="post" action="/" novalidate>
-                    <img class="mb-4" src="/static/images/BKlogowithoutbg.png" alt="" width="120">
+                    <a href="/"><img class="mb-4" src="/static/images/BKlogowithoutbg.png" alt="" width="120"></a>
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="form-group text-start">
                         {{with .Form.Errors.Get "email"}}

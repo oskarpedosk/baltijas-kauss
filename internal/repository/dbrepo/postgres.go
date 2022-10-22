@@ -861,28 +861,29 @@ func (m *postgresDBRepo) UpdateUser(u models.User) error {
 	return nil
 }
 
-// Authenticate authenticate a user
-func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, error) {
+// Authenticate authenticates a user
+func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	var id int
 	var hashedPassword string
+	var accessLevel int
 
-	row := m.DB.QueryRowContext(ctx, "select user_id, password from users where email = $1", email)
-	err := row.Scan(&id, &hashedPassword)
+	row := m.DB.QueryRowContext(ctx, "select user_id, password, access_level from users where email = $1", email)
+	err := row.Scan(&id, &hashedPassword, &accessLevel)
 	if err != nil {
-		return id, "", err
+		return id, "", 0, err
 	}
 
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(testPassword))
 	if err == bcrypt.ErrMismatchedHashAndPassword {
-		return 0, "", errors.New("incorrect password")
+		return 0, "", 0, errors.New("incorrect password")
 	} else if err != nil {
-		return 0, "", err
+		return 0, "", 0, err
 	}
 
-	return id, hashedPassword, nil
+	return id, hashedPassword, accessLevel, nil
 }
 
 // Display NBA player by ID

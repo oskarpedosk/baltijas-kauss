@@ -120,7 +120,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 	email := r.Form.Get("email")
 	password := r.Form.Get("password")
 
-	id, _, err := m.DB.Authenticate(email, password)
+	id, _, accessLevel, err := m.DB.Authenticate(email, password)
 
 	if err != nil {
 		log.Println(err)
@@ -131,7 +131,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 	}
 
 	m.App.Session.Put(r.Context(), "user_id", id)
-	m.App.Session.Put(r.Context(), "flash", "Logged in successfully")
+	m.App.Session.Put(r.Context(), "access_level", accessLevel)
 	http.Redirect(w, r, "/nba", http.StatusSeeOther)
 }
 
