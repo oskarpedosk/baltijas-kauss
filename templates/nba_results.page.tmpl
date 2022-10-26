@@ -363,10 +363,6 @@
             msg = "Please select away team";
             document.getElementById("errorid").innerHTML = msg;
             errorToast.show()
-        } else if ((typeof home_score != 'number') || (typeof away_score != 'number')) {
-            msg = "Score can only be a number";
-            document.getElementById("errorid").innerHTML = msg;
-            errorToast.show()
         } else if ((home_score < 0) || (away_score < 0)) {
             msg = "Score can only be positive";
             document.getElementById("errorid").innerHTML = msg;
@@ -416,10 +412,6 @@
 
         if (away_team_id === home_team_id) {
             msg = "Home and away team have to be different";
-            document.getElementById("errorid").innerHTML = msg;
-            errorToast.show()
-        } else if ((typeof home_score != 'number') || (typeof away_score != 'number')) {
-            msg = "Score can only be a number";
             document.getElementById("errorid").innerHTML = msg;
             errorToast.show()
         } else if ((home_score < 0) || (away_score < 0)) {

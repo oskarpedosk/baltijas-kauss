@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"path/filepath"
 
@@ -13,10 +14,10 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 )
 
-var pathToTemplates = "../../templates"
+var pathToTemplates = "./templates"
 var functions = template.FuncMap{
 	"add": add,
-} 
+}
 
 var app *config.AppConfig
 
@@ -41,14 +42,18 @@ func AddDefaultData(tmplData *models.TemplateData, r *http.Request) *models.Temp
 // RenderTemplate renders templates using html/template
 func Template(w http.ResponseWriter, r *http.Request, templateName string, tmplData *models.TemplateData) error {
 	var templateCache map[string]*template.Template
-	
+
 	if app.UseCache {
 		// Get the template cache from the app config
 		templateCache = app.TemplateCache
 	} else {
-		templateCache, _ = CreateTemplateCache()
+		t, err := CreateTemplateCache()
+		if err != nil {
+			log.Println(err)
+		}
+		templateCache = t
 	}
- 
+
 	tmpl, ok := templateCache[templateName]
 	if !ok {
 		return errors.New("can't get template from cache")
@@ -107,5 +112,5 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 }
 
 func add(x, y int) int {
-    return x + y
+	return x + y
 }

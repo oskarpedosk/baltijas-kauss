@@ -21,7 +21,6 @@ import (
 )
 
 const portNumber = ":8080"
-const nba2KDataFileName = "nba2k_player_data"
 
 var app config.AppConfig
 var session *scs.SessionManager
@@ -67,7 +66,9 @@ func main() {
 	}
 
 	err = serve.ListenAndServe()
-	log.Fatal(err)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 /*func getAllRows(conn *sql.DB) error {
@@ -114,13 +115,18 @@ func run() (*driver.DB, error) {
 	inProduction := flag.Bool("production", false, "Application is in production")
 	useCache := flag.Bool("cache", false, "Use template cache")
 	dbHost := flag.String("dbhost", "localhost", "Database host")
-	dbName := flag.String("dbname", "baltijas_kauss", "Database name")
-	dbUser := flag.String("dbuser", "op", "Database user")
+	dbName := flag.String("dbname", "", "Database name")
+	dbUser := flag.String("dbuser", "", "Database user")
 	dbPass := flag.String("dbpass", "", "Database password")
 	dbPort := flag.String("dbport", "5432", "Database port")
 	dbSSL := flag.String("dbssl", "disable", "Database SSL settings (disable, preger, require)")
 
 	flag.Parse()
+
+	if *dbName == "" || *dbUser == "" {
+		fmt.Println("Missing required flags")
+		os.Exit(1)
+	}
 
 	// Change this to true when in production
 	app.InProduction = *inProduction
@@ -144,6 +150,7 @@ func run() (*driver.DB, error) {
 	// Connect to database
 	log.Println("Connecting to database...")
 	connectionString := fmt.Sprintf("host=%s port=%s dbname=%s user=%s password=%s sslmode=%s", *dbHost, *dbPort, *dbName, *dbUser, *dbPass, *dbSSL)
+	fmt.Println(connectionString)
 	db, err := driver.ConnectSQL(connectionString)
 	if err != nil {
 		log.Fatal("Cannot connect to database")
