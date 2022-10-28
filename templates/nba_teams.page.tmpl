@@ -9,7 +9,7 @@
 
                     <div class="col-md-3" onClick="open_div('{{$teamInfo.TeamID.Int64}}')">
 
-                        <div class="p-5 rounded-3 lh-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}"
+                        <div class="p-5 pointer rounded-3 lh-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{else}}text-white{{end}}"
                             style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
                             <h3>{{$teamInfo.Name}}</h3>
                             <hr class="border {{if eq $teamInfo.DarkText "true"}}border-dark{{else}}border-white{{end}} border-1
