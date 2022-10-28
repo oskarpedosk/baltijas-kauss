@@ -41,7 +41,7 @@
                 <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
 
                     {{range $index, $players := index .Data "nba_players"}}
-                    <tr style="border-top: 0.5px solid rgb(190, 190, 190);">
+                    <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{add $index 1}}</td>
                         <td class="p-0">
                             <div id="playerimg_{{$index}}">
@@ -282,7 +282,7 @@
     $(document).ready(function () {
         $("#myInput").on("keyup", function () {
             var value = $(this).val().toLowerCase();
-            $("#players_table tr").filter(function () {
+            $("#players_table tr.searchable").filter(function () {
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
             });
         });
