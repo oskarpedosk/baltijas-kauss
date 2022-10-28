@@ -62,5 +62,5 @@ create_table("nba_players", {timestamps: false}) {
     t.Column("gold_badges", "integer", {})
     t.Column("hof_badges", "integer", {})
     t.Column("total_badges", "integer", {})
-    t.Column("assigned", "bool", {"default": false})
+    t.Column("assigned", "integer", {"default": 0})
 }
