@@ -114,15 +114,17 @@ type WebSocketConnection struct {
 type WsJsonResponse struct {
 	Action         string   `json:"action"`
 	Message        string   `json:"message"`
+	Countdown      int   `json:"countdown"`
 	MessageType    string   `json:"message_type"`
 	ConnectedUsers []string `json:"connected_users"`
 }
 
 type WsPayload struct {
-	Action   string              `json:"action"`
-	Username string              `json:"username"`
-	Message  string              `json:"message"`
-	Conn     WebSocketConnection `json:"-"`
+	Action    string              `json:"action"`
+	Username  string              `json:"username"`
+	Countdown int              `json:"countdown"`
+	Message   string              `json:"message"`
+	Conn      WebSocketConnection `json:"-"`
 }
 
 // WsEndPoint upgrades connection to websocket
@@ -189,10 +191,17 @@ func ListenToWsChannel() {
 			users := getUserList()
 			response.ConnectedUsers = users
 			broadcastToAll(response)
+
+		case "broadcast":
+			response.Action = "broadcast"
+			response.Message = fmt.Sprintf("<strong>%s</strong>: %s", e.Username, e.Message)
+			broadcastToAll(response)
+
+		case "timer":
+			response.Action = "timer"
+			response.Countdown = e.Countdown
+			broadcastToAll(response)
 		}
-		// response.Action = "Got here"
-		// response.Message = fmt.Sprintf("Some message, and action was %s", e.Action)
-		// broadcastToAll(response)
 	}
 }
 
