@@ -84,14 +84,14 @@
                                     {{if $players.TeamID.Int64}}
                                     {{range $teamInfo := index $.Data "nba_teams"}}
                                         {{if eq $teamInfo.TeamID $players.TeamID}}
-                                            <p class="badge badgehover badge-pill my-0 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
+                                            <p class="badge pointer badge-pill my-0 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
                                             data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:70px">
                                             {{$teamInfo.Abbreviation}}
                                             </p>
                                         {{end}}
                                     {{end}}
                                     {{else}}
-                                        <p style="display:inline-block; width:70px" class="badge badgehover badge-pill border bg-light text-dark my-0 ms-1" class="dropdown-toggle"
+                                        <p style="display:inline-block; width:70px" class="badge pointer badge-pill border bg-light text-dark my-0 ms-1" class="dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                             FA
                                         </p>

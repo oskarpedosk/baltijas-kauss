@@ -734,8 +734,6 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data["nba_players"] = players
-
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -746,6 +744,7 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(teams), func(i, j int) { teams[i], teams[j] = teams[j], teams[i] })
 
+	data["nba_players"] = players
 	data["nba_teams"] = teams
 
 	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{

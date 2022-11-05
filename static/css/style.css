@@ -110,10 +110,6 @@ html {
     vertical-align: middle;
 }
 
-.badgehover:hover {
-    cursor: pointer;
-}
-
 #scrollUpButton {
     display: none;
     position: fixed;
