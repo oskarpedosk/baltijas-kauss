@@ -6,7 +6,8 @@ type DatabaseRepo interface {
 	AllUsers() bool
 
 	GetNBATeamInfo() ([]models.NBATeam, error)
-	GetNBAPlayers() ([]models.NBAPlayer, error)
+	GetNBAPlayersWithBadges() ([]models.NBAPlayer, error)
+	GetNBAPlayersWithoutBadges() ([]models.NBAPlayer, error)
 	UpdateNBATeamInfo(team models.NBATeamInfo) error
 	AddNBAPlayer(teamID, playerID int) error
 	DropNBAPlayer(playerID int) error

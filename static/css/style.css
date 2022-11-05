@@ -124,10 +124,6 @@ html {
     z-index: 100;
 }
 
-.active {
-    display: none;
-}
-
 .dot {
     display: inline-block;
     vertical-align: middle;

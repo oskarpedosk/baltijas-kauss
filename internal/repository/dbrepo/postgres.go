@@ -11,6 +11,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+var playerCount = 150
+
 func (m *postgresDBRepo) AllUsers() bool {
 	return true
 }
@@ -194,24 +196,26 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 	return nil
 }
 
-// Display all NBA players
-func (m *postgresDBRepo) GetNBAPlayers() ([]models.NBAPlayer, error) {
+// Display NBA players with player limit
+func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	var players []models.NBAPlayer
 
 	query := `
-	select 
+	select
 		*
 	from 
 		nba_players
 	order by
 		"stats/Overall" desc,
 		"stats/Total Attributes" desc
+	limit
+		$1
 	`
 
-	rows, err := m.DB.QueryContext(ctx, query)
+	rows, err := m.DB.QueryContext(ctx, query, playerCount)
 	if err != nil {
 		return players, err
 	}
@@ -380,6 +384,107 @@ func (m *postgresDBRepo) GetNBAPlayers() ([]models.NBAPlayer, error) {
 		if err = rows.Err(); err != nil {
 			return players, err
 		}
+		players = append(players, player)
+	}
+
+	return players, nil
+}
+
+// Display all NBA players without badges
+func (m *postgresDBRepo) GetNBAPlayersWithoutBadges() ([]models.NBAPlayer, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var players []models.NBAPlayer
+
+	query := `
+	select
+		*
+	from 
+		nba_players
+	order by
+		"stats/Overall" desc,
+		"stats/Total Attributes" desc
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return players, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var player models.NBAPlayer
+		err := rows.Scan(
+			&player.PlayerID,
+			&player.FirstName,
+			&player.LastName,
+			&player.PrimaryPosition,
+			&player.SecondaryPosition,
+			&player.Archetype,
+			&player.NBATeam,
+			&player.Height,
+			&player.Weight,
+			&player.ImgUrl,
+			&player.PlayerUrl,
+			&player.TeamID,
+			&player.StatsOverall,
+			&player.StatsOutsideScoring,
+			&player.StatsAthleticism,
+			&player.StatsInsideScoring,
+			&player.StatsPlaymaking,
+			&player.StatsDefending,
+			&player.StatsRebounding,
+			&player.StatsCloseShot,
+			&player.StatsMidRangeShot,
+			&player.StatsThreePointShot,
+			&player.StatsFreeThrow,
+			&player.StatsShotIQ,
+			&player.StatsOffensiveConsistency,
+			&player.StatsSpeed,
+			&player.StatsAcceleration,
+			&player.StatsStrength,
+			&player.StatsVertical,
+			&player.StatsStamina,
+			&player.StatsHustle,
+			&player.StatsOverallDurability,
+			&player.StatsLayup,
+			&player.StatsStandingDunk,
+			&player.StatsDrivingDunk,
+			&player.StatsPostHook,
+			&player.StatsPostFade,
+			&player.StatsPostControl,
+			&player.StatsDrawFoul,
+			&player.StatsHands,
+			&player.StatsPassAccuracy,
+			&player.StatsBallHandle,
+			&player.StatsSpeedWithBall,
+			&player.StatsPassIQ,
+			&player.StatsPassVision,
+			&player.StatsInteriorDefense,
+			&player.StatsPerimeterDefense,
+			&player.StatsSteal,
+			&player.StatsBlock,
+			&player.StatsLateralQuickness,
+			&player.StatsHelpDefenseIQ,
+			&player.StatsPassPerception,
+			&player.StatsDefensiveConsistency,
+			&player.StatsOffensiveRebound,
+			&player.StatsDefensiveRebound,
+			&player.StatsIntangibles,
+			&player.StatsPotential,
+			&player.StatsTotalAttributes,
+			&player.BronzeBadgesCount,
+			&player.SilverBadgesCount,
+			&player.GoldBadgesCount,
+			&player.HOFBadgesCount,
+			&player.TotalBadgesCount,
+			&player.Assigned,
+		)
+		if err != nil {
+			return players, err
+		}
+
 		players = append(players, player)
 	}
 

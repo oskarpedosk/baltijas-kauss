@@ -3,13 +3,16 @@ package handlers
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"log"
 	"math/rand"
 	"net/http"
+	"sort"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/gorilla/websocket"
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
 	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
@@ -22,6 +25,17 @@ import (
 
 // Repo the repository used by the handlers
 var Repo *Repository
+
+var upgradeConnection = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+	CheckOrigin:     func(r *http.Request) bool { return true },
+}
+
+var wsChan = make(chan WsPayload)
+
+var clients = make(map[WebSocketConnection]string)
+
 var positions = []models.NBAPosition{
 	{
 		Name:   "PG",
@@ -90,6 +104,116 @@ func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 // NewHandlers sets repository for the handlers
 func NewHandlers(r *Repository) {
 	Repo = r
+}
+
+type WebSocketConnection struct {
+	*websocket.Conn
+}
+
+// WsJsonResponse defines the response sent back from websocket
+type WsJsonResponse struct {
+	Action         string   `json:"action"`
+	Message        string   `json:"message"`
+	MessageType    string   `json:"message_type"`
+	ConnectedUsers []string `json:"connected_users"`
+}
+
+type WsPayload struct {
+	Action   string              `json:"action"`
+	Username string              `json:"username"`
+	Message  string              `json:"message"`
+	Conn     WebSocketConnection `json:"-"`
+}
+
+// WsEndPoint upgrades connection to websocket
+func (m *Repository) WsEndPoint(w http.ResponseWriter, r *http.Request) {
+	ws, err := upgradeConnection.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+	}
+
+	log.Println("Client connected to endpoint")
+
+	var response WsJsonResponse
+	response.Message = `<em><small>Connected to server</small><em>`
+
+	conn := WebSocketConnection{Conn: ws}
+	clients[conn] = ""
+
+	err = ws.WriteJSON(response)
+	if err != nil {
+		log.Println(err)
+	}
+
+	go ListenForWs(&conn)
+}
+
+func ListenForWs(conn *WebSocketConnection) {
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("Error", fmt.Sprintf("%v", r))
+		}
+	}()
+
+	var payload WsPayload
+
+	for {
+		err := conn.ReadJSON(&payload)
+		if err != nil {
+			// do nothing
+		} else {
+			payload.Conn = *conn
+			wsChan <- payload
+		}
+	}
+}
+
+func ListenToWsChannel() {
+	var response WsJsonResponse
+
+	for {
+		e := <-wsChan
+
+		switch e.Action {
+		case "username":
+			// get a list of all users and send it back via broadcast
+			clients[e.Conn] = e.Username
+			users := getUserList()
+			response.Action = "list_users"
+			response.ConnectedUsers = users
+			broadcastToAll(response)
+
+		case "left":
+			response.Action = "list_users"
+			delete(clients, e.Conn)
+			users := getUserList()
+			response.ConnectedUsers = users
+			broadcastToAll(response)
+		}
+		// response.Action = "Got here"
+		// response.Message = fmt.Sprintf("Some message, and action was %s", e.Action)
+		// broadcastToAll(response)
+	}
+}
+
+func getUserList() []string {
+	var userList []string
+	for _, x := range clients {
+		userList = append(userList, x)
+	}
+	sort.Strings(userList)
+	return userList
+}
+
+func broadcastToAll(response WsJsonResponse) {
+	for client := range clients {
+		err := client.WriteJSON(response)
+		if err != nil {
+			log.Println("Websocket error")
+			_ = client.Close()
+			delete(clients, client)
+		}
+	}
 }
 
 func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
@@ -183,7 +307,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
-	players, err := m.DB.GetNBAPlayers()
+	players, err := m.DB.GetNBAPlayersWithBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -193,7 +317,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 		return
 	}
-	playersBadges, err := m.DB.GetNBAPlayersBadges()
+	playersBadges, err := m.DB.GetNBAPlayersWithBadgesBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -306,7 +430,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	players, err := m.DB.GetNBAPlayers()
+	players, err := m.DB.GetNBAPlayersWithoutBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -364,7 +488,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		players, err := m.DB.GetNBAPlayers()
+		players, err := m.DB.GetNBAPlayersWithoutBadges()
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
@@ -604,6 +728,14 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 
+	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data["nba_players"] = players
+
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -630,7 +762,7 @@ func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
-	players, err := m.DB.GetNBAPlayers()
+	players, err := m.DB.GetNBAPlayersWithoutBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return

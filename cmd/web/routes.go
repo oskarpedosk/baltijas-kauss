@@ -40,6 +40,7 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Post("/nba/results", handlers.Repo.PostNBAResults)
 
 		mux.Get("/nba/draft", handlers.Repo.NBADraft)
+		mux.Get("/ws", handlers.Repo.WsEndPoint)
 	})
 
 	mux.Route("/admin", func(mux chi.Router) {
@@ -56,3 +57,12 @@ func routes(app *config.AppConfig) http.Handler {
 
 	return mux
 }
+
+
+/*teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.NBATeamInfo)
+	if !ok {
+		m.App.ErrorLog.Println("Can't get error from session")
+		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
+		http.Redirect(w, r, "/nba/teams", http.StatusTemporaryRedirect)
+		return
+	}*/

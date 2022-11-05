@@ -38,6 +38,67 @@
       </div>
     </div>
   </div>
+  <div class="row bg-light rounded-3 border">
+    <div class="col-md-8">
+
+      <h3>Chat</h3>
+
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" class="form-control" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <input type="text" name="message" id="message" class="form-control" autocomplete="off">
+      </div>
+
+      <input type="hidden" name="action" id="action">
+
+      <hr>
+
+      <textarea id="output" class="form-control" id="exampleFormControlTextarea1" rows="3">
+
+      </textarea>
+
+    </div>
+    <div class="col-md-4">
+
+      <h3>Who's Online</h3>
+
+      <ul id="online_users">
+
+      </ul>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">...</div>
+        <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">...</div>
+        <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+        <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">...</div>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="row">
+    <div class="col-md-9 bg-secondary">
+      hello
+    </div>
+    <div class="col-md-3 bg-success">
+      <div class="list-group" id="list-tab" role="tablist">
+        <a class="list-group-item list-group-item-action active" id="list-home-list" data-bs-toggle="list" href="#list-home" role="tab" aria-controls="list-home">Home</a>
+        <a class="list-group-item list-group-item-action" id="list-profile-list" data-bs-toggle="list" href="#list-profile" role="tab" aria-controls="list-profile">Profile</a>
+        <a class="list-group-item list-group-item-action" id="list-messages-list" data-bs-toggle="list" href="#list-messages" role="tab" aria-controls="list-messages">Messages</a>
+        <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list" href="#list-settings" role="tab" aria-controls="list-settings">Settings</a>
+      </div>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-md-12 p-0 justify-content-center d-flex">
       <img class="img-fluid rounded-3" style="max-height: 500px;" src="/static/images/Bryant.png" alt="">
@@ -50,6 +111,83 @@
 {{end}}
 
 {{define "js"}}
+
+<script>
+  let socket = null;
+
+  window.onbeforeunload = function() {
+    console.log("Leaving");
+    let jsonData = {};
+    jsonData["action"] = "left";
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    socket = new WebSocket("ws://localhost:8080/ws");
+
+    socket.onopen = () => {
+      console.log("Successfully connected");
+    }
+
+    socket.onclose = () => {
+      console.log("Connection closed");
+    }
+
+    socket.onerror = error => {
+      console.log("There was an error");
+    }
+
+    socket.onmessage = msg => {
+      // console.log(msg)
+      // let j = JSON.parse(msg.data);
+      // console.log(j);
+
+      let data = JSON.parse(msg.data);
+      console.log("Action is", data.action);
+
+      switch (data.action) {
+        case "list_users":
+          let ul = document.getElementById("online_users");
+          while (ul.firstChild) ul.removeChild(ul.firstChild);
+
+          if (data.connected_users.length > 0) {
+            data.connected_users.forEach(function(item) {
+              let li = document.createElement("li");
+              li.appendChild(document.createTextNode(item))
+              ul.appendChild(li)
+            })
+          }
+          break;
+      }
+    }
+
+    let userInput = document.getElementById("username");
+        userInput.addEventListener("change", function () {
+            let jsonData = {};
+            jsonData["action"] = "username";
+            jsonData["username"] = this.value;
+            socket.send(JSON.stringify(jsonData));
+        })
+  })
+
+  function sendMessage() {
+    let jsonData = {};
+    jsonData["action"] = "broadcast";
+    jsonData[""]
+  }
+</script>
+
+<script>
+  const triggerTabList = document.querySelectorAll('#myList a')
+  triggerTabList.forEach(triggerEl => {
+    const tabTrigger = new bootstrap.Tab(triggerEl)
+
+    triggerEl.addEventListener('click', event => {
+      event.preventDefault()
+      tabTrigger.show()
+    })
+  })
+</script>
 
 <script>
   function revealPick(index) {
