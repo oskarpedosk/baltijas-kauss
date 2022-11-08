@@ -187,6 +187,7 @@ func ListenToWsChannel() {
 	var response WsJsonResponse
 
 	draftOrder := []int{}
+	pickCounter := 1
 	rowCounter := 1
 	rounds := 12
 	colCounter := 1
@@ -224,19 +225,14 @@ func ListenToWsChannel() {
 		case "generate_order":
 			response.Action = "generate_order"
 			teams := Repo.getDraftOrder()
+			pickCounter = 1
 			rowCounter = 1
 			colCounter = 1
 			draftOrder = []int{}
-			for i := 0; i < rounds; i++ {
-				if i%2 == 0 {
-					for j := 0; j < len(teams); j++ {
-						draftOrder = append(draftOrder, int(teams[j].TeamID.Int64))
-					}
-				} else {
-					for j := len(teams); j > 0; j-- {
-						draftOrder = append(draftOrder, int(teams[j-1].TeamID.Int64))
-					}
-				}
+			fmt.Println("test--------")
+			fmt.Println(teams)
+			for _, team := range teams {
+				draftOrder = append(draftOrder, int(team.TeamID.Int64))
 			}
 			fmt.Println(draftOrder)
 			response.Teams = teams
@@ -246,6 +242,7 @@ func ListenToWsChannel() {
 			fmt.Println("row", rowCounter)
 			fmt.Println("col", colCounter)
 			fmt.Println("---------------------")
+			// Repo.draftPlayer(draftOrder[pickCounter-1], e.PlayerID)
 			response.Action = "draft_player"
 			response.Row = rowCounter
 			response.Column = colCounter
@@ -294,6 +291,13 @@ func getUserList() []string {
 	}
 	sort.Strings(userList)
 	return userList
+}
+
+func (m *Repository) draftPlayer(teamID, playerID int) {
+	err := m.DB.AddNBAPlayer(teamID, playerID)
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 func (m *Repository) getDraftOrder() []models.NBATeam {
