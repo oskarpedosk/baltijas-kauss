@@ -112,19 +112,32 @@ type WebSocketConnection struct {
 
 // WsJsonResponse defines the response sent back from websocket
 type WsJsonResponse struct {
-	Action         string   `json:"action"`
-	Message        string   `json:"message"`
-	Countdown      int   `json:"countdown"`
-	MessageType    string   `json:"message_type"`
-	ConnectedUsers []string `json:"connected_users"`
+	Action         string           `json:"action"`
+	Message        string           `json:"message"`
+	Countdown      int              `json:"countdown"`
+	PlayerID       int              `json:"player_id"`
+	PlayerInfo     []string         `json:"player_info"`
+	Color          string           `json:"color"`
+	Row            int              `json:"row"`
+	Column         int              `json:"column"`
+	Round          int              `json:"round"`
+	Teams          []models.NBATeam `json:"teams"`
+	MessageType    string           `json:"message_type"`
+	ConnectedUsers []string         `json:"connected_users"`
 }
 
 type WsPayload struct {
-	Action    string              `json:"action"`
-	Username  string              `json:"username"`
-	Countdown int              `json:"countdown"`
-	Message   string              `json:"message"`
-	Conn      WebSocketConnection `json:"-"`
+	Action     string              `json:"action"`
+	Username   string              `json:"username"`
+	Countdown  int                 `json:"countdown"`
+	PlayerID   int                 `json:"player_id"`
+	PlayerInfo []string            `json:"player_info"`
+	Color      string              `json:"color"`
+	Row        int                 `json:"row"`
+	Column     int                 `json:"column"`
+	Teams      []models.NBATeam    `json:"nba_teams"`
+	Message    string              `json:"message"`
+	Conn       WebSocketConnection `json:"-"`
 }
 
 // WsEndPoint upgrades connection to websocket
@@ -173,6 +186,12 @@ func ListenForWs(conn *WebSocketConnection) {
 func ListenToWsChannel() {
 	var response WsJsonResponse
 
+	draftOrder := []int{}
+	rowCounter := 1
+	rounds := 12
+	colCounter := 1
+	color := "transparent"
+
 	for {
 		e := <-wsChan
 
@@ -201,6 +220,69 @@ func ListenToWsChannel() {
 			response.Action = "timer"
 			response.Countdown = e.Countdown
 			broadcastToAll(response)
+
+		case "generate_order":
+			response.Action = "generate_order"
+			teams := Repo.getDraftOrder()
+			rowCounter = 1
+			colCounter = 1
+			draftOrder = []int{}
+			for i := 0; i < rounds; i++ {
+				if i%2 == 0 {
+					for j := 0; j < len(teams); j++ {
+						draftOrder = append(draftOrder, int(teams[j].TeamID.Int64))
+					}
+				} else {
+					for j := len(teams); j > 0; j-- {
+						draftOrder = append(draftOrder, int(teams[j-1].TeamID.Int64))
+					}
+				}
+			}
+			fmt.Println(draftOrder)
+			response.Teams = teams
+			broadcastToAll(response)
+
+		case "draft_player":
+			fmt.Println("row", rowCounter)
+			fmt.Println("col", colCounter)
+			fmt.Println("---------------------")
+			response.Action = "draft_player"
+			response.Row = rowCounter
+			response.Column = colCounter
+			firstName := e.PlayerInfo[0]
+			lastName := e.PlayerInfo[1]
+			positions := e.PlayerInfo[2]
+			switch positions {
+			case "PG":
+				color = "#FDD8E6"
+			case "SG":
+				color = "#FDD8E6"
+			case "SF":
+				color = "#C1EBE7"
+			case "PF":
+				color = "#C4E7FD"
+			case "C":
+				color = "#C4E7FD"
+			}
+			if e.PlayerInfo[3] != "" {
+				positions += "/" + e.PlayerInfo[3]
+			}
+			response.Color = color
+			response.Message = fmt.Sprintf("%s<br><strong>%s</strong><br>%s", firstName, lastName, positions)
+			broadcastToAll(response)
+			if rowCounter%2 == 0 {
+				colCounter -= 1
+			} else {
+				colCounter += 1
+			}
+			if colCounter == 5 {
+				colCounter = 4
+				rowCounter += 1
+			} else if colCounter == 0 {
+				colCounter = 1
+				rowCounter += 1
+			}
+
 		}
 	}
 }
@@ -212,6 +294,17 @@ func getUserList() []string {
 	}
 	sort.Strings(userList)
 	return userList
+}
+
+func (m *Repository) getDraftOrder() []models.NBATeam {
+	teams, err := m.DB.GetNBATeamInfo()
+	if err != nil {
+		return nil
+	}
+	// Shuffle teams
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(teams), func(i, j int) { teams[i], teams[j] = teams[j], teams[i] })
+	return teams
 }
 
 func broadcastToAll(response WsJsonResponse) {
@@ -749,12 +842,9 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Shuffle teams
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(teams), func(i, j int) { teams[i], teams[j] = teams[j], teams[i] })
-
 	data["nba_players"] = players
 	data["nba_teams"] = teams
+	data["positions"] = positions
 
 	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{
 		Data: data,

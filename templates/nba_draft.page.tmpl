@@ -38,6 +38,7 @@
       </div>
     </div>
   </div>
+  <!--
   <div class="row bg-light rounded-3 border">
     <div class="col-md-8">
 
@@ -72,166 +73,216 @@
 
     </div>
   </div>
-  <!--
-  <div class="row">
-    <div class="col-md-12">
-      <div class="tab-content" id="nav-tabContent">
-        {{range $index, $players := index .Data "nba_players"}}
-          <div class="tab-pane fade" id="player{{$players.PlayerID}}" role="tabpanel" aria-labelledby="player{{$players.PlayerID}}-list">
-            <table class="table table-sm table-responsive table-borderless">
-              <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
-                  <tr style="background-color: white;">
-                      <th></th>
-                      <th class="ps-2" style="text-align: start;"></th>
-                      <th></th>
-                      <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
-                      <th title="Close Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">CLOSE</th>
-                      <th title="Mid-Range Shot " data-bs-toggle="tooltip" data-bs-placement="bottom">MID</th>
-                      <th title="Three-Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
-                      <th title="Free Throw" data-bs-toggle="tooltip" data-bs-placement="bottom">FT</th>
-                      <th title="Acceleration" data-bs-toggle="tooltip" data-bs-placement="bottom">ACCL</th>
-                      <th title="Speed" data-bs-toggle="tooltip" data-bs-placement="bottom">SPD</th>
-                      <th title="Strength" data-bs-toggle="tooltip" data-bs-placement="bottom">STR</th>
-                      <th title="Vertical" data-bs-toggle="tooltip" data-bs-placement="bottom">VERT</th>
-                      <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
-                      <th title="Draw Foul" data-bs-toggle="tooltip" data-bs-placement="bottom">FOUL</th>
-                      <th title="Steal" data-bs-toggle="tooltip" data-bs-placement="bottom">STL</th>
-                      <th title="Block" data-bs-toggle="tooltip" data-bs-placement="bottom">BLK</th>
-                      <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
-                      <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
-                      <th title="Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">DEF</th>
-                      <th title="Offensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">OREB</th>
-                      <th title="Defensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">DREB</th>
-                      <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
-                  </tr>
-              </thead>
-              <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
-
-                  <tr>
-                      <td class="p-0">
-                        {{if $players.TeamID.Int64}}
-                                {{range $teamInfo := index $.Data "nba_teams"}}
-                                    {{if eq $teamInfo.TeamID $players.TeamID}}
-                                        <img src="{{if ne $players.ImgUrl ""}}{{$players.ImgUrl}}{{else}}/static/images/lightProfile.png{{end}}"
-                                        alt="" class="header-image rounded-circle inline-block bg-light border">
-                                    {{end}}
-                                {{end}}
-                                {{else}}
-                                    <img src="{{if ne $players.ImgUrl ""}}{{$players.ImgUrl}}{{else}}/static/images/lightProfile.png{{end}}"
-                                    alt="" class="header-image rounded-circle bg-light border">
-                                {{end}}
-                      </td>
-                      <td class="p-0 ps-2" style="min-width: 205px;">
-                          <div class="d-flex player-card">
-                              <div class="p-0 inline-block">
-                                  <p class="m-0">{{$players.FirstName}} {{$players.LastName}}</p>
-                                  <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
-                                  <div class="my-0">
-                                      <p class="text-muted my-0" style="font-size: 10px;">
-                                          {{$players.PrimaryPosition}}
-                                          {{$players.SecondaryPosition}}
-                                          | {{$players.Height}}cm | {{$players.Weight}}kg
-                                      </p>
-                                  </div>
-
-                              </div>
-                          </div>
-                      </td>
-                      <td class="p-0 py-1">
-                          <div class="mt-2" style="font-size: 0px;">
-                              <div class="d-inline-block position-relative">
-                                      <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
-                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadgesCount}}</p>
-                              </div>
-                              <div class="d-inline-block position-relative">
-                                  <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">
-                                  <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadgesCount}}</p>
-                              </div>
-                              <div class="d-inline-block position-relative">
-                                  <img src="/static/images/2k-gold-badge-count.webp" alt="" width="30">
-                                  <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadgesCount}}</p>
-                              </div>
-                              <div class="d-inline-block position-relative">
-                                  <img src="/static/images/2k-hof-badge-count.webp" alt="" width="30">
-                                  <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadgesCount}}</p>
-                              </div>
-                              <div class="d-inline-block position-relative">
-                                  <img src="/static/images/2k-total-badge-count.webp" alt="" width="30">
-                                  <p class="position-absolute text-center badge-count text-white" style="font-size: 16px;">{{$players.TotalBadgesCount}}</p>
-                              </div>
-                          </div>
-                      </td>
-                      <td>
-                          <span style="font-size: 16px;" class="badge badge-pill p-1 fw-semibold
-                          {{if ge $players.StatsOverall 81}}
-                              {{if ge $players.StatsOverall 86}}
-                                  {{if ge $players.StatsOverall 91}}
-                                      bkcolor
-                                  {{else}}
-                                      badgecolor1
-                                  {{end}}
-                              {{else}}
-                                  badgecolor2
-                              {{end}}
-                          {{else}}
-                          bg-light border text-dark
-                          {{end}}
-                      ">{{.StatsOverall}}</span></td>
-                      <td>{{$players.StatsCloseShot}}</td>
-                      <td>{{$players.StatsMidRangeShot}}</td>
-                      <td>{{$players.StatsThreePointShot}}</td>
-                      <td>{{$players.StatsFreeThrow}}</td>
-                      <td>{{$players.StatsAcceleration}}</td>
-                      <td>{{$players.StatsSpeed}}</td>
-                      <td>{{$players.StatsStrength}}</td>
-                      <td>{{$players.StatsVertical}}</td>
-                      <td>{{$players.StatsDrivingDunk}}</td>
-                      <td>{{$players.StatsDrawFoul}}</td>
-                      <td>{{$players.StatsSteal}}</td>
-                      <td>{{$players.StatsBlock}}</td>
-                      <td>{{$players.StatsPerimeterDefense}}</td>
-                      <td>{{$players.StatsInteriorDefense}}</td>
-                      <td>{{$players.StatsDefending}}</td>
-                      <td>{{$players.StatsOffensiveRebound}}</td>
-                      <td>{{$players.StatsDefensiveRebound}}</td>
-                      <td>
-                          <span class="badge badge-pill text-dark border bg-light">{{$players.StatsTotalAttributes}}</span>
-                      </td>
-                      <td>
-                        <button type="submit" class="btn btn-primary {{if $players.TeamID.Valid}}btn-dark disabled{{end}}">Draft Player</button>
-                      </td>
-                  </tr>
-
-              </tbody>
-          </table>
-          </div>
-        {{end}}
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-9 bg-secondary">
-      hello
-    </div>
-    <div class="col-md-3 bg-success">
-      <div class="list-group" id="list-tab" role="tablist" style="max-height: 600px; overflow:scroll; -webkit-overflow-scrolling: touch;">
-        {{range $index, $players := index .Data "nba_players"}}
-          <a class="list-group-item list-group-item-action {{if $players.TeamID.Valid}}fst-italic fw-lighter{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" role="tab" aria-controls="player{{$players.PlayerID}}">{{$players.StatsOverall}} {{$players.FirstName}} {{$players.LastName}}</a>
-        {{end}}
-      </div>
-    </div>
-  </div>
   -->
 
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <div class="progress" style="height: 5px;">
-        <div id="countdown_bar" class="progress-bar bkcolor" role="progressbar" aria-label="Success example" style="width: 100%; height: 10px;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="45"></div>
-      </div>      
-      <p><h1 id="countdown_text"></h1></p>
+  <div class="d-flex flex-row">
+    <div id="timerBtn" class="btn btn-danger">Start Timer</div>
+    <div id="generateOrderBtn" class="btn btn-success">Generate Draft Order</div>
+    <div id="startDraftBtn" class="btn btn-primary">Start Draft</div>
+  </div>
+
+  <div class="row border border-dark rounded-3 bg-light">
+    <div class="col-md-12 py-2 px-3">
+      <div class="row px-3">
+        <div class="col-md-1 d-flex justify-content-center align-self-end p-0 rounded-3">
+          <p id="countdown_text" class="fw-semibold m-0 p-0 pt-1" style="font-size: 62px;">45</p>
+        </div>
+        <div class="col-md-11 p-0">
+          <div class="tab-content" id="nav-tabContent">
+            {{range $index, $players := index .Data "nba_players"}}
+              <div class="tab-pane fade" id="player{{$players.PlayerID}}" role="tabpanel" aria-labelledby="player{{$players.PlayerID}}-list">
+                <table class="table table-sm table-responsive table-borderless m-0">
+                  <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
+                      <tr>
+                          <th></th>
+                          <th class="ps-2" style="text-align: start;"></th>
+                          <th></th>
+                          <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
+                          <th title="Close Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">CLOSE</th>
+                          <th title="Mid-Range Shot " data-bs-toggle="tooltip" data-bs-placement="bottom">MID</th>
+                          <th title="Three-Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
+                          <th title="Free Throw" data-bs-toggle="tooltip" data-bs-placement="bottom">FT</th>
+                          <th title="Speed" data-bs-toggle="tooltip" data-bs-placement="bottom">SPD</th>
+                          <th title="Strength" data-bs-toggle="tooltip" data-bs-placement="bottom">STR</th>
+                          <th title="Vertical" data-bs-toggle="tooltip" data-bs-placement="bottom">VERT</th>
+                          <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
+                          <th title="Steal" data-bs-toggle="tooltip" data-bs-placement="bottom">STL</th>
+                          <th title="Block" data-bs-toggle="tooltip" data-bs-placement="bottom">BLK</th>
+                          <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
+                          <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
+                          <th title="Offensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">OREB</th>
+                          <th title="Defensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">DREB</th>
+                          <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
+                      </tr>
+                  </thead>
+                  <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+    
+                      <tr>
+                          <td class="p-0">
+                            {{if $players.TeamID.Int64}}
+                                    {{range $teamInfo := index $.Data "nba_teams"}}
+                                        {{if eq $teamInfo.TeamID $players.TeamID}}
+                                            <img src="{{if ne $players.ImgUrl ""}}{{$players.ImgUrl}}{{else}}/static/images/lightProfile.png{{end}}"
+                                            alt="" class="header-image rounded-circle inline-block bg-light border">
+                                        {{end}}
+                                    {{end}}
+                                    {{else}}
+                                        <img src="{{if ne $players.ImgUrl ""}}{{$players.ImgUrl}}{{else}}/static/images/lightProfile.png{{end}}"
+                                        alt="" class="header-image rounded-circle bg-light border">
+                                    {{end}}
+                          </td>
+                          <td class="p-0 ps-2" style="min-width: 180px;">
+                              <div class="d-flex player-card">
+                                  <div class="p-0 inline-block">
+                                      <p class="m-0">{{$players.FirstName}} {{$players.LastName}}</p>
+                                      <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
+                                      <div class="my-0">
+                                          <p class="text-muted my-0" style="font-size: 10px;">
+                                              {{$players.PrimaryPosition}}
+                                              {{$players.SecondaryPosition}}
+                                              | {{$players.Height}}cm | {{$players.Weight}}kg
+                                          </p>
+                                      </div>
+    
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="p-0 py-1">
+                              <div class="mt-2" style="font-size: 0px;">
+                                  <div class="d-inline-block position-relative">
+                                          <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
+                                          <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadgesCount}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">
+                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadgesCount}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <img src="/static/images/2k-gold-badge-count.webp" alt="" width="30">
+                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadgesCount}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <img src="/static/images/2k-hof-badge-count.webp" alt="" width="30">
+                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadgesCount}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <img src="/static/images/2k-total-badge-count.webp" alt="" width="30">
+                                      <p class="position-absolute text-center badge-count text-white" style="font-size: 16px;">{{$players.TotalBadgesCount}}</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>
+                              <span style="font-size: 16px;" class="badge badge-pill p-1 fw-semibold
+                              {{if ge $players.StatsOverall 81}}
+                                  {{if ge $players.StatsOverall 86}}
+                                      {{if ge $players.StatsOverall 91}}
+                                          bkcolor
+                                      {{else}}
+                                          badgecolor1
+                                      {{end}}
+                                  {{else}}
+                                      badgecolor2
+                                  {{end}}
+                              {{else}}
+                              bg-light border text-dark
+                              {{end}}
+                          ">{{.StatsOverall}}</span></td>
+                          <td>{{$players.StatsCloseShot}}</td>
+                          <td>{{$players.StatsMidRangeShot}}</td>
+                          <td>{{$players.StatsThreePointShot}}</td>
+                          <td>{{$players.StatsFreeThrow}}</td>
+                          <td>{{$players.StatsSpeed}}</td>
+                          <td>{{$players.StatsStrength}}</td>
+                          <td>{{$players.StatsVertical}}</td>
+                          <td>{{$players.StatsDrivingDunk}}</td>
+                          <td>{{$players.StatsSteal}}</td>
+                          <td>{{$players.StatsBlock}}</td>
+                          <td>{{$players.StatsPerimeterDefense}}</td>
+                          <td>{{$players.StatsInteriorDefense}}</td>
+                          <td>{{$players.StatsOffensiveRebound}}</td>
+                          <td>{{$players.StatsDefensiveRebound}}</td>
+                          <td>
+                              <span class="badge badge-pill text-dark border bg-light">{{$players.StatsTotalAttributes}}</span>
+                          </td>
+                          <td>
+                            <button id="draft_{{$players.PlayerID}}" type="submit" class="btn btn-primary {{if $players.TeamID.Valid}}btn-dark disabled{{end}}" 
+                            onclick="draftPlayer('{{$players.PlayerID}}', '{{$players.FirstName}}', '{{$players.LastName}}', '{{$players.PrimaryPosition}}', '{{$players.SecondaryPosition}}')">Draft Player</button>
+                          </td>
+                      </tr>
+    
+                  </tbody>
+              </table>
+              </div>
+            {{end}}
+          </div>
+        </div>
+      </div>
+      <div class="px-3">
+        <div class="progress mt-1 mb-3" style="height: 6px;">
+          <div id="countdown_bar" class="progress-bar bkcolor" role="progressbar" aria-label="Success example" style="width: 100%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="45"></div>
+        </div>
+      </div>
+    
+      <div class="row px-3">
+        <div class="col-md-9">
+          <table class="table table-condensed table-bordered border-dark table-responsive">
+            <thead style="text-align: center;">
+                <tr>
+                    <th style="width: 8%">Pick</th>
+                    <th id="pick1" style="width: 23%">Team 1</th>
+                    <th id="pick2" style="width: 23%">Team 2</th>
+                    <th id="pick3" style="width: 23%">Team 3</th>
+                    <th id="pick4" style="width: 23%">Team 4</th>
+                </tr>
+            </thead>
+            <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+              {{range $position := index $.Data "positions"}}
+                <tr>
+                  <td>
+                    {{$position.Number}}
+                  </td>
+                  <td class="p-0" style="font-size: 14px;">
+                    <div id="row{{$position.Number}}col1" class="p-1">
+                      <br>
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px;">
+                    <div id="row{{$position.Number}}col2" class="p-1">
+                      <br>
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px;">
+                    <div id="row{{$position.Number}}col3" class="p-1">
+                      <br>
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px;">
+                    <div id="row{{$position.Number}}col4" class="p-1">
+                      <br>
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                </tr>
+              {{end}}
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-3">
+            <div class="list-group" id="list-tab" role="tablist" style="max-height: 908px; overflow:scroll; scrollbar-width: none;">
+              {{range $index, $players := index .Data "nba_players"}}
+                <a class="list-group-item list-group-item-action {{if $players.TeamID.Valid}}fw-lighter{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" style="font-size: 16px;" role="tab" aria-controls="player{{$players.PlayerID}}">{{$players.StatsOverall}} {{$players.FirstName}} {{$players.LastName}}</a>
+              {{end}}
+            </div>
+        </div>
+      </div> 
     </div>
-    <div id="timerBtn" class="btn">Start</div>
   </div>
 
   <div class="row">
@@ -259,6 +310,26 @@
     socket.send(JSON.stringify(jsonData))
   }
 
+  document.getElementById("timerBtn").addEventListener("click", function(event) {
+      if (!socket) {
+        console.log("No connection");
+        return false
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      draftCountdown(45, 'countdown_bar', 'countdown_text')
+    });
+
+  document.getElementById("generateOrderBtn").addEventListener("click", function(event) {
+      if (!socket) {
+        console.log("No connection");
+        return false
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      generateOrder();
+    });
+
   document.addEventListener("DOMContentLoaded", function() {
     socket = new WebSocket("ws://localhost:8080/ws");
 
@@ -279,7 +350,7 @@
       console.log("Action is", data.action);
 
       switch (data.action) {
-        case "list_users":
+        /*case "list_users":
           let ul = document.getElementById("online_users");
           while (ul.firstChild) ul.removeChild(ul.firstChild);
 
@@ -294,16 +365,33 @@
 
         case "broadcast":
           o.innerHTML = o.innerHTML + data.message + "<br>";
-          break;
+          break;*/
 
         case "timer":
           clock.innerHTML = data.countdown;
           document.getElementById("countdown_bar").style.width = (data.countdown/45)*100 + "%";
           break;
-      }
+
+        case "generate_order":
+          for (let i = 0; i < data.teams.length; i++) {
+            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase();
+            document.getElementById("pick" + (i+1)).style.backgroundImage = 'linear-gradient(90deg,' + data.teams[i].Color1 + ', ' + data.teams[i].Color2 +  ')';
+            if (data.teams[i].DarkText !== "true") {
+              document.getElementById("pick" + (i+1)).style.color = "white";
+            } else {
+              document.getElementById("pick" + (i+1)).style.color = "black";
+            }
+          } 
+          break;
+        
+        case "draft_player":
+          document.getElementById("row" + (data.row) + "col" + (data.column)).innerHTML = data.message;
+          document.getElementById("row" + (data.row) + "col" + (data.column)).style.backgroundColor = data.color;
+          break;
+        }
     }
 
-    let userInput = document.getElementById("username");
+    /*let userInput = document.getElementById("username");
         userInput.addEventListener("change", function () {
             let jsonData = {};
             jsonData["action"] = "username";
@@ -321,17 +409,7 @@
         event.stopPropagation();
         sendMessage();
       }
-    })
-
-    document.getElementById("timerBtn").addEventListener("click", function(event) {
-      if (!socket) {
-        console.log("No connection");
-        return false
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      draftCountdown(45, 'countdown_bar', 'countdown_text')
-    })
+    })*/
   })
 
   function sendMessage() {
@@ -343,18 +421,30 @@
     document.getElementById("message").value = "";
   }
 
+  function generateOrder() {
+    let jsonData = {};
+    jsonData["action"] = "generate_order";
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  function draftPlayer(playerID, firstName, lastName, primaryPos, secondaryPos) {
+    var playerInfo = [firstName, lastName, primaryPos, secondaryPos];
+
+    let jsonData = {};
+    jsonData["action"] = "draft_player";
+    jsonData["player_id"] = parseInt(playerID);
+    jsonData["player_info"] = playerInfo;
+    socket.send(JSON.stringify(jsonData))
+  }
+
   function draftCountdown(timeleft, bar, text) {
-    clearTimeout();
     return new Promise((resolve, reject) => {
       var countdownTimer = setInterval(() => {
         timeleft--;
         let jsonData = {};
         jsonData["action"] = "timer";
         jsonData["countdown"] = timeleft;
-        console.log(jsonData);
         socket.send(JSON.stringify(jsonData))
-        document.getElementById(bar).value = timeleft;
-        document.getElementById(text).textContent = timeleft;
 
         if (timeleft <= 0) {
           clearInterval(countdownTimer);
@@ -400,12 +490,6 @@
       }
     });
   }
-
-  function stopAllAudio(){
-    allAudios.forEach(function(audio){
-    audio.pause();
-  });
-}
 
 </script>
 
