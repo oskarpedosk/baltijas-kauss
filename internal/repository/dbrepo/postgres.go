@@ -3,7 +3,6 @@ package dbrepo
 import (
 	"context"
 	"errors"
-	"fmt"
 	"math"
 	"time"
 
@@ -322,7 +321,7 @@ func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
 			if err != nil {
 				return players, err
 			}
-			
+
 			query3 := `
 			select 
 				*
@@ -353,7 +352,7 @@ func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
 				if err != nil {
 					return players, err
 				}
-				
+
 				if badge.Level == "Bronze" {
 					bronzeBadges = append(bronzeBadges, playerBadge)
 				}
@@ -377,7 +376,6 @@ func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
 			if err = rows.Err(); err != nil {
 				return players, err
 			}
-
 
 		}
 
@@ -778,8 +776,29 @@ func (m *postgresDBRepo) DropNBAPlayer(playerID int) error {
 		player_id = $1
 	`
 
-	_, err := m.DB.ExecContext(ctx, stmt, playerID,
-	)
+	_, err := m.DB.ExecContext(ctx, stmt, playerID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// Drop all NBA player from a team
+func (m *postgresDBRepo) DropAllNBAPlayers() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	update 
+		nba_players
+	set 
+		team_id = null,
+		assigned = 0
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt)
 
 	if err != nil {
 		return err
@@ -793,9 +812,6 @@ func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	fmt.Println(teamID)
-	fmt.Println(playerID)
-	
 	// Remove team and position
 	stmt := `
 	update 
@@ -807,8 +823,7 @@ func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
 		player_id = $2
 	`
 
-	_, err := m.DB.ExecContext(ctx, stmt, teamID, playerID,
-	)
+	_, err := m.DB.ExecContext(ctx, stmt, teamID, playerID)
 
 	if err != nil {
 		return err

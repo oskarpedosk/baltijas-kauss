@@ -9,8 +9,9 @@ type DatabaseRepo interface {
 	GetNBAPlayersWithBadges() ([]models.NBAPlayer, error)
 	GetNBAPlayersWithoutBadges() ([]models.NBAPlayer, error)
 	UpdateNBATeamInfo(team models.NBATeamInfo) error
-	AddNBAPlayer(teamID, playerID int) error
+	AddNBAPlayer(playerID, teamID int) error
 	DropNBAPlayer(playerID int) error
+	DropAllNBAPlayers() error
 
 	GetNBAPlayerByID(id int) (models.NBAPlayer, error)
 	AssignNBAPlayer(player models.NBAPlayer) error

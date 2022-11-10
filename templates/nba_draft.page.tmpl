@@ -40,16 +40,25 @@
   -->
 
   <div class="d-flex flex-row">
-    <div id="timerBtn" class="btn btn-danger">Start Timer</div>
-    <div id="generateOrderBtn" class="btn btn-success">Generate Draft Order</div>
-    <div id="startDraftBtn" class="btn btn-primary">Start Draft</div>
+    <div id="timerBtn" class="btn btn-warning">Start Timer</div>
+    <div id="generateOrderBtn" class="btn btn-success" onclick="generateOrder();">Generate Draft Order</div>
+    <div id="startDraftBtn" class="btn btn-primary" onclick="startDraft();">Start Draft</div>
+    <div id="resetPlayersBtn" class="btn btn-danger" onclick="resetAllPlayers();">Reset All Teams</div>
+    <div>
+      <select id="draftSeconds" class="form-select">
+        <option value="5">5</option>
+        <option value="30">30</option>
+        <option selected value="45">45</option>
+        <option value="60">60</option>
+      </select>
+    </div>
   </div>
 
   <div class="row border border-dark rounded-3 bg-light">
     <div class="col-md-12 py-2 px-3">
       <div class="row px-3">
         <div class="col-md-1 d-flex justify-content-center align-self-end p-0 rounded-3">
-          <p id="countdown_text" class="fw-semibold m-0 p-0 pt-1" style="font-size: 62px;">45</p>
+          <p id="countdown_text" class="fw-semibold m-0 p-0 pt-1" style="font-size: 62px;"><br></p>
         </div>
         <div class="col-md-11 p-0">
           <div class="tab-content" id="nav-tabContent">
@@ -102,8 +111,7 @@
                                       <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
                                       <div class="my-0">
                                           <p class="text-muted my-0" style="font-size: 10px;">
-                                              {{$players.PrimaryPosition}}
-                                              {{$players.SecondaryPosition}}
+                                              {{$players.PrimaryPosition}}{{if $players.SecondaryPosition}}/{{end}}{{$players.SecondaryPosition}}
                                               | {{$players.Height}}cm | {{$players.Weight}}kg
                                           </p>
                                       </div>
@@ -183,7 +191,7 @@
       </div>
       <div class="px-3">
         <div class="progress mt-1 mb-3" style="height: 6px;">
-          <div id="countdown_bar" class="progress-bar bkcolor" role="progressbar" aria-label="Success example" style="width: 100%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="45"></div>
+          <div id="countdown_bar" class="progress-bar bkcolor" role="progressbar" aria-label="Success example" style="width: 100%;"></div>
         </div>
       </div>
     
@@ -264,9 +272,11 @@
 {{define "js"}}
 
 <script>
+  var countdownTimer;
   let socket = null;
   let o = document.getElementById("output");
   let clock = document.getElementById("countdown_text");
+
 
   window.onbeforeunload = function() {
     console.log("Leaving");
@@ -274,26 +284,6 @@
     jsonData["action"] = "left";
     socket.send(JSON.stringify(jsonData))
   }
-
-  document.getElementById("timerBtn").addEventListener("click", function(event) {
-      if (!socket) {
-        console.log("No connection");
-        return false
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      draftCountdown(45, 'countdown_bar', 'countdown_text')
-    });
-
-  document.getElementById("generateOrderBtn").addEventListener("click", function(event) {
-      if (!socket) {
-        console.log("No connection");
-        return false
-      }
-      event.preventDefault();
-      event.stopPropagation();
-      generateOrder();
-    });
 
   document.addEventListener("DOMContentLoaded", function() {
     socket = new WebSocket("ws://localhost:8080/ws");
@@ -334,7 +324,7 @@
 
         case "timer":
           clock.innerHTML = data.countdown;
-          document.getElementById("countdown_bar").style.width = (data.countdown/45)*100 + "%";
+          document.getElementById("countdown_bar").style.width = (data.countdown/draft_seconds)*100 + "%";
           break;
 
         case "generate_order":
@@ -352,8 +342,15 @@
         case "draft_player":
           document.getElementById("row" + (data.row) + "col" + (data.column)).innerHTML = data.message;
           document.getElementById("row" + (data.row) + "col" + (data.column)).style.backgroundColor = data.color;
+          document.getElementById("player" + (data.player_id) + "-list").classList.add("fw-lighter");
+          document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark");
+          document.getElementById("draft_" + (data.player_id)).classList.add("disabled");
           break;
+
+        case "start_draft":
+          document.getElementById("draftSeconds").setAttribute("disabled", "");
         }
+
     }
 
     /*let userInput = document.getElementById("username");
@@ -392,9 +389,16 @@
     socket.send(JSON.stringify(jsonData))
   }
 
+  function startDraft() {
+    let jsonData = {};
+    jsonData["action"] = "start_draft";
+    jsonData["countdown"] = parseInt(document.getElementById("draftSeconds").value);
+    socket.send(JSON.stringify(jsonData))
+  }
+
   function draftPlayer(playerID, firstName, lastName, primaryPos, secondaryPos) {
     var playerInfo = [firstName, lastName, primaryPos, secondaryPos];
-
+    
     let jsonData = {};
     jsonData["action"] = "draft_player";
     jsonData["player_id"] = parseInt(playerID);
@@ -402,21 +406,10 @@
     socket.send(JSON.stringify(jsonData))
   }
 
-  function draftCountdown(timeleft, bar, text) {
-    return new Promise((resolve, reject) => {
-      var countdownTimer = setInterval(() => {
-        timeleft--;
-        let jsonData = {};
-        jsonData["action"] = "timer";
-        jsonData["countdown"] = timeleft;
-        socket.send(JSON.stringify(jsonData))
-
-        if (timeleft <= 0) {
-          clearInterval(countdownTimer);
-          resolve(true);
-        }
-      }, 1000);
-    });
+  function resetAllPlayers() {
+    let jsonData = {};
+    jsonData["action"] = "reset_players";
+    socket.send(JSON.stringify(jsonData))
   }
 
 </script>

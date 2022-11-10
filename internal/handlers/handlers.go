@@ -187,11 +187,12 @@ func ListenToWsChannel() {
 	var response WsJsonResponse
 
 	draftOrder := []int{}
-	pickCounter := 1
-	rowCounter := 1
-	rounds := 12
-	colCounter := 1
 	color := "transparent"
+	var draftSeconds int
+	var rowCounter int
+	var colCounter int
+	var seconds *int
+	var draftEnded *bool
 
 	for {
 		e := <-wsChan
@@ -225,27 +226,36 @@ func ListenToWsChannel() {
 		case "generate_order":
 			response.Action = "generate_order"
 			teams := Repo.getDraftOrder()
-			pickCounter = 1
-			rowCounter = 1
-			colCounter = 1
 			draftOrder = []int{}
-			fmt.Println("test--------")
-			fmt.Println(teams)
 			for _, team := range teams {
 				draftOrder = append(draftOrder, int(team.TeamID.Int64))
 			}
-			fmt.Println(draftOrder)
 			response.Teams = teams
 			broadcastToAll(response)
 
+		case "start_draft":
+			rowCounter = 1
+			colCounter = 1
+			seconds = new(int)
+			draftSeconds = e.Countdown
+			*seconds = draftSeconds
+			draftEnded = new(bool)
+			*draftEnded = false
+			go timer(seconds, draftEnded)
+
+		case "reset_players":
+			response.Action = "reset_players"
+			Repo.resetPlayers()
+
 		case "draft_player":
-			fmt.Println("row", rowCounter)
-			fmt.Println("col", colCounter)
-			fmt.Println("---------------------")
-			// Repo.draftPlayer(draftOrder[pickCounter-1], e.PlayerID)
+			Repo.draftPlayer(draftOrder[colCounter-1], e.PlayerID)
 			response.Action = "draft_player"
+			*seconds = draftSeconds + 1
+			fmt.Println("pick: ", *seconds)
+			fmt.Println("----------------------")
 			response.Row = rowCounter
 			response.Column = colCounter
+			response.PlayerID = e.PlayerID
 			firstName := e.PlayerInfo[0]
 			lastName := e.PlayerInfo[1]
 			positions := e.PlayerInfo[2]
@@ -272,6 +282,9 @@ func ListenToWsChannel() {
 			} else {
 				colCounter += 1
 			}
+			if rowCounter == 2 && colCounter == 0 {
+				*draftEnded = true
+			}
 			if colCounter == 5 {
 				colCounter = 4
 				rowCounter += 1
@@ -279,9 +292,32 @@ func ListenToWsChannel() {
 				colCounter = 1
 				rowCounter += 1
 			}
-
 		}
 	}
+}
+
+func timer(t *int, draftEnded *bool) {
+	var response WsJsonResponse
+	for {
+		if *draftEnded {
+			break
+		}
+		fmt.Println("broadcasted: ", *t)
+		response.Action = "timer"
+		response.Countdown = *t
+		broadcastToAll(response)
+		time.Sleep(1000 * time.Millisecond)
+		*t -= 1
+		fmt.Println("time after -1: ", *t)
+		if *t == 0 {
+			// Draft player
+			// Set timer to 45
+			break
+		}
+	}
+	response.Action = "draft_ended"
+	response.Countdown = 0
+	broadcastToAll(response)
 }
 
 func getUserList() []string {
@@ -294,7 +330,14 @@ func getUserList() []string {
 }
 
 func (m *Repository) draftPlayer(teamID, playerID int) {
-	err := m.DB.AddNBAPlayer(teamID, playerID)
+	err := m.DB.AddNBAPlayer(playerID, teamID)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+
+func (m *Repository) resetPlayers() {
+	err := m.DB.DropAllNBAPlayers()
 	if err != nil {
 		fmt.Println(err)
 	}

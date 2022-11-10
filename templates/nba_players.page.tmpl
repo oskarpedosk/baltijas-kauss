@@ -67,8 +67,7 @@
                                     <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
                                     <div class="my-0">
                                         <p class="text-muted my-0" style="font-size: 10px;">
-                                            {{$players.PrimaryPosition}}
-                                            {{$players.SecondaryPosition}}
+                                            {{$players.PrimaryPosition}}{{if $players.SecondaryPosition}}/{{end}}{{$players.SecondaryPosition}}
                                             | {{$players.Height}}cm | {{$players.Weight}}kg
                                         </p>
                                     </div>
