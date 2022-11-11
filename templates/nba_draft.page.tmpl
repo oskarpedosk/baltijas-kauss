@@ -2,43 +2,6 @@
 
 {{define "content"}}
 <div class="container p-3">
-  <!--
-  <div class="row bg-light rounded-3 border">
-    <div class="col-md-8">
-
-      <h3>Chat</h3>
-
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" class="form-control" autocomplete="off">
-      </div>
-
-      <div class="form-group">
-        <label for="message">Message:</label>
-        <input type="text" name="message" id="message" class="form-control" autocomplete="off">
-      </div>
-
-      <input type="hidden" name="action" id="action">
-
-      <hr>
-
-      <div id="output" class="form-control" style="min-height: 160px;">
-
-      </div>
-
-    </div>
-    <div class="col-md-4">
-
-      <h3>Who's Online</h3>
-
-      <ul id="online_users">
-
-      </ul>
-
-    </div>
-  </div>
-  -->
-
   <div class="d-flex flex-row">
     <div id="timerBtn" class="btn btn-warning">Start Timer</div>
     <div id="generateOrderBtn" class="btn btn-success" onclick="generateOrder();">Generate Draft Order</div>
@@ -46,7 +9,8 @@
     <div id="resetPlayersBtn" class="btn btn-danger" onclick="resetAllPlayers();">Reset All Teams</div>
     <div>
       <select id="draftSeconds" class="form-select">
-        <option value="5">5</option>
+        <option value="1">Random Teams</option>
+        <option value="15">15</option>
         <option value="30">30</option>
         <option selected value="45">45</option>
         <option value="60">60</option>
@@ -256,6 +220,41 @@
       </div> 
     </div>
   </div>
+
+  <div class="row bg-light rounded-3 border">
+    <div class="col-md-8">
+
+      <h3>Chat</h3>
+
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" class="form-control" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message:</label>
+        <input type="text" name="message" id="message" class="form-control" autocomplete="off">
+      </div>
+
+      <input type="hidden" name="action" id="action">
+
+      <hr>
+
+      <div id="output" class="form-control" style="min-height: 160px;">
+
+      </div>
+
+    </div>
+    <div class="col-md-4">
+
+      <h3>Who's Online</h3>
+
+      <ul id="online_users">
+
+      </ul>
+
+    </div>
+  </div>
   <!--
   <div class="row">
     <div class="col-md-12 p-0 justify-content-center d-flex">
@@ -276,6 +275,8 @@
   let socket = null;
   let o = document.getElementById("output");
   let clock = document.getElementById("countdown_text");
+  let userField = document.getElementById("username");
+  let messageField = document.getElementById("message");
 
 
   window.onbeforeunload = function() {
@@ -305,7 +306,7 @@
       console.log("Action is", data.action);
 
       switch (data.action) {
-        /*case "list_users":
+        case "list_users":
           let ul = document.getElementById("online_users");
           while (ul.firstChild) ul.removeChild(ul.firstChild);
 
@@ -320,11 +321,11 @@
 
         case "broadcast":
           o.innerHTML = o.innerHTML + data.message + "<br>";
-          break;*/
+          break;
 
         case "timer":
           clock.innerHTML = data.countdown;
-          document.getElementById("countdown_bar").style.width = (data.countdown/draft_seconds)*100 + "%";
+          document.getElementById("countdown_bar").style.width = (data.countdown/data.draft_seconds)*100 + "%";
           break;
 
         case "generate_order":
@@ -349,38 +350,50 @@
 
         case "start_draft":
           document.getElementById("draftSeconds").setAttribute("disabled", "");
+          break;
+
+        case "draft_ended":
+          clock.innerHTML = "<br>";
+          document.getElementById("countdown_bar").style.width = "100%";
+          break;
         }
 
     }
 
-    /*let userInput = document.getElementById("username");
-        userInput.addEventListener("change", function () {
-            let jsonData = {};
-            jsonData["action"] = "username";
-            jsonData["username"] = this.value;
-            socket.send(JSON.stringify(jsonData));
-        })
+    userField.addEventListener("change", function () {
+          let jsonData = {};
+          jsonData["action"] = "username";
+          jsonData["username"] = this.value;
+          socket.send(JSON.stringify(jsonData));
+      })
 
-    document.getElementById("message").addEventListener("keydown", function(event) {
+    messageField.addEventListener("keydown", function(event) {
       if (event.code === "Enter") {
         if (!socket) {
           console.log("No connection");
           return false
         }
+
+        if ((userField.value === "") || (messageField.value === "")) {
+          // errorMessage("Fill out username and message!");
+          return false;
+        } else {
+          sendMessage();
+        }
+
         event.preventDefault();
         event.stopPropagation();
-        sendMessage();
       }
-    })*/
+    })
   })
 
   function sendMessage() {
     let jsonData = {};
     jsonData["action"] = "broadcast";
-    jsonData["username"] = document.getElementById("username").value;
-    jsonData["message"] = document.getElementById("message").value;
+    jsonData["username"] = userField.value;
+    jsonData["message"] = messageField.value;
     socket.send(JSON.stringify(jsonData))
-    document.getElementById("message").value = "";
+    messageField.value = "";
   }
 
   function generateOrder() {

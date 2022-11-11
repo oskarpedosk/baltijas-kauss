@@ -832,6 +832,50 @@ func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
 	return nil
 }
 
+// Add a random NBA player directly to a team
+func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.NBAPlayer, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	// Remove team and position
+	stmt := `
+	select
+		"player_id",
+		"first_name",
+		"last_name",
+		"primary_position",
+		"secondary_position"
+	from 
+		nba_players
+	where
+		"team_id" is null
+	order by
+		"stats/Overall" desc,
+		"stats/Total Attributes" desc
+	limit
+		1
+	offset
+		$1
+	`
+
+	row := m.DB.QueryRowContext(ctx, stmt, random)
+
+	var player models.NBAPlayer
+	err := row.Scan(
+		&player.PlayerID,
+		&player.FirstName,
+		&player.LastName,
+		&player.PrimaryPosition,
+		&player.SecondaryPosition,
+	)
+
+	if err != nil {
+		return player, err
+	}
+
+	return player, nil
+}
+
 // Get all NBA badges
 func (m *postgresDBRepo) GetNBABadges() ([]models.Badge, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

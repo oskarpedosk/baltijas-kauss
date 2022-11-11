@@ -120,24 +120,25 @@ type WsJsonResponse struct {
 	Color          string           `json:"color"`
 	Row            int              `json:"row"`
 	Column         int              `json:"column"`
-	Round          int              `json:"round"`
+	DraftSeconds   int              `json:"draft_seconds"`
 	Teams          []models.NBATeam `json:"teams"`
 	MessageType    string           `json:"message_type"`
 	ConnectedUsers []string         `json:"connected_users"`
 }
 
 type WsPayload struct {
-	Action     string              `json:"action"`
-	Username   string              `json:"username"`
-	Countdown  int                 `json:"countdown"`
-	PlayerID   int                 `json:"player_id"`
-	PlayerInfo []string            `json:"player_info"`
-	Color      string              `json:"color"`
-	Row        int                 `json:"row"`
-	Column     int                 `json:"column"`
-	Teams      []models.NBATeam    `json:"nba_teams"`
-	Message    string              `json:"message"`
-	Conn       WebSocketConnection `json:"-"`
+	Action       string              `json:"action"`
+	Username     string              `json:"username"`
+	Countdown    int                 `json:"countdown"`
+	PlayerID     int                 `json:"player_id"`
+	PlayerInfo   []string            `json:"player_info"`
+	Color        string              `json:"color"`
+	Row          int                 `json:"row"`
+	Column       int                 `json:"column"`
+	DraftSeconds int                 `json:"draft_seconds"`
+	Teams        []models.NBATeam    `json:"nba_teams"`
+	Message      string              `json:"message"`
+	Conn         WebSocketConnection `json:"-"`
 }
 
 // WsEndPoint upgrades connection to websocket
@@ -186,13 +187,13 @@ func ListenForWs(conn *WebSocketConnection) {
 func ListenToWsChannel() {
 	var response WsJsonResponse
 
+	reset := false
+	quit := false
 	draftOrder := []int{}
 	color := "transparent"
-	var draftSeconds int
 	var rowCounter int
 	var colCounter int
-	var seconds *int
-	var draftEnded *bool
+	var draftCountdown int
 
 	for {
 		e := <-wsChan
@@ -234,14 +235,81 @@ func ListenToWsChannel() {
 			broadcastToAll(response)
 
 		case "start_draft":
+			fmt.Println("draft started")
 			rowCounter = 1
 			colCounter = 1
-			seconds = new(int)
-			draftSeconds = e.Countdown
-			*seconds = draftSeconds
-			draftEnded = new(bool)
-			*draftEnded = false
-			go timer(seconds, draftEnded)
+			draftCountdown = e.Countdown
+			go func() {
+				timeLeft := draftCountdown
+				for {
+					switch {
+					case reset:
+						timeLeft = draftCountdown
+						reset = false
+						continue
+					case quit:
+						response.Action = "draft_ended"
+						broadcastToAll(response)
+						reset = false
+						quit = false
+						rowCounter = 1
+						colCounter = 1
+						fmt.Println("draft ended")
+						return
+					default:
+						response.Action = "timer"
+						response.Countdown = timeLeft
+						response.DraftSeconds = draftCountdown
+						broadcastToAll(response)
+						time.Sleep(1000 * time.Millisecond)
+						if timeLeft <= 0 {
+							playerID, firstName, lastName, primary, secondary := Repo.getRandomPlayer()
+							Repo.draftPlayer(draftOrder[colCounter-1], playerID)
+							response.Action = "draft_player"
+							reset = true
+							response.Row = rowCounter
+							response.Column = colCounter
+							response.PlayerID = playerID
+							positions := primary
+							switch positions {
+							case "PG":
+								color = "#FDD8E6"
+							case "SG":
+								color = "#FDD8E6"
+							case "SF":
+								color = "#C1EBE7"
+							case "PF":
+								color = "#C4E7FD"
+							case "C":
+								color = "#C4E7FD"
+							}
+							if secondary != "" {
+								positions += "/" + secondary
+							}
+							response.Color = color
+							response.Message = fmt.Sprintf("%s<br><strong>%s</strong><br>%s", firstName, lastName, positions)
+							broadcastToAll(response)
+							if rowCounter%2 == 0 {
+								colCounter -= 1
+							} else {
+								colCounter += 1
+							}
+							if rowCounter == 12 && colCounter == 0 {
+								quit = true
+							}
+							if colCounter == 5 {
+								colCounter = 4
+								rowCounter += 1
+							} else if colCounter == 0 {
+								colCounter = 1
+								rowCounter += 1
+							}
+							continue
+						}
+						timeLeft -= 1
+					}
+				}
+			}()
 
 		case "reset_players":
 			response.Action = "reset_players"
@@ -250,9 +318,7 @@ func ListenToWsChannel() {
 		case "draft_player":
 			Repo.draftPlayer(draftOrder[colCounter-1], e.PlayerID)
 			response.Action = "draft_player"
-			*seconds = draftSeconds + 1
-			fmt.Println("pick: ", *seconds)
-			fmt.Println("----------------------")
+			reset = true
 			response.Row = rowCounter
 			response.Column = colCounter
 			response.PlayerID = e.PlayerID
@@ -282,8 +348,8 @@ func ListenToWsChannel() {
 			} else {
 				colCounter += 1
 			}
-			if rowCounter == 2 && colCounter == 0 {
-				*draftEnded = true
+			if rowCounter == 12 && colCounter == 0 {
+				quit = true
 			}
 			if colCounter == 5 {
 				colCounter = 4
@@ -296,28 +362,13 @@ func ListenToWsChannel() {
 	}
 }
 
-func timer(t *int, draftEnded *bool) {
-	var response WsJsonResponse
-	for {
-		if *draftEnded {
-			break
-		}
-		fmt.Println("broadcasted: ", *t)
-		response.Action = "timer"
-		response.Countdown = *t
-		broadcastToAll(response)
-		time.Sleep(1000 * time.Millisecond)
-		*t -= 1
-		fmt.Println("time after -1: ", *t)
-		if *t == 0 {
-			// Draft player
-			// Set timer to 45
-			break
-		}
+func (m *Repository) getRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
+	random := rand.Intn(9)
+	player, err := m.DB.GetRandomNBAPlayer(random)
+	if err != nil {
+		fmt.Println(err)
 	}
-	response.Action = "draft_ended"
-	response.Countdown = 0
-	broadcastToAll(response)
+	return player.PlayerID, player.FirstName, player.LastName, player.PrimaryPosition, player.SecondaryPosition
 }
 
 func getUserList() []string {

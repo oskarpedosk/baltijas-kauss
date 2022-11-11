@@ -12,6 +12,7 @@ type DatabaseRepo interface {
 	AddNBAPlayer(playerID, teamID int) error
 	DropNBAPlayer(playerID int) error
 	DropAllNBAPlayers() error
+	GetRandomNBAPlayer(random int) (models.NBAPlayer, error)
 
 	GetNBAPlayerByID(id int) (models.NBAPlayer, error)
 	AssignNBAPlayer(player models.NBAPlayer) error
