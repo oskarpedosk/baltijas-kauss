@@ -3,6 +3,7 @@ package dbrepo
 import (
 	"context"
 	"errors"
+	"fmt"
 	"math"
 	"time"
 
@@ -837,6 +838,8 @@ func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.NBAPlayer, error
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
+	fmt.Println("-------------------")
+	fmt.Println("random=", random)
 	// Remove team and position
 	stmt := `
 	select

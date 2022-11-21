@@ -234,6 +234,12 @@ func ListenToWsChannel() {
 			response.Teams = teams
 			broadcastToAll(response)
 
+		case "stop_draft":
+			fmt.Println("draft stopped")
+			// response.Action = "stop_draft"
+			quit = true
+			broadcastToAll(response)
+
 		case "start_draft":
 			fmt.Println("draft started")
 			rowCounter = 1
@@ -284,6 +290,9 @@ func ListenToWsChannel() {
 								color = "#C4E7FD"
 							}
 							if secondary != "" {
+								if secondary == "SF" {
+									color = "#C1EBE7"
+								}
 								positions += "/" + secondary
 							}
 							response.Color = color
@@ -313,7 +322,9 @@ func ListenToWsChannel() {
 
 		case "reset_players":
 			response.Action = "reset_players"
+			quit = true
 			Repo.resetPlayers()
+			broadcastToAll(response)
 
 		case "draft_player":
 			Repo.draftPlayer(draftOrder[colCounter-1], e.PlayerID)
@@ -338,6 +349,9 @@ func ListenToWsChannel() {
 				color = "#C4E7FD"
 			}
 			if e.PlayerInfo[3] != "" {
+				if e.PlayerInfo[3] == "SF" {
+					color = "#C1EBE7"
+				}
 				positions += "/" + e.PlayerInfo[3]
 			}
 			response.Color = color
@@ -363,7 +377,7 @@ func ListenToWsChannel() {
 }
 
 func (m *Repository) getRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
-	random := rand.Intn(9)
+	random := rand.Intn(5)
 	player, err := m.DB.GetRandomNBAPlayer(random)
 	if err != nil {
 		fmt.Println(err)
@@ -454,6 +468,12 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	user, err := m.DB.GetUserByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	m.App.Session.Put(r.Context(), "user_name", user.FirstName)
 	m.App.Session.Put(r.Context(), "user_id", id)
 	m.App.Session.Put(r.Context(), "access_level", accessLevel)
 	http.Redirect(w, r, "/nba", http.StatusSeeOther)

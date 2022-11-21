@@ -54,11 +54,6 @@
             <img src="/static/images/trophy.png" alt="" class="nav-img">
           </a>
         </li>
-        <li class="border-bottom">
-          <a href="#" title="Results" data-bs-toggle="tooltip" data-bs-placement="right">
-            <img src="/static/images/trophy.png" alt="" class="nav-img" onclick="errorMessage('error');">
-          </a>
-        </li>
         {{if eq .AccessLevel 2}}
           <li class="border-bottom">
             <a href="/admin/dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
@@ -141,13 +136,6 @@
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
     }
-
-  function errorMessage(msg) {
-    notie.alert({
-      type: 'error',
-      text: msg,
-    })
-  }
 
   </script>
 
