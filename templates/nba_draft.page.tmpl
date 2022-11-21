@@ -475,29 +475,4 @@
   })
 </script>
 
-<script>
-  function revealPick(index) {
-    const str = 'pick_' + (index);
-    $('#' + str).toggleClass("hidden");
-  }
-
-  function randomize() {
-    var audio = new Audio('/static/mp3/Draft Chime.mp3');    
-    audio.play();
-    const str = 'draftpicks';
-    $('#' + str).removeClass("hidden");
-    $.ajax({
-      type: 'GET',
-      dataType: 'html',
-      data: {
-      },
-      success: function (data) {
-        console.log("success");
-        $('#draftpicks').load(window.location.href + ' #draftpicksrefresh');
-      }
-    });
-  }
-
-</script>
-
 {{end}}
