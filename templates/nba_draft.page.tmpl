@@ -232,6 +232,7 @@
           </div>
           <div class="row mt-2">
             <div class="d-flex justify-content-end" style="padding-top: 6px;">
+              <div id="status" class="me-3"></div>
               <img class="pointer" src="/static/images/settings.png" alt="" style="max-height: 25px; opacity: 45%;" onclick="draftSettings();">
             </div>
           </div>
@@ -295,10 +296,15 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    socket = new WebSocket("wss://" + document.location.host + "/ws");
+    socket = new ReconnectingWebSocket("wss://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
+
+    const online = `<span class="badge bg-success">Connected</span>`
+    const offline = `<span class="badge bg-danger">Not connected</span>`
+    let statusDiv = document.getElementById("status");
 
     socket.onopen = () => {
       console.log("Successfully connected");
+      statusDiv.innerHTML = online;
       let jsonData = {};
       jsonData["action"] = "username";
       jsonData["username"] = userField.value;
@@ -307,10 +313,12 @@
 
     socket.onclose = () => {
       console.log("Connection closed");
+      statusDiv.innerHTML = offline;
     }
 
     socket.onerror = error => {
       console.log("There was an error");
+      statusDiv.innerHTML = offline;
     }
 
     socket.onmessage = msg => {
