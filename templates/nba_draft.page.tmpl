@@ -122,7 +122,7 @@
                           <td>{{$players.StatsOffensiveRebound}}</td>
                           <td>{{$players.StatsDefensiveRebound}}</td>
                           <td>
-                              <span class="badge badge-pill text-dark border bg-light">{{$players.StatsTotalAttributes}}</span>
+                              <span class="badge badge-pill text-dark border bg-white">{{$players.StatsTotalAttributes}}</span>
                           </td>
                           <td>
                             <button id="draft_{{$players.PlayerID}}" type="submit" class="btn btn-primary {{if $players.TeamID.Valid}}btn-dark disabled{{end}}" 
@@ -197,7 +197,24 @@
         <div class="col-md-3">
             <div class="list-group" id="list-tab" role="tablist" style="max-height: 907px; overflow:scroll; scrollbar-width: none;">
               {{range $index, $players := index .Data "nba_players"}}
-                <a class="list-group-item list-group-item-action {{if $players.TeamID.Valid}}fw-lighter{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" style="font-size: 16px;" role="tab" aria-controls="player{{$players.PlayerID}}">{{$players.StatsOverall}} {{$players.FirstName}} {{$players.LastName}}</a>
+                {{if eq $index 150}}
+                  {{break}}
+                {{end}}
+                    <a class="list-group-item list-group-item-action {{if $players.TeamID.Valid}}hidden{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" 
+                    style="font-size: 14px;" role="tab" aria-controls="player{{$players.PlayerID}}">
+                    <span {{if ge $players.StatsOverall 81}}
+                                          {{if ge $players.StatsOverall 86}}
+                                            {{if ge $players.StatsOverall 91}}
+                                              class="fw-semibold" style="background: linear-gradient(to right, #8100ff, #e002ff); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
+                                            {{else}}
+                                              class="fw-semibold" style="background: linear-gradient(to right, #0004ff, #0274ff); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
+                                            {{end}}
+                                          {{else}}
+                                            class="fw-semibold" style="background: linear-gradient(to right, #cf0000, #e82727); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
+                                          {{end}}
+                                        {{else}}
+                                          class="fw-semibold" style="background: linear-gradient(to right, #007d17, #0bab30); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
+                                        {{end}}>{{$players.StatsOverall}}</span> {{$players.FirstName}} {{$players.LastName}}</a>
               {{end}}
             </div>
         </div>
@@ -296,7 +313,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    socket = new ReconnectingWebSocket("wss://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
+    socket = new ReconnectingWebSocket("ws://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
 
     const online = `<span class="badge bg-success">Connected</span>`
     const offline = `<span class="badge bg-danger">Not connected</span>`
@@ -379,6 +396,7 @@
           document.getElementById("player" + (data.player_id) + "-list").classList.add("fw-lighter");
           document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark");
           document.getElementById("draft_" + (data.player_id)).classList.add("disabled");
+          document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden");
           break;
 
         case "start_draft":
