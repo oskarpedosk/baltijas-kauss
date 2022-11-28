@@ -101,10 +101,10 @@
                                           badgecolor1
                                       {{end}}
                                   {{else}}
-                                      badgecolor2
+                                      badgecolor3
                                   {{end}}
                               {{else}}
-                              bg-light border text-dark
+                                badgecolor2
                               {{end}}
                           ">{{.StatsOverall}}</span></td>
                           <td>{{$players.StatsCloseShot}}</td>
@@ -147,44 +147,40 @@
         <div class="col-md-9">
           <table class="table table-condensed table-borderless table-responsive">
             <thead style="text-align: center;">
-                <tr style="border-bottom: 0.5px solid rgb(190, 190, 190);;">
-                    <th style="width: 8%">Pick</th>
-                    <th id="pick1" style="width: 23%; border-left: 0.5px solid rgb(190, 190, 190);;">Team 1</th>
-                    <th id="pick2" style="width: 23%; border-left: 0.5px solid rgb(190, 190, 190);;">Team 2</th>
-                    <th id="pick3" style="width: 23%; border-left: 0.5px solid rgb(190, 190, 190);;">Team 3</th>
-                    <th id="pick4" style="width: 23%; border-left: 0.5px solid rgb(190, 190, 190);;">Team 4</th>
+                <tr style="border: 0.1px solid rgb(190, 190, 190);">
+                    <th style="font-size: 14px; width: 8%">Pick</th>
+                    <th id="pick1" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 1</th>
+                    <th id="pick2" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 2</th>
+                    <th id="pick3" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 3</th>
+                    <th id="pick4" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 4</th>
                 </tr>
             </thead>
             <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
               {{range $position := index $.Data "positions"}}
-                <tr style="border-top: 0.5px solid rgb(190, 190, 190);">
+                <tr style="border: 0.1px solid rgb(190, 190, 190);">
                   <td>
                     {{$position.Number}}
                   </td>
-                  <td class="p-0" style="font-size: 14px; border-left: 0.5px solid rgb(190, 190, 190);;">
-                    <div id="row{{$position.Number}}col1" class="p-1">
-                      <br>
-                      <br>
-                      <br>
-                    </div>
-                  </td>
-                  <td class="p-0" style="font-size: 14px; border-left: 0.5px solid rgb(190, 190, 190);;">
-                    <div id="row{{$position.Number}}col2" class="p-1">
-                      <br>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col1" class="py-1">
                       <br>
                       <br>
                     </div>
                   </td>
-                  <td class="p-0" style="font-size: 14px; border-left: 0.5px solid rgb(190, 190, 190);;">
-                    <div id="row{{$position.Number}}col3" class="p-1">
-                      <br>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col2" class="py-1">
                       <br>
                       <br>
                     </div>
                   </td>
-                  <td class="p-0" style="font-size: 14px; border-left: 0.5px solid rgb(190, 190, 190);;">
-                    <div id="row{{$position.Number}}col4" class="p-1">
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col3" class="py-1">
                       <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col4" class="py-1">
                       <br>
                       <br>
                     </div>
@@ -195,32 +191,68 @@
           </table>
         </div>
         <div class="col-md-3">
-            <div class="list-group" id="list-tab" role="tablist" style="max-height: 907px; overflow:scroll; scrollbar-width: none;">
+            <div class="list-group rounded-3 border" id="list-tab"  style="max-height: 609px; overflow:scroll; scrollbar-width: none; position: relative;">
               {{range $index, $players := index .Data "nba_players"}}
                 {{if eq $index 150}}
                   {{break}}
                 {{end}}
-                    <a class="list-group-item list-group-item-action {{if $players.TeamID.Valid}}hidden{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" 
-                    style="font-size: 14px;" role="tab" aria-controls="player{{$players.PlayerID}}">
-                    <span {{if ge $players.StatsOverall 81}}
-                                          {{if ge $players.StatsOverall 86}}
-                                            {{if ge $players.StatsOverall 91}}
-                                              class="fw-semibold" style="background: linear-gradient(to right, #8100ff, #e002ff); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
-                                            {{else}}
-                                              class="fw-semibold" style="background: linear-gradient(to right, #0004ff, #0274ff); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
-                                            {{end}}
+                <div style="position: relative;">
+                  <div class="list-group-item list-group-item-action justify-content-between {{if $players.TeamID.Valid}}hidden{{else}}d-flex{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" 
+                  style="font-size: 14px; border-bottom: 0,5px solid gray; border-left: none; border-right: none; border-top: none;" role="tab" aria-controls="player{{$players.PlayerID}}" onclick="toggleStar('{{$players.PlayerID}}');">
+                  <p class="m-0"><span {{if ge $players.StatsOverall 81}}
+                                        {{if ge $players.StatsOverall 86}}
+                                          {{if ge $players.StatsOverall 91}}
+                                            class="fw-semibold" style="color: #ce00f2;"
                                           {{else}}
-                                            class="fw-semibold" style="background: linear-gradient(to right, #cf0000, #e82727); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
+                                            class="fw-semibold" style="color: #0059ff;"
                                           {{end}}
                                         {{else}}
-                                          class="fw-semibold" style="background: linear-gradient(to right, #007d17, #0bab30); -webkit-text-fill-color: transparent; -webkit-background-clip: text;"
-                                        {{end}}>{{$players.StatsOverall}}</span> {{$players.FirstName}} {{$players.LastName}}</a>
+                                          class="fw-semibold" style="color: #e52848;"
+                                        {{end}}
+                                      {{else}}
+                                        class="fw-semibold" style="color: #3f9d25;"
+                                      {{end}}>{{$players.StatsOverall}}</span> {{$players.FirstName}} {{$players.LastName}}</p>
+                                    </div>
+                                    <i id="{{$players.PlayerID}}-star" class="far fa-star pointer" style="margin-top: 3px; position: absolute; z-index: 100; top: 7px; right: 13px; {{if $players.TeamID.Valid}}display: none;{{end}}"></i>
+                </div>
+                    
               {{end}}
             </div>
+              <div class="row px-2 mt-1">
+                <div class="d-flex justify-content-between" style="padding-top: 6px;">
+                  <div>
+                    <img class="pointer me-3" src="/static/images/volume-on.png" alt="" style="max-height: 20px; opacity: 45%;">
+                    {{if eq .AccessLevel 2}}
+                      <img class="pointer" src="/static/images/settings.png" alt="" style="max-height: 18px; opacity: 45%;" onclick="draftSettings();">
+                    {{end}}
+                  </div>
+                  <div id="status"></div>
+                </div>
+              </div>
         </div>
       </div> 
+
+      <div class="row px-3">
+        <div id="draftControls" class="col-md-9 my-3 hidden">
+          <div class="d-flex flex-row justify-content-between">
+              <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetAllPlayers();">Reset All Teams</div>
+              <div>
+                <select id="draftSeconds" class="form-select">
+                  <option value="1">Random</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option selected value="45">45</option>
+                  <option value="60">60</option>
+                </select>
+              </div>
+              <div id="generateOrderBtn" class="btn btn-success" onclick="generateOrder();">Generate Draft Order</div>
+              <div id="startDraftBtn" class="btn btn-primary" onclick="startDraft();">Start Draft</div>
+              <div id="stopDraftBtn" class="btn btn-danger" onclick="stopDraft();">Stop Draft</div>
+          </div>
+        </div>
+      </div>
       
-      <div class="row px-3 mt-3 mb-3">
+      <div class="row px-3 mt-2 mb-3">
         <div class="col-md-9">
   
           <div class="form-group hidden">
@@ -247,38 +279,10 @@
               </ul>
             </div>
           </div>
-          <div class="row mt-2">
-            <div class="d-flex justify-content-end" style="padding-top: 6px;">
-              <div id="status" class="me-3"></div>
-              <img class="pointer" src="/static/images/settings.png" alt="" style="max-height: 25px; opacity: 45%;" onclick="draftSettings();">
-            </div>
-          </div>
-    
-          
-    
         </div>
       </div>
     
-      <div class="row px-3">
-        <div id="draftControls" class="col-md-9 my-3 hidden">
-          <div class="d-flex flex-row justify-content-between">
-              <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetAllPlayers();">Reset All Teams</div>
-              <div>
-                <select id="draftSeconds" class="form-select">
-                  <option value="1">Random</option>
-                  <option value="15">15</option>
-                  <option value="30">30</option>
-                  <option selected value="45">45</option>
-                  <option value="60">60</option>
-                </select>
-              </div>
-              <div id="generateOrderBtn" class="btn btn-success" onclick="generateOrder();">Generate Draft Order</div>
-              <div id="startDraftBtn" class="btn btn-primary" onclick="startDraft();">Start Draft</div>
-              <div id="stopDraftBtn" class="btn btn-danger" onclick="stopDraft();">Stop Draft</div>
-          </div>
-        </div>
 
-    </div>
   </div>
   
   <!--
@@ -313,7 +317,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    socket = new ReconnectingWebSocket("ws://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
+    socket = new ReconnectingWebSocket("wss://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
 
     const online = `<span class="badge bg-success">Connected</span>`
     const offline = `<span class="badge bg-danger">Not connected</span>`
@@ -361,15 +365,20 @@
           break;
 
         case "reset_players":
-          var elems = document.querySelectorAll("#list-tab .fw-lighter");
+          var elems = document.querySelectorAll("#list-tab .hidden");
           var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
+          var stars = document.querySelectorAll("#list-tab i");
           console.log(buttons);
           elems.forEach(el => {
-            el.classList.remove('fw-lighter');
+            el.classList.remove('hidden');
+            el.classList.add('d-flex');
           });
           buttons.forEach(button => {
             button.classList.remove('btn-dark');
             button.classList.remove('disabled');
+          });
+          stars.forEach(star => {
+            star.style.display = "inline-block"
           });
           break;
 
@@ -393,10 +402,11 @@
         case "draft_player":
           document.getElementById("row" + (data.row) + "col" + (data.column)).innerHTML = data.message;
           document.getElementById("row" + (data.row) + "col" + (data.column)).style.backgroundColor = data.color;
-          document.getElementById("player" + (data.player_id) + "-list").classList.add("fw-lighter");
+          document.getElementById("player" + (data.player_id) + "-list").classList.remove("d-flex");
+          document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden");
           document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark");
           document.getElementById("draft_" + (data.player_id)).classList.add("disabled");
-          document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden");
+          document.getElementById((data.player_id) + "-star").style.display = "none";
           break;
 
         case "start_draft":
@@ -499,6 +509,20 @@
       tabTrigger.show()
     })
   })
+</script>
+
+<script>
+  $('.fa-star').click(function() {
+    $(this).toggleClass('fas far');
+  })
+
+  function toggleStar(playerID) {
+    var stars = document.querySelectorAll("#list-tab .logo-white");
+    stars.forEach(star => {
+      star.classList.remove("logo-white");
+    });
+    document.getElementById(playerID + "-star").classList.add("logo-white")
+  }
 </script>
 
 {{end}}

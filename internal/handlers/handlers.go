@@ -244,6 +244,7 @@ func ListenToWsChannel() {
 			fmt.Println("draft started")
 			rowCounter = 1
 			colCounter = 1
+			response.Action = ""
 			draftCountdown = e.Countdown
 			go func() {
 				timeLeft := draftCountdown
@@ -266,6 +267,7 @@ func ListenToWsChannel() {
 						response.Action = "timer"
 						response.Countdown = timeLeft
 						response.DraftSeconds = draftCountdown
+						// Row and col?
 						broadcastToAll(response)
 						time.Sleep(1000 * time.Millisecond)
 						if timeLeft <= 0 {
@@ -296,7 +298,7 @@ func ListenToWsChannel() {
 								positions += "/" + secondary
 							}
 							response.Color = color
-							response.Message = fmt.Sprintf("%s<br><strong>%s</strong><br>%s", firstName, lastName, positions)
+							response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
 							broadcastToAll(response)
 							if rowCounter%2 == 0 {
 								colCounter -= 1
@@ -355,7 +357,7 @@ func ListenToWsChannel() {
 				positions += "/" + e.PlayerInfo[3]
 			}
 			response.Color = color
-			response.Message = fmt.Sprintf("%s<br><strong>%s</strong><br>%s", firstName, lastName, positions)
+			response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
 			broadcastToAll(response)
 			if rowCounter%2 == 0 {
 				colCounter -= 1

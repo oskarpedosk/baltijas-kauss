@@ -15,7 +15,7 @@ html {
 }
 
 .sidebar {
-    width: 70px;
+    width: 65px;
     min-height: 100vh;
     max-height: 100vh;
     position: -webkit-sticky;
@@ -24,8 +24,8 @@ html {
 }
 
 .nav-img {
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     object-fit: contain;
     max-height: 100%;
     max-width: 100%;
@@ -158,4 +158,8 @@ html {
 
 .draftbutton:hover img {
     filter: brightness(0) invert(1);
+}
+
+.active p span {
+    color: white !important; 
 }
