@@ -20,7 +20,6 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 	"github.com/oskarpedosk/baltijas-kauss/internal/repository"
-	"github.com/oskarpedosk/baltijas-kauss/internal/repository/dbrepo"
 )
 
 // Repo the repository used by the handlers
@@ -90,14 +89,20 @@ var positions = []models.NBAPosition{
 // Repository is the repository type
 type Repository struct {
 	App *config.AppConfig
-	DB  repository.DatabaseRepo
+	TeamsRepo repository.TeamsRepo
+	StandingsRepo repository.StandingsRepo
+	PlayersRepo repository.PlayersRepo
+	AuthRepo repository.AuthRepo
 }
 
 // NewRepo creates a new repository
 func NewRepo(a *config.AppConfig, db *driver.DB) *Repository {
 	return &Repository{
 		App: a,
-		DB:  dbrepo.NewPostgresRepo(db.SQL, a),
+		TeamsRepo: repository.NewTeamsRepo(db.SQL, a),
+		StandingsRepo: repository.NewStandingsRepo(db.SQL, a),
+		PlayersRepo: repository.NewPlayersRepo(db.SQL, a),
+		AuthRepo: repository.NewAuthRepo(db.SQL, a),
 	}
 }
 
@@ -380,7 +385,7 @@ func ListenToWsChannel() {
 
 func (m *Repository) getRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
 	random := rand.Intn(5)
-	player, err := m.DB.GetRandomNBAPlayer(random)
+	player, err := m.PlayersRepo.GetRandomNBAPlayer(random)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -397,21 +402,21 @@ func getUserList() []string {
 }
 
 func (m *Repository) draftPlayer(teamID, playerID int) {
-	err := m.DB.AddNBAPlayer(playerID, teamID)
+	err := m.TeamsRepo.AddNBAPlayer(playerID, teamID)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
 func (m *Repository) resetPlayers() {
-	err := m.DB.DropAllNBAPlayers()
+	err := m.TeamsRepo.DropAllNBAPlayers()
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
 func (m *Repository) getDraftOrder() []models.NBATeam {
-	teams, err := m.DB.GetNBATeamInfo()
+	teams, err := m.TeamsRepo.GetNBATeamInfo()
 	if err != nil {
 		return nil
 	}
@@ -460,7 +465,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 	email := r.Form.Get("email")
 	password := r.Form.Get("password")
 
-	id, _, accessLevel, err := m.DB.Authenticate(email, password)
+	id, _, accessLevel, err := m.AuthRepo.Authenticate(email, password)
 
 	if err != nil {
 		log.Println(err)
@@ -470,7 +475,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := m.DB.GetUserByID(id)
+	user, err := m.AuthRepo.GetUserByID(id)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -518,18 +523,18 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 			Assigned: 0,
 		}
 
-		err = m.DB.UpdateNBAPlayer(player)
+		err = m.PlayersRepo.UpdateNBAPlayer(player)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
 	}
 
-	teams, err := m.DB.GetNBATeamInfo()
+	teams, err := m.TeamsRepo.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-	players, err := m.DB.GetNBAPlayersWithBadges()
+	players, err := m.PlayersRepo.GetNBAPlayersWithBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -582,7 +587,7 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 		Assigned: 0,
 	}
 
-	err = m.DB.UpdateNBAPlayer(player)
+	err = m.PlayersRepo.UpdateNBAPlayer(player)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -599,7 +604,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 
-		err = m.DB.DropNBAPlayer(playerID)
+		err = m.TeamsRepo.DropNBAPlayer(playerID)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -613,7 +618,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 
-		err = m.DB.AddNBAPlayer(playerID, teamID)
+		err = m.TeamsRepo.AddNBAPlayer(playerID, teamID)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -637,7 +642,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			TeamID:   sql.NullInt64{int64(teamID), true},
 			Assigned: assigned,
 		}
-		err = m.DB.AssignNBAPlayer(player)
+		err = m.TeamsRepo.AssignNBAPlayer(player)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -646,13 +651,13 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	var emptyTeamInfo models.NBATeamInfo
 	data := make(map[string]interface{})
 
-	teams, err := m.DB.GetNBATeamInfo()
+	teams, err := m.TeamsRepo.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	players, err := m.PlayersRepo.GetNBAPlayersWithoutBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -704,13 +709,13 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 	if !form.Valid() {
 		data := make(map[string]interface{})
 
-		teams, err := m.DB.GetNBATeamInfo()
+		teams, err := m.TeamsRepo.GetNBATeamInfo()
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
 		}
 
-		players, err := m.DB.GetNBAPlayersWithoutBadges()
+		players, err := m.PlayersRepo.GetNBAPlayersWithoutBadges()
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
@@ -728,7 +733,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = m.DB.UpdateNBATeamInfo(teamInfo)
+	err = m.TeamsRepo.UpdateNBATeamInfo(teamInfo)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -802,7 +807,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 			AwayScore: awayScore,
 			AwayTeam:  awayTeam,
 		}
-		err = m.DB.AddNBAResult(result)
+		err = m.StandingsRepo.AddNBAResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -838,7 +843,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 			AwayTeam:  awayTeam,
 			Time:      timestamp,
 		}
-		err = m.DB.UpdateNBAResult(result)
+		err = m.StandingsRepo.UpdateNBAResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -854,7 +859,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 		result := models.Result{
 			Time: timestamp,
 		}
-		err = m.DB.DeleteNBAResult(result)
+		err = m.StandingsRepo.DeleteNBAResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -863,17 +868,17 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 	var emptyStandings models.Result
 	data := make(map[string]interface{})
 
-	teams, err := m.DB.GetNBATeamInfo()
+	teams, err := m.TeamsRepo.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-	standings, err := m.DB.GetNBAStandings()
+	standings, err := m.StandingsRepo.GetNBAStandings()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-	lastResults, err := m.DB.GetLastResults(10)
+	lastResults, err := m.StandingsRepo.GetLastResults(10)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -937,7 +942,7 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = m.DB.AddNBAResult(result)
+	err = m.StandingsRepo.AddNBAResult(result)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -950,13 +955,13 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 
-	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	players, err := m.PlayersRepo.GetNBAPlayersWithoutBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	teams, err := m.DB.GetNBATeamInfo()
+	teams, err := m.TeamsRepo.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -980,7 +985,7 @@ func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
-	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	players, err := m.PlayersRepo.GetNBAPlayersWithoutBadges()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -1007,13 +1012,13 @@ func (m *Repository) AdminShowNBAPlayer(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	player, err := m.DB.GetNBAPlayerByID(id)
+	player, err := m.PlayersRepo.GetNBAPlayerByID(id)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	teams, err := m.DB.GetNBATeamInfo()
+	teams, err := m.TeamsRepo.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
