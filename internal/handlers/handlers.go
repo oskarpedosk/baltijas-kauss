@@ -241,6 +241,8 @@ func ListenToWsChannel() {
 			broadcastToAll(response)
 
 		case "start_draft":
+			response.Action = "draft_started"
+			broadcastToAll(response)
 			fmt.Println("draft started")
 			rowCounter = 1
 			colCounter = 1
@@ -267,7 +269,6 @@ func ListenToWsChannel() {
 						response.Action = "timer"
 						response.Countdown = timeLeft
 						response.DraftSeconds = draftCountdown
-						// Row and col?
 						broadcastToAll(response)
 						time.Sleep(1000 * time.Millisecond)
 						if timeLeft <= 0 {

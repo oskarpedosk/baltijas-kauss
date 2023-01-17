@@ -12,7 +12,7 @@
           <div class="tab-content" id="nav-tabContent">
             {{range $index, $players := index .Data "nba_players"}}
               <div class="tab-pane fade" id="player{{$players.PlayerID}}" role="tabpanel" aria-labelledby="player{{$players.PlayerID}}-list">
-                <table class="table table-sm table-responsive table-borderless m-0">
+                <table id="draft_single_player" class="table table-sm table-responsive table-borderless m-0">
                   <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
                       <tr>
                           <th></th>
@@ -125,7 +125,7 @@
                               <span class="badge badge-pill text-dark border bg-white">{{$players.StatsTotalAttributes}}</span>
                           </td>
                           <td>
-                            <button id="draft_{{$players.PlayerID}}" type="submit" class="btn btn-primary {{if $players.TeamID.Valid}}btn-dark disabled{{end}}" 
+                            <button id="draft_{{$players.PlayerID}}" type="submit" class="btn btn-dark disabled {{if $players.TeamID.Valid}}btn-dark disabled{{end}}" 
                             onclick="draftPlayer('{{$players.PlayerID}}', '{{$players.FirstName}}', '{{$players.LastName}}', '{{$players.PrimaryPosition}}', '{{$players.SecondaryPosition}}')">Draft Player</button>
                           </td>
                       </tr>
@@ -307,6 +307,7 @@
   let clock = document.getElementById("countdown_text");
   let userField = document.getElementById("username");
   let messageField = document.getElementById("message");
+  let pick = 1;
 
 
   window.onbeforeunload = function() {
@@ -368,7 +369,6 @@
           var elems = document.querySelectorAll("#list-tab .hidden");
           var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
           var stars = document.querySelectorAll("#list-tab i");
-          console.log(buttons);
           elems.forEach(el => {
             el.classList.remove('hidden');
             el.classList.add('d-flex');
@@ -380,6 +380,12 @@
           stars.forEach(star => {
             star.style.display = "inline-block"
           });
+          for (let row = 1; row <= 12; row++) {
+            for (let col = 1; col <= 4; col++) {
+              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>";
+              document.getElementById("row" + row + "col" + col).style.backgroundColor = "";
+            }
+          }
           break;
 
         case "timer":
@@ -402,23 +408,46 @@
         case "draft_player":
           document.getElementById("row" + (data.row) + "col" + (data.column)).innerHTML = data.message;
           document.getElementById("row" + (data.row) + "col" + (data.column)).style.backgroundColor = data.color;
+          document.getElementById("row" + (data.row) + "col" + (data.column)).style.color = "black";
           document.getElementById("player" + (data.player_id) + "-list").classList.remove("d-flex");
           document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden");
           document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark");
           document.getElementById("draft_" + (data.player_id)).classList.add("disabled");
           document.getElementById((data.player_id) + "-star").style.display = "none";
+          pick++
+          let row = Math.floor((pick - 1) / 4 + 1);
+          let col;
+          if (row % 2 !== 0) {
+            col = Math.floor(pick - (row - 1) * 4)
+          } else {
+            col = Math.floor(row * 4 - pick + 1)
+          }
+          console.log("pick", pick)
+          console.log("row", row)
+          console.log("col", col)
+          if (pick < 49) {
+            document.getElementById("row" + row.toString() + "col" + col.toString()).innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick" + col).innerHTML) + "</span>";
+            // document.getElementById("row" + row.toString() + "col" + col.toString()).style.color = 'white';
+            // document.getElementById("row" + row.toString() + "col" + col.toString()).style.backgroundColor = '#0d6efd';
+          }
           break;
 
-        case "start_draft":
-          document.getElementById("draftSeconds").setAttribute("disabled", "");
-          break;
+        case "draft_started":
+          document.getElementById("row" + "1" + "col" + "1").innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick1").innerHTML) + "</span>";
+          var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
+          buttons.forEach(button => {
+            button.classList.remove('disabled');
+            button.classList.remove('btn-dark');
+            button.classList.add('btn-primary');
+          });
+          break;  
 
         case "draft_ended":
           clock.innerHTML = "<br>";
+          pick = 1;
           document.getElementById("countdown_bar").style.width = "100%";
           break;
         }
-
     }
 
     userField.addEventListener("change", function () {
