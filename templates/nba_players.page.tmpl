@@ -3,47 +3,34 @@
 {{define "content"}}
 
 <div class="container">
+    <h3>Players</h3>
     <div class="row">
-        <div id="players_table" class="col">
-            <h1>2K23</h1>
-
-            <input class="form-control" id="myInput" type="text" placeholder="Search..">
-            <br>
+        <div id="players_table" class="col-md-9">
             <table class="table table-sm table-responsive table-borderless" style="border-bottom: 0.5px solid rgb(190, 190, 190);">
-                <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
+                <thead style="font-size: 14px; white-space: nowrap; text-align: center;">
                     <tr style="background-color: white; border-bottom: 1px solid rgb(190, 190, 190);">
                         <th>#</th>
                         <th></th>
-                        <th class="ps-2" style="text-align: start;">Player</th>
-                        <th>Team</th>
-                        <th>Badges</th>
+                        <th class="ps-2" style="text-align: start;">NAME</th>
+                        <th>TEAM</th>
                         <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
-                        <th title="Close Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">CLOSE</th>
-                        <th title="Mid-Range Shot " data-bs-toggle="tooltip" data-bs-placement="bottom">MID</th>
-                        <th title="Three-Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
-                        <th title="Free Throw" data-bs-toggle="tooltip" data-bs-placement="bottom">FT</th>
-                        <th title="Acceleration" data-bs-toggle="tooltip" data-bs-placement="bottom">ACCL</th>
-                        <th title="Speed" data-bs-toggle="tooltip" data-bs-placement="bottom">SPD</th>
-                        <th title="Strength" data-bs-toggle="tooltip" data-bs-placement="bottom">STR</th>
-                        <th title="Vertical" data-bs-toggle="tooltip" data-bs-placement="bottom">VERT</th>
+                        <th title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
                         <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
-                        <th title="Draw Foul" data-bs-toggle="tooltip" data-bs-placement="bottom">FOUL</th>
-                        <th title="Steal" data-bs-toggle="tooltip" data-bs-placement="bottom">STL</th>
-                        <th title="Block" data-bs-toggle="tooltip" data-bs-placement="bottom">BLK</th>
-                        <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
+                        <th title="Athleticism" data-bs-toggle="tooltip" data-bs-placement="bottom">ATHL</th>
                         <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
-                        <th title="Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">DEF</th>
-                        <th title="Offensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">OREB</th>
-                        <th title="Defensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">DREB</th>
+                        <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
+                        <th title="Rebounding" data-bs-toggle="tooltip" data-bs-placement="bottom">REB</th>
+                        <th>BADGES</th>
                         <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
                     </tr>
                 </thead>
                 <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
 
+                    {{$ranking := index .Data "ranking"}}
                     {{range $index, $players := index .Data "nba_players"}}
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
-                        <td class="p-0">{{add $index 1}}</td>
-                        <td class="p-0">
+                        <td class="p-0">{{index $ranking $index}}</td>
+                        <td class="p-0 py-1">
                             <div id="playerimg_{{$index}}">
                                 <div id="playerimgreload_{{$index}}">
                                 {{if $players.TeamID.Int64}}
@@ -63,10 +50,9 @@
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
                                 <div class="p-0 inline-block">
-                                    <p class="m-0">{{$players.FirstName}} {{$players.LastName}}</p>
-                                    <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
+                                    <p class="m-0"><a class="player-link" href="/nba/players/{{$players.PlayerID}}">{{$players.FirstName}} {{$players.LastName}}</a></p>
                                     <div class="my-0">
-                                        <p class="text-muted my-0" style="font-size: 10px;">
+                                        <p class="text-muted my-0" style="font-size: 12px;">
                                             {{$players.PrimaryPosition}}{{if $players.SecondaryPosition}}/{{end}}{{$players.SecondaryPosition}}
                                             | {{$players.Height}}cm | {{$players.Weight}}kg
                                         </p>
@@ -83,17 +69,13 @@
                                     {{if $players.TeamID.Int64}}
                                     {{range $teamInfo := index $.Data "nba_teams"}}
                                         {{if eq $teamInfo.TeamID $players.TeamID}}
-                                            <p class="badge pointer badge-pill my-0 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" class="dropdown-toggle"
-                                            data-bs-toggle="dropdown" aria-expanded="false" style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:70px">
-                                            {{$teamInfo.Abbreviation}}
-                                            </p>
+                                        <span style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:60px" 
+                                        class="playerbadge badge badge-pill p-1 fw-semibold pointer {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" data-bs-toggle="dropdown" aria-expanded="false">{{$teamInfo.Abbreviation}}</span>
                                         {{end}}
                                     {{end}}
                                     {{else}}
-                                        <p style="display:inline-block; width:70px" class="badge pointer badge-pill border bg-light text-dark my-0 ms-1" class="dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                            FA
-                                        </p>
+                                        <span style="width:60px;" class="playerbadge badge badge-pill p-1 bg-light text-dark fw-semibold border pointer" 
+                                        data-bs-toggle="dropdown" aria-expanded="false">FA</span>
                                     {{end}}
 
                                     <div class="dropdown-menu">
@@ -110,163 +92,105 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="p-0 py-1">
-                            <div class="mt-2" style="font-size: 0px;">
-                                <div class="d-inline-block position-relative pointer" onclick="toggleBadge('bronze', '{{$index}}')">
-                                        <img src="/static/images/2k-bronze-badge-count.webp" alt="" width="30">
-                                        <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadgesCount}}</p>
-                                </div>
-                                <div class="d-inline-block position-relative pointer" onclick="toggleBadge('silver', '{{$index}}')">
-                                    <img src="/static/images/2k-silver-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadgesCount}}</p>
-                                </div>
-                                <div class="d-inline-block position-relative pointer" onclick="toggleBadge('gold', '{{$index}}')">
-                                    <img src="/static/images/2k-gold-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadgesCount}}</p>
-                                </div>
-                                <div class="d-inline-block position-relative pointer" onclick="toggleBadge('hof', '{{$index}}')">
-                                    <img src="/static/images/2k-hof-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadgesCount}}</p>
-                                </div>
-                                <div class="d-inline-block position-relative pointer" onclick="toggleBadge('total', '{{$index}}')">
-                                    <img src="/static/images/2k-total-badge-count.webp" alt="" width="30">
-                                    <p class="position-absolute text-center badge-count text-white" style="font-size: 16px;">{{$players.TotalBadgesCount}}</p>
-                                </div>
-                            </div>
-                        </td>
                         <td>
-                            <span style="font-size: 16px;" class="badge badge-pill p-1 fw-semibold
+                            <span style="font-size: 16px;" class="
                             {{if ge $players.StatsOverall 81}}
                                 {{if ge $players.StatsOverall 86}}
                                     {{if ge $players.StatsOverall 91}}
-                                        bkcolor
+                                        overall1
                                     {{else}}
-                                        badgecolor1
+                                        overall2
                                     {{end}}
                                 {{else}}
-                                    badgecolor3
+                                    overall3
                                 {{end}}
                             {{else}}
-                                badgecolor2
+                                overall4
                             {{end}}
                         ">{{.StatsOverall}}</span></td>
-                        <td>{{$players.StatsCloseShot}}</td>
-                        <td>{{$players.StatsMidRangeShot}}</td>
                         <td>{{$players.StatsThreePointShot}}</td>
-                        <td>{{$players.StatsFreeThrow}}</td>
-                        <td>{{$players.StatsAcceleration}}</td>
-                        <td>{{$players.StatsSpeed}}</td>
-                        <td>{{$players.StatsStrength}}</td>
-                        <td>{{$players.StatsVertical}}</td>
                         <td>{{$players.StatsDrivingDunk}}</td>
-                        <td>{{$players.StatsDrawFoul}}</td>
-                        <td>{{$players.StatsSteal}}</td>
-                        <td>{{$players.StatsBlock}}</td>
-                        <td>{{$players.StatsPerimeterDefense}}</td>
+                        <td>{{$players.StatsAthleticism}}</td>
                         <td>{{$players.StatsInteriorDefense}}</td>
-                        <td>{{$players.StatsDefending}}</td>
-                        <td>{{$players.StatsOffensiveRebound}}</td>
-                        <td>{{$players.StatsDefensiveRebound}}</td>
+                        <td>{{$players.StatsPerimeterDefense}}</td>
+                        <td>{{$players.StatsRebounding}}</td>
                         <td>
-                            <span class="badge badge-pill text-dark border bg-light">{{$players.StatsTotalAttributes}}</span>
+                            <span class="playerbadge badge badge-pill p-1 bronze">{{$players.BronzeBadgesCount}}</span>
+                            <span class="playerbadge badge badge-pill p-1 silver">{{$players.SilverBadgesCount}}</span>
+                            <span class="playerbadge badge badge-pill p-1 gold">{{$players.GoldBadgesCount}}</span>
+                            <span class="playerbadge badge badge-pill p-1 hof">{{$players.HOFBadgesCount}}</span>
+                            <span class="playerbadge badge badge-pill p-1 total">{{$players.TotalBadgesCount}}</span>
                         </td>
-                    </tr>
-                    <tr class="hidden" id="hof_{{$index}}">
-                        <td class="p-0" colspan="24">
-                            <div class="row pe-3 mt-1" style="padding-left: 50px;">
-                                {{$counter := 0}}
-                                {{$length := len $players.HOFBadges}}
-                                {{range $hof := $players.HOFBadges}}
-                                <div class="col-md-3">
-                                    <div class="row mb-2">
-                                        <div class="col-md-2 p-0">
-                                            <img class="img-fluid" src="/static/images/nba_badges/{{$hof.Name}}_HOF.png" alt="" width="45px">
-                                        </div>
-                                        <div class="col-md-10 px-0 text-start">
-                                            <p class="p-0 mb-0 fw-semibold" style="font-size: 14px; color: #7e06ae;">{{$hof.Name}}</p>
-                                            <p class="p-0 mb-0 fw-bold" style="font-size: 10px;">{{$hof.Type}}</p>
-                                            <p class="p-0 mb-0 lh-sm" style="font-size: 12px; white-space: initial;">{{$hof.Info}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{$counter = add $counter 1}}
-                                {{end}}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hidden" id="gold_{{$index}}">
-                        <td class="p-0" colspan="24">
-                            <div class="row pe-3 mt-1" style="padding-left: 50px;">
-                                {{$counter := 0}}
-                                {{$length := len $players.GoldBadges}}
-                                {{range $gold := $players.GoldBadges}}
-                                <div class="col-md-3">
-                                    <div class="row mb-2">
-                                        <div class="col-md-2 p-0">
-                                            <img class="img-fluid" src="/static/images/nba_badges/{{$gold.Name}}_Gold.png" alt="" width="45px">
-                                        </div>
-                                        <div class="col-md-10 px-0 text-start">
-                                            <p class="p-0 mb-0 fw-semibold" style="font-size: 14px; color: #e0b23d;">{{$gold.Name}}</p>
-                                            <p class="p-0 mb-0 fw-bold" style="font-size: 10px;">{{$gold.Type}}</p>
-                                            <p class="p-0 mb-0 lh-sm" style="font-size: 12px; white-space: initial;">{{$gold.Info}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{$counter = add $counter 1}}
-                                {{end}}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hidden" id="silver_{{$index}}">
-                        <td class="p-0" colspan="24">
-                            <div class="row pe-3 mt-1" style="padding-left: 50px;">
-                                {{$counter := 0}}
-                                {{$length := len $players.SilverBadges}}
-                                {{range $silver := $players.SilverBadges}}
-                                <div class="col-md-3">
-                                    <div class="row mb-2">
-                                        <div class="col-md-2 p-0">
-                                            <img class="img-fluid" src="/static/images/nba_badges/{{$silver.Name}}_Silver.png" alt="" width="45px">
-                                        </div>
-                                        <div class="col-md-10 px-0 text-start">
-                                            <p class="p-0 mb-0 fw-semibold" style="font-size: 14px; color: #757575;">{{$silver.Name}}</p>
-                                            <p class="p-0 mb-0 fw-bold" style="font-size: 10px;">{{$silver.Type}}</p>
-                                            <p class="p-0 mb-0 lh-sm" style="font-size: 12px; white-space: initial;">{{$silver.Info}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{$counter = add $counter 1}}
-                                {{end}}
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="hidden" id="bronze_{{$index}}">
-                        <td class="p-0" colspan="24">
-                            <div class="row pe-3 mt-1" style="padding-left: 50px;">
-                                {{$counter := 0}}
-                                {{$length := len $players.BronzeBadges}}
-                                {{range $bronze := $players.BronzeBadges}}
-                                <div class="col-md-3">
-                                    <div class="row mb-2">
-                                        <div class="col-md-2 p-0">
-                                            <img class="img-fluid" src="/static/images/nba_badges/{{$bronze.Name}}_Bronze.png" alt="" width="45px">
-                                        </div>
-                                        <div class="col-md-10 px-0 text-start">
-                                            <p class="p-0 mb-0 fw-semibold" style="font-size: 14px; color: #804c18;">{{$bronze.Name}}</p>
-                                            <p class="p-0 mb-0 fw-bold" style="font-size: 10px;">{{$bronze.Type}}</p>
-                                            <p class="p-0 mb-0 lh-sm" style="font-size: 12px; white-space: initial;">{{$bronze.Info}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{$counter = add $counter 1}}
-                                {{end}}
-                            </div>
+                        <td>
+                            <span class="playerbadge badge badge-pill p-1 text-dark" style="background-color: rgb(237, 237, 237); width: 50px;">{{$players.StatsTotalAttributes}}</span>
                         </td>
                     </tr>
                     {{end}}
 
                 </tbody>
             </table>
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        {{ if (gt .Data.pagination.CurrentPage 1)}}
+                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.PreviousPage}}">Previous</a></li>
+                        {{end}}
+
+                        {{ if (gt .Data.pagination.CurrentPage 1)}}
+                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.PreviousPage}}">{{.Data.pagination.PreviousPage}}</a></li>
+                        {{end}}
+
+                        <li class="page-item"><a class="page-link active" href="#">{{.Data.pagination.CurrentPage}}</a></li>
+
+                        {{ if (lt .Data.pagination.CurrentPage .Data.pagination.TotalPages)}}
+                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.NextPage}}">{{.Data.pagination.NextPage}}</a></li>
+                        {{end}}
+
+                        {{ if (lt .Data.pagination.CurrentPage .Data.pagination.TotalPages)}}
+                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.NextPage}}">Next</a></li>
+                        {{end}}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="row">
+                <p class="fw-bold mt-1" style="font-size: 14px;">SEARCH</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p style="font-size: 16px;">Three Point Shot</p>
+                </div>
+                <div class="col-md-3">
+                    <input id="away_score" type="text" class="form-control" value=0>
+                </div>
+                <div class="col-md-3">
+                    <input id="away_score" type="text" class="form-control" value=99>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p style="font-size: 16px;">Three Point Shot</p>
+                </div>
+                <div class="col-md-3">
+                    <input id="away_score" type="text" class="form-control" value=0>
+                </div>
+                <div class="col-md-3">
+                    <input id="away_score" type="text" class="form-control" value=99>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p style="font-size: 16px;">Three Point Shot</p>
+                </div>
+                <div class="col-md-3">
+                    <input id="away_score" type="text" class="form-control" value=0>
+                </div>
+                <div class="col-md-3">
+                    <input id="away_score" type="text" class="form-control" value=99>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -277,39 +201,6 @@
 
 {{define "js"}}
 <script>
-    // Search
-    $(document).ready(function () {
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#players_table tr.searchable").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-
-    function toggleBadge(color, index) {
-        const str = (color) + '_' + (index);
-        $('#' + str).toggleClass("hidden");
-        if (color === 'total') {
-            var bronze = document.getElementById('bronze_' + (index));
-            var silver = document.getElementById('silver_' + (index));
-            var gold = document.getElementById('gold_' + (index));
-            var hof = document.getElementById('hof_' + (index));
-
-            if (bronze.classList.contains('hidden') && silver.classList.contains('hidden') && gold.classList.contains('hidden') && hof.classList.contains('hidden')) {
-                bronze.classList.remove('hidden');
-                silver.classList.remove('hidden');
-                gold.classList.remove('hidden');
-                hof.classList.remove('hidden');
-            } else {
-                bronze.classList.add('hidden');
-                silver.classList.add('hidden');
-                gold.classList.add('hidden');
-                hof.classList.add('hidden');
-            }
-        }
-    }
-
    function updateTeam(index, playerID, teamID) {
         console.log(index)
         console.log(playerID)

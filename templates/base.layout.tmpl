@@ -22,67 +22,56 @@
   {{end}}
 
   <title>Baltijas Kauss</title>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 shadow">
+    <div class="container">
+      <a class="navbar-brand" href="/nba"><img class="mb-1" src="/static/images/BKlogowithoutbg.png" alt="" style="max-height: 25px;"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bk_navbar" aria-controls="bk_navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="bk_navbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="/nba/teams">Teams</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/nba/players">Players</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/nba/draft">Draft</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/nba/standings">Standings</a>
+          </li>
+        </ul>
+        <div>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {{if eq .AccessLevel 2}}
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/dashboard">Admin</a>
+              </li>
+            {{end}}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/static/images/profile.png" width="20" height="20" class="rounded-circle mb-1">
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" href="/logout">Logout</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
 </head>
 
 <body>
-
-
-  <div class="wrapper">
-    <div class="sidebar d-flex flex-column justify-content-between shadow">
-      <ul class="navbar p-0">
-        <li class="border-bottom">
-          <a href="/nba">
-            <img src="/static/images/BKlogowithoutbg.png" alt="" class="nav-img">
-          </a>
-        <li class="border-bottom">
-          <a href="/nba/teams" title="Teams" data-bs-toggle="tooltip" data-bs-placement="right">
-            <img src="/static/images/teams.png" alt="" class="nav-img">
-          </a>
-        </li>
-        </li>
-        <li class="border-bottom">
-          <a href="/nba/players" aria-current="page" title="Players" data-bs-toggle="tooltip" data-bs-placement="right">
-            <img src="/static/images/basketball-jersey.png" alt="" class="nav-img">
-          </a>
-        </li>
-        <li class="border-bottom">
-          <a href="/nba/draft" title="Draft" data-bs-toggle="tooltip" data-bs-placement="right">
-            <img src="/static/images/draft.png" alt="" class="nav-img">
-          </a>
-        </li>
-        <li class="border-bottom">
-          <a href="/nba/results" title="Results" data-bs-toggle="tooltip" data-bs-placement="right">
-            <img src="/static/images/trophy.png" alt="" class="nav-img">
-          </a>
-        </li>
-        {{if eq .AccessLevel 2}}
-          <li class="border-bottom">
-            <a href="/admin/dashboard" data-bs-toggle="tooltip" data-bs-placement="right">
-              <img src="/static/images/fifa22logo.png" alt="" class="nav-img">
-            </a>
-          </li>
-        {{end}}
-      </ul>
-      <div class="dropdown border-top">
-        <a href="#"
-          class="d-flex align-items-center justify-content-center p-3 link-dark text-decoration-none dropdown-toggle"
-          data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="/static/images/profile.png" width="22" height="22" class="rounded-circle">
-        </a>
-        <ul class="dropdown-menu text-small shadow">
-          <li><a class="dropdown-item" href="#">Settings</a></li>
-          <li><a class="dropdown-item" href="#">Profile</a></li>
-          <li>
-            <hr class="dropdown-divider">
-          </li>
-          <li><a class="dropdown-item" href="/logout">Logout</a></li>
-        </ul>
-      </div>
-    </div>
     <div class="main flex-column d-flex justify-content-between">
       <div class="content container-fluid">
-
-        <button type="button" class="badge bkcolor text-white p-0" style="border: none;" onclick="topFunction()" id="scrollUpButton">↑</button>
 
         {{block "content" .}}
 
@@ -117,26 +106,6 @@
         new bootstrap.Tooltip(tooltipTriggerEl)
       })
     })()
-
-    // Get the button
-    var mybutton = document.getElementById("scrollUpButton");
-
-    // When the user scrolls down x px from the top of the document, show the button
-    window.onscroll = function () { scrollFunction() };
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 1200 || document.documentElement.scrollTop > 1200) {
-            mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
-        }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }
 
   </script>
 

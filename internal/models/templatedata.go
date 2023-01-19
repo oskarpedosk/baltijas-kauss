@@ -8,6 +8,7 @@ type TemplateData struct {
 	IntMap          map[string]int
 	FuncMap         map[string]any
 	Data            map[string]interface{}
+	IntSlice        []int
 	CSRFToken       string
 	Flash           string
 	Warning         string

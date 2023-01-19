@@ -5,8 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"math/rand"
 	"net/http"
+	"regexp"
 	"sort"
 	"strconv"
 	"strings"
@@ -497,6 +499,36 @@ func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "nba_home.page.tmpl", &models.TemplateData{})
 }
 
+// Player is the single player handler
+func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
+	exploded := strings.Split(r.RequestURI, "/")
+	id, err := strconv.Atoi(exploded[3])
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	player, err := m.DB.GetNBAPlayerByID(id)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	teams, err := m.DB.GetNBATeamInfo()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["player"] = player
+	data["teams"] = teams
+
+	render.Template(w, r, "player.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
+}
+
 func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	if r.FormValue("action") == "update" {
 		playerID, err := strconv.Atoi(r.FormValue("player_id"))
@@ -525,15 +557,39 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	page := 1
+	perPage := 30
+	// Get page number
+	re := regexp.MustCompile(`\/page=(\d+)`)
+	match := re.FindStringSubmatch(r.RequestURI)
+	if len(match) > 1 {
+		page, _ = strconv.Atoi(match[1])
+	}
+
+	// Calculate total pages
+	totalRows, err := m.DB.CountPlayers()
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	totalPages := math.Ceil(float64(totalRows) / float64(perPage))
+
+	// Calculate offset
+	offset := (page - 1) * perPage
+
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-	players, err := m.DB.GetNBAPlayersWithBadges()
+	players, err := m.DB.GetNBAPlayersWithoutBadges(offset)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
+	}
+
+	ranking := []int{}
+	for i := 1; i <= len(players); i++ {
+		ranking = append(ranking, i+offset)
 	}
 	/* badges, err := m.DB.GetNBABadges()
 	if err != nil {
@@ -548,6 +604,13 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["nba_players"] = players
 	data["nba_teams"] = teams
+	data["ranking"] = ranking
+	data["pagination"] = models.PaginationData{
+		NextPage:     page + 1,
+		PreviousPage: page - 1,
+		CurrentPage:  page,
+		TotalPages:   int(totalPages),
+	}
 	// data["nba_badges"] = badges
 	// data["nba_players_badges"] = playersBadges
 
@@ -653,7 +716,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	players, err := m.DB.GetNBAPlayersWithoutBadges(1)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -711,7 +774,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		players, err := m.DB.GetNBAPlayersWithoutBadges()
+		players, err := m.DB.GetNBAPlayersWithoutBadges(1)
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
@@ -951,7 +1014,7 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 
-	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	players, err := m.DB.GetNBAPlayersWithoutBadges(1)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -981,7 +1044,7 @@ func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
-	players, err := m.DB.GetNBAPlayersWithoutBadges()
+	players, err := m.DB.GetNBAPlayersWithoutBadges(1)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return

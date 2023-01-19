@@ -28,7 +28,9 @@ func routes(app *config.AppConfig) http.Handler {
 		
 		mux.Get("/nba", handlers.Repo.NBAHome)
 
+		mux.Get("/nba/{src}/{id}", handlers.Repo.Player)
 		mux.Get("/nba/players", handlers.Repo.NBAPlayers)
+		mux.Get("/nba/players/page={page}", handlers.Repo.NBAPlayers)
 		mux.Post("/nba/players", handlers.Repo.PostNBAPlayers)
 
 		mux.Get("/nba/teams", handlers.Repo.NBATeams)
@@ -36,8 +38,8 @@ func routes(app *config.AppConfig) http.Handler {
 		// mux.Post("/nba/teams-json", handlers.Repo.NBATeamsAvailabilityJSON)
 		mux.Get("/nba/team-info-summary", handlers.Repo.NBATeamInfoSummary)
 
-		mux.Get("/nba/results", handlers.Repo.NBAResults)
-		mux.Post("/nba/results", handlers.Repo.PostNBAResults)
+		mux.Get("/nba/standings", handlers.Repo.NBAResults)
+		mux.Post("/nba/standings", handlers.Repo.PostNBAResults)
 
 		mux.Get("/nba/draft", handlers.Repo.NBADraft)
 		mux.Get("/ws", handlers.Repo.WsEndPoint)
@@ -51,18 +53,9 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/nba_teams", handlers.Repo.AdminNBATeams)
 		mux.Get("/nba_players", handlers.Repo.AdminNBAPlayers)
 		mux.Get("/{src}/{id}", handlers.Repo.AdminShowNBAPlayer)
-		mux.Get("/nba_results", handlers.Repo.AdminNBAResults)
+		mux.Get("/nba_standings", handlers.Repo.AdminNBAResults)
 		
 	})
 
 	return mux
 }
-
-
-/*teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.NBATeamInfo)
-	if !ok {
-		m.App.ErrorLog.Println("Can't get error from session")
-		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
-		http.Redirect(w, r, "/nba/teams", http.StatusTemporaryRedirect)
-		return
-	}*/

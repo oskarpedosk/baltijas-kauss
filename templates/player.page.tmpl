@@ -1,0 +1,20 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {{$player := index .Data "player"}}
+            {{$player.FirstName}}
+            {{$player.LastName}}
+        </div>
+    </div>
+</div>
+
+{{end}}
+
+{{define "js"}}
+
+
+{{end}}

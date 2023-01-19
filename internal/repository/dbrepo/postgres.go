@@ -389,8 +389,27 @@ func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
 	return players, nil
 }
 
+func (m *postgresDBRepo) CountPlayers() (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	select count(*)
+	from
+		"nba_players"
+	`
+	var count int
+	rows := m.DB.QueryRowContext(ctx, query)
+	err := rows.Scan(&count)
+	if err != nil {
+		return count, err
+	}
+
+	return count, nil
+}
+
 // Display all NBA players without badges
-func (m *postgresDBRepo) GetNBAPlayersWithoutBadges() ([]models.NBAPlayer, error) {
+func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(offset int) ([]models.NBAPlayer, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -404,9 +423,11 @@ func (m *postgresDBRepo) GetNBAPlayersWithoutBadges() ([]models.NBAPlayer, error
 	order by
 		"stats/Overall" desc,
 		"stats/Total Attributes" desc
+	limit 30
+	offset $1
 	`
 
-	rows, err := m.DB.QueryContext(ctx, query)
+	rows, err := m.DB.QueryContext(ctx, query, offset)
 	if err != nil {
 		return players, err
 	}

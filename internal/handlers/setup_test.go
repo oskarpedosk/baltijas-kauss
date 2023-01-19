@@ -15,6 +15,7 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/justinas/nosurf"
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
+	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
@@ -52,7 +53,7 @@ func getRoutes() http.Handler {
 	app.TemplateCache = templateCache
 	app.UseCache = true
 
-	repo := NewRepo(&app)
+	repo := NewRepo(&app, &driver.DB{})
 	NewHandlers(repo)
 	render.NewRenderer(&app)
 

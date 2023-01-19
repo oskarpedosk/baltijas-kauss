@@ -202,15 +202,15 @@
                   <p class="m-0"><span {{if ge $players.StatsOverall 81}}
                                         {{if ge $players.StatsOverall 86}}
                                           {{if ge $players.StatsOverall 91}}
-                                            class="fw-semibold" style="color: #ce00f2;"
+                                            class="overall1"
                                           {{else}}
-                                            class="fw-semibold" style="color: #0059ff;"
+                                            class="overall2"
                                           {{end}}
                                         {{else}}
-                                          class="fw-semibold" style="color: #e52848;"
+                                          class="overall3"
                                         {{end}}
                                       {{else}}
-                                        class="fw-semibold" style="color: #3f9d25;"
+                                        class="overall4"
                                       {{end}}>{{$players.StatsOverall}}</span> {{$players.FirstName}} {{$players.LastName}}</p>
                                     </div>
                                     <i id="{{$players.PlayerID}}-star" class="far fa-star pointer" style="margin-top: 3px; position: absolute; z-index: 100; top: 7px; right: 13px; {{if $players.TeamID.Valid}}display: none;{{end}}"></i>
@@ -318,7 +318,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    socket = new ReconnectingWebSocket("wss://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
+    socket = new ReconnectingWebSocket("ws://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
 
     const online = `<span class="badge bg-success">Connected</span>`
     const offline = `<span class="badge bg-danger">Not connected</span>`

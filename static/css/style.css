@@ -38,12 +38,73 @@ html {
 }
 
 .footer-img {
-    max-height: 50px;
+    max-height: 40px;
     max-width: 100%;
 }
 
 .bkcolor {
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
+}
+
+.playerbadge {
+    font-size: 16px; 
+    font-weight: 400;
+    width: 30px;
+}
+
+.player-link {
+    text-decoration: none;
+    color: black;
+}
+
+.player-link:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.bronze {
+    color: black;
+    background-color: #b26648;
+}
+
+.silver {
+    color: black;
+    background-color: #cacaca;
+}
+
+.gold {
+    color: black;
+    background-color: #edc537;
+}
+
+.hof {
+    color: black;
+    background-color: #9b5ec7;
+}
+
+.total {
+    color: white;
+    background-color: rgb(55, 55, 55);
+}
+
+.overall1 {
+    color: #ce00f2;
+    font-weight: 600;
+}
+
+.overall2 {
+    color: #0059ff;
+    font-weight: 600;
+}
+
+.overall3 {
+    color: #e52848;
+    font-weight: 600;
+}
+
+.overall4 {
+    color: #3f9d25;
+    font-weight: 600;
 }
 
 .badgecolor1 {
@@ -56,14 +117,6 @@ html {
 
 .badgecolor3 {
     background-image: linear-gradient(90deg, #cf0000, #e82727);
-}
-
-.sidebar ul li:hover {
-    background-image: linear-gradient(90deg, #8100ff, #e002ff);
-}
-
-.sidebar ul li img:hover {
-    filter: brightness(0) invert(1);
 }
 
 .logo-white {
@@ -101,8 +154,8 @@ html {
 .header-image {
     object-fit: cover;
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
+    height: 40px;
+    width: 40px;
 }
 
 .player-card {
@@ -165,39 +218,27 @@ html {
 }
 
 @media (max-width:768px) {
+    #players_table table th:nth-child(1),
     #players_table table th:nth-child(2),
-    #players_table table th:nth-child(5),
+    #players_table table th:nth-child(6),
     #players_table table th:nth-child(7),
     #players_table table th:nth-child(8),
+    #players_table table th:nth-child(9),
     #players_table table th:nth-child(10),
     #players_table table th:nth-child(11),
     #players_table table th:nth-child(12),
     #players_table table th:nth-child(13),
-    #players_table table th:nth-child(14),
-    #players_table table th:nth-child(15),
-    #players_table table th:nth-child(16),
-    #players_table table th:nth-child(17),
-    #players_table table th:nth-child(18),
-    #players_table table th:nth-child(21),
-    #players_table table th:nth-child(22),
-    #players_table table th:nth-child(23),
 
+    #players_table table td:nth-child(1),
     #players_table table td:nth-child(2),
-    #players_table table td:nth-child(5),
+    #players_table table td:nth-child(6),
     #players_table table td:nth-child(7),
     #players_table table td:nth-child(8),
+    #players_table table td:nth-child(9),
     #players_table table td:nth-child(10),
     #players_table table td:nth-child(11),
     #players_table table td:nth-child(12),
     #players_table table td:nth-child(13),
-    #players_table table td:nth-child(14),
-    #players_table table td:nth-child(15),
-    #players_table table td:nth-child(16),
-    #players_table table td:nth-child(17),
-    #players_table table td:nth-child(18),
-    #players_table table td:nth-child(21),
-    #players_table table td:nth-child(22),
-    #players_table table td:nth-child(23),
 
     #season_results th:nth-child(3),
     #season_results th:nth-child(7),

@@ -5,22 +5,11 @@ import (
 	"time"
 )
 
-type Duration int64
-
-type runtimeTimer struct {
-	pp       uintptr
-	when     int64
-	period   int64
-	f        func(any, uintptr) // NOTE: must not be closure
-	arg      any
-	seq      uintptr
-	nextwhen int64
-	status   uint32
-}
-
-type Timer struct {
-	C <-chan time.Time
-	r runtimeTimer
+type PaginationData struct {
+	NextPage     int
+	PreviousPage int
+	CurrentPage  int
+	TotalPages   int
 }
 
 type NBATeamInfo struct {
