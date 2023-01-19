@@ -10,6 +10,8 @@ type PaginationData struct {
 	PreviousPage int
 	CurrentPage  int
 	TotalPages   int
+	TwoBefore    int
+	TwoAfter     int
 }
 
 type NBATeamInfo struct {

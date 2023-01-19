@@ -610,6 +610,8 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		PreviousPage: page - 1,
 		CurrentPage:  page,
 		TotalPages:   int(totalPages),
+		TwoBefore:    page - 2,
+		TwoAfter:     page + 2,
 	}
 	// data["nba_badges"] = badges
 	// data["nba_players_badges"] = playersBadges
