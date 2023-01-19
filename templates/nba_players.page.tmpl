@@ -130,27 +130,7 @@
                 </tbody>
             </table>
             <div class="row">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        {{ if (gt .Data.pagination.CurrentPage 1)}}
-                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.PreviousPage}}">Previous</a></li>
-                        {{end}}
-
-                        {{ if (gt .Data.pagination.CurrentPage 1)}}
-                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.PreviousPage}}">{{.Data.pagination.PreviousPage}}</a></li>
-                        {{end}}
-
-                        <li class="page-item"><a class="page-link active" href="#">{{.Data.pagination.CurrentPage}}</a></li>
-
-                        {{ if (lt .Data.pagination.CurrentPage .Data.pagination.TotalPages)}}
-                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.NextPage}}">{{.Data.pagination.NextPage}}</a></li>
-                        {{end}}
-
-                        {{ if (lt .Data.pagination.CurrentPage .Data.pagination.TotalPages)}}
-                        <li class="page-item"><a class="page-link" href="/nba/players/page={{.Data.pagination.NextPage}}">Next</a></li>
-                        {{end}}
-                    </ul>
-                </nav>
+                {{ template "pagination" .}}
             </div>
         </div>
         

@@ -389,15 +389,12 @@ func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
 	return players, nil
 }
 
-func (m *postgresDBRepo) CountPlayers() (int, error) {
+func (m *postgresDBRepo) CountRows(tableName string) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	query := `
-	select count(*)
-	from
-		"nba_players"
-	`
+	query := fmt.Sprintf(`select count(*) from %s`, tableName)
+
 	var count int
 	rows := m.DB.QueryRowContext(ctx, query)
 	err := rows.Scan(&count)
@@ -408,8 +405,33 @@ func (m *postgresDBRepo) CountPlayers() (int, error) {
 	return count, nil
 }
 
+func (m *postgresDBRepo) GetPaginationData(page int, perPage int, tableName string, baseURL string) (models.PaginationData, error) {
+	// Calculate total pages
+	totalRows, err := m.CountRows(tableName)
+	if err != nil {
+		return models.PaginationData{}, err
+	}
+	totalPages := math.Ceil(float64(totalRows) / float64(perPage))
+
+	// Calculate offset
+	offset := (page - 1) * perPage
+
+	pagination := models.PaginationData{
+		NextPage:     page + 1,
+		PreviousPage: page - 1,
+		CurrentPage:  page,
+		TotalPages:   int(totalPages),
+		TwoBefore:    page - 2,
+		TwoAfter:     page + 2,
+		ThreeAfter:   page + 3,
+		Offset:       offset,
+		BaseURL:      baseURL,
+	}
+	return pagination, nil
+}
+
 // Display all NBA players without badges
-func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(offset int) ([]models.NBAPlayer, error) {
+func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(perPage int, offset int) ([]models.NBAPlayer, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -423,11 +445,11 @@ func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(offset int) ([]models.NBAPla
 	order by
 		"stats/Overall" desc,
 		"stats/Total Attributes" desc
-	limit 30
-	offset $1
+	limit $1
+	offset $2
 	`
 
-	rows, err := m.DB.QueryContext(ctx, query, offset)
+	rows, err := m.DB.QueryContext(ctx, query, perPage, offset)
 	if err != nil {
 		return players, err
 	}

@@ -7,7 +7,7 @@ type DatabaseRepo interface {
 
 	GetNBATeamInfo() ([]models.NBATeam, error)
 	GetNBAPlayersWithBadges() ([]models.NBAPlayer, error)
-	GetNBAPlayersWithoutBadges(offset int) ([]models.NBAPlayer, error)
+	GetNBAPlayersWithoutBadges(perPage int, offset int) ([]models.NBAPlayer, error)
 	UpdateNBATeamInfo(team models.NBATeamInfo) error
 	AddNBAPlayer(playerID, teamID int) error
 	DropNBAPlayer(playerID int) error
@@ -26,7 +26,8 @@ type DatabaseRepo interface {
 	UpdateNBAResult(res models.Result) error
 	DeleteNBAResult(res models.Result) error
 
-	CountPlayers() (count int, err error)
+	CountRows(tableName string) (count int, err error)
+	GetPaginationData(page int, perPage int, tableName string, baseURL string) (models.PaginationData, error)
 	GetUserByID(id int) (models.User, error)
 	UpdateUser(u models.User) error
 	Authenticate(email, testPassword string) (int, string, int, error)

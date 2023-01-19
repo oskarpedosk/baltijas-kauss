@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"math"
 	"math/rand"
 	"net/http"
 	"regexp"
@@ -558,7 +557,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	page := 1
-	perPage := 30
+	perPage := 20
 	// Get page number
 	re := regexp.MustCompile(`\/page=(\d+)`)
 	match := re.FindStringSubmatch(r.RequestURI)
@@ -566,22 +565,18 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		page, _ = strconv.Atoi(match[1])
 	}
 
-	// Calculate total pages
-	totalRows, err := m.DB.CountPlayers()
+	pagination, err := m.DB.GetPaginationData(page, perPage, "nba_players", "/nba/players")
 	if err != nil {
 		helpers.ServerError(w, err)
+		return
 	}
-	totalPages := math.Ceil(float64(totalRows) / float64(perPage))
-
-	// Calculate offset
-	offset := (page - 1) * perPage
 
 	teams, err := m.DB.GetNBATeamInfo()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-	players, err := m.DB.GetNBAPlayersWithoutBadges(offset)
+	players, err := m.DB.GetNBAPlayersWithoutBadges(perPage, pagination.Offset)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -589,7 +584,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 
 	ranking := []int{}
 	for i := 1; i <= len(players); i++ {
-		ranking = append(ranking, i+offset)
+		ranking = append(ranking, i+pagination.Offset)
 	}
 	/* badges, err := m.DB.GetNBABadges()
 	if err != nil {
@@ -605,14 +600,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	data["nba_players"] = players
 	data["nba_teams"] = teams
 	data["ranking"] = ranking
-	data["pagination"] = models.PaginationData{
-		NextPage:     page + 1,
-		PreviousPage: page - 1,
-		CurrentPage:  page,
-		TotalPages:   int(totalPages),
-		TwoBefore:    page - 2,
-		TwoAfter:     page + 2,
-	}
+	data["pagination"] = pagination
 	// data["nba_badges"] = badges
 	// data["nba_players_badges"] = playersBadges
 
@@ -718,7 +706,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	players, err := m.DB.GetNBAPlayersWithoutBadges(1)
+	players, err := m.DB.GetNBAPlayersWithoutBadges(150, 0)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -776,7 +764,7 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		players, err := m.DB.GetNBAPlayersWithoutBadges(1)
+		players, err := m.DB.GetNBAPlayersWithoutBadges(150, 0)
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
@@ -1016,7 +1004,7 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 
-	players, err := m.DB.GetNBAPlayersWithoutBadges(1)
+	players, err := m.DB.GetNBAPlayersWithoutBadges(120, 0)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -1046,7 +1034,7 @@ func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
-	players, err := m.DB.GetNBAPlayersWithoutBadges(1)
+	players, err := m.DB.GetNBAPlayersWithoutBadges(120, 0)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return

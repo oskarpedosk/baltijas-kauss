@@ -52,6 +52,12 @@ html {
     width: 30px;
 }
 
+.playerbadgebig {
+    font-size: 25px; 
+    font-weight: 300;
+    width: 40px;
+}
+
 .player-link {
     text-decoration: none;
     color: black;
@@ -105,6 +111,42 @@ html {
 .overall4 {
     color: #3f9d25;
     font-weight: 600;
+}
+
+.attribute1 {
+    color: white;
+    padding: 3px;
+    background-color: #13a335;
+}
+
+.attribute2 {
+    color: white;
+    padding: 3px;
+    background-color: #09631e;
+}
+
+.attribute3 {
+    color: white;
+    padding: 3px;
+    background-color: #b6ad00;
+}
+
+.attribute4 {
+    color: white;
+    padding: 3px;
+    background-color: #b37700;
+}
+
+.attribute5 {
+    color: white;
+    padding: 3px;
+    background-color: #b90600;
+}
+
+.attribute6 {
+    color: white;
+    padding: 3px;
+    background-color: #1c1c1c;
 }
 
 .badgecolor1 {

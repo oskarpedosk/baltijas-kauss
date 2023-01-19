@@ -4,11 +4,167 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            {{$player := index .Data "player"}}
-            {{$player.FirstName}}
-            {{$player.LastName}}
+        <div class="col-md-2">
+            <img class="img-fluid" src="{{.Data.player.ImgUrl}}" alt="">
         </div>
+        <div class="col-md-10 align-self-end">
+            <h1 class="mb-0">{{.Data.player.FirstName}} {{.Data.player.LastName}}</h1>
+            <p>{{.Data.player.Archetype}}</p>
+        </div>
+    </div>
+    <div class="row bg-light pt-1">
+        <div class="col-md-2 py-2 px-3">
+            <p class="overall1 mb-0" style="font-size: 25px;">{{.Data.player.StatsOverall}}</p>
+            <p class="mb-1">Overall Rating</p>
+        </div>
+        <div class="col-md-3 py-2 px-3">
+            <p class="mb-0 fw-light" style="font-size: 25px;">Feb 28, 1999 (23)</p>
+            <p class="mb-1">Birthdate</p>
+        </div>
+        <div class="col-md-2 py-2 px-3">
+            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.PrimaryPosition}}{{if .Data.player.SecondaryPosition}}/{{end}}{{.Data.player.SecondaryPosition}}</p>
+            <p class="mb-1">Positions</p>
+        </div>
+        <div class="col-md-2 py-2 px-3">
+            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Height}}cm</p>
+            <p class="mb-1">Height</p>
+        </div>
+        <div class="col-md-2 py-2 px-3">
+            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Weight}}kg</p>
+            <p class="mb-1">Weight</p>
+        </div>
+    </div>
+    <div class="row bg-light">
+        <div class="col-md-2 py-2 px-3">
+            <p class="mb-0 fw-semibold" style="font-size: 25px;">HIPO</p>
+            <p class="mb-1">Team</p>
+        </div>
+        <div class="col-md-3 py-2 px-3">
+            <p class="mb-1" style="margin-top: 2px;">
+                <span class="playerbadgebig badge badge-pill p-1 bronze">{{.Data.player.BronzeBadgesCount}}</span>
+                <span class="playerbadgebig badge badge-pill p-1 silver">{{.Data.player.SilverBadgesCount}}</span>
+                <span class="playerbadgebig badge badge-pill p-1 gold">{{.Data.player.GoldBadgesCount}}</span>
+                <span class="playerbadgebig badge badge-pill p-1 hof">{{.Data.player.HOFBadgesCount}}</span>
+                <span class="playerbadgebig badge badge-pill p-1 total">{{.Data.player.TotalBadgesCount}}</span>
+                </p>
+                <p class="mb-1">Badges</p>
+        </div>
+        <div class="col-md-4 py-2 px-3">
+            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.NBATeam}}</p>
+            <p class="mb-1">NBA Team</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="row py-3">
+                <div class="col bg-light p-3">
+                    <img class="my-2" style="height: 25px;" src="/static/images/flags/unitedstates.webp" alt="">
+                    <p class="mb-1">Nationality</p>
+                </div>
+            </div>
+            <div class="row py-3">
+                <div class="col bg-light p-3">
+                    <p class="mb-0" style="font-size: 25px;">{{.Data.player.StatsPotential}}</p>
+                    <p class="mb-1">Potential</p>
+                </div>
+            </div>
+            <div class="row py-3">
+                <div class="col bg-light p-3">
+                    <p class="mb-0" style="font-size: 25px;">{{.Data.player.StatsIntangibles}}</p>
+                    <p class="mb-1">Intangibles</p>
+                </div>
+            </div>
+            <div class="row py-3">
+                <div class="col bg-light p-3">
+                    <p class="mb-0" style="font-size: 25px;">{{.Data.player.StatsTotalAttributes}}</p>
+                    <p class="mb-1">Total Attributes</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-4 p-3">
+                    <div class="bg-light p-3">
+                        <p><span class="rounded-1 attribute1">{{.Data.player.StatsOutsideScoring}}</span> Outside Scoring</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsCloseShot}}</span> Close Shot</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsMidRangeShot}}</span> Mid-Range Shot</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsThreePointShot}}</span> Three-Point Shot</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsFreeThrow}}</span> Free Throw</p>
+                        <p class="mb-1"><span class="rounded-1 attribute3">{{.Data.player.StatsShotIQ}}</span> Shot IQ</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsOffensiveConsistency}}</span> Offensive Consistency</p>
+                        <br class="mb-1">
+                        <br class="mb-1">
+                    </div>
+                </div>
+                <div class="col-md-4 p-3">
+                    <div class="bg-light p-3">
+                        <p><span class="rounded-1 attribute1">{{.Data.player.StatsInsideScoring}}</span> Inside Scoring</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsLayup}}</span> Layup</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsStandingDunk}}</span> Standing Dunk</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsDrivingDunk}}</span> Driving Dunk</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsPostHook}}</span> Post Hook</p>
+                        <p class="mb-1"><span class="rounded-1 attribute5">{{.Data.player.StatsPostFade}}</span> Post Fade</p>
+                        <p class="mb-1"><span class="rounded-1 attribute4">{{.Data.player.StatsPostControl}}</span> Post Control</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsDrawFoul}}</span> Draw Foul</p>
+                        <p class="mb-1"><span class="rounded-1 attribute3">{{.Data.player.StatsHands}}</span> Hands</p>
+                    </div>
+                </div>
+                <div class="col-md-4 p-3">
+                    <div class="bg-light p-3">
+                        <p><span class="rounded-1 attribute1">{{.Data.player.StatsDefending}}</span> Defending</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsInteriorDefense}}</span> Interior Defense</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsPerimeterDefense}}</span> Perimeter Defense</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsSteal}}</span> Steal</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsBlock}}</span> Block</p>
+                        <p class="mb-1"><span class="rounded-1 attribute3">{{.Data.player.StatsLateralQuickness}}</span> Lateral Quickness</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsHelpDefenseIQ}}</span> Help Defense IQ</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsPassPerception}}</span> Pass Perception</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsDefensiveConsistency}}</span> Defensive Consistency</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 p-3">
+                    <div class="bg-light p-3">
+                        <p><span class="rounded-1 attribute1">{{.Data.player.StatsAthleticism}}</span> Atheliticism</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsSpeed}}</span> Speed</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsAcceleration}}</span> Acceleration</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsStrength}}</span> Strength</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsVertical}}</span> Vertical</p>
+                        <p class="mb-1"><span class="rounded-1 attribute5">{{.Data.player.StatsStamina}}</span> Stamina</p>
+                        <p class="mb-1"><span class="rounded-1 attribute4">{{.Data.player.StatsHustle}}</span> Hustle</p>
+                        <p class="mb-1"><span class="rounded-1 attribute6">{{.Data.player.StatsOverallDurability}}</span> Overall Durability</p>
+                    </div>
+                </div>
+                <div class="col-md-4 p-3">
+                    <div class="bg-light p-3">
+                        <p><span class="rounded-1 attribute1">{{.Data.player.StatsPlaymaking}}</span> Playmaking</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsPassAccuracy}}</span> Pass Accuraccy</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsBallHandle}}</span> Ball Handle</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsSpeedWithBall}}</span> Speed With Ball</p>
+                        <p class="mb-1"><span class="rounded-1 attribute2">{{.Data.player.StatsPassIQ}}</span> Pass IQ</p>
+                        <p class="mb-1"><span class="rounded-1 attribute3">{{.Data.player.StatsPassVision}}</span> Pass Vision</p>
+                        <br class="mb-1">
+                        <br class="mb-1">
+                    </div>
+                </div>
+                <div class="col-md-4 p-3">
+                    <div class="bg-light p-3">
+                        <p><span class="rounded-1 attribute1">{{.Data.player.StatsRebounding}}</span> Rebounding</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsOffensiveRebound}}</span> Offensive Rebound</p>
+                        <p class="mb-1"><span class="rounded-1 attribute1">{{.Data.player.StatsDefensiveRebound}}</span> Defensive Rebound</p>
+                        <br class="mb-1">
+                        <br class="mb-1">
+                        <br class="mb-1">
+                        <br class="mb-1">
+                        <br class="mb-1">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2 bg-light">
+        <h1>BADGES</h1>
     </div>
 </div>
 
