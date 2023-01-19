@@ -113,39 +113,39 @@ html {
     font-weight: 600;
 }
 
-.attribute1 {
+.attribute-badge {
     color: white;
-    padding: 4px;
+    font-size: 16px;
+    font-weight: 400;
+    padding: 1px;
+    width: 30px;
+    display: inline-block;
+    text-align:center;
+    white-space:nowrap;
+    vertical-align:baseline;
+}
+
+.attribute1 {
     background-color: #13a335;
 }
 
 .attribute2 {
-    color: white;
-    padding: 4px;
     background-color: #09631e;
 }
 
 .attribute3 {
-    color: white;
-    padding: 4px;
     background-color: #caab00;
 }
 
 .attribute4 {
-    color: white;
-    padding: 4px;
     background-color: #de8107;
 }
 
 .attribute5 {
-    color: white;
-    padding: 4px;
     background-color: #b90600;
 }
 
 .attribute6 {
-    color: white;
-    padding: 4px;
     background-color: #1c1c1c;
 }
 
