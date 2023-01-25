@@ -1,0 +1,3 @@
+drop_foreign_key("standings", "home_team_id_fk_key", {})
+
+drop_foreign_key("standings", "away_team_id_fk_key", {})

@@ -58,6 +58,12 @@ html {
     width: 40px;
 }
 
+.team-badge {
+    font-size: 25px; 
+    font-weight: 600;
+    width: 80px;
+}
+
 .player-link {
     text-decoration: none;
     color: black;
@@ -120,25 +126,26 @@ html {
     padding: 1px;
     width: 30px;
     display: inline-block;
-    text-align:center;
-    white-space:nowrap;
-    vertical-align:baseline;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 3px;
 }
 
 .attribute1 {
-    background-color: #13a335;
-}
-
-.attribute2 {
     background-color: #09631e;
 }
 
+.attribute2 {
+    background-color: #13a335;
+}
+
 .attribute3 {
-    background-color: #caab00;
+    background-color: #e1c214;
 }
 
 .attribute4 {
-    background-color: #de8107;
+    background-color: #d37700;
 }
 
 .attribute5 {
@@ -196,8 +203,8 @@ html {
 .header-image {
     object-fit: cover;
     border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    height: 45px;
+    width: 45px;
 }
 
 .player-card {

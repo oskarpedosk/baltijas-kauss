@@ -22,7 +22,7 @@ func (m *postgresDBRepo) UpdateNBATeamInfo(team models.NBATeamInfo) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `update nba_teams set name = $2, abbreviation = $3, team_color1 = $4, team_color2 = $5, dark_text = $6 where team_id = $1`
+	stmt := `update teams set name = $2, abbreviation = $3, team_color1 = $4, team_color2 = $5, dark_text = $6 where team_id = $1`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		team.ID,
@@ -45,7 +45,7 @@ func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `insert into nba_results (home_team_id, home_score, away_score, away_team_id, timestamp) 
+	stmt := `insert into standings (home_team_id, home_score, away_score, away_team_id, timestamp) 
 	values ($1, $2, $3, $4, CURRENT_TIMESTAMP)`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
@@ -69,7 +69,7 @@ func (m *postgresDBRepo) UpdateNBAResult(res models.Result) error {
 
 	stmt := `
 	update 
-		nba_results
+		standings
 	set 
 		home_team_id = $1,
 		home_score = $2,
@@ -101,7 +101,7 @@ func (m *postgresDBRepo) DeleteNBAResult(res models.Result) error {
 
 	stmt := `
 	delete from 
-		nba_results
+		standings
 	where
 		timestamp = $1
 	`
@@ -118,13 +118,13 @@ func (m *postgresDBRepo) DeleteNBAResult(res models.Result) error {
 }
 
 // Updates NBA player team
-func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
+func (m *postgresDBRepo) UpdateNBAPlayer(player models.Player) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	stmt := `
 	update 
-		nba_players
+		players
 	set 
 		team_id = $2,
 		assigned = $3
@@ -135,7 +135,7 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 	_, err := m.DB.ExecContext(ctx, stmt,
 		player.PlayerID,
 		player.TeamID,
-		player.Assigned,
+		player.AssignedPosition,
 	)
 
 	if err != nil {
@@ -146,14 +146,14 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.NBAPlayer) error {
 }
 
 // Assigns NBA player to a position
-func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
+func (m *postgresDBRepo) AssignNBAPlayer(player models.Player) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	// Remove previous player from position
 	stmt := `
 	update 
-		nba_players
+		players
 	set 
 		assigned = 0
 	where
@@ -164,7 +164,7 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		player.TeamID,
-		player.Assigned,
+		player.AssignedPosition,
 	)
 
 	if err != nil {
@@ -174,7 +174,7 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 	// Add new player to position
 	stmt = `
 	update 
-		nba_players
+		players
 	set 
 		assigned = $3
 	where
@@ -186,7 +186,7 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 	_, err = m.DB.ExecContext(ctx, stmt,
 		player.PlayerID,
 		player.TeamID,
-		player.Assigned,
+		player.AssignedPosition,
 	)
 
 	if err != nil {
@@ -194,199 +194,6 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.NBAPlayer) error {
 	}
 
 	return nil
-}
-
-// Display NBA players with player limit
-func (m *postgresDBRepo) GetNBAPlayersWithBadges() ([]models.NBAPlayer, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	var players []models.NBAPlayer
-
-	query := `
-	select
-		*
-	from 
-		nba_players
-	order by
-		"stats/Overall" desc,
-		"stats/Total Attributes" desc
-	limit
-		$1
-	`
-
-	rows, err := m.DB.QueryContext(ctx, query, playerCount)
-	if err != nil {
-		return players, err
-	}
-
-	defer rows.Close()
-	for rows.Next() {
-		var player models.NBAPlayer
-		err := rows.Scan(
-			&player.PlayerID,
-			&player.FirstName,
-			&player.LastName,
-			&player.PrimaryPosition,
-			&player.SecondaryPosition,
-			&player.Archetype,
-			&player.NBATeam,
-			&player.Height,
-			&player.Weight,
-			&player.ImgUrl,
-			&player.PlayerUrl,
-			&player.TeamID,
-			&player.StatsOverall,
-			&player.StatsOutsideScoring,
-			&player.StatsAthleticism,
-			&player.StatsInsideScoring,
-			&player.StatsPlaymaking,
-			&player.StatsDefending,
-			&player.StatsRebounding,
-			&player.StatsCloseShot,
-			&player.StatsMidRangeShot,
-			&player.StatsThreePointShot,
-			&player.StatsFreeThrow,
-			&player.StatsShotIQ,
-			&player.StatsOffensiveConsistency,
-			&player.StatsSpeed,
-			&player.StatsAcceleration,
-			&player.StatsStrength,
-			&player.StatsVertical,
-			&player.StatsStamina,
-			&player.StatsHustle,
-			&player.StatsOverallDurability,
-			&player.StatsLayup,
-			&player.StatsStandingDunk,
-			&player.StatsDrivingDunk,
-			&player.StatsPostHook,
-			&player.StatsPostFade,
-			&player.StatsPostControl,
-			&player.StatsDrawFoul,
-			&player.StatsHands,
-			&player.StatsPassAccuracy,
-			&player.StatsBallHandle,
-			&player.StatsSpeedWithBall,
-			&player.StatsPassIQ,
-			&player.StatsPassVision,
-			&player.StatsInteriorDefense,
-			&player.StatsPerimeterDefense,
-			&player.StatsSteal,
-			&player.StatsBlock,
-			&player.StatsLateralQuickness,
-			&player.StatsHelpDefenseIQ,
-			&player.StatsPassPerception,
-			&player.StatsDefensiveConsistency,
-			&player.StatsOffensiveRebound,
-			&player.StatsDefensiveRebound,
-			&player.StatsIntangibles,
-			&player.StatsPotential,
-			&player.StatsTotalAttributes,
-			&player.BronzeBadgesCount,
-			&player.SilverBadgesCount,
-			&player.GoldBadgesCount,
-			&player.HOFBadgesCount,
-			&player.TotalBadgesCount,
-			&player.Assigned,
-		)
-		if err != nil {
-			return players, err
-		}
-
-		query2 := `
-		select 
-			"badge_id", "level"
-		from 
-			nba_players_badges
-		where
-			"player_id" = $1
-		`
-
-		rows, err := m.DB.QueryContext(ctx, query2, player.PlayerID)
-		if err != nil {
-			return players, err
-		}
-
-		bronzeBadges := player.BronzeBadges
-		silverBadges := player.SilverBadges
-		goldBadges := player.GoldBadges
-		hofBadges := player.HOFBadges
-
-		defer rows.Close()
-		for rows.Next() {
-			var badge models.PlayersBadges
-			err := rows.Scan(
-				&badge.BadgeID,
-				&badge.Level,
-			)
-			if err != nil {
-				return players, err
-			}
-
-			query3 := `
-			select 
-				*
-			from 
-				nba_badges
-			where
-				"badge_id" = $1
-			`
-
-			rows, err := m.DB.QueryContext(ctx, query3, badge.BadgeID)
-			if err != nil {
-				return players, err
-			}
-
-			defer rows.Close()
-			for rows.Next() {
-				var playerBadge models.Badge
-				err := rows.Scan(
-					&playerBadge.BadgeID,
-					&playerBadge.Name,
-					&playerBadge.Type,
-					&playerBadge.Info,
-					&playerBadge.BronzeUrl,
-					&playerBadge.SilverUrl,
-					&playerBadge.GoldUrl,
-					&playerBadge.HOFUrl,
-				)
-				if err != nil {
-					return players, err
-				}
-
-				if badge.Level == "Bronze" {
-					bronzeBadges = append(bronzeBadges, playerBadge)
-				}
-				if badge.Level == "Silver" {
-					silverBadges = append(silverBadges, playerBadge)
-				}
-				if badge.Level == "Gold" {
-					goldBadges = append(goldBadges, playerBadge)
-				}
-				if badge.Level == "HOF" {
-					hofBadges = append(hofBadges, playerBadge)
-				}
-
-			}
-
-			player.BronzeBadges = bronzeBadges
-			player.SilverBadges = silverBadges
-			player.GoldBadges = goldBadges
-			player.HOFBadges = hofBadges
-
-			if err = rows.Err(); err != nil {
-				return players, err
-			}
-
-		}
-
-		if err = rows.Err(); err != nil {
-			return players, err
-		}
-		players = append(players, player)
-	}
-
-	return players, nil
 }
 
 func (m *postgresDBRepo) CountRows(tableName string) (int, error) {
@@ -431,20 +238,20 @@ func (m *postgresDBRepo) GetPaginationData(page int, perPage int, tableName stri
 }
 
 // Display all NBA players without badges
-func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(perPage int, offset int) ([]models.NBAPlayer, error) {
+func (m *postgresDBRepo) GetPlayers(perPage int, offset int) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	var players []models.NBAPlayer
+	var players []models.Player
 
 	query := `
 	select
 		*
 	from 
-		nba_players
+		players
 	order by
-		"stats/Overall" desc,
-		"stats/Total Attributes" desc
+		"overall" desc,
+		"attributes/TotalAttributes" desc
 	limit $1
 	offset $2
 	`
@@ -456,72 +263,78 @@ func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(perPage int, offset int) ([]
 
 	defer rows.Close()
 	for rows.Next() {
-		var player models.NBAPlayer
+		var player models.Player
 		err := rows.Scan(
 			&player.PlayerID,
 			&player.FirstName,
 			&player.LastName,
 			&player.PrimaryPosition,
 			&player.SecondaryPosition,
+			&player.TeamID,
+			&player.AssignedPosition,
 			&player.Archetype,
-			&player.NBATeam,
 			&player.Height,
 			&player.Weight,
-			&player.ImgUrl,
-			&player.PlayerUrl,
-			&player.TeamID,
-			&player.StatsOverall,
-			&player.StatsOutsideScoring,
-			&player.StatsAthleticism,
-			&player.StatsInsideScoring,
-			&player.StatsPlaymaking,
-			&player.StatsDefending,
-			&player.StatsRebounding,
-			&player.StatsCloseShot,
-			&player.StatsMidRangeShot,
-			&player.StatsThreePointShot,
-			&player.StatsFreeThrow,
-			&player.StatsShotIQ,
-			&player.StatsOffensiveConsistency,
-			&player.StatsSpeed,
-			&player.StatsAcceleration,
-			&player.StatsStrength,
-			&player.StatsVertical,
-			&player.StatsStamina,
-			&player.StatsHustle,
-			&player.StatsOverallDurability,
-			&player.StatsLayup,
-			&player.StatsStandingDunk,
-			&player.StatsDrivingDunk,
-			&player.StatsPostHook,
-			&player.StatsPostFade,
-			&player.StatsPostControl,
-			&player.StatsDrawFoul,
-			&player.StatsHands,
-			&player.StatsPassAccuracy,
-			&player.StatsBallHandle,
-			&player.StatsSpeedWithBall,
-			&player.StatsPassIQ,
-			&player.StatsPassVision,
-			&player.StatsInteriorDefense,
-			&player.StatsPerimeterDefense,
-			&player.StatsSteal,
-			&player.StatsBlock,
-			&player.StatsLateralQuickness,
-			&player.StatsHelpDefenseIQ,
-			&player.StatsPassPerception,
-			&player.StatsDefensiveConsistency,
-			&player.StatsOffensiveRebound,
-			&player.StatsDefensiveRebound,
-			&player.StatsIntangibles,
-			&player.StatsPotential,
-			&player.StatsTotalAttributes,
-			&player.BronzeBadgesCount,
-			&player.SilverBadgesCount,
-			&player.GoldBadgesCount,
-			&player.HOFBadgesCount,
-			&player.TotalBadgesCount,
-			&player.Assigned,
+			&player.NBATeam,
+			&player.Nationality,
+			&player.Birthdate,
+			&player.Jersey,
+			&player.Draft,
+			&player.ImgID,
+			&player.RatingsURL,
+			&player.Overall,
+			&player.AttributesOutsideScoring,
+			&player.AttributesAthleticism,
+			&player.AttributesInsideScoring,
+			&player.AttributesPlaymaking,
+			&player.AttributesDefending,
+			&player.AttributesRebounding,
+			&player.AttributesIntangibles,
+			&player.AttributesPotential,
+			&player.AttributesTotalAttributes,
+			&player.AttributesCloseShot,
+			&player.AttributesMidRangeShot,
+			&player.AttributesThreePointShot,
+			&player.AttributesFreeThrow,
+			&player.AttributesShotIQ,
+			&player.AttributesOffensiveConsistency,
+			&player.AttributesSpeed,
+			&player.AttributesAcceleration,
+			&player.AttributesStrength,
+			&player.AttributesVertical,
+			&player.AttributesStamina,
+			&player.AttributesHustle,
+			&player.AttributesOverallDurability,
+			&player.AttributesLayup,
+			&player.AttributesStandingDunk,
+			&player.AttributesDrivingDunk,
+			&player.AttributesPostHook,
+			&player.AttributesPostFade,
+			&player.AttributesPostControl,
+			&player.AttributesDrawFoul,
+			&player.AttributesHands,
+			&player.AttributesPassAccuracy,
+			&player.AttributesBallHandle,
+			&player.AttributesSpeedWithBall,
+			&player.AttributesPassIQ,
+			&player.AttributesPassVision,
+			&player.AttributesInteriorDefense,
+			&player.AttributesPerimeterDefense,
+			&player.AttributesSteal,
+			&player.AttributesBlock,
+			&player.AttributesLateralQuickness,
+			&player.AttributesHelpDefenseIQ,
+			&player.AttributesPassPerception,
+			&player.AttributesDefensiveConsistency,
+			&player.AttributesOffensiveRebound,
+			&player.AttributesDefensiveRebound,
+			&player.BronzeBadges,
+			&player.SilverBadges,
+			&player.GoldBadges,
+			&player.HOFBadges,
+			&player.TotalBadges,
+			&player.CreatedAt,
+			&player.UpdatedAt,
 		)
 		if err != nil {
 			return players, err
@@ -534,17 +347,17 @@ func (m *postgresDBRepo) GetNBAPlayersWithoutBadges(perPage int, offset int) ([]
 }
 
 // Get team info
-func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
+func (m *postgresDBRepo) GetTeams() ([]models.Team, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	var teams []models.NBATeam
+	var teams []models.Team
 
 	query := `
 	select 
 		*
 	from 
-		nba_teams
+		teams
 	order by
 		"team_id" asc
 	`
@@ -556,7 +369,7 @@ func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 
 	defer rows.Close()
 	for rows.Next() {
-		var team models.NBATeam
+		var team models.Team
 		err := rows.Scan(
 			&team.TeamID,
 			&team.Name,
@@ -564,7 +377,9 @@ func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 			&team.Color1,
 			&team.Color2,
 			&team.DarkText,
-			&team.OwnerID,
+			&team.UserID,
+			&team.CreatedAt,
+			&team.UpdatedAt,
 		)
 		if err != nil {
 			return teams, err
@@ -580,7 +395,7 @@ func (m *postgresDBRepo) GetNBATeamInfo() ([]models.NBATeam, error) {
 }
 
 // Display all NBA standings
-func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
+func (m *postgresDBRepo) GetStandings() ([]models.NBAStandings, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -598,7 +413,7 @@ func (m *postgresDBRepo) GetNBAStandings() ([]models.NBAStandings, error) {
 			select 
 				*
 			from 
-				nba_results
+				standings
 			where
 				"home_team_id" = $1 or "away_team_id" = $1
 			order by
@@ -759,7 +574,7 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 			select 
 				*
 			from 
-				nba_results
+				standings
 			order by
 				timestamp asc
 			`
@@ -812,7 +627,7 @@ func (m *postgresDBRepo) DropNBAPlayer(playerID int) error {
 	// Remove team and position
 	stmt := `
 	update 
-		nba_players
+		players
 	set 
 		team_id = null,
 		assigned = 0
@@ -836,7 +651,7 @@ func (m *postgresDBRepo) DropAllNBAPlayers() error {
 
 	stmt := `
 	update 
-		nba_players
+		players
 	set 
 		team_id = null,
 		assigned = 0
@@ -859,7 +674,7 @@ func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
 	// Remove team and position
 	stmt := `
 	update 
-		nba_players
+		players
 	set 
 		team_id = $1,
 		assigned = 0
@@ -877,7 +692,7 @@ func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
 }
 
 // Add a random NBA player directly to a team
-func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.NBAPlayer, error) {
+func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -892,12 +707,12 @@ func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.NBAPlayer, error
 		"primary_position",
 		"secondary_position"
 	from 
-		nba_players
+		players
 	where
 		"team_id" is null
 	order by
-		"stats/Overall" desc,
-		"stats/Total Attributes" desc
+		"overall" desc,
+		"attributes/TotalAttributes" desc
 	limit
 		1
 	offset
@@ -906,7 +721,7 @@ func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.NBAPlayer, error
 
 	row := m.DB.QueryRowContext(ctx, stmt, random)
 
-	var player models.NBAPlayer
+	var player models.Player
 	err := row.Scan(
 		&player.PlayerID,
 		&player.FirstName,
@@ -920,94 +735,6 @@ func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.NBAPlayer, error
 	}
 
 	return player, nil
-}
-
-// Get all NBA badges
-func (m *postgresDBRepo) GetNBABadges() ([]models.Badge, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	var badges []models.Badge
-
-	query := `
-	select 
-		*
-	from 
-		nba_badges
-	`
-
-	rows, err := m.DB.QueryContext(ctx, query)
-	if err != nil {
-		return badges, err
-	}
-
-	defer rows.Close()
-	for rows.Next() {
-		var badge models.Badge
-		err := rows.Scan(
-			&badge.BadgeID,
-			&badge.Name,
-			&badge.Type,
-			&badge.Info,
-			&badge.BronzeUrl,
-			&badge.SilverUrl,
-			&badge.GoldUrl,
-			&badge.HOFUrl,
-		)
-		if err != nil {
-			return badges, err
-		}
-		badges = append(badges, badge)
-	}
-
-	if err = rows.Err(); err != nil {
-		return badges, err
-	}
-
-	return badges, nil
-}
-
-// Get all NBA badges
-func (m *postgresDBRepo) GetNBAPlayersBadges() ([]models.PlayersBadges, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	var playersBadges []models.PlayersBadges
-
-	query := `
-	select 
-		*
-	from 
-		nba_players_badges
-	`
-
-	rows, err := m.DB.QueryContext(ctx, query)
-	if err != nil {
-		return playersBadges, err
-	}
-
-	defer rows.Close()
-	for rows.Next() {
-		var playersBadge models.PlayersBadges
-		err := rows.Scan(
-			&playersBadge.PlayerID,
-			&playersBadge.FirstName,
-			&playersBadge.LastName,
-			&playersBadge.BadgeID,
-			&playersBadge.Name,
-			&playersBadge.Level,
-		)
-		if err != nil {
-			return playersBadges, err
-		}
-		playersBadges = append(playersBadges, playersBadge)
-	}
-
-	if err = rows.Err(); err != nil {
-		return playersBadges, err
-	}
-
-	return playersBadges, nil
 }
 
 // Returns user by ID
@@ -1097,7 +824,7 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 }
 
 // Display NBA player by ID
-func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.NBAPlayer, error) {
+func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -1105,11 +832,11 @@ func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.NBAPlayer, error) {
 	select 
 		*
 	from 
-		nba_players
+		players
 	where
 		"player_id" = $1
 	`
-	var player models.NBAPlayer
+	var player models.Player
 
 	row, err := m.DB.QueryContext(ctx, query, id)
 	if err != nil {
@@ -1124,65 +851,71 @@ func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.NBAPlayer, error) {
 			&player.LastName,
 			&player.PrimaryPosition,
 			&player.SecondaryPosition,
+			&player.TeamID,
+			&player.AssignedPosition,
 			&player.Archetype,
-			&player.NBATeam,
 			&player.Height,
 			&player.Weight,
-			&player.ImgUrl,
-			&player.PlayerUrl,
-			&player.TeamID,
-			&player.StatsOverall,
-			&player.StatsOutsideScoring,
-			&player.StatsAthleticism,
-			&player.StatsInsideScoring,
-			&player.StatsPlaymaking,
-			&player.StatsDefending,
-			&player.StatsRebounding,
-			&player.StatsCloseShot,
-			&player.StatsMidRangeShot,
-			&player.StatsThreePointShot,
-			&player.StatsFreeThrow,
-			&player.StatsShotIQ,
-			&player.StatsOffensiveConsistency,
-			&player.StatsSpeed,
-			&player.StatsAcceleration,
-			&player.StatsStrength,
-			&player.StatsVertical,
-			&player.StatsStamina,
-			&player.StatsHustle,
-			&player.StatsOverallDurability,
-			&player.StatsLayup,
-			&player.StatsStandingDunk,
-			&player.StatsDrivingDunk,
-			&player.StatsPostHook,
-			&player.StatsPostFade,
-			&player.StatsPostControl,
-			&player.StatsDrawFoul,
-			&player.StatsHands,
-			&player.StatsPassAccuracy,
-			&player.StatsBallHandle,
-			&player.StatsSpeedWithBall,
-			&player.StatsPassIQ,
-			&player.StatsPassVision,
-			&player.StatsInteriorDefense,
-			&player.StatsPerimeterDefense,
-			&player.StatsSteal,
-			&player.StatsBlock,
-			&player.StatsLateralQuickness,
-			&player.StatsHelpDefenseIQ,
-			&player.StatsPassPerception,
-			&player.StatsDefensiveConsistency,
-			&player.StatsOffensiveRebound,
-			&player.StatsDefensiveRebound,
-			&player.StatsIntangibles,
-			&player.StatsPotential,
-			&player.StatsTotalAttributes,
-			&player.BronzeBadgesCount,
-			&player.SilverBadgesCount,
-			&player.GoldBadgesCount,
-			&player.HOFBadgesCount,
-			&player.TotalBadgesCount,
-			&player.Assigned,
+			&player.NBATeam,
+			&player.Nationality,
+			&player.Birthdate,
+			&player.Jersey,
+			&player.Draft,
+			&player.ImgID,
+			&player.RatingsURL,
+			&player.Overall,
+			&player.AttributesOutsideScoring,
+			&player.AttributesAthleticism,
+			&player.AttributesInsideScoring,
+			&player.AttributesPlaymaking,
+			&player.AttributesDefending,
+			&player.AttributesRebounding,
+			&player.AttributesIntangibles,
+			&player.AttributesPotential,
+			&player.AttributesTotalAttributes,
+			&player.AttributesCloseShot,
+			&player.AttributesMidRangeShot,
+			&player.AttributesThreePointShot,
+			&player.AttributesFreeThrow,
+			&player.AttributesShotIQ,
+			&player.AttributesOffensiveConsistency,
+			&player.AttributesSpeed,
+			&player.AttributesAcceleration,
+			&player.AttributesStrength,
+			&player.AttributesVertical,
+			&player.AttributesStamina,
+			&player.AttributesHustle,
+			&player.AttributesOverallDurability,
+			&player.AttributesLayup,
+			&player.AttributesStandingDunk,
+			&player.AttributesDrivingDunk,
+			&player.AttributesPostHook,
+			&player.AttributesPostFade,
+			&player.AttributesPostControl,
+			&player.AttributesDrawFoul,
+			&player.AttributesHands,
+			&player.AttributesPassAccuracy,
+			&player.AttributesBallHandle,
+			&player.AttributesSpeedWithBall,
+			&player.AttributesPassIQ,
+			&player.AttributesPassVision,
+			&player.AttributesInteriorDefense,
+			&player.AttributesPerimeterDefense,
+			&player.AttributesSteal,
+			&player.AttributesBlock,
+			&player.AttributesLateralQuickness,
+			&player.AttributesHelpDefenseIQ,
+			&player.AttributesPassPerception,
+			&player.AttributesDefensiveConsistency,
+			&player.AttributesOffensiveRebound,
+			&player.AttributesDefensiveRebound,
+			&player.BronzeBadges,
+			&player.SilverBadges,
+			&player.GoldBadges,
+			&player.HOFBadges,
+			&player.TotalBadges,
+			&player.CreatedAt,
+			&player.UpdatedAt,
 		)
 		if err != nil {
 			return player, err

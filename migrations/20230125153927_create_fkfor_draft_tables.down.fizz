@@ -1,0 +1,1 @@
+drop_foreign_key("draft", "player_id_fk_key", {})

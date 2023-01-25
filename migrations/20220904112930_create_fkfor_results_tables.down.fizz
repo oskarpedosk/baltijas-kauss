@@ -1,3 +1,0 @@
-drop_foreign_key("nba_players_badges", "home_team_id_fk_key", {})
-
-drop_foreign_key("nba_players_badges", "away_team_id_fk_key", {})

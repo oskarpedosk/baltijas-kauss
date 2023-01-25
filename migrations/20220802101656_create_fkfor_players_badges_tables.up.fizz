@@ -1,0 +1,9 @@
+add_foreign_key("players_badges", "player_id", {"players": ["player_id"]}, {
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})
+
+add_foreign_key("players_badges", "badge_id", {"badges": ["badge_id"]}, {
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})

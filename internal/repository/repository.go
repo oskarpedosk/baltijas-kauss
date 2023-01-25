@@ -1,26 +1,25 @@
 package repository
 
-import "github.com/oskarpedosk/baltijas-kauss/internal/models"
+import (
+	"github.com/oskarpedosk/baltijas-kauss/internal/models"
+)
 
 type DatabaseRepo interface {
 	AllUsers() bool
 
-	GetNBATeamInfo() ([]models.NBATeam, error)
-	GetNBAPlayersWithBadges() ([]models.NBAPlayer, error)
-	GetNBAPlayersWithoutBadges(perPage int, offset int) ([]models.NBAPlayer, error)
+	GetTeams() ([]models.Team, error)
+	GetPlayers(perPage int, offset int) ([]models.Player, error)
 	UpdateNBATeamInfo(team models.NBATeamInfo) error
 	AddNBAPlayer(playerID, teamID int) error
 	DropNBAPlayer(playerID int) error
 	DropAllNBAPlayers() error
-	GetRandomNBAPlayer(random int) (models.NBAPlayer, error)
+	GetRandomNBAPlayer(random int) (models.Player, error)
 
-	GetNBAPlayerByID(id int) (models.NBAPlayer, error)
-	AssignNBAPlayer(player models.NBAPlayer) error
-	UpdateNBAPlayer(player models.NBAPlayer) error 
-	GetNBAPlayersBadges() ([]models.PlayersBadges, error)
-	GetNBABadges() ([]models.Badge, error)
+	GetNBAPlayerByID(id int) (models.Player, error)
+	AssignNBAPlayer(player models.Player) error
+	UpdateNBAPlayer(player models.Player) error
 
-	GetNBAStandings() ([]models.NBAStandings, error)
+	GetStandings() ([]models.NBAStandings, error)
 	GetLastResults(count int) ([]models.Result, error)
 	AddNBAResult(res models.Result) error
 	UpdateNBAResult(res models.Result) error

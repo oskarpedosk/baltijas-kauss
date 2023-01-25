@@ -1,7 +1,6 @@
 package models
 
 import (
-	"database/sql"
 	"time"
 )
 
@@ -36,16 +35,16 @@ type User struct {
 	AccessLevel int
 }
 
-// NBATeam is the NBA teams model
-type NBATeam struct {
-	TeamID       sql.NullInt64
+type Team struct {
+	TeamID       int
 	Name         string
 	Abbreviation string
 	Color1       string
 	Color2       string
 	DarkText     string
-	OwnerID      int
-	Players      []NBAPlayer
+	UserID       int
+	CreatedAt    time.Time
+	UpdatedAt    time.Time
 }
 
 type Result struct {
@@ -58,75 +57,77 @@ type Result struct {
 }
 
 // NBAPlayer is the NBA player model
-type NBAPlayer struct {
-	PlayerID                  int
-	FirstName                 string
-	LastName                  string
-	PrimaryPosition           string
-	SecondaryPosition         string
-	Archetype                 string
-	NBATeam                   string
-	Height                    int
-	Weight                    int
-	ImgUrl                    string
-	PlayerUrl                 string
-	TeamID                    sql.NullInt64
-	StatsOverall              int
-	StatsOutsideScoring       int
-	StatsAthleticism          int
-	StatsInsideScoring        int
-	StatsPlaymaking           int
-	StatsDefending            int
-	StatsRebounding           int
-	StatsCloseShot            int
-	StatsMidRangeShot         int
-	StatsThreePointShot       int
-	StatsFreeThrow            int
-	StatsShotIQ               int
-	StatsOffensiveConsistency int
-	StatsSpeed                int
-	StatsAcceleration         int
-	StatsStrength             int
-	StatsVertical             int
-	StatsStamina              int
-	StatsHustle               int
-	StatsOverallDurability    int
-	StatsLayup                int
-	StatsStandingDunk         int
-	StatsDrivingDunk          int
-	StatsPostHook             int
-	StatsPostFade             int
-	StatsPostControl          int
-	StatsDrawFoul             int
-	StatsHands                int
-	StatsPassAccuracy         int
-	StatsBallHandle           int
-	StatsSpeedWithBall        int
-	StatsPassIQ               int
-	StatsPassVision           int
-	StatsInteriorDefense      int
-	StatsPerimeterDefense     int
-	StatsSteal                int
-	StatsBlock                int
-	StatsLateralQuickness     int
-	StatsHelpDefenseIQ        int
-	StatsPassPerception       int
-	StatsDefensiveConsistency int
-	StatsOffensiveRebound     int
-	StatsDefensiveRebound     int
-	StatsIntangibles          int
-	StatsPotential            int
-	StatsTotalAttributes      int
-	BronzeBadgesCount         int
-	SilverBadgesCount         int
-	GoldBadgesCount           int
-	HOFBadgesCount            int
-	TotalBadgesCount          int
-	Assigned                  int
-	BronzeBadges              []Badge
-	SilverBadges              []Badge
-	GoldBadges                []Badge
-	HOFBadges                 []Badge
+type Player struct {
+	PlayerID                       int
+	FirstName                      string
+	LastName                       string
+	PrimaryPosition                *string
+	SecondaryPosition              *string
+	TeamID                         int
+	AssignedPosition               int
+	Archetype                      *string
+	Height                         *int
+	Weight                         *int
+	NBATeam                        *string
+	Nationality                    *string
+	Birthdate                      *string
+	Jersey                         string
+	Draft                          *string
+	ImgID                          string
+	RatingsURL                     *string
+	Overall                        *int
+	AttributesOutsideScoring       *int
+	AttributesAthleticism          *int
+	AttributesInsideScoring        *int
+	AttributesPlaymaking           *int
+	AttributesDefending            *int
+	AttributesRebounding           *int
+	AttributesIntangibles          *int
+	AttributesPotential            *int
+	AttributesTotalAttributes      *int
+	AttributesCloseShot            *int
+	AttributesMidRangeShot         *int
+	AttributesThreePointShot       *int
+	AttributesFreeThrow            *int
+	AttributesShotIQ               *int
+	AttributesOffensiveConsistency *int
+	AttributesSpeed                *int
+	AttributesAcceleration         *int
+	AttributesStrength             *int
+	AttributesVertical             *int
+	AttributesStamina              *int
+	AttributesHustle               *int
+	AttributesOverallDurability    *int
+	AttributesLayup                *int
+	AttributesStandingDunk         *int
+	AttributesDrivingDunk          *int
+	AttributesPostHook             *int
+	AttributesPostFade             *int
+	AttributesPostControl          *int
+	AttributesDrawFoul             *int
+	AttributesHands                *int
+	AttributesPassAccuracy         *int
+	AttributesBallHandle           *int
+	AttributesSpeedWithBall        *int
+	AttributesPassIQ               *int
+	AttributesPassVision           *int
+	AttributesInteriorDefense      *int
+	AttributesPerimeterDefense     *int
+	AttributesSteal                *int
+	AttributesBlock                *int
+	AttributesLateralQuickness     *int
+	AttributesHelpDefenseIQ        *int
+	AttributesPassPerception       *int
+	AttributesDefensiveConsistency *int
+	AttributesOffensiveRebound     *int
+	AttributesDefensiveRebound     *int
+	BronzeBadges                   int
+	SilverBadges                   int
+	GoldBadges                     int
+	HOFBadges                      int
+	TotalBadges                    int
+	CreatedAt                      time.Time
+	UpdatedAt                      time.Time
 }
 
 type NBAPosition struct {

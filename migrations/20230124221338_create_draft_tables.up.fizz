@@ -1,0 +1,6 @@
+create_table("draft") {
+    t.Column("draft_id", "integer", {primary: true})
+    t.Column("pick", "integer", {})
+    t.Column("player_id", "integer", {})
+    t.Column("team_id", "integer", {})
+}

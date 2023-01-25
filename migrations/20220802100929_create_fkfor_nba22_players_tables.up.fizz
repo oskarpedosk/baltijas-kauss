@@ -1,4 +1,0 @@
-add_foreign_key("nba_players", "team_id", {"nba_teams": ["team_id"]}, {
-    "on_delete": "cascade",
-    "on_update": "cascade",
-})

@@ -1,0 +1,3 @@
+drop_foreign_key("players_badges", "players_badges_players_player_id_fk", {})
+
+drop_foreign_key("players_badges", "players_badges_badges_badge_id_fk", {})

@@ -1,0 +1,11 @@
+add_foreign_key("standings", "home_team_id", {"teams": ["team_id"]},  {
+    "name": "home_team_id_fk_key",
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})
+
+add_foreign_key("standings", "away_team_id", {"teams": ["team_id"]}, {
+    "name": "away_team_id_fk_key",
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})

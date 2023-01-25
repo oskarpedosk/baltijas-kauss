@@ -1,0 +1,5 @@
+add_foreign_key("draft", "player_id", {"players": ["player_id"]},  {
+    "name": "player_id_fk_key",
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})
