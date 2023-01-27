@@ -16,8 +16,8 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Get("/", handlers.Repo.SignIn)
-	mux.Post("/", handlers.Repo.PostSignIn)
+	mux.Get("/", handlers.Repo.Login)
+	mux.Post("/", handlers.Repo.PostLogin)
 	mux.Get("/logout", handlers.Repo.Logout)
 
 	fileServer := http.FileServer(http.Dir("./static/"))
@@ -26,22 +26,26 @@ func routes(app *config.AppConfig) http.Handler {
 	mux.Route("/", func(mux chi.Router) {
 		mux.Use(Auth)
 		
-		mux.Get("/nba", handlers.Repo.NBAHome)
+		mux.Get("/home", handlers.Repo.NBAHome)
 
-		mux.Get("/nba/{src}/{id}", handlers.Repo.Player)
-		mux.Get("/nba/players", handlers.Repo.NBAPlayers)
-		mux.Get("/nba/players/page={page}", handlers.Repo.NBAPlayers)
-		mux.Post("/nba/players", handlers.Repo.PostNBAPlayers)
+		mux.Get("/{src}/{id}", handlers.Repo.Player)
+		mux.Post("/{src}/{id}", handlers.Repo.PostPlayer)
+		
+		mux.Get("/players", handlers.Repo.Players)
+		mux.Post("/players", handlers.Repo.PostPlayers)
 
-		mux.Get("/nba/teams", handlers.Repo.NBATeams)
-		mux.Post("/nba/teams", handlers.Repo.PostNBATeams)
+		mux.Get("/players/page={page}", handlers.Repo.Players)
+		mux.Post("/players/page={page}", handlers.Repo.PostPlayers)
+
+		mux.Get("/teams", handlers.Repo.NBATeams)
+		mux.Post("/teams", handlers.Repo.PostNBATeams)
 		// mux.Post("/nba/teams-json", handlers.Repo.NBATeamsAvailabilityJSON)
-		mux.Get("/nba/team-info-summary", handlers.Repo.NBATeamInfoSummary)
+		mux.Get("/team-info-summary", handlers.Repo.NBATeamInfoSummary)
 
-		mux.Get("/nba/standings", handlers.Repo.NBAResults)
-		mux.Post("/nba/standings", handlers.Repo.PostNBAResults)
+		mux.Get("/standings", handlers.Repo.NBAResults)
+		mux.Post("/standings", handlers.Repo.PostNBAResults)
 
-		mux.Get("/nba/draft", handlers.Repo.NBADraft)
+		mux.Get("/draft", handlers.Repo.NBADraft)
 		mux.Get("/ws", handlers.Repo.WsEndPoint)
 	})
 
@@ -50,10 +54,10 @@ func routes(app *config.AppConfig) http.Handler {
 		// add routes here for admin
 		mux.Get("/dashboard", handlers.Repo.AdminDashboard)
 		
-		mux.Get("/nba_teams", handlers.Repo.AdminNBATeams)
-		mux.Get("/nba_players", handlers.Repo.AdminNBAPlayers)
+		mux.Get("/teams", handlers.Repo.AdminNBATeams)
+		mux.Get("/players", handlers.Repo.AdminNBAPlayers)
 		mux.Get("/{src}/{id}", handlers.Repo.AdminShowNBAPlayer)
-		mux.Get("/nba_standings", handlers.Repo.AdminNBAResults)
+		mux.Get("/standings", handlers.Repo.AdminNBAResults)
 		
 	})
 

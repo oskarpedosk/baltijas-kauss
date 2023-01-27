@@ -1,1 +1,1 @@
-drop_foreign_key("teams", "teams_users_user_id_fk", {})
+drop_foreign_key("teams", "user_id_fk_key", {})

@@ -27,36 +27,25 @@
                     </tr>
                 </thead>
                 <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
-
                     {{$ranking := index .Data "ranking"}}
-                    {{range $index, $players := index .Data "nba_players"}}
+                    {{range $index, $player := index .Data.players}}
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
                         <td class="p-0 py-2">
-                            <div id="playerimg_{{$index}}">
-                                <div id="playerimgreload_{{$index}}">
-                                {{if $players.TeamID}}
-                                        {{range $teamInfo := index $.Data "nba_teams"}}
-                                            {{if eq $teamInfo.TeamID $players.TeamID}}
-                                                <img src="/static/images/players/{{$players.ImgID}}"
-                                                alt="" class="header-image rounded-circle inline-block" style="border-style: none; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}});">
-                                            {{end}}
-                                        {{end}}
-                                        {{else}}
-                                            <img src="{{if ne $players.ImgID ""}}{{$players.ImgID}}{{else}}/static/images/lightProfile.png{{end}}"
-                                            alt="" class="header-image rounded-circle bg-light border">
-                                        {{end}}
-                                </div>
-                            </div>
-                    </td>
+                            <img src="/static/images/players/{{$player.Player.ImgID}}"
+                            alt="" class="header-image rounded-circle inline-block" style="border-style: none; background-image: linear-gradient(90deg, {{$player.Team.Color1}}, {{$player.Team.Color2}});">
+                        </td>
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
                                 <div class="p-0 inline-block">
-                                    <p class="m-0"><a class="player-link" href="/nba/players/{{$players.PlayerID}}">{{$players.FirstName}} {{$players.LastName}}</a></p>
+                                    <p class="m-0"><a class="player-link" href="/players/{{$player.Player.PlayerID}}">{{$player.Player.FirstName}} {{$player.Player.LastName}}</a></p>
                                     <div class="my-0">
                                         <p class="text-muted my-0" style="font-size: 12px;">
-                                            {{$players.PrimaryPosition}}{{if $players.SecondaryPosition}}/{{$players.SecondaryPosition}}{{end}}
-                                            | {{$players.Height}}cm | {{$players.Weight}}kg
+                                            {{$player.Player.PrimaryPosition}}{{if $player.Player.SecondaryPosition}}/{{$player.Player.SecondaryPosition}}{{end}}
+                                            | {{$player.Player.Height}}cm | {{$player.Player.Weight}}kg
+                                        </p>
+                                        <p class="text-muted my-0" style="font-size: 12px;">
+                                            {{$player.Team.Name}}
                                         </p>
                                     </div>
 
@@ -66,50 +55,37 @@
 
                         
                         <td class="p-0">
-                            <div id="player_{{$index}}">
-                                <div id="player_reload_{{$index}}">
-                                    {{if $players.TeamID}}
-                                    {{range $teamInfo := index $.Data "nba_teams"}}
-                                        {{if eq $teamInfo.TeamID $players.TeamID}}
-                                        <span style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width:60px" 
-                                        class="playerbadge badge badge-pill p-1 fw-semibold pointer {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}" data-bs-toggle="dropdown" aria-expanded="false">{{$teamInfo.Abbreviation}}</span>
-                                        {{end}}
-                                    {{end}}
-                                    {{else}}
-                                        <span style="width:60px;" class="playerbadge badge badge-pill p-1 bg-light text-dark fw-semibold border pointer" 
-                                        data-bs-toggle="dropdown" aria-expanded="false">FA</span>
-                                    {{end}}
+                            <span style="background-image: linear-gradient(90deg, {{$player.Team.Color1}}, {{$player.Team.Color2}}); display:inline-block; width:60px" 
+                            class="playerbadge badge badge-pill p-1 fw-semibold pointer {{if eq $player.Team.DarkText "true"}}text-dark{{end}}" data-bs-toggle="dropdown" aria-expanded="false">{{$player.Team.Abbreviation}}</span>
 
-                                    <div class="dropdown-menu">
-                                        {{range $teams := index $.Data "nba_teams"}}
-                                            <li class="dropdown-item" onclick="updateTeam('{{$index}}', '{{$players.PlayerID}}', '{{$teams.TeamID}}')">
-                                                {{$teams.Abbreviation}} {{$teams.Name}}
-                                            </li>
-                                        {{end}}
-                                        <hr class="dropdown-divider">
-                                        <li class="dropdown-item" onclick="updateTeam('{{$index}}', '{{$players.PlayerID}}', 'null')">
-                                            Free Agency
-                                        </li>
-                                    </div>
-                                </div>
+                            <div class="dropdown-menu">
+                                {{range $team := $.Data.teams}}
+                                    <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$team.TeamID}}', '{{$.CSRFToken}}')">
+                                        {{$team.Abbreviation}} {{$team.Name}}
+                                    </li>
+                                {{end}}
+                                <hr class="dropdown-divider">
+                                <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$.Data.FA.TeamID}}', '{{$.CSRFToken}}')">
+                                    {{$.Data.FA.Name}}
+                                </li>
                             </div>
                         </td>
-                        <td>{{.Overall}}</td>
-                        <td>{{$players.AttributesThreePointShot}}</td>
-                        <td>{{$players.AttributesDrivingDunk}}</td>
-                        <td>{{$players.AttributesAthleticism}}</td>
-                        <td>{{$players.AttributesInteriorDefense}}</td>
-                        <td>{{$players.AttributesPerimeterDefense}}</td>
-                        <td>{{$players.AttributesRebounding}}</td>
+                        <td><span class="attribute-overall" overall-color="{{$player.Player.Overall}}">{{$player.Player.Overall}}</span></td>
+                        <td>{{$player.Player.AttributesThreePointShot}}</td>
+                        <td>{{$player.Player.AttributesDrivingDunk}}</td>
+                        <td>{{$player.Player.AttributesAthleticism}}</td>
+                        <td>{{$player.Player.AttributesInteriorDefense}}</td>
+                        <td>{{$player.Player.AttributesPerimeterDefense}}</td>
+                        <td>{{$player.Player.AttributesRebounding}}</td>
                         <td>
-                            <span class="playerbadge badge badge-pill p-1 bronze">{{$players.BronzeBadges}}</span>
-                            <span class="playerbadge badge badge-pill p-1 silver">{{$players.SilverBadges}}</span>
-                            <span class="playerbadge badge badge-pill p-1 gold">{{$players.GoldBadges}}</span>
-                            <span class="playerbadge badge badge-pill p-1 hof">{{$players.HOFBadges}}</span>
-                            <span class="playerbadge badge badge-pill p-1 total">{{$players.TotalBadges}}</span>
+                            <span class="playerbadge badge badge-pill p-1 bronze">{{$player.Player.BronzeBadges}}</span>
+                            <span class="playerbadge badge badge-pill p-1 silver">{{$player.Player.SilverBadges}}</span>
+                            <span class="playerbadge badge badge-pill p-1 gold">{{$player.Player.GoldBadges}}</span>
+                            <span class="playerbadge badge badge-pill p-1 hof">{{$player.Player.HOFBadges}}</span>
+                            <span class="playerbadge badge badge-pill p-1 total">{{$player.Player.TotalBadges}}</span>
                         </td>
                         <td>
-                            <span class="playerbadge badge badge-pill p-1 text-dark" style="background-color: rgb(237, 237, 237); width: 50px;">{{$players.AttributesTotalAttributes}}</span>
+                            <span class="playerbadge badge badge-pill p-1 text-dark" style="background-color: rgb(237, 237, 237); width: 50px;">{{$player.Player.AttributesTotalAttributes}}</span>
                         </td>
                     </tr>
                     {{end}}
@@ -136,28 +112,6 @@
                     <input id="away_score" type="text" class="form-control" value=99>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p style="font-size: 16px;">Three Point Shot</p>
-                </div>
-                <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=0>
-                </div>
-                <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=99>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p style="font-size: 16px;">Three Point Shot</p>
-                </div>
-                <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=0>
-                </div>
-                <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=99>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -167,26 +121,64 @@
 {{end}}
 
 {{define "js"}}
+
 <script>
-   function updateTeam(index, playerID, teamID) {
-        console.log(index)
+    $(document).ready(function(){
+    let colorRange = {
+        '91-99' :'overall1',
+        '86-90' :'overall2',
+        '81-85' :'overall3',
+        '1-80'  :'overall4',
+        '0-0'   :'overall5',
+    };
+    
+    function between(value, min, max) {
+        return value >= min && value <= max;
+    }
+    
+    let color;
+    let first; 
+    let second;
+    let overall;
+    
+    $('.attribute-overall').each(function(index){
+        
+        overall = $(this);
+        color = parseInt($(this).attr('overall-color'),10);
+        
+        $.each(colorRange, function(name, value){
+            
+            first = parseInt(name.split('-')[0],10);
+            second = parseInt(name.split('-')[1],10);
+            
+            if( between(color, first, second) ){
+                overall.addClass(value);
+            }
+        
+        });
+        
+    });
+    });
+</script>
+
+<script>
+    function changeTeam(playerID, teamID, csrftoken) {
         console.log(playerID)
         console.log(teamID)
+        console.log(csrftoken)
         $.ajax({
-            type: 'GET',
-            dataType: 'html',
-            data : {
-                action: "update",
-                player_id: playerID,
-                team_id: teamID,
-            },
-            success: function(data) {
-                console.log("success");
-                $( '#playerimg_' + index).load(window.location.href + ' #playerimgreload_' + index );
-                $( '#player_' + index).load(window.location.href + ' #player_reload_' + index );
-            }
+        type: 'POST',
+        dataType: 'html',
+        data : {
+            csrf_token: csrftoken,
+            player_id: playerID,
+            team_id: teamID,
+        },
+        success: function(data) {
+            window.location.reload();
+        }
         });
     }
-</script>
+ </script>
 
 {{end}}

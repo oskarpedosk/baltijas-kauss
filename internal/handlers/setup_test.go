@@ -26,7 +26,7 @@ var pathToTemplates = "../../templates"
 var functions = template.FuncMap{}
 
 func getRoutes() http.Handler {
-	gob.Register(models.NBATeamInfo{})
+	gob.Register(models.Team{})
 
 	// Change this to true when in production
 	app.InProduction = false
@@ -63,19 +63,19 @@ func getRoutes() http.Handler {
 	// mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Get("/", Repo.SignIn)
+	mux.Get("/", Repo.Login)
 
-	mux.Get("/nba", Repo.NBAHome)
+	mux.Get("/home", Repo.NBAHome)
 
-	mux.Get("/nba/players", Repo.NBAPlayers)
+	mux.Get("/players", Repo.Players)
 
-	mux.Get("/nba/teams", Repo.NBATeams)
-	mux.Post("/nba/teams", Repo.PostNBATeams)
-	mux.Get("/nba/teams-json", Repo.NBATeamsAvailabilityJSON)
-	mux.Get("/nba/team-info-summary", Repo.NBATeamInfoSummary)
+	mux.Get("/teams", Repo.NBATeams)
+	mux.Post("/teams", Repo.PostNBATeams)
+	mux.Get("/teams-json", Repo.NBATeamsAvailabilityJSON)
+	mux.Get("/team-info-summary", Repo.NBATeamInfoSummary)
 
-	mux.Get("/nba/results", Repo.NBAResults)
-	mux.Post("/nba/results", Repo.PostNBAResults)
+	mux.Get("/standings", Repo.NBAResults)
+	mux.Post("/standings", Repo.PostNBAResults)
 
 	fileServer := http.FileServer(http.Dir("../../static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

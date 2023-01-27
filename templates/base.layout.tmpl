@@ -22,7 +22,7 @@
 
   <nav class="navbar navbar-expand-lg navbar-light bg-light py-0 shadow">
     <div class="container">
-      <a class="navbar-brand" href="/nba"><img class="mb-1" src="/static/images/BKlogowithoutbg.png" alt="" style="max-height: 25px;"></a>
+      <a class="navbar-brand" href="/home"><img class="mb-1" src="/static/images/baltijaskauss/bk.png" alt="" style="max-height: 25px;"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bk_navbar" aria-controls="bk_navbar" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -30,16 +30,16 @@
       <div class="collapse navbar-collapse" id="bk_navbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="/nba/teams">Teams</a>
+            <a class="nav-link" href="/teams">Teams</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/nba/players">Players</a>
+            <a class="nav-link" href="/players">Players</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/nba/draft">Draft</a>
+            <a class="nav-link" href="/draft">Draft</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/nba/standings">Standings</a>
+            <a class="nav-link" href="/standings">Standings</a>
           </li>
         </ul>
         <div>
@@ -51,7 +51,7 @@
             {{end}}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/static/images/profile.png" width="20" height="20" class="rounded-circle mb-1">
+                <img src="/static/images/users/default_user.png" width="20" height="20" class="rounded-circle mb-1 border">
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Profile</a></li>
@@ -76,7 +76,7 @@
         
       </div>
       <div class="footer d-flex align-items-center">
-        <img src="/static/images/BaltijasKausslogo.png" alt="" class="footer-img mx-auto d-block">
+        <img src="/static/images/baltijaskauss/baltijaskauss.png" alt="" class="footer-img mx-auto d-block">
       </div>
 
     </div>
@@ -95,8 +95,6 @@
     {{end}}
 
   <script>
-
-    /* global bootstrap: false */
     (() => {
       'use strict'
       const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
@@ -104,7 +102,6 @@
         new bootstrap.Tooltip(tooltipTriggerEl)
       })
     })()
-
   </script>
 
 </body>

@@ -1,0 +1,46 @@
+{{template "base" .}}
+
+{{define "content"}}
+{{$res := index .Data "team_info"}}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="mt-5">Team info summary</h1>
+
+            <hr>
+
+            <table class="table table-striped">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td>Team ID:</td>
+                        <td>{{$res.ID}}</td>
+                    </tr>
+                    <tr>
+                        <td>Team name:</td>
+                        <td>{{$res.Name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Abbreviation:</td>
+                        <td>{{$res.Abbreviation}}</td>
+                    </tr>
+                    <tr>
+                        <td>Team color 1:</td>
+                        <td>{{$res.Color1}}</td>
+                    </tr>
+                    <tr>
+                        <td>Team color 2:</td>
+                        <td>{{$res.Color2}}</td>
+                    </tr>
+                    <tr>
+                        <td>Dark text:</td>
+                        <td>{{$res.DarkText}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{{end}}

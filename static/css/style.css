@@ -1,5 +1,6 @@
 html {
     overflow-y: scroll;
+    min-height: 100vh;
 }
 
 .wrapper {
@@ -8,19 +9,9 @@ html {
 
 .main {
     width: 100%;
-    min-height: 100vh;
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
-}
-
-.sidebar {
-    width: 65px;
-    min-height: 100vh;
-    max-height: 100vh;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
 }
 
 .nav-img {
@@ -99,24 +90,28 @@ html {
     background-color: rgb(55, 55, 55);
 }
 
+.attribute-overall {
+    font-weight: 600;
+}
+
 .overall1 {
     color: #ce00f2;
-    font-weight: 600;
 }
 
 .overall2 {
     color: #0059ff;
-    font-weight: 600;
 }
 
 .overall3 {
     color: #e52848;
-    font-weight: 600;
 }
 
 .overall4 {
     color: #3f9d25;
-    font-weight: 600;
+}
+
+.overall5 {
+    color: #1c1c1c;
 }
 
 .attribute-badge {

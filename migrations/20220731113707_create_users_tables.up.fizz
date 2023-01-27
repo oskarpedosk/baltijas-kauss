@@ -1,9 +1,11 @@
 create_table("users") {
-    t.Column("user_id", "integer", {primary: true})
+    t.Column("user_id", "integer", {"primary": true, "generated always": "as identity"})
     t.Column("first_name", "string", {"default": ""})
     t.Column("last_name", "string", {"default": ""})
     t.Column("email", "string", {})
     t.Column("password", "string", {"size": 60})
-    t.Column("img_id", "string",  {"default": "default.png"})
+    t.Column("img_id", "string",  {"default": "default_user.png"})
     t.Column("access_level", "integer", {"default": 1})
+    t.Column("created_at", "timestamp", {"default": "now()"})
+    t.Column("updated_at", "timestamp", {"default": "now()"})
 }

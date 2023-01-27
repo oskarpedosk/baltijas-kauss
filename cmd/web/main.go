@@ -28,7 +28,6 @@ var infoLog *log.Logger
 var errorLog *log.Logger
 
 func main() {
-
 	db, err := run()
 	if err != nil {
 		log.Fatal(err)
@@ -56,8 +55,7 @@ func run() (*driver.DB, error) {
 	gob.Register(models.PlayersBadges{})
 	gob.Register(models.Player{})
 	gob.Register(models.Team{})
-	gob.Register(models.NBATeamInfo{})
-	gob.Register(models.NBAStandings{})
+	gob.Register(models.Standings{})
 	gob.Register(models.Result{})
 
 	// Read flags

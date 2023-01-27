@@ -11,21 +11,19 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var playerCount = 150
-
 func (m *postgresDBRepo) AllUsers() bool {
 	return true
 }
 
 // Updates NBA team info
-func (m *postgresDBRepo) UpdateNBATeamInfo(team models.NBATeamInfo) error {
+func (m *postgresDBRepo) UpdateTeam(team models.Team) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	stmt := `update teams set name = $2, abbreviation = $3, team_color1 = $4, team_color2 = $5, dark_text = $6 where team_id = $1`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		team.ID,
+		team.TeamID,
 		team.Name,
 		team.Abbreviation,
 		team.Color1,
@@ -41,18 +39,18 @@ func (m *postgresDBRepo) UpdateNBATeamInfo(team models.NBATeamInfo) error {
 }
 
 // Adds a result to NBA results table
-func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
+func (m *postgresDBRepo) AddResult(res models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `insert into standings (home_team_id, home_score, away_score, away_team_id, timestamp) 
-	values ($1, $2, $3, $4, CURRENT_TIMESTAMP)`
+	stmt := `insert into results (home_team_id, home_score, away_score, away_team_id) 
+	values ($1, $2, $3, $4)`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.HomeTeam,
+		res.HomeTeamID,
 		res.HomeScore,
 		res.AwayScore,
-		res.AwayTeam,
+		res.AwayTeamID,
 	)
 
 	if err != nil {
@@ -63,28 +61,28 @@ func (m *postgresDBRepo) AddNBAResult(res models.Result) error {
 }
 
 // Update NBA result
-func (m *postgresDBRepo) UpdateNBAResult(res models.Result) error {
+func (m *postgresDBRepo) UpdateResult(res models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	stmt := `
 	update 
-		standings
+		results
 	set 
 		home_team_id = $1,
 		home_score = $2,
 		away_score = $3,
 		away_team_id = $4
 	where
-		timestamp = $5
+		created_at = $5
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.HomeTeam,
+		res.HomeTeamID,
 		res.HomeScore,
 		res.AwayScore,
-		res.AwayTeam,
-		res.Time,
+		res.AwayTeamID,
+		res.CreatedAt,
 	)
 
 	if err != nil {
@@ -95,19 +93,19 @@ func (m *postgresDBRepo) UpdateNBAResult(res models.Result) error {
 }
 
 // Delete NBA result from database
-func (m *postgresDBRepo) DeleteNBAResult(res models.Result) error {
+func (m *postgresDBRepo) DeleteResult(res models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	stmt := `
 	delete from 
-		standings
+		results
 	where
-		timestamp = $1
+		created_at = $1
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.Time,
+		res.CreatedAt,
 	)
 
 	if err != nil {
@@ -118,7 +116,7 @@ func (m *postgresDBRepo) DeleteNBAResult(res models.Result) error {
 }
 
 // Updates NBA player team
-func (m *postgresDBRepo) UpdateNBAPlayer(player models.Player) error {
+func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -127,7 +125,7 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.Player) error {
 		players
 	set 
 		team_id = $2,
-		assigned = $3
+		assigned_position = 0
 	where
 		player_id = $1
 	`
@@ -135,7 +133,6 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.Player) error {
 	_, err := m.DB.ExecContext(ctx, stmt,
 		player.PlayerID,
 		player.TeamID,
-		player.AssignedPosition,
 	)
 
 	if err != nil {
@@ -146,7 +143,7 @@ func (m *postgresDBRepo) UpdateNBAPlayer(player models.Player) error {
 }
 
 // Assigns NBA player to a position
-func (m *postgresDBRepo) AssignNBAPlayer(player models.Player) error {
+func (m *postgresDBRepo) AssignPosition(player models.Player) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -155,11 +152,11 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.Player) error {
 	update 
 		players
 	set 
-		assigned = 0
+		assigned_position = 0
 	where
 		team_id = $1
 	and
-		assigned = $2
+		assigned_position = $2
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
@@ -176,7 +173,7 @@ func (m *postgresDBRepo) AssignNBAPlayer(player models.Player) error {
 	update 
 		players
 	set 
-		assigned = $3
+		assigned_position = $3
 	where
 		player_id = $1
 	and
@@ -237,7 +234,7 @@ func (m *postgresDBRepo) GetPaginationData(page int, perPage int, tableName stri
 	return pagination, nil
 }
 
-// Display all NBA players without badges
+// Get all players pagination limit
 func (m *postgresDBRepo) GetPlayers(perPage int, offset int) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -346,7 +343,49 @@ func (m *postgresDBRepo) GetPlayers(perPage int, offset int) ([]models.Player, e
 	return players, nil
 }
 
-// Get team info
+// Get all teams
+func (m *postgresDBRepo) GetTeam(teamID int) (models.Team, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	select 
+		*
+	from 
+		teams
+	where
+		"team_id" = $1
+	`
+	
+	var team models.Team
+
+	row, err := m.DB.QueryContext(ctx, query, teamID)
+	if err != nil {
+		return team, err
+	}
+
+	defer row.Close()
+	for row.Next() {
+		err := row.Scan(
+			&team.TeamID,
+			&team.Name,
+			&team.Abbreviation,
+			&team.Color1,
+			&team.Color2,
+			&team.DarkText,
+			&team.UserID,
+			&team.CreatedAt,
+			&team.UpdatedAt,
+		)
+		if err != nil {
+			return team, err
+		}
+	}
+
+	return team, nil
+}
+
+// Get all teams
 func (m *postgresDBRepo) GetTeams() ([]models.Team, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -394,12 +433,12 @@ func (m *postgresDBRepo) GetTeams() ([]models.Team, error) {
 	return teams, nil
 }
 
-// Display all NBA standings
-func (m *postgresDBRepo) GetStandings() ([]models.NBAStandings, error) {
+// Get results and calculate standings
+func (m *postgresDBRepo) GetStandings() ([]models.Standings, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	var standingsSlice []models.NBAStandings
+	var standingsSlice []models.Standings
 
 	for i := 1; i < 5; i++ {
 		homeWins := 0
@@ -413,11 +452,11 @@ func (m *postgresDBRepo) GetStandings() ([]models.NBAStandings, error) {
 			select 
 				*
 			from 
-				standings
+				results
 			where
 				"home_team_id" = $1 or "away_team_id" = $1
 			order by
-				timestamp asc
+				created_at asc
 			`
 
 		rows, err := m.DB.QueryContext(ctx, query, i)
@@ -429,17 +468,20 @@ func (m *postgresDBRepo) GetStandings() ([]models.NBAStandings, error) {
 		defer rows.Close()
 		for rows.Next() {
 			err := rows.Scan(
-				&singleGame.HomeTeam,
+				&singleGame.ResultID,
+				&singleGame.Season,
+				&singleGame.HomeTeamID,
 				&singleGame.HomeScore,
 				&singleGame.AwayScore,
-				&singleGame.AwayTeam,
-				&singleGame.Time,
+				&singleGame.AwayTeamID,
+				&singleGame.CreatedAt,
+				&singleGame.UpdatedAt,
 			)
 			if err != nil {
 				return standingsSlice, err
 			}
 
-			if singleGame.HomeTeam == i {
+			if singleGame.HomeTeamID == i {
 				basketsFor += singleGame.HomeScore
 				basketsAgainst += singleGame.AwayScore
 				if singleGame.HomeScore > singleGame.AwayScore {
@@ -512,7 +554,7 @@ func (m *postgresDBRepo) GetStandings() ([]models.NBAStandings, error) {
 			againstAvg = toFixed(float64(basketsAgainst)/float64(totalGames), 1)
 		}
 
-		teamStandings := models.NBAStandings{
+		teamStandings := models.Standings{
 			TeamID:         i,
 			WinPercentage:  winPercentage,
 			Played:         totalGames,
@@ -547,7 +589,7 @@ func toFixed(num float64, precision int) float64 {
 	return float64(round(num*output)) / output
 }
 
-func order(slice []models.NBAStandings) []models.NBAStandings {
+func order(slice []models.Standings) []models.Standings {
 	for i := 0; i < len(slice)-1; i++ {
 		if slice[i].WinPercentage < slice[i+1].WinPercentage {
 			slice[i], slice[i+1] = slice[i+1], slice[i]
@@ -574,9 +616,9 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 			select 
 				*
 			from 
-				standings
+				results
 			order by
-				timestamp asc
+				created_at asc
 			`
 
 	rows, err := m.DB.QueryContext(ctx, query)
@@ -588,25 +630,25 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 	defer rows.Close()
 	for rows.Next() {
 		err := rows.Scan(
-			&singleGame.HomeTeam,
+			&singleGame.ResultID,
+			&singleGame.Season,
+			&singleGame.HomeTeamID,
 			&singleGame.HomeScore,
 			&singleGame.AwayScore,
-			&singleGame.AwayTeam,
-			&singleGame.Time,
+			&singleGame.AwayTeamID,
+			&singleGame.CreatedAt,
+			&singleGame.UpdatedAt,
 		)
 		if err != nil {
 			return resultsSlice, err
 		}
 
-		layout := "02/01/2006 15:04"
-
 		result := models.Result{
-			HomeTeam:   singleGame.HomeTeam,
+			HomeTeamID: singleGame.HomeTeamID,
 			HomeScore:  singleGame.HomeScore,
 			AwayScore:  singleGame.AwayScore,
-			AwayTeam:   singleGame.AwayTeam,
-			Time:       singleGame.Time,
-			TimeString: singleGame.Time.Round(15 * time.Minute).Format(layout),
+			AwayTeamID: singleGame.AwayTeamID,
+			CreatedAt:  singleGame.CreatedAt.Round(15 * time.Minute),
 		}
 
 		resultsSlice = append([]models.Result{result}, resultsSlice...)
@@ -620,11 +662,10 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 }
 
 // Drop NBA player from a team
-func (m *postgresDBRepo) DropNBAPlayer(playerID int) error {
+func (m *postgresDBRepo) DropPlayer(playerID int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	// Remove team and position
 	stmt := `
 	update 
 		players
@@ -644,8 +685,8 @@ func (m *postgresDBRepo) DropNBAPlayer(playerID int) error {
 	return nil
 }
 
-// Drop all NBA player from a team
-func (m *postgresDBRepo) DropAllNBAPlayers() error {
+// Reset players team
+func (m *postgresDBRepo) ResetPlayers() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -653,8 +694,8 @@ func (m *postgresDBRepo) DropAllNBAPlayers() error {
 	update 
 		players
 	set 
-		team_id = null,
-		assigned = 0
+		team_id = 1,
+		assigned_position = 0
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt)
@@ -666,18 +707,17 @@ func (m *postgresDBRepo) DropAllNBAPlayers() error {
 	return nil
 }
 
-// Add NBA player directly to a team
-func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
+// Add player to a team
+func (m *postgresDBRepo) AddPlayer(playerID, teamID int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	// Remove team and position
 	stmt := `
 	update 
 		players
 	set 
 		team_id = $1,
-		assigned = 0
+		assigned_position = 0
 	where
 		player_id = $2
 	`
@@ -691,8 +731,8 @@ func (m *postgresDBRepo) AddNBAPlayer(playerID, teamID int) error {
 	return nil
 }
 
-// Add a random NBA player directly to a team
-func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.Player, error) {
+// Add a random player to a team
+func (m *postgresDBRepo) GetRandomPlayer(random int) (models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -709,7 +749,7 @@ func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.Player, error) {
 	from 
 		players
 	where
-		"team_id" is null
+		"team_id" = 1
 	order by
 		"overall" desc,
 		"attributes/TotalAttributes" desc
@@ -737,21 +777,21 @@ func (m *postgresDBRepo) GetRandomNBAPlayer(random int) (models.Player, error) {
 	return player, nil
 }
 
-// Returns user by ID
-func (m *postgresDBRepo) GetUserByID(id int) (models.User, error) {
+// Get user by ID
+func (m *postgresDBRepo) GetUser(userID int) (models.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	query := `
 	select 
-		user_id, first_name, last_name, email, password, access_level
+		*
 	from
 		users
 	where
 		user_id = $1
 	`
 
-	row := m.DB.QueryRowContext(ctx, query, id)
+	row := m.DB.QueryRowContext(ctx, query, userID)
 
 	var u models.User
 	err := row.Scan(
@@ -760,7 +800,10 @@ func (m *postgresDBRepo) GetUserByID(id int) (models.User, error) {
 		&u.LastName,
 		&u.Email,
 		&u.Password,
+		&u.ImgID,
 		&u.AccessLevel,
+		&u.CreatedAt,
+		&u.UpdatedAt,
 	)
 
 	if err != nil {
@@ -798,7 +841,7 @@ func (m *postgresDBRepo) UpdateUser(u models.User) error {
 	return nil
 }
 
-// Authenticate authenticates a user
+// Authenticates a user
 func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -823,8 +866,8 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 	return id, hashedPassword, accessLevel, nil
 }
 
-// Display NBA player by ID
-func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.Player, error) {
+// Get player by ID
+func (m *postgresDBRepo) GetPlayer(playerID int) (models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -838,7 +881,7 @@ func (m *postgresDBRepo) GetNBAPlayerByID(id int) (models.Player, error) {
 	`
 	var player models.Player
 
-	row, err := m.DB.QueryContext(ctx, query, id)
+	row, err := m.DB.QueryContext(ctx, query, playerID)
 	if err != nil {
 		return player, err
 	}

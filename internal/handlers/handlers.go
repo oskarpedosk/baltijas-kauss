@@ -272,7 +272,7 @@ func ListenToWsChannel() {
 						broadcastToAll(response)
 						time.Sleep(1000 * time.Millisecond)
 						if timeLeft <= 0 {
-							playerID, firstName, lastName, primary, secondary := Repo.getRandomPlayer()
+							playerID, firstName, lastName, primary, secondary := Repo.GetRandomPlayer()
 							Repo.draftPlayer(draftOrder[colCounter-1], playerID)
 							response.Action = "draft_player"
 							reset = true
@@ -379,13 +379,13 @@ func ListenToWsChannel() {
 	}
 }
 
-func (m *Repository) getRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
+func (m *Repository) GetRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
 	random := rand.Intn(5)
-	player, err := m.DB.GetRandomNBAPlayer(random)
+	player, err := m.DB.GetRandomPlayer(random)
 	if err != nil {
 		fmt.Println(err)
 	}
-	return player.PlayerID, player.FirstName, player.LastName, *player.PrimaryPosition, *player.SecondaryPosition
+	return player.PlayerID, player.FirstName, player.LastName, player.PrimaryPosition, player.SecondaryPosition
 }
 
 func getUserList() []string {
@@ -398,14 +398,14 @@ func getUserList() []string {
 }
 
 func (m *Repository) draftPlayer(teamID, playerID int) {
-	err := m.DB.AddNBAPlayer(playerID, teamID)
+	err := m.DB.AddPlayer(playerID, teamID)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
 func (m *Repository) resetPlayers() {
-	err := m.DB.DropAllNBAPlayers()
+	err := m.DB.ResetPlayers()
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -433,14 +433,14 @@ func broadcastToAll(response WsJsonResponse) {
 	}
 }
 
-func (m *Repository) SignIn(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "signin.page.tmpl", &models.TemplateData{
+func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "login.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 	})
 }
 
 // Handles logging in the user
-func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
 	_ = m.App.Session.RenewToken(r.Context())
 
 	err := r.ParseForm()
@@ -452,7 +452,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 	form.Required("email", "password")
 	form.IsEmail("email")
 	if !form.Valid() {
-		render.Template(w, r, "signin.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "login.page.tmpl", &models.TemplateData{
 			Form: form,
 		})
 		return
@@ -470,7 +470,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user, err := m.DB.GetUserByID(id)
+	user, err := m.DB.GetUser(id)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -478,7 +478,7 @@ func (m *Repository) PostSignIn(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "user_name", user.FirstName)
 	m.App.Session.Put(r.Context(), "user_id", id)
 	m.App.Session.Put(r.Context(), "access_level", accessLevel)
-	http.Redirect(w, r, "/nba", http.StatusSeeOther)
+	http.Redirect(w, r, "/home", http.StatusSeeOther)
 }
 
 // Logout logs a user out
@@ -493,19 +493,19 @@ func (m *Repository) NBAHome(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.Template(w, r, "nba_home.page.tmpl", &models.TemplateData{})
+	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
 }
 
 // Player is the single player handler
 func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
 	exploded := strings.Split(r.RequestURI, "/")
-	id, err := strconv.Atoi(exploded[3])
+	id, err := strconv.Atoi(exploded[2])
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	player, err := m.DB.GetNBAPlayerByID(id)
+	player, err := m.DB.GetPlayer(id)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -517,40 +517,51 @@ func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var playersTeam models.Team
+	for _, team := range teams {
+		if team.TeamID == player.TeamID {
+			playersTeam = team
+			break
+		}
+	}
+
 	data := make(map[string]interface{})
 	data["player"] = player
-	data["teams"] = teams
+	data["team"] = playersTeam
+	data["teams"] = teams[1:]
+	data["FA"] = teams[0]
 
 	render.Template(w, r, "player.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }
 
-func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
-	if r.FormValue("action") == "update" {
-		playerID, err := strconv.Atoi(r.FormValue("player_id"))
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-
-		teamID, err := strconv.Atoi(r.FormValue("team_id"))
-		if err != nil {
-			log.Println(err)
-			// helpers.ServerError(w, err)
-		}
-
-		player := models.Player{
-			PlayerID:         playerID,
-			TeamID:           teamID,
-			AssignedPosition: 0,
-		}
-
-		err = m.DB.UpdateNBAPlayer(player)
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
+func (m *Repository) PostPlayer(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
 	}
 
+	playerID, err := strconv.Atoi(r.FormValue("player_id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	teamID, err := strconv.Atoi(r.FormValue("team_id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	err = m.DB.AddPlayer(playerID, teamID)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
+}
+
+func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 	page := 1
 	perPage := 20
 	// Get page number
@@ -560,7 +571,7 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		page, _ = strconv.Atoi(match[1])
 	}
 
-	pagination, err := m.DB.GetPaginationData(page, perPage, "players", "/nba/players")
+	pagination, err := m.DB.GetPaginationData(page, perPage, "players", "/players")
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -577,14 +588,30 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var playersWithTeamInfo []models.PlayerWithTeamInfo
+
+	for _, player := range players {
+		for _, team := range teams {
+			if player.TeamID == team.TeamID {
+				playerWithTeamInfo := models.PlayerWithTeamInfo{
+					Player: player,
+					Team: team,
+				}
+				playersWithTeamInfo = append(playersWithTeamInfo, playerWithTeamInfo)
+				break
+			}
+		}
+	}
+
 	ranking := []int{}
 	for i := 1; i <= len(players); i++ {
 		ranking = append(ranking, i+pagination.Offset)
 	}
 
 	data := make(map[string]interface{})
-	data["nba_players"] = players
-	data["nba_teams"] = teams
+	data["players"] = playersWithTeamInfo
+	data["teams"] = teams[1:]
+	data["FA"] = teams[0]
 	data["ranking"] = ranking
 	data["pagination"] = pagination
 
@@ -593,22 +620,21 @@ func (m *Repository) NBAPlayers(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) PostPlayers(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
 
-	playerID, err := strconv.Atoi(r.Form.Get("player_id"))
+	playerID, err := strconv.Atoi(r.FormValue("player_id"))
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
 
-	teamID, err := strconv.Atoi(r.Form.Get("team_id"))
+	teamID, err := strconv.Atoi(r.FormValue("team_id"))
 	if err != nil {
-		log.Println(err)
-		// helpers.ServerError(w, err)
+		helpers.ServerError(w, err)
 	}
 
 	player := models.Player{
@@ -617,14 +643,14 @@ func (m *Repository) PostNBAPlayers(w http.ResponseWriter, r *http.Request) {
 		AssignedPosition: 0,
 	}
 
-	err = m.DB.UpdateNBAPlayer(player)
+	err = m.DB.UpdatePlayer(player)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
 
 	m.App.Session.Put(r.Context(), "nba_players", player)
 
-	http.Redirect(w, r, "/nba/players", http.StatusSeeOther)
+	http.Redirect(w, r, "/players", http.StatusSeeOther)
 }
 
 func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
@@ -634,7 +660,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 
-		err = m.DB.DropNBAPlayer(playerID)
+		err = m.DB.DropPlayer(playerID)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -648,7 +674,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 
-		err = m.DB.AddNBAPlayer(playerID, teamID)
+		err = m.DB.AddPlayer(playerID, teamID)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -663,7 +689,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
-		assigned, err := strconv.Atoi(r.FormValue("assigned"))
+		assigned, err := strconv.Atoi(r.FormValue("AssignedPosition"))
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -672,13 +698,13 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 			TeamID:           teamID,
 			AssignedPosition: assigned,
 		}
-		err = m.DB.AssignNBAPlayer(player)
+		err = m.DB.AssignPosition(player)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
 	}
 
-	var emptyTeamInfo models.NBATeamInfo
+	var emptyTeamInfo models.Team
 	data := make(map[string]interface{})
 
 	teams, err := m.DB.GetTeams()
@@ -698,7 +724,7 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	data["nba_teams"] = teams
 	data["positions"] = positions
 
-	render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -722,8 +748,8 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 	}
 
-	teamInfo := models.NBATeamInfo{
-		ID:           teamID,
+	teamInfo := models.Team{
+		TeamID:       teamID,
 		Name:         r.Form.Get("team_name"),
 		Abbreviation: r.Form.Get("abbreviation"),
 		Color1:       r.Form.Get("team_color1"),
@@ -756,21 +782,21 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		data["teamInfo"] = teamInfo
 		data["positions"] = positions
 
-		render.Template(w, r, "nba_teams.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
 		return
 	}
 
-	err = m.DB.UpdateNBATeamInfo(teamInfo)
+	err = m.DB.UpdateTeam(teamInfo)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
 
 	m.App.Session.Put(r.Context(), "team_info", teamInfo)
 
-	http.Redirect(w, r, "/nba/teams", http.StatusSeeOther)
+	http.Redirect(w, r, "/teams", http.StatusSeeOther)
 }
 
 type jsonResponse struct {
@@ -796,11 +822,11 @@ func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Req
 }
 
 func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) {
-	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.NBATeamInfo)
+	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.Team)
 	if !ok {
 		m.App.ErrorLog.Println("Can't get error from session")
 		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
-		http.Redirect(w, r, "/nba/teams", http.StatusTemporaryRedirect)
+		http.Redirect(w, r, "/teams", http.StatusTemporaryRedirect)
 		return
 	}
 
@@ -808,7 +834,7 @@ func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) 
 	data := make(map[string]interface{})
 	data["team_info"] = teamInfo
 
-	render.Template(w, r, "nba_team_info.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "team_info.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -832,12 +858,12 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 		result := models.Result{
-			HomeTeam:  homeTeam,
-			HomeScore: homeScore,
-			AwayScore: awayScore,
-			AwayTeam:  awayTeam,
+			HomeTeamID: homeTeam,
+			HomeScore:  homeScore,
+			AwayScore:  awayScore,
+			AwayTeamID: awayTeam,
 		}
-		err = m.DB.AddNBAResult(result)
+		err = m.DB.AddResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -858,22 +884,19 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
-		timestampString := r.FormValue("timestamp")
-		layout := "2006-01-02 15:04:05 -0700 MST"
-		timestamp, err := time.Parse(layout, timestampString)
+
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
 		}
 
 		result := models.Result{
-			HomeTeam:  homeTeam,
-			HomeScore: homeScore,
-			AwayScore: awayScore,
-			AwayTeam:  awayTeam,
-			Time:      timestamp,
+			HomeTeamID: homeTeam,
+			HomeScore:  homeScore,
+			AwayScore:  awayScore,
+			AwayTeamID: awayTeam,
 		}
-		err = m.DB.UpdateNBAResult(result)
+		err = m.DB.UpdateResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -887,9 +910,9 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		result := models.Result{
-			Time: timestamp,
+			CreatedAt: timestamp,
 		}
-		err = m.DB.DeleteNBAResult(result)
+		err = m.DB.DeleteResult(result)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
@@ -919,7 +942,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 	data["standings"] = standings
 	data["last_results"] = lastResults
 
-	render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -949,10 +972,10 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 	}
 	result := models.Result{
-		HomeTeam:  homeTeam,
-		HomeScore: homeScore,
-		AwayScore: awayScore,
-		AwayTeam:  awayTeam,
+		HomeTeamID: homeTeam,
+		HomeScore:  homeScore,
+		AwayScore:  awayScore,
+		AwayTeamID: awayTeam,
 	}
 
 	form := forms.New(r.PostForm)
@@ -965,21 +988,21 @@ func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
 		data := make(map[string]interface{})
 		data["NBAresult"] = result
 
-		render.Template(w, r, "nba_results.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "standings.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
 		return
 	}
 
-	err = m.DB.AddNBAResult(result)
+	err = m.DB.AddResult(result)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
 
-	m.App.Session.Put(r.Context(), "nba_result", result)
+	m.App.Session.Put(r.Context(), "result", result)
 
-	http.Redirect(w, r, "/nba/results", http.StatusSeeOther)
+	http.Redirect(w, r, "/results", http.StatusSeeOther)
 }
 
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
@@ -1001,7 +1024,7 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	data["nba_teams"] = teams
 	data["positions"] = positions
 
-	render.Template(w, r, "nba_draft.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "draft.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
 }
@@ -1042,7 +1065,7 @@ func (m *Repository) AdminShowNBAPlayer(w http.ResponseWriter, r *http.Request) 
 		return
 	}
 
-	player, err := m.DB.GetNBAPlayerByID(id)
+	player, err := m.DB.GetPlayer(id)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return

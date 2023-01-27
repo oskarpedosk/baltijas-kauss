@@ -1,0 +1,10 @@
+create_table("results") {
+    t.Column("result_id", "integer", {"primary": true, "generated always": "as identity"})
+    t.Column("season", "integer", {})
+    t.Column("home_team_id", "integer", {})
+    t.Column("home_score", "integer", {})
+    t.Column("away_score", "integer", {})
+    t.Column("away_team_id", "integer", {})
+    t.Column("created_at", "timestamp", {"default": "now()"})
+    t.Column("updated_at", "timestamp", {"default": "now()"})
+}

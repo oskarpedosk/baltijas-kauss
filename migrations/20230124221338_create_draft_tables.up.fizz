@@ -3,4 +3,6 @@ create_table("draft") {
     t.Column("pick", "integer", {})
     t.Column("player_id", "integer", {})
     t.Column("team_id", "integer", {})
+    t.Column("created_at", "timestamp", {"default": "now()"})
+    t.Column("updated_at", "timestamp", {"default": "now()"})
 }

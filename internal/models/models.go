@@ -16,15 +16,6 @@ type PaginationData struct {
 	BaseURL      string
 }
 
-type NBATeamInfo struct {
-	ID           int
-	Name         string
-	Abbreviation string
-	Color1       string
-	Color2       string
-	DarkText     string
-}
-
 // User is the users model
 type User struct {
 	UserID      int
@@ -32,7 +23,10 @@ type User struct {
 	LastName    string
 	Email       string
 	Password    string
+	ImgID       string
 	AccessLevel int
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 type Team struct {
@@ -48,12 +42,19 @@ type Team struct {
 }
 
 type Result struct {
-	HomeTeam   int
+	ResultID   int
+	Season     int
+	HomeTeamID int
 	HomeScore  int
 	AwayScore  int
-	AwayTeam   int
-	Time       time.Time
-	TimeString string
+	AwayTeamID int
+	CreatedAt  time.Time
+	UpdatedAt  time.Time
+}
+
+type PlayerWithTeamInfo struct {
+	Player Player
+	Team   Team
 }
 
 // NBAPlayer is the NBA player model
@@ -61,66 +62,66 @@ type Player struct {
 	PlayerID                       int
 	FirstName                      string
 	LastName                       string
-	PrimaryPosition                *string
-	SecondaryPosition              *string
+	PrimaryPosition                string
+	SecondaryPosition              string
 	TeamID                         int
 	AssignedPosition               int
-	Archetype                      *string
+	Archetype                      string
 	Height                         *int
 	Weight                         *int
-	NBATeam                        *string
-	Nationality                    *string
-	Birthdate                      *string
+	NBATeam                        string
+	Nationality                    string
+	Birthdate                      string
 	Jersey                         string
-	Draft                          *string
+	Draft                          string
 	ImgID                          string
-	RatingsURL                     *string
-	Overall                        *int
-	AttributesOutsideScoring       *int
-	AttributesAthleticism          *int
-	AttributesInsideScoring        *int
-	AttributesPlaymaking           *int
-	AttributesDefending            *int
-	AttributesRebounding           *int
-	AttributesIntangibles          *int
-	AttributesPotential            *int
-	AttributesTotalAttributes      *int
-	AttributesCloseShot            *int
-	AttributesMidRangeShot         *int
-	AttributesThreePointShot       *int
-	AttributesFreeThrow            *int
-	AttributesShotIQ               *int
-	AttributesOffensiveConsistency *int
-	AttributesSpeed                *int
-	AttributesAcceleration         *int
-	AttributesStrength             *int
-	AttributesVertical             *int
-	AttributesStamina              *int
-	AttributesHustle               *int
-	AttributesOverallDurability    *int
-	AttributesLayup                *int
-	AttributesStandingDunk         *int
-	AttributesDrivingDunk          *int
-	AttributesPostHook             *int
-	AttributesPostFade             *int
-	AttributesPostControl          *int
-	AttributesDrawFoul             *int
-	AttributesHands                *int
-	AttributesPassAccuracy         *int
-	AttributesBallHandle           *int
-	AttributesSpeedWithBall        *int
-	AttributesPassIQ               *int
-	AttributesPassVision           *int
-	AttributesInteriorDefense      *int
-	AttributesPerimeterDefense     *int
-	AttributesSteal                *int
-	AttributesBlock                *int
-	AttributesLateralQuickness     *int
-	AttributesHelpDefenseIQ        *int
-	AttributesPassPerception       *int
-	AttributesDefensiveConsistency *int
-	AttributesOffensiveRebound     *int
-	AttributesDefensiveRebound     *int
+	RatingsURL                     string
+	Overall                        int
+	AttributesOutsideScoring       int
+	AttributesAthleticism          int
+	AttributesInsideScoring        int
+	AttributesPlaymaking           int
+	AttributesDefending            int
+	AttributesRebounding           int
+	AttributesIntangibles          int
+	AttributesPotential            int
+	AttributesTotalAttributes      int
+	AttributesCloseShot            int
+	AttributesMidRangeShot         int
+	AttributesThreePointShot       int
+	AttributesFreeThrow            int
+	AttributesShotIQ               int
+	AttributesOffensiveConsistency int
+	AttributesSpeed                int
+	AttributesAcceleration         int
+	AttributesStrength             int
+	AttributesVertical             int
+	AttributesStamina              int
+	AttributesHustle               int
+	AttributesOverallDurability    int
+	AttributesLayup                int
+	AttributesStandingDunk         int
+	AttributesDrivingDunk          int
+	AttributesPostHook             int
+	AttributesPostFade             int
+	AttributesPostControl          int
+	AttributesDrawFoul             int
+	AttributesHands                int
+	AttributesPassAccuracy         int
+	AttributesBallHandle           int
+	AttributesSpeedWithBall        int
+	AttributesPassIQ               int
+	AttributesPassVision           int
+	AttributesInteriorDefense      int
+	AttributesPerimeterDefense     int
+	AttributesSteal                int
+	AttributesBlock                int
+	AttributesLateralQuickness     int
+	AttributesHelpDefenseIQ        int
+	AttributesPassPerception       int
+	AttributesDefensiveConsistency int
+	AttributesOffensiveRebound     int
+	AttributesDefensiveRebound     int
 	BronzeBadges                   int
 	SilverBadges                   int
 	GoldBadges                     int
@@ -141,23 +142,25 @@ type Badge struct {
 	Name      string
 	Type      string
 	Info      string
-	BronzeUrl string
-	SilverUrl string
-	GoldUrl   string
-	HOFUrl    string
+	ImgID     string
+	URL       string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 // Players badges is the NBA players badges model
 type PlayersBadges struct {
 	PlayerID  int
+	BadgeID   int
 	FirstName string
 	LastName  string
-	BadgeID   int
 	Name      string
 	Level     string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
-type NBAStandings struct {
+type Standings struct {
 	TeamID         int
 	WinPercentage  int
 	Played         int

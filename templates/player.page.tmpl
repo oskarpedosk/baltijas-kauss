@@ -11,74 +11,91 @@
         </div>
         <div class="col-md-10 align-self-end">
             <h1 class="mb-0 mt-2">{{.Data.player.FirstName}} {{.Data.player.LastName}}</h1>
-            <p class="mb-1">{{.Data.player.Archetype}}</p>
+            <p class="mb-1">{{.Data.player.Archetype}} | {{.Data.player.Height}}cm | {{.Data.player.Weight}}kg </p>
         </div>
     </div>
+
     <div class="row bg-light pt-1">
+
         <div class="col-md-2 py-2 px-3">
-            <p class="overall1 mb-0" style="font-size: 25px;">{{.Data.player.Overall}}</p>
-            <p class="mb-1">Overall Rating</p>
+            <div class="row">
+                <p class="overall1 mb-0 fw-semibold" style="font-size: 68px;">{{.Data.player.Overall}}</p>
+                <p class="mb-1">Overall Rating</p>
+            </div>
+            <div class="row">
+
+            </div>
         </div>
+
         <div class="col-md-2 py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.PrimaryPosition}}{{if .Data.player.SecondaryPosition}} / {{end}}{{.Data.player.SecondaryPosition}}</p>
-            <p class="mb-1">Positions</p>
-        </div>
-        <div class="col-md-2 py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Height}} cm</p>
-            <p class="mb-1">Height</p>
-        </div>
-        <div class="col-md-3 bg-light py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Nationality}}</p>
-            <p class="mb-1">Nationality</p>
-        </div>
-        <div class="col-md-3 py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Jersey}}</p>
-            <p class="mb-1">Number</p>
-        </div>
-    </div>
-    <div class="row bg-light">
-        <div class="col-md-2 py-2 px-3">
-            <p class="mb-1" style="margin-top: 2px;">
-            {{if .Data.player.TeamID}}
-            {{range $teamInfo := index $.Data "teams"}}
-                {{if eq $teamInfo.TeamID $.Data.player.TeamID}}
-                <span style="background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block;" 
-                class="team-badge badge badge-pill p-1 {{if eq $teamInfo.DarkText "true"}}text-dark{{end}}">{{$teamInfo.Abbreviation}}</span>
+            <div class="row">
+                <p class="mb-0 fw-semibold" style="font-size: 18px;">{{.Data.player.PrimaryPosition}}{{if .Data.player.SecondaryPosition}}/{{end}}{{.Data.player.SecondaryPosition}}</p>
+                <p class="mb-1" style="font-size: 14px;">Positions</p>
+            </div>
+            <div class="row">
+                <p class="mb-1" style="margin-top: 2px;"></p>
+                <span style="background-image: linear-gradient(90deg, {{.Data.team.Color1}}, {{.Data.team.Color2}})" 
+                class="team-badge badge badge-pill p-1 {{if eq .Data.team.DarkText "true"}}text-dark{{end}}" data-bs-toggle="dropdown" aria-expanded="false">{{$.Data.team.Abbreviation}}</span>
+                <div class="dropdown-menu">
+                {{range $team := .Data.teams}}
+                    <li class="dropdown-item" onclick="changeTeam('{{$.Data.player.PlayerID}}', '{{$team.TeamID}}', '{{$.CSRFToken}}')">
+                        {{$team.Abbreviation}} {{$team.Name}}
+                    </li>
                 {{end}}
-            {{end}}
-            {{else}}
-                <span class="team-badge badge badge-pill p-1 bg-light text-dark border">FA</span>
-            {{end}}
-            </p>
+                <hr class="dropdown-divider">
+                <li class="dropdown-item" onclick="changeTeam('{{.Data.player.PlayerID}}', '{{.Data.FA.TeamID}}', '{{$.CSRFToken}}')">
+                    {{.Data.FA.Name}}
+                </li>
+            </div>
             <p class="mb-1">Team</p>
+            </div>
+            
         </div>
-        <div class="col-md-2 py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Birthdate}}</p>
-            <p class="mb-1">Birthdate</p>
+
+        <div class="col-md-3 bg-light py-2 px-3">
+            <div class="row">
+                <p class="mb-0" style="font-size: 22px;">{{if .Data.player.Nationality}}{{.Data.player.Nationality}}{{else}}--{{end}}</p>
+                <p class="mb-1" style="font-size: 14px;">Nationality</p>
+            </div>
+            <div class="row">
+                <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Birthdate}}</p>
+                <p class="mb-1">Birthdate</p>
+            </div>
         </div>
-        <div class="col-md-2 py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.Weight}} kg</p>
-            <p class="mb-1">Weight</p>
-        </div>
+
         <div class="col-md-3 py-2 px-3">
-            <p class="mb-1" style="margin-top: 2px;">
-                <span class="playerbadgebig badge badge-pill p-1 bronze">{{.Data.player.BronzeBadges}}</span>
-                <span class="playerbadgebig badge badge-pill p-1 silver">{{.Data.player.SilverBadges}}</span>
-                <span class="playerbadgebig badge badge-pill p-1 gold">{{.Data.player.GoldBadges}}</span>
-                <span class="playerbadgebig badge badge-pill p-1 hof">{{.Data.player.HOFBadges}}</span>
-                <span class="playerbadgebig badge badge-pill p-1 total">{{.Data.player.TotalBadges}}</span>
+            <div class="row">
+                <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.NBATeam}}</p>
+                <p class="mb-1">NBA Team</p>
+            </div>
+            <div class="row">
+                <p class="mb-1" style="margin-top: 2px;">
+                    <span class="playerbadgebig badge badge-pill p-1 bronze">{{.Data.player.BronzeBadges}}</span>
+                    <span class="playerbadgebig badge badge-pill p-1 silver">{{.Data.player.SilverBadges}}</span>
+                    <span class="playerbadgebig badge badge-pill p-1 gold">{{.Data.player.GoldBadges}}</span>
+                    <span class="playerbadgebig badge badge-pill p-1 hof">{{.Data.player.HOFBadges}}</span>
+                    <span class="playerbadgebig badge badge-pill p-1 total">{{.Data.player.TotalBadges}}</span>
                 </p>
                 <p class="mb-1">Badges</p>
+            </div>
         </div>
-        
-        
-        <div class="col-md-3 py-2 px-3">
-            <p class="mb-0 fw-light" style="font-size: 25px;">{{.Data.player.NBATeam}}</p>
-            <p class="mb-1">NBA Team</p>
-        </div>
+
     </div>
+    
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2" style="height: 100%;">
+            <div class="row py-3">
+                <div class="col bg-light p-3">
+                    <p class="mb-0" style="font-size: 25px;">{{.Data.player.Jersey}}</p>
+                    <p class="mb-1">Jersey</p>
+                </div>
+            </div>
+            <div class="row py-3">
+                <div class="col bg-light p-3">
+                    <p class="mb-0" style="font-size: 25px;">{{.Data.player.Jersey}}</p>
+                    <p class="mb-1">Jersey</p>
+                </div>
+            </div>
             <div class="row py-3">
                 <div class="col bg-light p-3">
                     <p class="mb-0" style="font-size: 25px;">{{.Data.player.AttributesPotential}}</p>
@@ -210,7 +227,10 @@
             first = parseInt(name.split('-')[0],10);
             second = parseInt(name.split('-')[1],10);
             
-            if( between(color, first, second) ){
+            if (color === 0) {
+                attribute.text('--');
+                attribute.addClass('attribute6');
+            } else if (between(color, first, second) ){
                 attribute.addClass(value);
             }
         
@@ -220,5 +240,22 @@
     });
 </script>
 
+<script>
+    function changeTeam(playerID, teamID, csrftoken) {
+        $.ajax({
+        type: 'POST',
+        dataType: 'html',
+        data : {
+            csrf_token: csrftoken,
+            player_id: playerID,
+            team_id: teamID,
+        },
+        success: function(data) {
+            window.location.reload();
+        }
+        });
+    }
+ </script>
+ 
 
 {{end}}

@@ -7,7 +7,7 @@
 {{define "content"}}
     {{$player := index .Data "nba_player"}}
     <div class="col-md-12">
-        <form method="post" action="/admin/nba_players/{{$player.PlayerID}}" novalidate>
+        <form method="post" action="/admin/players/{{$player.PlayerID}}" novalidate>
             <input type="hidden" name="player_id" value="{{$player.PlayerID}}">
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <div class="form-group">
@@ -258,10 +258,10 @@
             <hr>
             <div class="float-start">
                 <input type="submit" class="btn btn-primary" value="Save">
-                <a href="/admin/nba_players" class="btn btn-warning">Cancel</a>
+                <a href="/admin/players" class="btn btn-warning">Cancel</a>
             </div>
             <div class="float-end">
-                <a href="/admin/nba_players" class="btn btn-danger float-right">Delete Player</a>
+                <a href="/admin/players" class="btn btn-danger float-right">Delete Player</a>
             </div>
             <div class="clearfix"></div>
         </form>

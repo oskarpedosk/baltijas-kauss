@@ -1,0 +1,518 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<title>Draft | Baltijas Kauss</title>
+
+<div class="container p-3">
+  <div class="row border border-dark rounded-3 bg-light">
+    <div class="col-md-12 py-2 px-3">
+      <div class="row px-3">
+        <div class="col-md-1 d-flex justify-content-center align-self-end p-0 rounded-3">
+          <p id="countdown_text" class="fw-semibold m-0 p-0 pt-1" style="font-size: 62px;"><br></p>
+        </div>
+        <div class="col-md-11 p-0">
+          <div class="tab-content" id="nav-tabContent">
+            {{range $index, $players := index .Data "nba_players"}}
+              <div class="tab-pane fade" id="player{{$players.PlayerID}}" role="tabpanel" aria-labelledby="player{{$players.PlayerID}}-list">
+                <table id="draft_single_player" class="table table-sm table-responsive table-borderless m-0">
+                  <thead style="font-size: 8px; white-space: nowrap; text-align: center;">
+                      <tr>
+                          <th></th>
+                          <th class="ps-2" style="text-align: start;"></th>
+                          <th></th>
+                          <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
+                          <th title="Close Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">CLOSE</th>
+                          <th title="Mid-Range Shot " data-bs-toggle="tooltip" data-bs-placement="bottom">MID</th>
+                          <th title="Three-Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
+                          <th title="Free Throw" data-bs-toggle="tooltip" data-bs-placement="bottom">FT</th>
+                          <th title="Speed" data-bs-toggle="tooltip" data-bs-placement="bottom">SPD</th>
+                          <th title="Strength" data-bs-toggle="tooltip" data-bs-placement="bottom">STR</th>
+                          <th title="Vertical" data-bs-toggle="tooltip" data-bs-placement="bottom">VERT</th>
+                          <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
+                          <th title="Steal" data-bs-toggle="tooltip" data-bs-placement="bottom">STL</th>
+                          <th title="Block" data-bs-toggle="tooltip" data-bs-placement="bottom">BLK</th>
+                          <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
+                          <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
+                          <th title="Offensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">OREB</th>
+                          <th title="Defensive Rebound" data-bs-toggle="tooltip" data-bs-placement="bottom">DREB</th>
+                          <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
+                      </tr>
+                  </thead>
+                  <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+    
+                      <tr>
+                          <td class="p-0">
+                            {{if $players.TeamID}}
+                                    {{range $teamInfo := index $.Data "nba_teams"}}
+                                        {{if eq $teamInfo.TeamID $players.TeamID}}
+                                            <img src="{{if ne $players.ImgID ""}}{{$players.ImgID}}{{else}}/static/images/players/default_player.png{{end}}"
+                                            alt="" class="header-image rounded-circle inline-block bg-light border">
+                                        {{end}}
+                                    {{end}}
+                                    {{else}}
+                                        <img src="{{if ne $players.ImgID ""}}{{$players.ImgID}}{{else}}/static/players/default_player.png{{end}}"
+                                        alt="" class="header-image rounded-circle bg-light border">
+                                    {{end}}
+                          </td>
+                          <td class="p-0 ps-2" style="min-width: 180px;">
+                              <div class="d-flex player-card">
+                                  <div class="p-0 inline-block">
+                                      <p class="m-0">{{$players.FirstName}} {{$players.LastName}}</p>
+                                      <p class="text-muted my-0" style="font-size: 10px;">{{$players.Archetype}}</p>
+                                      <div class="my-0">
+                                          <p class="text-muted my-0" style="font-size: 10px;">
+                                              {{$players.PrimaryPosition}}{{if $players.SecondaryPosition}}/{{end}}{{$players.SecondaryPosition}}
+                                              | {{$players.Height}}cm | {{$players.Weight}}kg
+                                          </p>
+                                      </div>
+    
+                                  </div>
+                              </div>
+                          </td>
+                          <td class="p-0 py-1">
+                              <div class="mt-2" style="font-size: 0px;">
+                                  <div class="d-inline-block position-relative">
+                                          <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.BronzeBadges}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.SilverBadges}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.GoldBadges}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <p class="position-absolute text-center badge-count" style="font-size: 16px;">{{$players.HOFBadges}}</p>
+                                  </div>
+                                  <div class="d-inline-block position-relative">
+                                      <p class="position-absolute text-center badge-count text-white" style="font-size: 16px;">{{$players.TotalBadges}}</p>
+                                  </div>
+                              </div>
+                          </td>
+                          <td>{{.Overall}}</span></td>
+                          <td>{{$players.AttributesCloseShot}}</td>
+                          <td>{{$players.AttributesMidRangeShot}}</td>
+                          <td>{{$players.AttributesThreePointShot}}</td>
+                          <td>{{$players.AttributesFreeThrow}}</td>
+                          <td>{{$players.AttributesSpeed}}</td>
+                          <td>{{$players.AttributesStrength}}</td>
+                          <td>{{$players.AttributesVertical}}</td>
+                          <td>{{$players.AttributesDrivingDunk}}</td>
+                          <td>{{$players.AttributesSteal}}</td>
+                          <td>{{$players.AttributesBlock}}</td>
+                          <td>{{$players.AttributesPerimeterDefense}}</td>
+                          <td>{{$players.AttributesInteriorDefense}}</td>
+                          <td>{{$players.AttributesOffensiveRebound}}</td>
+                          <td>{{$players.AttributesDefensiveRebound}}</td>
+                          <td>
+                              <span class="badge badge-pill text-dark border bg-white">{{$players.AttributesTotalAttributes}}</span>
+                          </td>
+                          <td>
+                            <button id="draft_{{$players.PlayerID}}" type="submit" class="btn btn-dark disabled {{if $players.TeamID}}btn-dark disabled{{end}}" 
+                            onclick="draftPlayer('{{$players.PlayerID}}', '{{$players.FirstName}}', '{{$players.LastName}}', '{{$players.PrimaryPosition}}', '{{$players.SecondaryPosition}}')">Draft Player</button>
+                          </td>
+                      </tr>
+    
+                  </tbody>
+              </table>
+              </div>
+            {{end}}
+          </div>
+        </div>
+      </div>
+      <div class="px-3">
+        <div class="progress mt-1 mb-3" style="height: 6px;">
+          <div id="countdown_bar" class="progress-bar bkcolor" role="progressbar" aria-label="Success example" style="width: 100%;"></div>
+        </div>
+      </div>
+    
+      <div class="row px-3">
+        <div class="col-md-9">
+          <table class="table table-condensed table-borderless table-responsive">
+            <thead style="text-align: center;">
+                <tr style="border: 0.1px solid rgb(190, 190, 190);">
+                    <th style="font-size: 14px; width: 8%">Pick</th>
+                    <th id="pick1" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 1</th>
+                    <th id="pick2" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 2</th>
+                    <th id="pick3" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 3</th>
+                    <th id="pick4" style="font-size: 14px; width: 23%; border: 0.1px solid rgb(190, 190, 190);">Team 4</th>
+                </tr>
+            </thead>
+            <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+              {{range $position := index $.Data "positions"}}
+                <tr style="border: 0.1px solid rgb(190, 190, 190);">
+                  <td>
+                    {{$position.Number}}
+                  </td>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col1" class="py-1">
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col2" class="py-1">
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col3" class="py-1">
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                  <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                    <div id="row{{$position.Number}}col4" class="py-1">
+                      <br>
+                      <br>
+                    </div>
+                  </td>
+                </tr>
+              {{end}}
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-3">
+            <div class="list-group rounded-3 border" id="list-tab"  style="max-height: 609px; overflow:scroll; scrollbar-width: none; position: relative;">
+              {{range $index, $players := index .Data "nba_players"}}
+                {{if eq $index 150}}
+                  {{break}}
+                {{end}}
+                <div style="position: relative;">
+                  <div class="list-group-item list-group-item-action justify-content-between {{if $players.TeamID}}hidden{{else}}d-flex{{end}}" id="player{{$players.PlayerID}}-list" data-bs-toggle="list" href="#player{{$players.PlayerID}}" 
+                  style="font-size: 14px; border-bottom: 0,5px solid gray; border-left: none; border-right: none; border-top: none;" role="tab" aria-controls="player{{$players.PlayerID}}" onclick="toggleStar('{{$players.PlayerID}}');">
+                  <p class="m-0">{{$players.Overall}} {{$players.FirstName}} {{$players.LastName}}</p>
+                                    </div>
+                                    <i id="{{$players.PlayerID}}-star" class="far fa-star pointer" style="margin-top: 3px; position: absolute; z-index: 100; top: 7px; right: 13px; {{if $players.TeamID}}display: none;{{end}}"></i>
+                </div>
+                    
+              {{end}}
+            </div>
+              <div class="row px-2 mt-1">
+                <div class="d-flex justify-content-between" style="padding-top: 6px;">
+                  <div>
+                    <img class="pointer me-3" src="/static/images/buttons/volume-on.png" alt="" style="max-height: 20px; opacity: 45%;">
+                    {{if eq .AccessLevel 2}}
+                      <img class="pointer" src="/static/images/buttons/settings.png" alt="" style="max-height: 18px; opacity: 45%;" onclick="draftSettings();">
+                    {{end}}
+                  </div>
+                  <div id="status"></div>
+                </div>
+              </div>
+        </div>
+      </div> 
+
+      <div class="row px-3">
+        <div id="draftControls" class="col-md-9 my-3 hidden">
+          <div class="d-flex flex-row justify-content-between">
+              <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetAllPlayers();">Reset All Teams</div>
+              <div>
+                <select id="draftSeconds" class="form-select">
+                  <option value="1">Random</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option selected value="45">45</option>
+                  <option value="60">60</option>
+                </select>
+              </div>
+              <div id="generateOrderBtn" class="btn btn-success" onclick="generateOrder();">Generate Draft Order</div>
+              <div id="startDraftBtn" class="btn btn-primary" onclick="startDraft();">Start Draft</div>
+              <div id="stopDraftBtn" class="btn btn-danger" onclick="stopDraft();">Stop Draft</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="row px-3 mt-2 mb-3">
+        <div class="col-md-9">
+  
+          <div class="form-group hidden">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" class="form-control" autocomplete="off" value="{{.StringMap.user}}">
+          </div>
+    
+          <input type="hidden" name="action" id="action">
+    
+          <div id="output" class="form-control" style="min-height: 160px; max-height: 160px; overflow:scroll; scrollbar-width: none;">
+    
+          </div>
+    
+          <div class="form-group mt-2">
+            <input type="text" name="message" id="message" class="form-control" autocomplete="off">
+          </div>
+    
+        </div>
+        <div class="col-md-3">
+          <div class="row" style="min-height: 160px; max-height: 160px;">
+            <div class="col-md-12">
+              <h3>Online</h3>
+              <ul id="online_users" style="padding-left: 1em; font-size: 16px;">
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+  </div>
+
+</div>
+{{end}}
+
+{{define "js"}}
+
+<script>
+  var countdownTimer;
+  let socket = null;
+  let o = document.getElementById("output");
+  let clock = document.getElementById("countdown_text");
+  let userField = document.getElementById("username");
+  let messageField = document.getElementById("message");
+  let pick = 1;
+
+
+  window.onbeforeunload = function() {
+    console.log("Leaving");
+    let jsonData = {};
+    jsonData["action"] = "left";
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    socket = new ReconnectingWebSocket("ws://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
+
+    const online = `<span class="badge bg-success">Connected</span>`
+    const offline = `<span class="badge bg-danger">Not connected</span>`
+    let statusDiv = document.getElementById("status");
+
+    socket.onopen = () => {
+      console.log("Successfully connected");
+      statusDiv.innerHTML = online;
+      let jsonData = {};
+      jsonData["action"] = "username";
+      jsonData["username"] = userField.value;
+      socket.send(JSON.stringify(jsonData));
+    }
+
+    socket.onclose = () => {
+      console.log("Connection closed");
+      statusDiv.innerHTML = offline;
+    }
+
+    socket.onerror = error => {
+      console.log("There was an error");
+      statusDiv.innerHTML = offline;
+    }
+
+    socket.onmessage = msg => {
+      let data = JSON.parse(msg.data);
+      console.log("Action is", data.action);
+
+      switch (data.action) {
+        case "list_users":
+          let ul = document.getElementById("online_users");
+          while (ul.firstChild) ul.removeChild(ul.firstChild);
+
+          if (data.connected_users.length > 0) {
+            data.connected_users.forEach(function(item) {
+              let li = document.createElement("li");
+              li.appendChild(document.createTextNode(item))
+              ul.appendChild(li)
+            })
+          }
+          break;
+
+        case "broadcast":
+          o.innerHTML = o.innerHTML + data.message + "<br>";
+          break;
+
+        case "reset_players":
+          var elems = document.querySelectorAll("#list-tab .hidden");
+          var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
+          var stars = document.querySelectorAll("#list-tab i");
+          elems.forEach(el => {
+            el.classList.remove('hidden');
+            el.classList.add('d-flex');
+          });
+          buttons.forEach(button => {
+            button.classList.remove('btn-dark');
+            button.classList.remove('disabled');
+          });
+          stars.forEach(star => {
+            star.style.display = "inline-block"
+          });
+          for (let row = 1; row <= 12; row++) {
+            for (let col = 1; col <= 4; col++) {
+              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>";
+              document.getElementById("row" + row + "col" + col).style.backgroundColor = "";
+            }
+          }
+          break;
+
+        case "timer":
+          clock.innerHTML = data.countdown;
+          document.getElementById("countdown_bar").style.width = (data.countdown/data.draft_seconds)*100 + "%";
+          break;
+
+        case "generate_order":
+          for (let i = 0; i < data.teams.length; i++) {
+            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase();
+            document.getElementById("pick" + (i+1)).style.backgroundImage = 'linear-gradient(90deg,' + data.teams[i].Color1 + ', ' + data.teams[i].Color2 +  ')';
+            if (data.teams[i].DarkText !== "true") {
+              document.getElementById("pick" + (i+1)).style.color = "white";
+            } else {
+              document.getElementById("pick" + (i+1)).style.color = "black";
+            }
+          } 
+          break;
+        
+        case "draft_player":
+          document.getElementById("row" + (data.row) + "col" + (data.column)).innerHTML = data.message;
+          document.getElementById("row" + (data.row) + "col" + (data.column)).style.backgroundColor = data.color;
+          document.getElementById("row" + (data.row) + "col" + (data.column)).style.color = "black";
+          document.getElementById("player" + (data.player_id) + "-list").classList.remove("d-flex");
+          document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden");
+          document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark");
+          document.getElementById("draft_" + (data.player_id)).classList.add("disabled");
+          document.getElementById((data.player_id) + "-star").style.display = "none";
+          pick++
+          let row = Math.floor((pick - 1) / 4 + 1);
+          let col;
+          if (row % 2 !== 0) {
+            col = Math.floor(pick - (row - 1) * 4)
+          } else {
+            col = Math.floor(row * 4 - pick + 1)
+          }
+          console.log("pick", pick)
+          console.log("row", row)
+          console.log("col", col)
+          if (pick < 49) {
+            document.getElementById("row" + row.toString() + "col" + col.toString()).innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick" + col).innerHTML) + "</span>";
+            // document.getElementById("row" + row.toString() + "col" + col.toString()).style.color = 'white';
+            // document.getElementById("row" + row.toString() + "col" + col.toString()).style.backgroundColor = '#0d6efd';
+          }
+          break;
+
+        case "draft_started":
+          document.getElementById("row" + "1" + "col" + "1").innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick1").innerHTML) + "</span>";
+          var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
+          buttons.forEach(button => {
+            button.classList.remove('disabled');
+            button.classList.remove('btn-dark');
+            button.classList.add('btn-primary');
+          });
+          break;  
+
+        case "draft_ended":
+          clock.innerHTML = "<br>";
+          pick = 1;
+          document.getElementById("countdown_bar").style.width = "100%";
+          break;
+        }
+    }
+
+    userField.addEventListener("change", function () {
+          let jsonData = {};
+          jsonData["action"] = "username";
+          jsonData["username"] = this.value;
+          socket.send(JSON.stringify(jsonData));
+      })
+
+    messageField.addEventListener("keydown", function(event) {
+      if (event.code === "Enter") {
+        if (!socket) {
+          console.log("No connection");
+          return false
+        }
+
+        if ((userField.value === "") || (messageField.value === "")) {
+          // errorMessage("Fill out username and message!");
+          return false;
+        } else {
+          sendMessage();
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    })
+  })
+
+  function sendMessage() {
+    let jsonData = {};
+    jsonData["action"] = "broadcast";
+    jsonData["username"] = userField.value;
+    jsonData["message"] = messageField.value;
+    socket.send(JSON.stringify(jsonData))
+    messageField.value = "";
+  }
+
+  function generateOrder() {
+    let jsonData = {};
+    jsonData["action"] = "generate_order";
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  function startDraft() {
+    let jsonData = {};
+    jsonData["action"] = "start_draft";
+    jsonData["countdown"] = parseInt(document.getElementById("draftSeconds").value);
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  function stopDraft() {
+    let jsonData = {};
+    jsonData["action"] = "stop_draft";
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  function draftPlayer(playerID, firstName, lastName, primaryPos, secondaryPos) {
+    var playerInfo = [firstName, lastName, primaryPos, secondaryPos];
+    
+    let jsonData = {};
+    jsonData["action"] = "draft_player";
+    jsonData["player_id"] = parseInt(playerID);
+    jsonData["player_info"] = playerInfo;
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  function resetAllPlayers() {
+    let jsonData = {};
+    jsonData["action"] = "reset_players";
+    socket.send(JSON.stringify(jsonData))
+  }
+
+  function draftSettings() {
+        const str = 'draftControls';
+        $('#' + str).toggleClass("hidden");
+    }
+
+</script>
+
+<script>
+  const triggerTabList = document.querySelectorAll('#myList a')
+  triggerTabList.forEach(triggerEl => {
+    const tabTrigger = new bootstrap.Tab(triggerEl)
+
+    triggerEl.addEventListener('click', event => {
+      event.preventDefault()
+      tabTrigger.show()
+    })
+  })
+</script>
+
+<script>
+  $('.fa-star').click(function() {
+    $(this).toggleClass('fas far');
+  })
+
+  function toggleStar(playerID) {
+    var stars = document.querySelectorAll("#list-tab .logo-white");
+    stars.forEach(star => {
+      star.classList.remove("logo-white");
+    });
+    document.getElementById(playerID + "-star").classList.add("logo-white")
+  }
+</script>
+
+{{end}}

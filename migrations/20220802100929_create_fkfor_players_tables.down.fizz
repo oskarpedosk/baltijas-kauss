@@ -1,1 +1,1 @@
-drop_foreign_key("players", "players_nba_teams_team_id_fk", {})
+drop_foreign_key("players", ""name": "team_id_fk_key",", {})

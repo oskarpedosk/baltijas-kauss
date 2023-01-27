@@ -20,20 +20,20 @@ var theTests = []struct {
 	expectedStatusCode int
 }{
 	{"signIn", "/", "GET", []postData{}, http.StatusOK},
-	{"nbaHome", "/nba", "GET", []postData{}, http.StatusOK},
-	{"nbaPlayers", "/nba/players", "GET", []postData{}, http.StatusOK},
-	{"nbaTeams", "/nba/teams", "GET", []postData{}, http.StatusOK},
-	{"nbaTeamsJSON", "/nba/teams-json", "GET", []postData{}, http.StatusOK},
-	{"nbaTeamInfo", "/nba/team-info-summary", "GET", []postData{}, http.StatusOK},
-	{"nbaResults", "/nba/results", "GET", []postData{}, http.StatusOK},
+	{"nbaHome", "/home", "GET", []postData{}, http.StatusOK},
+	{"nbaPlayers", "/players", "GET", []postData{}, http.StatusOK},
+	{"nbaTeams", "/teams", "GET", []postData{}, http.StatusOK},
+	{"nbaTeamsJSON", "/teams-json", "GET", []postData{}, http.StatusOK},
+	{"nbaTeamInfo", "/team-info-summary", "GET", []postData{}, http.StatusOK},
+	{"nbaResults", "/standings", "GET", []postData{}, http.StatusOK},
 
-	{"post-nbaTeams", "/nba/teams", "POST", []postData{
+	{"post-nbaTeams", "/teams", "POST", []postData{
 		{key: "TeamName", value: "Jannseni Krakenid"},
 		{key: "Abbreviation", value: "JNSN"},
 		{key: "TeamColor", value: "#FFFFFF"},
 		{key: "DarkText", value: "true"},
 	}, http.StatusOK},
-	{"post-nbaResults", "/nba/results", "POST", []postData{
+	{"post-nbaResults", "/standings", "POST", []postData{
 		{key: "home_team", value: "Jannseni Krakenid"},
 		{key: "home_score", value: "21"},
 		{key: "away_score", value: "13"},

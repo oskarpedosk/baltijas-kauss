@@ -1,4 +1,5 @@
 add_foreign_key("players", "team_id", {"teams": ["team_id"]}, {
+    "name": "team_id_fk_key",
     "on_delete": "cascade",
     "on_update": "cascade",
 })

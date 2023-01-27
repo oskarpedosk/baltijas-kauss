@@ -1,9 +1,11 @@
 create_table("teams") {
-    t.Column("team_id", "integer", {primary: true})
+    t.Column("team_id", "integer", {"primary": true, "generated always": "as identity"})
     t.Column("name", "string", {"default": ""})
     t.Column("abbreviation", "string", {"default": "", "size": 4})
     t.Column("team_color1", "string", {"default": ""})
     t.Column("team_color2", "string", {"default": ""})
     t.Column("dark_text", "bool", {"default": false})
     t.Column("user_id", "integer", {})
+    t.Column("created_at", "timestamp", {"default": "now()"})
+    t.Column("updated_at", "timestamp", {"default": "now()"})
 }
