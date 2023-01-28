@@ -8,13 +8,12 @@
     <h3>Players</h3>
     <div class="row">
         <div id="players_table" class="col-md-9">
-            <table class="table table-sm table-responsive table-borderless" style="border-bottom: 0.5px solid rgb(190, 190, 190);">
+            <table class="table table-sm table-responsive table-borderless table-hover" style="border-bottom: 0.5px solid rgb(190, 190, 190);">
                 <thead style="font-size: 14px; white-space: nowrap; text-align: center;">
                     <tr style="background-color: white; border-bottom: 1px solid rgb(190, 190, 190);">
                         <th>#</th>
                         <th></th>
                         <th class="ps-2" style="text-align: start;">NAME</th>
-                        <th>TEAM</th>
                         <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
                         <th title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
                         <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
@@ -31,46 +30,36 @@
                     {{range $index, $player := index .Data.players}}
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
-                        <td class="p-0 py-2">
-                            <img src="/static/images/players/{{$player.Player.ImgID}}"
-                            alt="" class="header-image rounded-circle inline-block" style="border-style: none; background-image: linear-gradient(90deg, {{$player.Team.Color1}}, {{$player.Team.Color2}});">
+                        <td class="p-0 py-1">
+                            <a href="/players/{{$player.Player.PlayerID}}"><img src="/static/images/players/{{$player.Player.ImgID}}"
+                            alt="" class="header-image rounded-circle inline-block border"></a>
                         </td>
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
                                 <div class="p-0 inline-block">
                                     <p class="m-0"><a class="player-link" href="/players/{{$player.Player.PlayerID}}">{{$player.Player.FirstName}} {{$player.Player.LastName}}</a></p>
                                     <div class="my-0">
-                                        <p class="text-muted my-0" style="font-size: 12px;">
+                                        <p class="text-muted my-0 pointer" style="font-size: 12px;" data-bs-toggle="dropdown" aria-expanded="false">
                                             {{$player.Player.PrimaryPosition}}{{if $player.Player.SecondaryPosition}}/{{$player.Player.SecondaryPosition}}{{end}}
-                                            | {{$player.Player.Height}}cm | {{$player.Player.Weight}}kg
+                                            | {{$player.Player.Height}}cm | {{$player.Team.Abbreviation}}
                                         </p>
-                                        <p class="text-muted my-0" style="font-size: 12px;">
-                                            {{$player.Team.Name}}
-                                        </p>
+                                        <div class="dropdown-menu">
+                                            {{range $team := $.Data.teams}}
+                                                <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$team.TeamID}}', '{{$.CSRFToken}}')">
+                                                    {{$team.Abbreviation}} {{$team.Name}}
+                                                </li>
+                                            {{end}}
+                                            <hr class="dropdown-divider">
+                                            <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$.Data.FA.TeamID}}', '{{$.CSRFToken}}')">
+                                                {{$.Data.FA.Name}}
+                                            </li>
+                                        </div>
                                     </div>
 
                                 </div>
                             </div>
                         </td>
-
-                        
-                        <td class="p-0">
-                            <span style="background-image: linear-gradient(90deg, {{$player.Team.Color1}}, {{$player.Team.Color2}}); display:inline-block; width:60px" 
-                            class="playerbadge badge badge-pill p-1 fw-semibold pointer {{if eq $player.Team.DarkText "true"}}text-dark{{end}}" data-bs-toggle="dropdown" aria-expanded="false">{{$player.Team.Abbreviation}}</span>
-
-                            <div class="dropdown-menu">
-                                {{range $team := $.Data.teams}}
-                                    <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$team.TeamID}}', '{{$.CSRFToken}}')">
-                                        {{$team.Abbreviation}} {{$team.Name}}
-                                    </li>
-                                {{end}}
-                                <hr class="dropdown-divider">
-                                <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$.Data.FA.TeamID}}', '{{$.CSRFToken}}')">
-                                    {{$.Data.FA.Name}}
-                                </li>
-                            </div>
-                        </td>
-                        <td><span class="attribute-overall" overall-color="{{$player.Player.Overall}}">{{$player.Player.Overall}}</span></td>
+                        <td><span class="overall-badge" overall-color="{{$player.Player.Overall}}">{{$player.Player.Overall}}</span></td>
                         <td>{{$player.Player.AttributesThreePointShot}}</td>
                         <td>{{$player.Player.AttributesDrivingDunk}}</td>
                         <td>{{$player.Player.AttributesAthleticism}}</td>
@@ -85,7 +74,7 @@
                             <span class="playerbadge badge badge-pill p-1 total">{{$player.Player.TotalBadges}}</span>
                         </td>
                         <td>
-                            <span class="playerbadge badge badge-pill p-1 text-dark" style="background-color: rgb(237, 237, 237); width: 50px;">{{$player.Player.AttributesTotalAttributes}}</span>
+                            <span class="playerbadge badge badge-pill p-1 text-dark bg-light border" style="background-color: rgb(237, 237, 237); width: 50px;">{{$player.Player.AttributesTotalAttributes}}</span>
                         </td>
                     </tr>
                     {{end}}
@@ -106,7 +95,7 @@
                     <p style="font-size: 16px;">Three Point Shot</p>
                 </div>
                 <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=0>
+                    <input id="away_score" type="text" class="form-control" value=1>
                 </div>
                 <div class="col-md-3">
                     <input id="away_score" type="text" class="form-control" value=99>
@@ -141,7 +130,7 @@
     let second;
     let overall;
     
-    $('.attribute-overall').each(function(index){
+    $('.overall-badge').each(function(index){
         
         overall = $(this);
         color = parseInt($(this).attr('overall-color'),10);
@@ -163,9 +152,6 @@
 
 <script>
     function changeTeam(playerID, teamID, csrftoken) {
-        console.log(playerID)
-        console.log(teamID)
-        console.log(csrftoken)
         $.ajax({
         type: 'POST',
         dataType: 'html',

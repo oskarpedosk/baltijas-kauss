@@ -37,24 +37,6 @@ html {
     background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
 
-.playerbadge {
-    font-size: 16px; 
-    font-weight: 400;
-    width: 30px;
-}
-
-.playerbadgebig {
-    font-size: 25px; 
-    font-weight: 300;
-    width: 40px;
-}
-
-.team-badge {
-    font-size: 25px; 
-    font-weight: 600;
-    width: 80px;
-}
-
 .player-link {
     text-decoration: none;
     color: black;
@@ -90,28 +72,81 @@ html {
     background-color: rgb(55, 55, 55);
 }
 
-.attribute-overall {
+.overall-badge {
+    color: white;
+    font-size: 16px;
     font-weight: 600;
+    padding: 0px;
+    width: 30px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 5px;
+}
+
+.overall-badge-big {
+    color: white;
+    font-size: 70px;
+    font-weight: 600;
+    padding: 0px;
+    width: 110px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 5px;
+}
+
+.playerbadge {
+    font-size: 16px; 
+    font-weight: 400;
+    width: 30px;
+}
+
+.player-badge-big {
+    font-size: 22px; 
+    font-weight: 400;
+    width: 40px;
+    padding: 0px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 5px;
+}
+
+.team-badge {
+    color: white;
+    font-size: 22px; 
+    font-weight: 600;
+    width: 100px;
+    padding: 0px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 5px;
 }
 
 .overall1 {
-    color: #ce00f2;
+    background-image: linear-gradient(90deg, #8100ff, #e002ff);
 }
 
 .overall2 {
-    color: #0059ff;
+    background-image: linear-gradient(90deg, #0004ff, #0274ff);
 }
 
 .overall3 {
-    color: #e52848;
+    background-image: linear-gradient(90deg, #cf0000, #e82727);
 }
 
 .overall4 {
-    color: #3f9d25;
+    background-image: linear-gradient(90deg, #007d17, #0bab30);
 }
 
 .overall5 {
-    color: #1c1c1c;
+    background-color: #1c1c1c;
 }
 
 .attribute-badge {
@@ -124,7 +159,7 @@ html {
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 .attribute1 {
@@ -149,18 +184,6 @@ html {
 
 .attribute6 {
     background-color: #1c1c1c;
-}
-
-.badgecolor1 {
-    background-image: linear-gradient(90deg, #0004ff, #0274ff);
-}
-
-.badgecolor2 {
-    background-image: linear-gradient(90deg, #007d17, #0bab30);
-}
-
-.badgecolor3 {
-    background-image: linear-gradient(90deg, #cf0000, #e82727);
 }
 
 .logo-white {
