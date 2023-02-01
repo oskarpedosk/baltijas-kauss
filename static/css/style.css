@@ -1,6 +1,5 @@
 html {
     overflow-y: scroll;
-    min-height: 100vh;
 }
 
 .wrapper {
@@ -9,6 +8,7 @@ html {
 
 .main {
     width: 100%;
+    min-height: calc(100vh - 41.8px);
     padding-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
@@ -24,7 +24,7 @@ html {
 }
 
 .footer {
-    height: 100px;
+    height: 80px;
     margin-top: 2em;
 }
 
@@ -367,4 +367,9 @@ html {
     {
         display:none;
     }
+}
+
+.filter-attribute {
+    display: grid;
+    grid-template-columns: 60% 20% 20%;
 }

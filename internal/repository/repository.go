@@ -13,12 +13,13 @@ type DatabaseRepo interface {
 	UpdateTeam(team models.Team) error
 	AddPlayer(playerID, teamID int) error
 	DropPlayer(playerID int) error
+	UpdatePlayer(player models.Player) error
 	ResetPlayers() error
 	GetRandomPlayer(random int) (models.Player, error)
 
 	GetPlayer(playerID int) (models.Player, error)
 	AssignPosition(player models.Player) error
-	UpdatePlayer(player models.Player) error
+	SwitchTeam(player models.Player) error
 
 	GetStandings() ([]models.Standings, error)
 	GetLastResults(count int) ([]models.Result, error)

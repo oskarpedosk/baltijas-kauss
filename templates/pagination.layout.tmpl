@@ -2,45 +2,45 @@
     <nav>
         <ul class="pagination justify-content-center">
             {{ if (gt .Data.pagination.CurrentPage 1)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.PreviousPage}}">Previous</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.PreviousPage}}">Previous</a></li>
             {{end}}
 
             {{ if (gt .Data.pagination.CurrentPage 3)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page=1">1</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page=1">1</a></li>
             {{end}}
 
             {{ if (gt .Data.pagination.CurrentPage 4)}}
-            <li class="page-item"><a class="page-link disabled">...</a></li>
+            <li class="page-item"><a class="page-link text-dark disabled" style="font-size: 14px;">...</a></li>
             {{end}}
 
             {{ if (gt .Data.pagination.CurrentPage 2)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.TwoBefore}}">{{.Data.pagination.TwoBefore}}</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.TwoBefore}}">{{.Data.pagination.TwoBefore}}</a></li>
             {{end}}
 
             {{ if (gt .Data.pagination.CurrentPage 1)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.PreviousPage}}">{{.Data.pagination.PreviousPage}}</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.PreviousPage}}">{{.Data.pagination.PreviousPage}}</a></li>
             {{end}}
 
-            <li class="page-item"><a class="page-link active" >{{.Data.pagination.CurrentPage}}</a></li>
+            <li class="page-item"><a class="page-link bkcolor text-white" style="font-size: 14px;">{{.Data.pagination.CurrentPage}}</a></li>
 
             {{ if (lt .Data.pagination.CurrentPage .Data.pagination.TotalPages)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.NextPage}}">{{.Data.pagination.NextPage}}</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.NextPage}}">{{.Data.pagination.NextPage}}</a></li>
             {{end}}
 
             {{ if (le .Data.pagination.TwoAfter .Data.pagination.TotalPages)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.TwoAfter}}">{{.Data.pagination.TwoAfter}}</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.TwoAfter}}">{{.Data.pagination.TwoAfter}}</a></li>
             {{end}}
 
             {{ if (lt .Data.pagination.ThreeAfter .Data.pagination.TotalPages)}}
-            <li class="page-item"><a class="page-link disabled">...</a></li>
+            <li class="page-item"><a class="page-link text-dark disabled" style="font-size: 14px;">...</a></li>
             {{end}}
 
             {{ if (lt .Data.pagination.TwoAfter .Data.pagination.TotalPages)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.TotalPages}}">{{.Data.pagination.TotalPages}}</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.TotalPages}}">{{.Data.pagination.TotalPages}}</a></li>
             {{end}}
 
             {{ if (lt .Data.pagination.CurrentPage .Data.pagination.TotalPages)}}
-            <li class="page-item"><a class="page-link" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.NextPage}}">Next</a></li>
+            <li class="page-item"><a class="page-link text-dark" style="font-size: 14px;" href="{{.Data.pagination.BaseURL}}/page={{.Data.pagination.NextPage}}">Next</a></li>
             {{end}}
         </ul>
     </nav>

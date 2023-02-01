@@ -5,7 +5,11 @@
 <title>Players | Baltijas Kauss</title>
 
 <div class="container">
-    <h3>Players</h3>
+    <div class="row">
+        <div class="col-md-9">
+            {{ template "pagination" .}}
+        </div>
+    </div>
     <div class="row">
         <div id="players_table" class="col-md-9">
             <table class="table table-sm table-responsive table-borderless table-hover" style="border-bottom: 0.5px solid rgb(190, 190, 190);">
@@ -18,8 +22,8 @@
                         <th title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
                         <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
                         <th title="Athleticism" data-bs-toggle="tooltip" data-bs-placement="bottom">ATHL</th>
-                        <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
                         <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
+                        <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
                         <th title="Rebounding" data-bs-toggle="tooltip" data-bs-placement="bottom">REB</th>
                         <th>BADGES</th>
                         <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
@@ -31,7 +35,7 @@
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
                         <td class="p-0 py-1">
-                            <a href="/players/{{$player.Player.PlayerID}}"><img src="/static/images/players/{{$player.Player.ImgID}}"
+                            <a href="/players/{{$player.Player.PlayerID}}"><img src="{{$player.Player.ImgURL}}"
                             alt="" class="header-image rounded-circle inline-block border"></a>
                         </td>
                         <td class="p-0 ps-2">
@@ -60,12 +64,12 @@
                             </div>
                         </td>
                         <td><span class="overall-badge" overall-color="{{$player.Player.Overall}}">{{$player.Player.Overall}}</span></td>
-                        <td>{{$player.Player.AttributesThreePointShot}}</td>
-                        <td>{{$player.Player.AttributesDrivingDunk}}</td>
-                        <td>{{$player.Player.AttributesAthleticism}}</td>
-                        <td>{{$player.Player.AttributesInteriorDefense}}</td>
-                        <td>{{$player.Player.AttributesPerimeterDefense}}</td>
-                        <td>{{$player.Player.AttributesRebounding}}</td>
+                        <td>{{$player.Player.Attributes.ThreePointShot}}</td>
+                        <td>{{$player.Player.Attributes.DrivingDunk}}</td>
+                        <td>{{$player.Player.Attributes.Athleticism}}</td>
+                        <td>{{$player.Player.Attributes.PerimeterDefense}}</td>
+                        <td>{{$player.Player.Attributes.InteriorDefense}}</td>
+                        <td>{{$player.Player.Attributes.Rebounding}}</td>
                         <td>
                             <span class="playerbadge badge badge-pill p-1 bronze">{{$player.Player.BronzeBadges}}</span>
                             <span class="playerbadge badge badge-pill p-1 silver">{{$player.Player.SilverBadges}}</span>
@@ -74,7 +78,7 @@
                             <span class="playerbadge badge badge-pill p-1 total">{{$player.Player.TotalBadges}}</span>
                         </td>
                         <td>
-                            <span class="playerbadge badge badge-pill p-1 text-dark bg-light border" style="background-color: rgb(237, 237, 237); width: 50px;">{{$player.Player.AttributesTotalAttributes}}</span>
+                            <span class="playerbadge badge badge-pill p-1 text-dark bg-light border" style="background-color: rgb(237, 237, 237); width: 50px;">{{$player.Player.Attributes.TotalAttributes}}</span>
                         </td>
                     </tr>
                     {{end}}
@@ -90,17 +94,118 @@
             <div class="row">
                 <p class="fw-bold mt-1" style="font-size: 14px;">SEARCH</p>
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <p style="font-size: 16px;">Three Point Shot</p>
+                <div>
+                    <input id="name" type="text" placeholder="Name" class="form-control" value="">                  
                 </div>
-                <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=1>
+
+                <div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="position_pg">
+                        <p>PG</p>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="position_sg">
+                        <p>SG</p>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="position_sf">
+                        <p>SF</p>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="position_pf">
+                        <p>PF</p>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" name="position_c">
+                        <p>C</p>
+                    </div>
                 </div>
-                <div class="col-md-3">
-                    <input id="away_score" type="text" class="form-control" value=99>
+
+                <div class="filter-attribute">
+                    <p>Height</p>
+                    <input id="height_min" type="text" class="form-control" value="{{with .Form.Values.Get `height_min`}}{{else}}150{{end}}">
+                    <input id="height_max" type="text" class="form-control" value="{{with .Form.Values.Get `height_max`}}{{else}}250{{end}}">
                 </div>
-            </div>
+                <div class="filter-attribute">
+                    <p>Weight</p>
+                    <input id="weight_min" type="text" class="form-control" value="{{with .Form.Values.Get `weight_min`}}{{else}}60{{end}}">
+                    <input id="weight_max" type="text" class="form-control" value="{{with .Form.Values.Get `weight_max`}}{{else}}250{{end}}">
+                </div>
+
+                <div>
+                    <select class="form-select">
+                        <option selected>Team</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>                      
+                </div>
+
+                <div class="filter-attribute">
+                    <p>Three Point Shot</p>
+                    <input name="3pt_min" type="text" class="form-control" value="{{with .Form.Values.Get `3pt_min`}}{{else}}1{{end}}">
+                    <input name="3pt_max" type="text" class="form-control" value="{{with .Form.Values.Get `3pt_max`}}{{else}}99{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Driving Dunk</p>
+                    <input name="driving_dunk_min" type="text" class="form-control" value="{{with .Form.Values.Get `driving_dunk_min`}}{{else}}1{{end}}">
+                    <input name="driving_dunk_max" type="text" class="form-control" value="{{with .Form.Values.Get `driving_dunk_max`}}{{else}}99{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Athleticism</p>
+                    <input name="athleticism_min" type="text" class="form-control" value="{{with .Form.Values.Get `athleticism_min`}}{{else}}1{{end}}">
+                    <input name="athleticism_max" type="text" class="form-control" value="{{with .Form.Values.Get `athleticism_max`}}{{else}}99{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Perimeter Defense</p>
+                    <input name="perimeter_defense_min" type="text" class="form-control" value="{{with .Form.Values.Get `perimeter_defense_min`}}{{else}}1{{end}}">
+                    <input name="perimeter_defense_max" type="text" class="form-control" value="{{with .Form.Values.Get `perimeter_defense_max`}}{{else}}99{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Interior Defense</p>
+                    <input name="interior_defense_min" type="text" class="form-control" value="{{with .Form.Values.Get `interior_defense_min`}}{{else}}1{{end}}">
+                    <input name="interior_defense_max" type="text" class="form-control" value="{{with .Form.Values.Get `interior_defense_max`}}{{else}}99{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Rebounding</p>
+                    <input name="rebounding_min" type="text" class="form-control" value="{{with .Form.Values.Get `rebounding_min`}}{{else}}1{{end}}">
+                    <input name="rebounding_max" type="text" class="form-control" value="{{with .Form.Values.Get `rebounding_max`}}{{else}}99{{end}}">
+                </div>
+
+                <div>
+                    <select class="form-select">
+                        <option selected>NBA Team</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>                      
+                </div>
+
+                <div class="filter-attribute">
+                    <p>Bronze Badges</p>
+                    <input name="bronze_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `bronze_badges_min`}}{{else}}0{{end}}">
+                    <input name="bronze_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `bronze_badges_max`}}{{else}}60{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Silver Badges</p>
+                    <input name="silver_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `silver_badges_min`}}{{else}}0{{end}}">
+                    <input name="silver_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `silver_badges_max`}}{{else}}60{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Gold Badges</p>
+                    <input name="gold_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `gold_badges_min`}}{{else}}0{{end}}">
+                    <input name="gold_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `gold_badges_max`}}{{else}}60{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>HOF Badges</p>
+                    <input name="hof_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `hof_badges_min`}}{{else}}0{{end}}">
+                    <input name="hof_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `hof_badges_max`}}{{else}}60{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Total Badges</p>
+                    <input name="total_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_min`}}{{else}}0{{end}}">
+                    <input name="total_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_max`}}{{else}}60{{end}}">
+                </div>
         </div>
     </div>
 </div>

@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <img class="img-fluid" src="/static/images/players/{{.Data.player.ImgID}}" alt="">
+            <img class="img-fluid" src="{{.Data.player.ImgURL}}" alt="">
         </div>
         <div class="col-md-4 align-self-end">
             <h1 class="mb-0">{{.Data.player.FirstName}}</h1>
@@ -63,94 +63,102 @@
             <div class="row">
                 <div class="col-md-4 p-3 pb-0">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="fw-semibold"><span attribute-color="{{.Data.player.AttributesOutsideScoring}}" class="attribute-badge">{{.Data.player.AttributesOutsideScoring}}</span> Outside Scoring</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesCloseShot}}" class="attribute-badge">{{.Data.player.AttributesCloseShot}}</span> Close Shot</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesMidRangeShot}}" class="attribute-badge">{{.Data.player.AttributesMidRangeShot}}</span> Mid-Range Shot</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesThreePointShot}}" class="attribute-badge">{{.Data.player.AttributesThreePointShot}}</span> Three-Point Shot</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesFreeThrow}}" class="attribute-badge">{{.Data.player.AttributesFreeThrow}}</span> Free Throw</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesShotIQ}}" class="attribute-badge">{{.Data.player.AttributesShotIQ}}</span> Shot IQ</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesOffensiveConsistency}}" class="attribute-badge">{{.Data.player.AttributesOffensiveConsistency}}</span> Offensive Consistency</p>
+                        <p class="fw-semibold"><span attribute-color="{{.Data.player.Attributes.OutsideScoring}}" class="attribute-badge">{{.Data.player.Attributes.OutsideScoring}}</span> Outside Scoring</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.CloseShot}}" class="attribute-badge">{{.Data.player.Attributes.CloseShot}}</span> Close Shot</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.MidRangeShot}}" class="attribute-badge">{{.Data.player.Attributes.MidRangeShot}}</span> Mid-Range Shot</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.ThreePointShot}}" class="attribute-badge">{{.Data.player.Attributes.ThreePointShot}}</span> Three-Point Shot</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.FreeThrow}}" class="attribute-badge">{{.Data.player.Attributes.FreeThrow}}</span> Free Throw</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.ShotIQ}}" class="attribute-badge">{{.Data.player.Attributes.ShotIQ}}</span> Shot IQ</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.OffensiveConsistency}}" class="attribute-badge">{{.Data.player.Attributes.OffensiveConsistency}}</span> Offensive Consistency</p>
                     </div>
                 </div>
                 <div class="col-md-4 p-3 pb-0">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="fw-semibold"><span attribute-color="{{.Data.player.AttributesInsideScoring}}" class="attribute-badge">{{.Data.player.AttributesInsideScoring}}</span> Inside Scoring</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesLayup}}" class="attribute-badge">{{.Data.player.AttributesLayup}}</span> Layup</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesStandingDunk}}" class="attribute-badge">{{.Data.player.AttributesStandingDunk}}</span> Standing Dunk</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesDrivingDunk}}" class="attribute-badge">{{.Data.player.AttributesDrivingDunk}}</span> Driving Dunk</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPostHook}}" class="attribute-badge">{{.Data.player.AttributesPostHook}}</span> Post Hook</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPostFade}}" class="attribute-badge">{{.Data.player.AttributesPostFade}}</span> Post Fade</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPostControl}}" class="attribute-badge">{{.Data.player.AttributesPostControl}}</span> Post Control</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesDrawFoul}}" class="attribute-badge">{{.Data.player.AttributesDrawFoul}}</span> Draw Foul</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesHands}}" class="attribute-badge">{{.Data.player.AttributesHands}}</span> Hands</p>
+                        <p class="fw-semibold"><span attribute-color="{{.Data.player.Attributes.InsideScoring}}" class="attribute-badge">{{.Data.player.Attributes.InsideScoring}}</span> Inside Scoring</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Layup}}" class="attribute-badge">{{.Data.player.Attributes.Layup}}</span> Layup</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.StandingDunk}}" class="attribute-badge">{{.Data.player.Attributes.StandingDunk}}</span> Standing Dunk</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.DrivingDunk}}" class="attribute-badge">{{.Data.player.Attributes.DrivingDunk}}</span> Driving Dunk</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PostHook}}" class="attribute-badge">{{.Data.player.Attributes.PostHook}}</span> Post Hook</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PostFade}}" class="attribute-badge">{{.Data.player.Attributes.PostFade}}</span> Post Fade</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PostControl}}" class="attribute-badge">{{.Data.player.Attributes.PostControl}}</span> Post Control</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.DrawFoul}}" class="attribute-badge">{{.Data.player.Attributes.DrawFoul}}</span> Draw Foul</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Hands}}" class="attribute-badge">{{.Data.player.Attributes.Hands}}</span> Hands</p>
                     </div>
                 </div>
                 <div class="col-md-4 p-3 pb-0">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="fw-semibold"><span attribute-color="{{.Data.player.AttributesDefending}}" class="attribute-badge">{{.Data.player.AttributesDefending}}</span> Defending</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesInteriorDefense}}" class="attribute-badge">{{.Data.player.AttributesInteriorDefense}}</span> Interior Defense</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPerimeterDefense}}" class="attribute-badge">{{.Data.player.AttributesPerimeterDefense}}</span> Perimeter Defense</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesSteal}}" class="attribute-badge">{{.Data.player.AttributesSteal}}</span> Steal</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesBlock}}" class="attribute-badge">{{.Data.player.AttributesBlock}}</span> Block</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesLateralQuickness}}" class="attribute-badge">{{.Data.player.AttributesLateralQuickness}}</span> Lateral Quickness</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesHelpDefenseIQ}}" class="attribute-badge">{{.Data.player.AttributesHelpDefenseIQ}}</span> Help Defense IQ</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPassPerception}}" class="attribute-badge">{{.Data.player.AttributesPassPerception}}</span> Pass Perception</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesDefensiveConsistency}}" class="attribute-badge">{{.Data.player.AttributesDefensiveConsistency}}</span> Defensive Consistency</p>
+                        <p class="fw-semibold"><span attribute-color="{{.Data.player.Attributes.Defending}}" class="attribute-badge">{{.Data.player.Attributes.Defending}}</span> Defending</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.InteriorDefense}}" class="attribute-badge">{{.Data.player.Attributes.InteriorDefense}}</span> Interior Defense</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PerimeterDefense}}" class="attribute-badge">{{.Data.player.Attributes.PerimeterDefense}}</span> Perimeter Defense</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Steal}}" class="attribute-badge">{{.Data.player.Attributes.Steal}}</span> Steal</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Block}}" class="attribute-badge">{{.Data.player.Attributes.Block}}</span> Block</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.LateralQuickness}}" class="attribute-badge">{{.Data.player.Attributes.LateralQuickness}}</span> Lateral Quickness</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.HelpDefenseIQ}}" class="attribute-badge">{{.Data.player.Attributes.HelpDefenseIQ}}</span> Help Defense IQ</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PassPerception}}" class="attribute-badge">{{.Data.player.Attributes.PassPerception}}</span> Pass Perception</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.DefensiveConsistency}}" class="attribute-badge">{{.Data.player.Attributes.DefensiveConsistency}}</span> Defensive Consistency</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 p-3 pb-0">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="fw-semibold"><span attribute-color="{{.Data.player.AttributesAthleticism}}" class="attribute-badge">{{.Data.player.AttributesAthleticism}}</span> Athleticism</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesSpeed}}" class="attribute-badge">{{.Data.player.AttributesSpeed}}</span> Speed</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesAcceleration}}" class="attribute-badge">{{.Data.player.AttributesAcceleration}}</span> Acceleration</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesStrength}}" class="attribute-badge">{{.Data.player.AttributesStrength}}</span> Strength</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesVertical}}" class="attribute-badge">{{.Data.player.AttributesVertical}}</span> Vertical</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesStamina}}" class="attribute-badge">{{.Data.player.AttributesStamina}}</span> Stamina</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesHustle}}" class="attribute-badge">{{.Data.player.AttributesHustle}}</span> Hustle</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesOverallDurability}}" class="attribute-badge">{{.Data.player.AttributesOverallDurability}}</span> Overall Durability</p>
+                        <p class="fw-semibold"><span attribute-color="{{.Data.player.Attributes.Athleticism}}" class="attribute-badge">{{.Data.player.Attributes.Athleticism}}</span> Athleticism</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Speed}}" class="attribute-badge">{{.Data.player.Attributes.Speed}}</span> Speed</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Acceleration}}" class="attribute-badge">{{.Data.player.Attributes.Acceleration}}</span> Acceleration</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Strength}}" class="attribute-badge">{{.Data.player.Attributes.Strength}}</span> Strength</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Vertical}}" class="attribute-badge">{{.Data.player.Attributes.Vertical}}</span> Vertical</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Stamina}}" class="attribute-badge">{{.Data.player.Attributes.Stamina}}</span> Stamina</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.Hustle}}" class="attribute-badge">{{.Data.player.Attributes.Hustle}}</span> Hustle</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.OverallDurability}}" class="attribute-badge">{{.Data.player.Attributes.OverallDurability}}</span> Overall Durability</p>
                     </div>
                 </div>
                 <div class="col-md-4 p-3 pb-0">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="fw-semibold"><span attribute-color="{{.Data.player.AttributesPlaymaking}}" class="attribute-badge">{{.Data.player.AttributesPlaymaking}}</span> Playmaking</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPassAccuracy}}" class="attribute-badge">{{.Data.player.AttributesPassAccuracy}}</span> Pass Accuraccy</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesBallHandle}}" class="attribute-badge">{{.Data.player.AttributesBallHandle}}</span> Ball Handle</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesSpeedWithBall}}" class="attribute-badge">{{.Data.player.AttributesSpeedWithBall}}</span> Speed With Ball</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPassIQ}}" class="attribute-badge">{{.Data.player.AttributesPassIQ}}</span> Pass IQ</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesPassVision}}" class="attribute-badge">{{.Data.player.AttributesPassVision}}</span> Pass Vision</p>
+                        <p class="fw-semibold"><span attribute-color="{{.Data.player.Attributes.Playmaking}}" class="attribute-badge">{{.Data.player.Attributes.Playmaking}}</span> Playmaking</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PassAccuracy}}" class="attribute-badge">{{.Data.player.Attributes.PassAccuracy}}</span> Pass Accuraccy</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.BallHandle}}" class="attribute-badge">{{.Data.player.Attributes.BallHandle}}</span> Ball Handle</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.SpeedWithBall}}" class="attribute-badge">{{.Data.player.Attributes.SpeedWithBall}}</span> Speed With Ball</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PassIQ}}" class="attribute-badge">{{.Data.player.Attributes.PassIQ}}</span> Pass IQ</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.PassVision}}" class="attribute-badge">{{.Data.player.Attributes.PassVision}}</span> Pass Vision</p>
                     </div>
                 </div>
                 <div class="col-md-4 p-3 pb-0">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="fw-semibold"><span attribute-color="{{.Data.player.AttributesRebounding}}" class="attribute-badge">{{.Data.player.AttributesRebounding}}</span> Rebounding</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesOffensiveRebound}}" class="attribute-badge">{{.Data.player.AttributesOffensiveRebound}}</span> Offensive Rebound</p>
-                        <p class="mb-1"><span attribute-color="{{.Data.player.AttributesDefensiveRebound}}" class="attribute-badge">{{.Data.player.AttributesDefensiveRebound}}</span> Defensive Rebound</p>
+                        <p class="fw-semibold"><span attribute-color="{{.Data.player.Attributes.Rebounding}}" class="attribute-badge">{{.Data.player.Attributes.Rebounding}}</span> Rebounding</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.OffensiveRebound}}" class="attribute-badge">{{.Data.player.Attributes.OffensiveRebound}}</span> Offensive Rebound</p>
+                        <p class="mb-1"><span attribute-color="{{.Data.player.Attributes.DefensiveRebound}}" class="attribute-badge">{{.Data.player.Attributes.DefensiveRebound}}</span> Defensive Rebound</p>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 p-3">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="mb-0" style="font-size: 25px;">{{.Data.player.AttributesPotential}}</p>
+                        <p class="mb-0" style="font-size: 25px;">{{.Data.player.Attributes.Potential}}</p>
                         <p class="mb-1">Potential</p>
                     </div>
                 </div>
                 <div class="col-md-4 p-3">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="mb-0" style="font-size: 25px;">{{.Data.player.AttributesIntangibles}}</p>
+                        <p class="mb-0" style="font-size: 25px;">{{.Data.player.Attributes.Intangibles}}</p>
                         <p class="mb-1">Intangibles</p>
                     </div>
                 </div>
                 <div class="col-md-4 p-3">
                     <div class="bg-light p-3" style="height: 100%;">
-                        <p class="mb-0" style="font-size: 25px; color: rgb(0, 132, 255);">{{.Data.player.AttributesTotalAttributes}}</p>
+                        <p class="mb-0" style="font-size: 25px; color: rgb(0, 132, 255);">{{.Data.player.Attributes.TotalAttributes}}</p>
                         <p class="mb-1">Total Attributes</p>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div>
+        <form action="/update" method="post">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <input type="hidden" name="player_id" value="{{.Data.player.PlayerID}}">
+            <input type="hidden" name="ratings_url" value="{{.Data.player.RatingsURL}}">
+            <button class="btn" type="submit">Update</button>
+        </form>
     </div>
     <div class="row mt-2 bg-light">
         <h1>BADGES</h1>

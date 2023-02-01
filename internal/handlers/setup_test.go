@@ -69,10 +69,8 @@ func getRoutes() http.Handler {
 
 	mux.Get("/players", Repo.Players)
 
-	mux.Get("/teams", Repo.NBATeams)
-	mux.Post("/teams", Repo.PostNBATeams)
-	mux.Get("/teams-json", Repo.NBATeamsAvailabilityJSON)
-	mux.Get("/team-info-summary", Repo.NBATeamInfoSummary)
+	mux.Get("/teams", Repo.Team)
+	mux.Post("/teams", Repo.PostTeam)
 
 	mux.Get("/standings", Repo.NBAResults)
 	mux.Post("/standings", Repo.PostNBAResults)

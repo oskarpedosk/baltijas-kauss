@@ -3,6 +3,7 @@ package forms
 import (
 	"fmt"
 	"net/url"
+	"regexp"
 	"strings"
 
 	"github.com/asaskevich/govalidator"
@@ -41,7 +42,17 @@ func (f *Form) Required(fields ...string) {
 func (f *Form) Has(field string) bool {
 	x := f.Get(field)
 	if x == "" {
-		// f.Errors.Add(field, "This field cannot be blank")
+		f.Errors.Add(field, "This field cannot be empty")
+		return false
+	}
+	return true
+}
+
+// MaLength checks for string maximum length
+func (f *Form) MinLength(field string, length int) bool {
+	x := f.Get(field)
+	if len(x) < length {
+		f.Errors.Add(field, fmt.Sprintf("Minimum %d characters", length))
 		return false
 	}
 	return true
@@ -72,5 +83,25 @@ func (f *Form) IsDuplicate(field string, field2 string, msg string) bool {
 func (f *Form) IsEmail(field string) {
 	if !govalidator.IsEmail(f.Get(field)) {
 		f.Errors.Add(field, "Invalid e-mail address")
+	}
+}
+
+// Alphanumeric checks for alphanumeric and spaces
+func (f *Form) AlphaNumeric(fields ...string) {
+	regexp, _ := regexp.Compile(`^[a-zA-Z0-9 ]*$`)
+	for _, field := range fields {
+		value := f.Get(field)
+		match := regexp.MatchString(value)
+		if !match {
+			f.Errors.Add(field, "Alphanumeric values only")
+		}
+	}
+}
+
+// IsUpper checks for uppercase letters and numbers
+func (f *Form) IsUpper(field string) {
+	match, _ := regexp.MatchString(`^[A-Z0-9 ]*$`, f.Get(field))
+	if !match {
+		f.Errors.Add(field, "Only uppercase letters and numbers allowed")
 	}
 }

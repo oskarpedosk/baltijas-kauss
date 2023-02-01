@@ -46,12 +46,12 @@
                             {{if $players.TeamID}}
                                     {{range $teamInfo := index $.Data "nba_teams"}}
                                         {{if eq $teamInfo.TeamID $players.TeamID}}
-                                            <img src="{{if ne $players.ImgID ""}}{{$players.ImgID}}{{else}}/static/images/players/default_player.png{{end}}"
+                                            <img src="{{if ne $players.ImgURL ""}}{{$players.ImgURL}}{{else}}/static/images/players/default_player.png{{end}}"
                                             alt="" class="header-image rounded-circle inline-block bg-light border">
                                         {{end}}
                                     {{end}}
                                     {{else}}
-                                        <img src="{{if ne $players.ImgID ""}}{{$players.ImgID}}{{else}}/static/players/default_player.png{{end}}"
+                                        <img src="{{if ne $players.ImgURL ""}}{{$players.ImgURL}}{{else}}/static/players/default_player.png{{end}}"
                                         alt="" class="header-image rounded-circle bg-light border">
                                     {{end}}
                           </td>
@@ -90,22 +90,22 @@
                               </div>
                           </td>
                           <td>{{.Overall}}</span></td>
-                          <td>{{$players.AttributesCloseShot}}</td>
-                          <td>{{$players.AttributesMidRangeShot}}</td>
-                          <td>{{$players.AttributesThreePointShot}}</td>
-                          <td>{{$players.AttributesFreeThrow}}</td>
-                          <td>{{$players.AttributesSpeed}}</td>
-                          <td>{{$players.AttributesStrength}}</td>
-                          <td>{{$players.AttributesVertical}}</td>
-                          <td>{{$players.AttributesDrivingDunk}}</td>
-                          <td>{{$players.AttributesSteal}}</td>
-                          <td>{{$players.AttributesBlock}}</td>
-                          <td>{{$players.AttributesPerimeterDefense}}</td>
-                          <td>{{$players.AttributesInteriorDefense}}</td>
-                          <td>{{$players.AttributesOffensiveRebound}}</td>
-                          <td>{{$players.AttributesDefensiveRebound}}</td>
+                          <td>{{$players.Attributes.CloseShot}}</td>
+                          <td>{{$players.Attributes.MidRangeShot}}</td>
+                          <td>{{$players.Attributes.ThreePointShot}}</td>
+                          <td>{{$players.Attributes.FreeThrow}}</td>
+                          <td>{{$players.Attributes.Speed}}</td>
+                          <td>{{$players.Attributes.Strength}}</td>
+                          <td>{{$players.Attributes.Vertical}}</td>
+                          <td>{{$players.Attributes.DrivingDunk}}</td>
+                          <td>{{$players.Attributes.Steal}}</td>
+                          <td>{{$players.Attributes.Block}}</td>
+                          <td>{{$players.Attributes.PerimeterDefense}}</td>
+                          <td>{{$players.Attributes.InteriorDefense}}</td>
+                          <td>{{$players.Attributes.OffensiveRebound}}</td>
+                          <td>{{$players.Attributes.DefensiveRebound}}</td>
                           <td>
-                              <span class="badge badge-pill text-dark border bg-white">{{$players.AttributesTotalAttributes}}</span>
+                              <span class="badge badge-pill text-dark border bg-white">{{$players.Attributes.TotalAttributes}}</span>
                           </td>
                           <td>
                             <button id="draft_{{$players.PlayerID}}" type="submit" class="btn btn-dark disabled {{if $players.TeamID}}btn-dark disabled{{end}}" 
@@ -193,7 +193,7 @@
                 <div class="d-flex justify-content-between" style="padding-top: 6px;">
                   <div>
                     <img class="pointer me-3" src="/static/images/buttons/volume-on.png" alt="" style="max-height: 20px; opacity: 45%;">
-                    {{if eq .AccessLevel 2}}
+                    {{if eq .User.AccessLevel 2}}
                       <img class="pointer" src="/static/images/buttons/settings.png" alt="" style="max-height: 18px; opacity: 45%;" onclick="draftSettings();">
                     {{end}}
                   </div>

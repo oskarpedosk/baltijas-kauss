@@ -6,12 +6,14 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os/exec"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/gorilla/websocket"
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
@@ -434,6 +436,9 @@ func broadcastToAll(response WsJsonResponse) {
 }
 
 func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
+	if helpers.IsAuthenticated(r) {
+		http.Redirect(w, r, "/home", http.StatusSeeOther)
+	}
 	render.Template(w, r, "login.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 	})
@@ -595,7 +600,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 			if player.TeamID == team.TeamID {
 				playerWithTeamInfo := models.PlayerWithTeamInfo{
 					Player: player,
-					Team: team,
+					Team:   team,
 				}
 				playersWithTeamInfo = append(playersWithTeamInfo, playerWithTeamInfo)
 				break
@@ -616,6 +621,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 	data["pagination"] = pagination
 
 	render.Template(w, r, "players.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
 		Data: data,
 	})
 }
@@ -643,7 +649,7 @@ func (m *Repository) PostPlayers(w http.ResponseWriter, r *http.Request) {
 		AssignedPosition: 0,
 	}
 
-	err = m.DB.UpdatePlayer(player)
+	err = m.DB.SwitchTeam(player)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -653,7 +659,41 @@ func (m *Repository) PostPlayers(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/players", http.StatusSeeOther)
 }
 
-func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	playerID := r.FormValue("player_id")
+	ratingsURL := r.FormValue("ratings_url")
+
+	go func(playerID, ratingsURL string) {
+		filePath := "./static/js/script/updateplayer.js"
+		cmd := exec.Command("node", filePath, playerID, ratingsURL)
+		output, err := cmd.Output()
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		var player models.Player
+		json.Unmarshal(output, &player)
+
+		err = m.DB.UpdatePlayer(player)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+	}(playerID, ratingsURL)
+
+	http.Redirect(w, r, "/players", http.StatusSeeOther)
+}
+
+func (m *Repository) Team(w http.ResponseWriter, r *http.Request) {
+	teamID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	fmt.Println(teamID)
 	if r.FormValue("action") == "drop" {
 		playerID, err := strconv.Atoi(r.FormValue("playerID"))
 		if err != nil {
@@ -724,13 +764,13 @@ func (m *Repository) NBATeams(w http.ResponseWriter, r *http.Request) {
 	data["nba_teams"] = teams
 	data["positions"] = positions
 
-	render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "team.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
 }
 
-func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -760,6 +800,9 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 	form := forms.New(r.PostForm)
 
 	form.Required("team_name", "abbreviation")
+	form.AlphaNumeric("team_name", "abbreviation")
+	form.MaxLength("team_name", 20)
+	form.IsUpper("abbreviation")
 	form.MaxLength("abbreviation", 4)
 
 	if !form.Valid() {
@@ -782,7 +825,12 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		data["teamInfo"] = teamInfo
 		data["positions"] = positions
 
-		render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
+		errMsg := form.Errors.Get("team_name")
+		if errMsg == "" {
+			errMsg = form.Errors.Get("abbreviation")
+		}
+		m.App.Session.Put(r.Context(), "error", errMsg)
+		render.Template(w, r, "team.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})
@@ -794,49 +842,8 @@ func (m *Repository) PostNBATeams(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 	}
 
-	m.App.Session.Put(r.Context(), "team_info", teamInfo)
-
-	http.Redirect(w, r, "/teams", http.StatusSeeOther)
-}
-
-type jsonResponse struct {
-	OK      bool   `json:"ok"`
-	Message string `json:"message"`
-}
-
-// Handles request for availability and sends JSON response
-func (m *Repository) NBATeamsAvailabilityJSON(w http.ResponseWriter, r *http.Request) {
-	resp := jsonResponse{
-		OK:      true,
-		Message: "Available!",
-	}
-
-	out, err := json.MarshalIndent(resp, "", "     ")
-	if err != nil {
-		helpers.ServerError(w, err)
-		return
-	}
-
-	w.Header().Set("Content-type", "application/json")
-	w.Write(out)
-}
-
-func (m *Repository) NBATeamInfoSummary(w http.ResponseWriter, r *http.Request) {
-	teamInfo, ok := m.App.Session.Get(r.Context(), "team_info").(models.Team)
-	if !ok {
-		m.App.ErrorLog.Println("Can't get error from session")
-		m.App.Session.Put(r.Context(), "error", "Cant get team info from session")
-		http.Redirect(w, r, "/teams", http.StatusTemporaryRedirect)
-		return
-	}
-
-	m.App.Session.Remove(r.Context(), "team_info")
-	data := make(map[string]interface{})
-	data["team_info"] = teamInfo
-
-	render.Template(w, r, "team_info.page.tmpl", &models.TemplateData{
-		Data: data,
-	})
+	m.App.Session.Put(r.Context(), "flash", "Team updated successfully!")
+	http.Redirect(w, r, "/team/"+string(teamID), http.StatusSeeOther)
 }
 
 func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {

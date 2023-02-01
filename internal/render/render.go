@@ -33,10 +33,11 @@ func AddDefaultData(tmplData *models.TemplateData, r *http.Request) *models.Temp
 	tmplData.Warning = app.Session.PopString(r.Context(), "warning")
 	tmplData.CSRFToken = nosurf.Token(r)
 	if app.Session.Exists(r.Context(), "user_id") {
-		tmplData.IsAuthenticated = 1
-		tmplData.StringMap = make(map[string]string)
-		tmplData.StringMap["user"] = app.Session.Get(r.Context(), "user_name").(string)
-		tmplData.AccessLevel = app.Session.Get(r.Context(), "access_level").(int)
+		tmplData.User = models.User{
+			UserID:      app.Session.GetInt(r.Context(), "user_id"),
+			FirstName:   app.Session.GetString(r.Context(), "user_name"),
+			AccessLevel: app.Session.GetInt(r.Context(), "access_level"),
+		}
 	}
 	return tmplData
 }

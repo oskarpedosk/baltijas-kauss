@@ -30,6 +30,8 @@ func routes(app *config.AppConfig) http.Handler {
 
 		mux.Get("/{src}/{id}", handlers.Repo.Player)
 		mux.Post("/{src}/{id}", handlers.Repo.PostPlayer)
+
+		mux.Post("/update", handlers.Repo.PostUpdatePlayer)
 		
 		mux.Get("/players", handlers.Repo.Players)
 		mux.Post("/players", handlers.Repo.PostPlayers)
@@ -37,10 +39,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/players/page={page}", handlers.Repo.Players)
 		mux.Post("/players/page={page}", handlers.Repo.PostPlayers)
 
-		mux.Get("/teams", handlers.Repo.NBATeams)
-		mux.Post("/teams", handlers.Repo.PostNBATeams)
-		// mux.Post("/nba/teams-json", handlers.Repo.NBATeamsAvailabilityJSON)
-		mux.Get("/team-info-summary", handlers.Repo.NBATeamInfoSummary)
+		mux.Get("/team/{id}", handlers.Repo.Team)
+		mux.Post("/team/{id}", handlers.Repo.PostTeam)
 
 		mux.Get("/standings", handlers.Repo.NBAResults)
 		mux.Post("/standings", handlers.Repo.PostNBAResults)
