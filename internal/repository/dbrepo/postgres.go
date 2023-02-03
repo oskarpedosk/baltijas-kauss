@@ -356,7 +356,7 @@ func (m *postgresDBRepo) GetTeam(teamID int) (models.Team, error) {
 	where
 		"team_id" = $1
 	`
-	
+
 	var team models.Team
 
 	row, err := m.DB.QueryContext(ctx, query, teamID)
@@ -960,6 +960,14 @@ func (m *postgresDBRepo) GetPlayer(playerID int) (models.Player, error) {
 			&player.CreatedAt,
 			&player.UpdatedAt,
 		)
+		if player.Birthdate != "" {
+			timestamp, err := time.Parse("January 2, 2006", player.Birthdate)
+			if err != nil {
+				fmt.Println(err)
+			}
+			player.Age = fmt.Sprintf("%dy.o.", int(time.Since(timestamp).Hours()/24/365))
+		}
+
 		if err != nil {
 			return player, err
 		}
@@ -1120,4 +1128,111 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 	}
 
 	return nil
+}
+
+// Filter players with pagination limit
+func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, filter models.Filter) ([]models.Player, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var players []models.Player
+
+	query := `
+	SELECT *
+	FROM players
+	WHERE	$1 < "overall" AND "overall" < $2
+	AND		$3 < "height" AND "height" < $4
+	ORDER BY "overall" DESC, "attributes/TotalAttributes" DESC
+	LIMIT $5
+	OFFSET $6;
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query, filter.OverallMin, filter.OverallMax, filter.HeightMin, filter.HeightMax, perPage, offset)
+	if err != nil {
+		return players, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var player models.Player
+		err := rows.Scan(
+			&player.PlayerID,
+			&player.FirstName,
+			&player.LastName,
+			&player.PrimaryPosition,
+			&player.SecondaryPosition,
+			&player.TeamID,
+			&player.AssignedPosition,
+			&player.Archetype,
+			&player.Height,
+			&player.Weight,
+			&player.NBATeam,
+			&player.Nationality,
+			&player.Birthdate,
+			&player.Jersey,
+			&player.Draft,
+			&player.ImgURL,
+			&player.RatingsURL,
+			&player.Overall,
+			&player.Attributes.OutsideScoring,
+			&player.Attributes.Athleticism,
+			&player.Attributes.InsideScoring,
+			&player.Attributes.Playmaking,
+			&player.Attributes.Defending,
+			&player.Attributes.Rebounding,
+			&player.Attributes.Intangibles,
+			&player.Attributes.Potential,
+			&player.Attributes.TotalAttributes,
+			&player.Attributes.CloseShot,
+			&player.Attributes.MidRangeShot,
+			&player.Attributes.ThreePointShot,
+			&player.Attributes.FreeThrow,
+			&player.Attributes.ShotIQ,
+			&player.Attributes.OffensiveConsistency,
+			&player.Attributes.Speed,
+			&player.Attributes.Acceleration,
+			&player.Attributes.Strength,
+			&player.Attributes.Vertical,
+			&player.Attributes.Stamina,
+			&player.Attributes.Hustle,
+			&player.Attributes.OverallDurability,
+			&player.Attributes.Layup,
+			&player.Attributes.StandingDunk,
+			&player.Attributes.DrivingDunk,
+			&player.Attributes.PostHook,
+			&player.Attributes.PostFade,
+			&player.Attributes.PostControl,
+			&player.Attributes.DrawFoul,
+			&player.Attributes.Hands,
+			&player.Attributes.PassAccuracy,
+			&player.Attributes.BallHandle,
+			&player.Attributes.SpeedWithBall,
+			&player.Attributes.PassIQ,
+			&player.Attributes.PassVision,
+			&player.Attributes.InteriorDefense,
+			&player.Attributes.PerimeterDefense,
+			&player.Attributes.Steal,
+			&player.Attributes.Block,
+			&player.Attributes.LateralQuickness,
+			&player.Attributes.HelpDefenseIQ,
+			&player.Attributes.PassPerception,
+			&player.Attributes.DefensiveConsistency,
+			&player.Attributes.OffensiveRebound,
+			&player.Attributes.DefensiveRebound,
+			&player.BronzeBadges,
+			&player.SilverBadges,
+			&player.GoldBadges,
+			&player.HOFBadges,
+			&player.TotalBadges,
+			&player.CreatedAt,
+			&player.UpdatedAt,
+		)
+		if err != nil {
+			return players, err
+		}
+
+		players = append(players, player)
+	}
+
+	return players, nil
 }

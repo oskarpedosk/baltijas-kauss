@@ -16,6 +16,7 @@ type DatabaseRepo interface {
 	UpdatePlayer(player models.Player) error
 	ResetPlayers() error
 	GetRandomPlayer(random int) (models.Player, error)
+	FilterPlayers(perPage int, offset int, filter models.Filter) ([]models.Player, error)
 
 	GetPlayer(playerID int) (models.Player, error)
 	AssignPosition(player models.Player) error

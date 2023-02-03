@@ -72,6 +72,7 @@ type Player struct {
 	NBATeam           string     `json:"nba_team"`
 	Nationality       string     `json:"nationality"`
 	Birthdate         string     `json:"birthdate"`
+	Age               string
 	Jersey            string     `json:"jersey"`
 	Draft             string     `json:"draft"`
 	ImgURL            string     `json:"img_url"`
@@ -85,6 +86,25 @@ type Player struct {
 	TotalBadges       int        `json:"total_badges"`
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
+}
+
+type Filter struct {
+	OverallMin          int
+	OverallMax          int
+	HeightMin           int
+	HeightMax           int
+	WeightMin           int
+	WeightMax           int
+	ThreePointShotMin   int
+	ThreePointShotMax   int
+	DrivingDunkMin      int
+	DrivingDunkMax      int
+	AthleticismMin      int
+	AthleticismMax      int
+	PerimeterDefenseMin int
+	PerimeterDefenseMax int
+	TeamID              int
+	NBATeam             string
 }
 
 type Attributes struct {
@@ -135,7 +155,7 @@ type Attributes struct {
 	DefensiveRebound     int
 }
 
-type NBAPosition struct {
+type Positions struct {
 	Name   string
 	Number int
 }

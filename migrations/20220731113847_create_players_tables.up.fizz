@@ -11,7 +11,7 @@ create_table("players") {
     t.Column("weight", "integer", {"null": true})
     t.Column("nba_team", "string", {"default": ""})
     t.Column("nationality", "string", {"default": ""})
-    t.Column("birthdate", "date", {"null": true})
+    t.Column("birthdate", "string", {"default": ""})
     t.Column("jersey", "string", {"default": "#"})
     t.Column("draft", "string", {"default": ""})
     t.Column("img_url", "string", {"default": "/static/images/players/default_player.png"})

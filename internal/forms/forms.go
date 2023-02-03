@@ -88,7 +88,7 @@ func (f *Form) IsEmail(field string) {
 
 // Alphanumeric checks for alphanumeric and spaces
 func (f *Form) AlphaNumeric(fields ...string) {
-	regexp, _ := regexp.Compile(`^[a-zA-Z0-9 ]*$`)
+	regexp, _ := regexp.Compile(`^[a-zA-Z0-9õäöüÕÄÖÜ ]*$`)
 	for _, field := range fields {
 		value := f.Get(field)
 		match := regexp.MatchString(value)

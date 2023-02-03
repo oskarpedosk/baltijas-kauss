@@ -2,6 +2,7 @@
   "dependencies": {
     "bootstrap-table": "^1.21.0",
     "jquery": "^3.6.1",
+    "moment": "^2.29.4",
     "puppeteer": "^19.6.2",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1"

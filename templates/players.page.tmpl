@@ -45,16 +45,16 @@
                                     <div class="my-0">
                                         <p class="text-muted my-0 pointer" style="font-size: 12px;" data-bs-toggle="dropdown" aria-expanded="false">
                                             {{$player.Player.PrimaryPosition}}{{if $player.Player.SecondaryPosition}}/{{$player.Player.SecondaryPosition}}{{end}}
-                                            | {{$player.Player.Height}}cm | {{$player.Team.Abbreviation}}
+                                            | {{$player.Player.Height}}cm | <span id="player_{{$player.Player.PlayerID}}_abbreviation">{{$player.Team.Abbreviation}}</span>
                                         </p>
                                         <div class="dropdown-menu">
                                             {{range $team := $.Data.teams}}
-                                                <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$team.TeamID}}', '{{$.CSRFToken}}')">
+                                                <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$team.TeamID}}', '{{$team.Abbreviation}}', '{{$.CSRFToken}}')">
                                                     {{$team.Abbreviation}} {{$team.Name}}
                                                 </li>
                                             {{end}}
                                             <hr class="dropdown-divider">
-                                            <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$.Data.FA.TeamID}}', '{{$.CSRFToken}}')">
+                                            <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$.Data.FA.TeamID}}', '{{$.Data.FA.Abbreviation}}', '{{$.CSRFToken}}')">
                                                 {{$.Data.FA.Name}}
                                             </li>
                                         </div>
@@ -91,6 +91,9 @@
         </div>
         
         <div class="col-md-3">
+            <form action="/players" method="post">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <input type="hidden" name="action" value="filter">
             <div class="row">
                 <p class="fw-bold mt-1" style="font-size: 14px;">SEARCH</p>
             </div>
@@ -121,15 +124,22 @@
                     </div>
                 </div>
 
+                <button class="btn" type="submit">Submit</button>
+
                 <div class="filter-attribute">
                     <p>Height</p>
-                    <input id="height_min" type="text" class="form-control" value="{{with .Form.Values.Get `height_min`}}{{else}}150{{end}}">
-                    <input id="height_max" type="text" class="form-control" value="{{with .Form.Values.Get `height_max`}}{{else}}250{{end}}">
+                    <input name="height_min" type="text" class="form-control" value="{{with .Form.Values.Get `height_min`}}{{else}}150{{end}}">
+                    <input name="height_max" type="text" class="form-control" value="{{with .Form.Values.Get `height_max`}}{{else}}250{{end}}">
                 </div>
                 <div class="filter-attribute">
                     <p>Weight</p>
-                    <input id="weight_min" type="text" class="form-control" value="{{with .Form.Values.Get `weight_min`}}{{else}}60{{end}}">
-                    <input id="weight_max" type="text" class="form-control" value="{{with .Form.Values.Get `weight_max`}}{{else}}250{{end}}">
+                    <input name="weight_min" type="text" class="form-control" value="{{with .Form.Values.Get `weight_min`}}{{else}}60{{end}}">
+                    <input name="weight_max" type="text" class="form-control" value="{{with .Form.Values.Get `weight_max`}}{{else}}250{{end}}">
+                </div>
+                <div class="filter-attribute">
+                    <p>Overall</p>
+                    <input name="overall_min" type="text" class="form-control" value="{{with .Form.Values.Get `overall_min`}}{{else}}1{{end}}">
+                    <input name="overall_max" type="text" class="form-control" value="{{with .Form.Values.Get `overall_max`}}{{else}}99{{end}}">
                 </div>
 
                 <div>
@@ -206,6 +216,7 @@
                     <input name="total_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_min`}}{{else}}0{{end}}">
                     <input name="total_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_max`}}{{else}}60{{end}}">
                 </div>
+            </form>
         </div>
     </div>
 </div>
@@ -256,17 +267,23 @@
 </script>
 
 <script>
-    function changeTeam(playerID, teamID, csrftoken) {
+    function changeTeam(playerID, firstName, lastName, teamID, abbreviation, csrftoken) {
         $.ajax({
-        type: 'POST',
-        dataType: 'html',
+        type: "POST",
+        url: "/players",
         data : {
             csrf_token: csrftoken,
+            action: "change_team",
             player_id: playerID,
             team_id: teamID,
         },
-        success: function(data) {
-            window.location.reload();
+        success: function(response) {
+            const team = document.getElementById('player_' + playerID + '_abbreviation');
+            team.textContent = abbreviation;
+            notie.alert({ type: 1, text: firstName + ' ' + lastName + ' added to ' + abbreviation});
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            notie.alert({ type: 3, text: 'Error adding player: ' + errorThrown});
         }
         });
     }

@@ -209,7 +209,7 @@ async function scrapeNBAcom(first_name, last_name) {
                 } else if (info === "DRAFT") {
                     nba_com_scrape.draft = data;
                 } else if (info === "BIRTHDATE") {
-                    nba_com_scrape.birthdate = new Date(data).getTime();
+                    nba_com_scrape.birthdate = data;
                 }
 
             }

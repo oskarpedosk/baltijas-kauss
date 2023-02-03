@@ -28,16 +28,16 @@ func routes(app *config.AppConfig) http.Handler {
 		
 		mux.Get("/home", handlers.Repo.NBAHome)
 
-		mux.Get("/{src}/{id}", handlers.Repo.Player)
-		mux.Post("/{src}/{id}", handlers.Repo.PostPlayer)
+		mux.Get("/players/{id}", handlers.Repo.Player)
+		mux.Post("/players/{id}", handlers.Repo.PostPlayer)
 
 		mux.Post("/update", handlers.Repo.PostUpdatePlayer)
 		
 		mux.Get("/players", handlers.Repo.Players)
 		mux.Post("/players", handlers.Repo.PostPlayers)
 
-		mux.Get("/players/page={page}", handlers.Repo.Players)
-		mux.Post("/players/page={page}", handlers.Repo.PostPlayers)
+		mux.Get("/players/", handlers.Repo.Playˇers)
+		mux.Post("/players/", handlers.Repo.PostPlayers)
 
 		mux.Get("/team/{id}", handlers.Repo.Team)
 		mux.Post("/team/{id}", handlers.Repo.PostTeam)
