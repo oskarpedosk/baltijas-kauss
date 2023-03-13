@@ -6,15 +6,10 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-9">
-            {{ template "pagination" .}}
-        </div>
-    </div>
-    <div class="row">
         <div id="players_table" class="col-md-9">
             <table class="table table-sm table-responsive table-borderless table-hover" style="border-bottom: 0.5px solid rgb(190, 190, 190);">
                 <thead style="font-size: 14px; white-space: nowrap; text-align: center;">
-                    <tr style="background-color: white; border-bottom: 1px solid rgb(190, 190, 190);">
+                    <tr style="background-color: white;">
                         <th>#</th>
                         <th></th>
                         <th class="ps-2" style="text-align: start;">NAME</th>
@@ -35,8 +30,8 @@
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
                         <td class="p-0 py-1">
-                            <a href="/players/{{$player.Player.PlayerID}}"><img src="{{$player.Player.ImgURL}}"
-                            alt="" class="header-image rounded-circle inline-block border"></a>
+                            <!-- <a href="/players/{{$player.Player.PlayerID}}"><img src="{{$player.Player.ImgURL}}"
+                            alt="" class="header-image rounded-circle inline-block border"></a> -->
                         </td>
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
@@ -91,130 +86,97 @@
         </div>
         
         <div class="col-md-3">
-            <form id="filter" action="/players" method="GET">
+            <div id="filterForm">
             <div class="row">
-                <p class="fw-bold mt-1" style="font-size: 14px;">SEARCH</p>
+                <p class="fw-bold mt-1" style="font-size: 14px;">FILTER</p>
             </div>
-                <div>
+                <!-- <div>
                     <input id="name" type="text" placeholder="Name" class="form-control" value="">                  
-                </div>
+                </div> -->
 
-                <div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="position_pg">
+                <div id="positionsFilter">
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="p1" checked>
                         <p>PG</p>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="position_sg">
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="p2" checked>
                         <p>SG</p>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="position_sf">
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="p3" checked>
                         <p>SF</p>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="position_pf">
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="p4" checked>
                         <p>PF</p>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="position_c">
+                    <div>
+                        <input class="form-check-input" type="checkbox" name="p5" checked>
                         <p>C</p>
                     </div>
                 </div>
-
-                <button class="btn bkcolor btn-outline-light" type="submit" style="width: 100%;">Submit</button>
-
+                <div>
+                    <select class="form-select">
+                        <option value="0">All Teams</option>
+                        {{range $team := $.Data.teams}}
+                            <option value="{{$team.TeamID}}">{{$team.Name}}</option>
+                        {{end}}
+                        <option value="1">Free Agency</option>
+                      </select>                      
+                </div>
+                <hr>
                 <div class="filter-attribute">
                     <p>Height</p>
-                    <input name="hl" type="text" class="form-control" value="{{with .Form.Values.Get `hl`}}{{end}}">
-                    <input name="hh" type="text" class="form-control" value="{{with .Form.Values.Get `hh`}}{{end}}">
+                    <input name="hl" type="text" class="form-control" placeholder="150cm">
+                    <input name="hh" type="text" class="form-control" placeholder="250cm">
                 </div>
                 <div class="filter-attribute">
                     <p>Weight</p>
-                    <input name="weight_min" type="text" class="form-control" value="{{with .Form.Values.Get `weight_min`}}{{end}}">
-                    <input name="weight_max" type="text" class="form-control" value="{{with .Form.Values.Get `weight_max`}}{{end}}">
+                    <input name="wl" type="text" class="form-control" placeholder="50kg">
+                    <input name="wh" type="text" class="form-control" placeholder="150kg">
                 </div>
+                <hr>
                 <div class="filter-attribute">
                     <p>Overall</p>
-                    <input name="ovrl" type="text" class="form-control" value="{{with .Form.Values.Get `ovrl`}}{{end}}">
-                    <input name="ovrh" type="text" class="form-control" value="{{with .Form.Values.Get `ovrh`}}{{end}}">
+                    <input name="ovrl" type="text" class="form-control" placeholder="1">
+                    <input name="ovrh" type="text" class="form-control" placeholder="99">
                 </div>
-
-                <!-- <div>
-                    <select class="form-select">
-                        <option selected>Team</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>                      
-                </div>
-
                 <div class="filter-attribute">
                     <p>Three Point Shot</p>
-                    <input name="3pt_min" type="text" class="form-control" value="{{with .Form.Values.Get `3pt_min`}}{{else}}1{{end}}">
-                    <input name="3pt_max" type="text" class="form-control" value="{{with .Form.Values.Get `3pt_max`}}{{else}}99{{end}}">
+                    <input name="3ptl" type="text" class="form-control" placeholder="1">
+                    <input name="3pth" type="text" class="form-control" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Driving Dunk</p>
-                    <input name="driving_dunk_min" type="text" class="form-control" value="{{with .Form.Values.Get `driving_dunk_min`}}{{else}}1{{end}}">
-                    <input name="driving_dunk_max" type="text" class="form-control" value="{{with .Form.Values.Get `driving_dunk_max`}}{{else}}99{{end}}">
+                    <input name="ddunkl" type="text" class="form-control" placeholder="1">
+                    <input name="ddunkh" type="text" class="form-control" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Athleticism</p>
-                    <input name="athleticism_min" type="text" class="form-control" value="{{with .Form.Values.Get `athleticism_min`}}{{else}}1{{end}}">
-                    <input name="athleticism_max" type="text" class="form-control" value="{{with .Form.Values.Get `athleticism_max`}}{{else}}99{{end}}">
+                    <input name="athl" type="text" class="form-control" placeholder="1">
+                    <input name="athh" type="text" class="form-control" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Perimeter Defense</p>
-                    <input name="perimeter_defense_min" type="text" class="form-control" value="{{with .Form.Values.Get `perimeter_defense_min`}}{{else}}1{{end}}">
-                    <input name="perimeter_defense_max" type="text" class="form-control" value="{{with .Form.Values.Get `perimeter_defense_max`}}{{else}}99{{end}}">
+                    <input name="perdl" type="text" class="form-control" placeholder="1">
+                    <input name="perdh" type="text" class="form-control" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Interior Defense</p>
-                    <input name="interior_defense_min" type="text" class="form-control" value="{{with .Form.Values.Get `interior_defense_min`}}{{else}}1{{end}}">
-                    <input name="interior_defense_max" type="text" class="form-control" value="{{with .Form.Values.Get `interior_defense_max`}}{{else}}99{{end}}">
+                    <input name="intdl" type="text" class="form-control" placeholder="1">
+                    <input name="intdh" type="text" class="form-control" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Rebounding</p>
-                    <input name="rebounding_min" type="text" class="form-control" value="{{with .Form.Values.Get `rebounding_min`}}{{else}}1{{end}}">
-                    <input name="rebounding_max" type="text" class="form-control" value="{{with .Form.Values.Get `rebounding_max`}}{{else}}99{{end}}">
+                    <input name="rebl" type="text" class="form-control" placeholder="1">
+                    <input name="rebh" type="text" class="form-control" placeholder="99">
                 </div>
 
-                <div>
-                    <select class="form-select">
-                        <option selected>NBA Team</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>                      
-                </div>
+                <button class="btn btn-outline-dark" style="width: 100%;">Reset</button>
+                <button class="btn bkcolor btn-outline-light" style="width: 100%;" onclick="filterPlayers()">Submit</button>
 
-                <div class="filter-attribute">
-                    <p>Bronze Badges</p>
-                    <input name="bronze_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `bronze_badges_min`}}{{else}}0{{end}}">
-                    <input name="bronze_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `bronze_badges_max`}}{{else}}60{{end}}">
-                </div>
-                <div class="filter-attribute">
-                    <p>Silver Badges</p>
-                    <input name="silver_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `silver_badges_min`}}{{else}}0{{end}}">
-                    <input name="silver_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `silver_badges_max`}}{{else}}60{{end}}">
-                </div>
-                <div class="filter-attribute">
-                    <p>Gold Badges</p>
-                    <input name="gold_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `gold_badges_min`}}{{else}}0{{end}}">
-                    <input name="gold_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `gold_badges_max`}}{{else}}60{{end}}">
-                </div>
-                <div class="filter-attribute">
-                    <p>HOF Badges</p>
-                    <input name="hof_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `hof_badges_min`}}{{else}}0{{end}}">
-                    <input name="hof_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `hof_badges_max`}}{{else}}60{{end}}">
-                </div>
-                <div class="filter-attribute">
-                    <p>Total Badges</p>
-                    <input name="total_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_min`}}{{else}}0{{end}}">
-                    <input name="total_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_max`}}{{else}}60{{end}}">
-                </div> -->
-            </form>
+            </div>
         </div>
     </div>
 </div>
@@ -224,6 +186,8 @@
 {{end}}
 
 {{define "js"}}
+
+<script src="/static/js/pagination.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -288,15 +252,23 @@
  </script>
 
 <script>
-    $(document).ready(function(){
-        $("form").submit(function(){
-            $("input").each(function(index, obj){
-                if($(obj).val() == "") {
-                    $(obj).remove();
-                }
-            });
-        });
-    });
+    function filterPlayers() {
+        let URLWithoutQueries = window.location.origin + window.location.pathname
+        let url = new URL(URLWithoutQueries)
+        let inputs = document.querySelectorAll('#filterForm input')
+        inputs.forEach(input => {
+            if ((!input.checked) && input.type === 'checkbox') {
+                url.searchParams.set(input.name, 0)
+            } else if (input.value && input.type !== 'checkbox') {
+                url.searchParams.set(input.name, input.value)
+            }
+        })
+        let teams = document.querySelector('select')
+        if (teams.value !== '0') {
+            url.searchParams.set("team", teams.value)
+        }
+        window.location.href = url.toString()
+    }
 </script>
 
 {{end}}

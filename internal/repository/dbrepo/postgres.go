@@ -195,47 +195,6 @@ func (m *postgresDBRepo) AssignPosition(player models.Player) error {
 	return nil
 }
 
-func (m *postgresDBRepo) CountRows(tableName string) (int, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	query := fmt.Sprintf(`select count(*) from %s`, tableName)
-
-	var count int
-	rows := m.DB.QueryRowContext(ctx, query)
-	err := rows.Scan(&count)
-	if err != nil {
-		return count, err
-	}
-
-	return count, nil
-}
-
-func (m *postgresDBRepo) GetPaginationData(page int, perPage int, tableName string, baseURL string) (models.PaginationData, error) {
-	// Calculate total pages
-	totalRows, err := m.CountRows(tableName)
-	if err != nil {
-		return models.PaginationData{}, err
-	}
-	totalPages := math.Ceil(float64(totalRows) / float64(perPage))
-
-	// Calculate offset 
-	offset := (page - 1) * perPage
-
-	pagination := models.PaginationData{
-		NextPage:     page + 1,
-		PreviousPage: page - 1,
-		CurrentPage:  page,
-		TotalPages:   int(totalPages),
-		TwoBefore:    page - 2,
-		TwoAfter:     page + 2,
-		ThreeAfter:   page + 3,
-		Offset:       offset,
-		BaseURL:      baseURL,
-	}
-	return pagination, nil
-}
-
 // Get all players pagination limit
 func (m *postgresDBRepo) GetPlayers(perPage int, offset int) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -1138,37 +1097,113 @@ func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Valu
 	defer cancel()
 
 	filter := models.Filter{
+		TeamID: 0,
+		HeightMin: 150,
+		HeightMax: 250,
+		WeightMin: 50,
+		WeightMax: 150,
 		OverallMin: 1,
 		OverallMax: 99,
+		ThreePointShotMin: 1,
+		ThreePointShotMax: 99,
+		DrivingDunkMin: 1,
+		DrivingDunkMax: 99,
+		AthleticismMin: 1,
+		AthleticismMax: 99,
+		PerimeterDefenseMin: 1,
+		PerimeterDefenseMax: 99,
+		InteriorDefenseMin: 1,
+		InteriorDefenseMax: 99,
+		ReboundingMin: 1,
+		ReboundingMax: 99,
 	}
 	var players []models.Player
 
 	for key, value := range queries {
-		fmt.Println(key, " => ", value)
 		queryInt, err := strconv.Atoi(value[0])
 		if err != nil {
 			continue
 		}
 		switch key {
+		case "team":
+			filter.TeamID = queryInt
 		case "ovrl":
 			filter.OverallMin = queryInt
 		case "ovrh":
 			filter.OverallMax = queryInt
+		case "hl":
+			filter.HeightMin = queryInt
+		case "hh":
+			filter.HeightMax = queryInt
+		case "wl":
+			filter.WeightMin = queryInt
+		case "wh":
+			filter.WeightMax = queryInt
+		case "3ptl":
+			filter.ThreePointShotMin = queryInt
+		case "3pth":
+			filter.ThreePointShotMax = queryInt
+		case "ddunkl":
+			filter.DrivingDunkMin = queryInt
+		case "ddunkh":
+			filter.DrivingDunkMax = queryInt
+		case "athl":
+			filter.AthleticismMin = queryInt
+		case "athh":
+			filter.AthleticismMax = queryInt
+		case "perdl":
+			filter.PerimeterDefenseMin = queryInt
+		case "perdh":
+			filter.PerimeterDefenseMax = queryInt
+		case "intdl":
+			filter.InteriorDefenseMin = queryInt
+		case "intdh":
+			filter.InteriorDefenseMax = queryInt
+		case "rebl":
+			filter.ReboundingMin = queryInt
+		case "rebh":
+			filter.ReboundingMax = queryInt
 		} 
 	}
 
 	query := `
 	SELECT *
 	FROM players
-	WHERE $1 <= overall AND overall <= $2
+	WHERE ($1 = 0 OR team_id = $1)
+	AND $2 <= overall AND overall <= $3
+	AND $4 <= height AND height <= $5
+	AND $6 <= weight AND weight <= $7
+	AND $8 <= "attributes/ThreePointShot" AND "attributes/ThreePointShot" <= $9
+	AND $10 <= "attributes/DrivingDunk" AND "attributes/DrivingDunk" <= $11
+	AND $12 <= "attributes/Athleticism" AND "attributes/Athleticism" <= $13
+	AND $14 <= "attributes/PerimeterDefense" AND "attributes/PerimeterDefense" <= $15
+	AND $16 <= "attributes/InteriorDefense" AND "attributes/InteriorDefense" <= $17
+	AND $18 <= "attributes/Rebounding" AND "attributes/Rebounding" <= $19
 	ORDER BY "overall" DESC, "attributes/TotalAttributes" DESC
-	LIMIT $3
-	OFFSET $4
+	LIMIT $20
+	OFFSET $21
 	`
 
 	rows, err := m.DB.QueryContext(ctx, query,
+		filter.TeamID,
 		filter.OverallMin,
 		filter.OverallMax,
+		filter.HeightMin,
+		filter.HeightMax,
+		filter.WeightMin,
+		filter.WeightMax,
+		filter.ThreePointShotMin,
+		filter.ThreePointShotMax,
+		filter.DrivingDunkMin,
+		filter.DrivingDunkMax,
+		filter.AthleticismMin,
+		filter.AthleticismMax,
+		filter.PerimeterDefenseMin,
+		filter.PerimeterDefenseMax,
+		filter.InteriorDefenseMin,
+		filter.InteriorDefenseMax,
+		filter.ReboundingMin,
+		filter.ReboundingMax,
 		perPage,
 		offset,
 	)

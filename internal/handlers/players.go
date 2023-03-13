@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"net/url"
 	"os/exec"
 	"strconv"
 
@@ -80,20 +79,18 @@ func (m *Repository) PostPlayer(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.URL.Path)
-	fmt.Println(r.URL.String())
-	fmt.Println(r.RequestURI)
-	fmt.Println(r.URL.RawQuery)
+	limit := 20
+	offset := 0
 
-	page := 1
-	perPage := 20
-
-	baseURL := r.URL.String() + "&"
-
-	pagination, err := m.DB.GetPaginationData(page, perPage, "players", baseURL)
+	limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
 	if err != nil {
-		helpers.ServerError(w, err)
-		return
+		limit = 20
+	}
+	if r.URL.Query().Has("offset") {
+		offset, err = strconv.Atoi(r.URL.Query().Get("offset"))
+		if err != nil {
+			offset = 20
+		}
 	}
 
 	teams, err := m.DB.GetTeams()
@@ -102,17 +99,11 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	players, err := m.DB.FilterPlayers(perPage, pagination.Offset, r.URL.Query())
+	players, err := m.DB.FilterPlayers(limit, offset, r.URL.Query())
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-	fmt.Println(page)
-	// players, err := m.DB.GetPlayers(perPage, pagination.Offset)
-	// if err != nil {
-	// 	helpers.ServerError(w, err)
-	// 	return
-	// }
 
 	var playersWithTeamInfo []models.PlayerWithTeamInfo
 
@@ -131,7 +122,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 
 	ranking := []int{}
 	for i := 1; i <= len(players); i++ {
-		ranking = append(ranking, i+pagination.Offset)
+		ranking = append(ranking, i+offset)
 	}
 
 	data := make(map[string]interface{})
@@ -139,7 +130,6 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 	data["teams"] = teams[1:]
 	data["FA"] = teams[0]
 	data["ranking"] = ranking
-	data["pagination"] = pagination
 
 	render.Template(w, r, "players.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
@@ -176,16 +166,6 @@ func (m *Repository) PostPlayers(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
-	case "filter":
-		v := url.Values{}
-		v.Add("ovrh", r.FormValue("ovrh"))
-		v.Add("ovrl", r.FormValue("ovrl"))
-		v.Add("hh", r.FormValue("hh"))
-		v.Add("hl", r.FormValue("hl"))
-
-		redirectURL := r.URL.Path + "?" + v.Encode()
-
-		http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 	}
 }
 

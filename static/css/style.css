@@ -14,6 +14,10 @@ html {
     padding-right: 15px;
 }
 
+.navbar {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 0px 10px -2px;
+}
+
 .nav-img {
     width: 65px;
     height: 65px;
@@ -369,7 +373,18 @@ html {
     }
 }
 
+#positionsFilter {
+    display: grid;
+    grid-template-columns: 20% 20% 20% 20% 20%;
+}
+#positionsFilter div{
+    display: flex;
+}
+#positionsFilter p{
+    margin: 0 0 10px 5px;
+}
+
 .filter-attribute {
     display: grid;
-    grid-template-columns: 60% 20% 20%;
+    grid-template-columns: 50% 25% 25%;
 }

@@ -59,19 +59,19 @@ type PlayerWithTeamInfo struct {
 
 // NBAPlayer is the NBA player model
 type Player struct {
-	PlayerID          int        `json:"player_id"`
-	FirstName         string     `json:"first_name"`
-	LastName          string     `json:"last_name"`
-	PrimaryPosition   string     `json:"primary_position"`
-	SecondaryPosition string     `json:"secondary_position"`
-	TeamID            int        `json:"team_id"`
-	AssignedPosition  int        `json:"assigned_position"`
-	Archetype         string     `json:"archetype"`
-	Height            *int       `json:"height"`
-	Weight            *int       `json:"weight"`
-	NBATeam           string     `json:"nba_team"`
-	Nationality       string     `json:"nationality"`
-	Birthdate         string     `json:"birthdate"`
+	PlayerID          int    `json:"player_id"`
+	FirstName         string `json:"first_name"`
+	LastName          string `json:"last_name"`
+	PrimaryPosition   string `json:"primary_position"`
+	SecondaryPosition string `json:"secondary_position"`
+	TeamID            int    `json:"team_id"`
+	AssignedPosition  int    `json:"assigned_position"`
+	Archetype         string `json:"archetype"`
+	Height            *int   `json:"height"`
+	Weight            *int   `json:"weight"`
+	NBATeam           string `json:"nba_team"`
+	Nationality       string `json:"nationality"`
+	Birthdate         string `json:"birthdate"`
 	Age               string
 	Jersey            string     `json:"jersey"`
 	Draft             string     `json:"draft"`
@@ -103,8 +103,11 @@ type Filter struct {
 	AthleticismMax      int
 	PerimeterDefenseMin int
 	PerimeterDefenseMax int
+	InteriorDefenseMin  int
+	InteriorDefenseMax  int
+	ReboundingMin       int
+	ReboundingMax       int
 	TeamID              int
-	NBATeam             string
 }
 
 type Attributes struct {

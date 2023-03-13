@@ -30,8 +30,6 @@ type DatabaseRepo interface {
 	UpdateResult(res models.Result) error
 	DeleteResult(res models.Result) error
 
-	CountRows(tableName string) (count int, err error)
-	GetPaginationData(page int, perPage int, tableName string, baseURL string) (models.PaginationData, error)
 	GetUser(userID int) (models.User, error)
 	UpdateUser(u models.User) error
 	Authenticate(email, testPassword string) (int, string, int, error)
