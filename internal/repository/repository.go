@@ -1,6 +1,8 @@
 package repository
 
 import (
+	"net/url"
+
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 )
 
@@ -16,7 +18,7 @@ type DatabaseRepo interface {
 	UpdatePlayer(player models.Player) error
 	ResetPlayers() error
 	GetRandomPlayer(random int) (models.Player, error)
-	FilterPlayers(perPage int, offset int, filter models.Filter) ([]models.Player, error)
+	FilterPlayers(perPage int, offset int, queries url.Values) ([]models.Player, error)
 
 	GetPlayer(playerID int) (models.Player, error)
 	AssignPosition(player models.Player) error

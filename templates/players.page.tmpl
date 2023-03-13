@@ -18,15 +18,15 @@
                         <th>#</th>
                         <th></th>
                         <th class="ps-2" style="text-align: start;">NAME</th>
-                        <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="bottom">OVR</th>
-                        <th title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="bottom">3PT</th>
-                        <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="bottom">DUNK</th>
-                        <th title="Athleticism" data-bs-toggle="tooltip" data-bs-placement="bottom">ATHL</th>
-                        <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">PER D</th>
-                        <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="bottom">INT D</th>
-                        <th title="Rebounding" data-bs-toggle="tooltip" data-bs-placement="bottom">REB</th>
-                        <th>BADGES</th>
-                        <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="bottom">TOTAL</th>
+                        <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="top">OVR</th>
+                        <th title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="top">3PT</th>
+                        <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="top">DUNK</th>
+                        <th title="Athleticism" data-bs-toggle="tooltip" data-bs-placement="top">ATHL</th>
+                        <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="top">PER D</th>
+                        <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="top">INT D</th>
+                        <th title="Rebounding" data-bs-toggle="tooltip" data-bs-placement="top">REB</th>
+                        <th title="Badges" data-bs-toggle="tooltip" data-bs-placement="top">BADGES</th>
+                        <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="top">TOTAL</th>
                     </tr>
                 </thead>
                 <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
@@ -91,9 +91,7 @@
         </div>
         
         <div class="col-md-3">
-            <form action="/players" method="post">
-            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-            <input type="hidden" name="action" value="filter">
+            <form id="filter" action="/players" method="GET">
             <div class="row">
                 <p class="fw-bold mt-1" style="font-size: 14px;">SEARCH</p>
             </div>
@@ -124,25 +122,25 @@
                     </div>
                 </div>
 
-                <button class="btn" type="submit">Submit</button>
+                <button class="btn bkcolor btn-outline-light" type="submit" style="width: 100%;">Submit</button>
 
                 <div class="filter-attribute">
                     <p>Height</p>
-                    <input name="height_min" type="text" class="form-control" value="{{with .Form.Values.Get `height_min`}}{{else}}150{{end}}">
-                    <input name="height_max" type="text" class="form-control" value="{{with .Form.Values.Get `height_max`}}{{else}}250{{end}}">
+                    <input name="hl" type="text" class="form-control" value="{{with .Form.Values.Get `hl`}}{{end}}">
+                    <input name="hh" type="text" class="form-control" value="{{with .Form.Values.Get `hh`}}{{end}}">
                 </div>
                 <div class="filter-attribute">
                     <p>Weight</p>
-                    <input name="weight_min" type="text" class="form-control" value="{{with .Form.Values.Get `weight_min`}}{{else}}60{{end}}">
-                    <input name="weight_max" type="text" class="form-control" value="{{with .Form.Values.Get `weight_max`}}{{else}}250{{end}}">
+                    <input name="weight_min" type="text" class="form-control" value="{{with .Form.Values.Get `weight_min`}}{{end}}">
+                    <input name="weight_max" type="text" class="form-control" value="{{with .Form.Values.Get `weight_max`}}{{end}}">
                 </div>
                 <div class="filter-attribute">
                     <p>Overall</p>
-                    <input name="overall_min" type="text" class="form-control" value="{{with .Form.Values.Get `overall_min`}}{{else}}1{{end}}">
-                    <input name="overall_max" type="text" class="form-control" value="{{with .Form.Values.Get `overall_max`}}{{else}}99{{end}}">
+                    <input name="ovrl" type="text" class="form-control" value="{{with .Form.Values.Get `ovrl`}}{{end}}">
+                    <input name="ovrh" type="text" class="form-control" value="{{with .Form.Values.Get `ovrh`}}{{end}}">
                 </div>
 
-                <div>
+                <!-- <div>
                     <select class="form-select">
                         <option selected>Team</option>
                         <option value="1">One</option>
@@ -215,7 +213,7 @@
                     <p>Total Badges</p>
                     <input name="total_badges_min" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_min`}}{{else}}0{{end}}">
                     <input name="total_badges_max" type="text" class="form-control" value="{{with .Form.Values.Get `total_badges_max`}}{{else}}60{{end}}">
-                </div>
+                </div> -->
             </form>
         </div>
     </div>
@@ -288,5 +286,17 @@
         });
     }
  </script>
+
+<script>
+    $(document).ready(function(){
+        $("form").submit(function(){
+            $("input").each(function(index, obj){
+                if($(obj).val() == "") {
+                    $(obj).remove();
+                }
+            });
+        });
+    });
+</script>
 
 {{end}}

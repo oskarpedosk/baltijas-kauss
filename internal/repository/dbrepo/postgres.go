@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"math"
+	"net/url"
+	"strconv"
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
@@ -1131,23 +1133,45 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 }
 
 // Filter players with pagination limit
-func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, filter models.Filter) ([]models.Player, error) {
+func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Values) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
+	filter := models.Filter{
+		OverallMin: 1,
+		OverallMax: 99,
+	}
 	var players []models.Player
+
+	for key, value := range queries {
+		fmt.Println(key, " => ", value)
+		queryInt, err := strconv.Atoi(value[0])
+		if err != nil {
+			continue
+		}
+		switch key {
+		case "ovrl":
+			filter.OverallMin = queryInt
+		case "ovrh":
+			filter.OverallMax = queryInt
+		} 
+	}
 
 	query := `
 	SELECT *
 	FROM players
-	WHERE	$1 < "overall" AND "overall" < $2
-	AND		$3 < "height" AND "height" < $4
+	WHERE $1 <= overall AND overall <= $2
 	ORDER BY "overall" DESC, "attributes/TotalAttributes" DESC
-	LIMIT $5
-	OFFSET $6;
+	LIMIT $3
+	OFFSET $4
 	`
 
-	rows, err := m.DB.QueryContext(ctx, query, filter.OverallMin, filter.OverallMax, filter.HeightMin, filter.HeightMax, perPage, offset)
+	rows, err := m.DB.QueryContext(ctx, query,
+		filter.OverallMin,
+		filter.OverallMax,
+		perPage,
+		offset,
+	)
 	if err != nil {
 		return players, err
 	}
