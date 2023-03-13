@@ -219,7 +219,7 @@ func (m *postgresDBRepo) GetPaginationData(page int, perPage int, tableName stri
 	}
 	totalPages := math.Ceil(float64(totalRows) / float64(perPage))
 
-	// Calculate offset
+	// Calculate offset 
 	offset := (page - 1) * perPage
 
 	pagination := models.PaginationData{
