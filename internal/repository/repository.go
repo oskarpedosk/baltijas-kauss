@@ -22,6 +22,7 @@ type DatabaseRepo interface {
 	GetPlayers(filter models.Filter) ([]models.Player, error)
 
 	GetPlayer(playerID int) (models.Player, error)
+	GetPlayerBadges(playerID int) ([]models.Badge, error)
 	AssignPosition(player models.Player) error
 	SwitchTeam(player models.Player) error
 

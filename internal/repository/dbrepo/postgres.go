@@ -1104,7 +1104,7 @@ func (m *postgresDBRepo) CreateNewBadge(badge models.Badge) (int, error) {
 	return badgeID, nil
 }
 
-// Filter players with pagination limit
+// Filter players
 func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -1269,4 +1269,42 @@ func (m *postgresDBRepo) CountPlayers() (int, error) {
 	}
 
 	return count, nil
+}
+
+func (m *postgresDBRepo) GetPlayerBadges(playerID int) ([]models.Badge, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var badges []models.Badge
+
+	query := `
+	SELECT badges.badge_id, badges.name, badges.type, badges.info, badges.img_id, badges.url 
+	FROM players_badges 
+	JOIN badges ON players_badges.badge_id = badges.badge_id 
+	WHERE players_badges.player_id = $1;
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query, playerID)
+	if err != nil {
+		return badges, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var badge models.Badge
+		err := rows.Scan(
+			&badge.BadgeID,
+			&badge.Name,
+			&badge.Type,
+			&badge.Info,
+			&badge.ImgID,
+			&badge.URL,
+		)
+		if err != nil {
+			return badges, err
+		}
+		badges = append(badges, badge)
+	}
+
+	return badges, nil
 }

@@ -4,18 +4,6 @@ import (
 	"time"
 )
 
-type PaginationData struct {
-	NextPage     int
-	PreviousPage int
-	CurrentPage  int
-	TotalPages   int
-	TwoBefore    int
-	TwoAfter     int
-	ThreeAfter   int
-	Offset       int
-	BaseURL      string
-}
-
 // User is the users model
 type User struct {
 	UserID      int
@@ -183,18 +171,6 @@ type Badge struct {
 	ImgID     string `json:"img_id"`
 	Level     string `json:"level"`
 	URL       string `json:"url"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-}
-
-// Players badges is the NBA players badges model
-type PlayersBadges struct {
-	PlayerID  int
-	BadgeID   int
-	FirstName string
-	LastName  string
-	Name      string
-	Level     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

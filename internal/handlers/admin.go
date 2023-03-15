@@ -77,6 +77,13 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	} else if 0 < limit && limit <= playerCount {
 		filter.Limit = limit
 	}
+	offsetStr := r.FormValue("offset")
+	offset, err := strconv.Atoi(offsetStr)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+	filter.Offset = offset
 
 	players, err := m.DB.GetPlayers(filter)
 	if err != nil {
@@ -87,10 +94,12 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	filePath := "./static/js/script/updateplayer.js"
 	success := 0
 	for _, player := range players {
+		failMsg := fmt.Sprintf("%s %s update FAILED", player.FirstName, player.LastName)
 		cmd := exec.Command("node", filePath, strconv.Itoa(player.PlayerID), player.RatingsURL)
 		output, err := cmd.Output()
 		if err != nil {
 			fmt.Println(err)
+			fmt.Println(failMsg)
 			continue
 		}
 
@@ -99,6 +108,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		err = json.Unmarshal(output, &data)
 		if err != nil {
 			fmt.Println(err)
+			fmt.Println(failMsg)
 			continue
 		}
 
@@ -107,6 +117,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		err = json.Unmarshal(data[0], &player)
 		if err != nil {
 			fmt.Println(err)
+			fmt.Println(failMsg)
 			continue
 		}
 
@@ -115,25 +126,28 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		err = json.Unmarshal(data[1], &badges)
 		if err != nil {
 			fmt.Println(err)
+			fmt.Println(failMsg)
 			continue
 		}
 
 		err = m.DB.UpdatePlayer(player)
 		if err != nil {
+			fmt.Println(failMsg)
 			continue
 			helpers.ServerError(w, err)
 		}
 
 		err = m.DB.UpdatePlayerBadges(player, badges)
 		if err != nil {
+			fmt.Println(failMsg)
 			continue
 			helpers.ServerError(w, err)
 		}
 		success++
 	}
-
-	msg := fmt.Sprintf("%d of %d updated successfully", success, filter.Limit)
-	m.App.Session.Put(r.Context(), "warning", msg)
+	fmt.Println("------------")
+	msg := fmt.Sprintf("%d of %d players updated successfully", success, filter.Limit)
+	fmt.Println(msg)
 	http.Redirect(w, r, "/admin/dashboard", http.StatusSeeOther)
 }
 

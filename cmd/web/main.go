@@ -52,7 +52,6 @@ func run() (*driver.DB, error) {
 	// What am I going to put in the session
 	gob.Register(models.User{})
 	gob.Register(models.Badge{})
-	gob.Register(models.PlayersBadges{})
 	gob.Register(models.Player{})
 	gob.Register(models.Team{})
 	gob.Register(models.Standings{})

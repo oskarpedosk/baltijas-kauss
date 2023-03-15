@@ -11,15 +11,24 @@
 {{define "content"}}
     <form method="post" action="/admin/players" novalidate>
         <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        <select class="form-select" name="offset">
+            <option value="0">Start from rank 1</option>
+            <option value="20">Start from rank 21</option>
+            <option value="50">Start from rank 51</option>
+            <option value="100">Start from rank 101</option>
+            <option value="200">Start from rank 201</option>
+            <option value="300">Start from rank 301</option>
+            <option value="400">Start from rank 401</option>
+        </select>
         <select class="form-select" name="limit">
-            <option value="0">All players</option>
-            <option value="5">Top 5</option>
-            <option value="20">Top 20</option>
-            <option value="50">Top 50</option>
-            <option value="100">Top 100</option>
-            <option value="150">Top 150</option>
-            <option value="250">Top 250</option>
-            <option value="450">Top 450</option>
+            <option value="0">All</option>
+            <option value="5">+5</option>
+            <option value="20">+20</option>
+            <option value="50">+50</option>
+            <option value="100">+100</option>
+            <option value="150">+150</option>
+            <option value="250">+250</option>
+            <option value="450">+450</option>
         </select>
         <button class="btn btn-primary">Update</button>
     </form>

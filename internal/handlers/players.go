@@ -58,6 +58,12 @@ func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	badges, err := m.DB.GetPlayerBadges(playerID)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
 	teams, err := m.DB.GetTeams()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -74,6 +80,7 @@ func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
 
 	data := make(map[string]interface{})
 	data["player"] = player
+	data["badges"] = badges
 	data["team"] = playersTeam
 	data["teams"] = teams[1:]
 	data["FA"] = teams[0]

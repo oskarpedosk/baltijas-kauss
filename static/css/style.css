@@ -416,3 +416,16 @@ html {
 .filter-attribute p{
     margin: 0;
 }
+.badges-container {
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+}
+.badge-detail img {
+    max-width:100%;
+    object-fit: cover;
+}
+@media (max-width: 767px) {
+    .badges-container {
+      grid-template-columns: 100%;
+    }
+  }

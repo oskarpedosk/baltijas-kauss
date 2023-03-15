@@ -55,6 +55,16 @@
                         <p class="text-muted">NBA Team <span class="text-dark">{{.Data.player.NBATeam}}</span></p>
                         <p class="text-muted">Drafted <span class="text-dark">{{.Data.player.Draft}}</span></p>
                     </div>
+                    {{if eq .User.AccessLevel 2}}
+                    <div>
+                        <form action="/update" method="post">
+                            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                            <input type="hidden" name="player_id" value="{{.Data.player.PlayerID}}">
+                            <input type="hidden" name="ratings_url" value="{{.Data.player.RatingsURL}}">
+                            <button class="btn btn-success" type="submit" style="width: 100%;">Update</button>
+                        </form>
+                    </div>
+                    {{ end }}
                 </div>
             </div>
         </div>
@@ -151,16 +161,17 @@
             </div>
         </div>
     </div>
-    <div>
-        <form action="/update" method="post">
-            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
-            <input type="hidden" name="player_id" value="{{.Data.player.PlayerID}}">
-            <input type="hidden" name="ratings_url" value="{{.Data.player.RatingsURL}}">
-            <button class="btn" type="submit">Update</button>
-        </form>
-    </div>
-    <div class="row mt-2 bg-light rounded-3">
-        <h1>BADGES</h1>
+    <div class="badges-container mt-2">
+        {{ range $badge := $.Data.badges }}
+            <div class="badge-detail d-flex bg-light rounded-3 p-3">
+                <img class="img-fluid" src="/static/images/badges/{{.ImgID}}" alt="">
+                <div>
+                    <h4>{{ .Name }}</h4>
+                    <p>{{ .Type }}</p>
+                    <p>{{ .Info }}</p>
+                </div>
+            </div>
+        {{ end }}
     </div>
 </div>
 
