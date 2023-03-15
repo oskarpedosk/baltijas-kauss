@@ -4,9 +4,9 @@ next.addEventListener("click", function() {
     let url = new URL(currentURL)
     if (url.searchParams.has("offset")) {
         let offset = parseInt(url.searchParams.get("offset"))
-        url.searchParams.set("offset", offset + 20)
+        url.searchParams.set("offset", offset + parseInt(limit.value))
     } else {
-        url.searchParams.set("offset", 20)
+        url.searchParams.set("offset", parseInt(limit.value))
     }
     window.location.href = url.toString()
 })
@@ -17,8 +17,8 @@ previous.addEventListener("click", function() {
     let url = new URL(currentURL)
     if (url.searchParams.has("offset")) {
         let offset = parseInt(url.searchParams.get("offset"))
-        if (offset - 20 > 0) {
-            url.searchParams.set("offset", offset - 20)
+        if (offset - limit.value > 0) {
+            url.searchParams.set("offset", offset - parseInt(limit.value))
         } else {
             url.searchParams.delete("offset")
         }

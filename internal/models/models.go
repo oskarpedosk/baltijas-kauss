@@ -108,6 +108,15 @@ type Filter struct {
 	ReboundingMin       int
 	ReboundingMax       int
 	TeamID              int
+	Position1           int
+	Position2           int
+	Position3           int
+	Position4           int
+	Position5           int
+	Col1                string
+	Col2                string
+	Order               string
+	Search              string
 }
 
 type Attributes struct {
@@ -166,11 +175,12 @@ type Positions struct {
 // Badge is the NBA badge model
 type Badge struct {
 	BadgeID   int
-	Name      string
-	Type      string
-	Info      string
-	ImgID     string
-	URL       string
+	Name      string `json:"name"`
+	Type      string `json:"type"`
+	Info      string `json:"info"`
+	ImgID     string `json:"img_id"`
+	Level     string `json:"level"`
+	URL       string `json:"url"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

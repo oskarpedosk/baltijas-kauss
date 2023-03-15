@@ -374,17 +374,45 @@ html {
 }
 
 #positionsFilter {
-    display: grid;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-}
-#positionsFilter div{
     display: flex;
-}
-#positionsFilter p{
-    margin: 0 0 10px 5px;
+    justify-content: space-between;
+    align-items: center;
 }
 
+#positionsFilter div {
+    display: flex;
+    align-items: center;
+    margin-right: 5px;
+}
+#positionsFilter div p {
+    margin: 0 0 0 5px;
+}
+
+.inputMin[type="text"] {
+    color: rgb(215, 0, 0);
+}
+.inputMax[type="text"] {
+    color: rgb(0, 150, 0);
+}
+  
+.filter-attribute-height-weight {
+    display: grid;
+    margin: 10px 0;
+    align-items: center;
+    grid-template-columns: 35% 30% 5% 30%;
+}
+.filter-attribute-height-weight p{
+    margin: 0;
+}
 .filter-attribute {
     display: grid;
-    grid-template-columns: 50% 25% 25%;
+    margin: 10px 0;
+    align-items: center;
+    grid-template-columns: 55% 20% 5% 20%;
+}
+.filter-attribute div{
+    padding-left: 5px;
+}
+.filter-attribute p{
+    margin: 0;
 }

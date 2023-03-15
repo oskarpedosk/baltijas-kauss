@@ -186,10 +186,33 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
+		// Parse the output as an array of two objects
+		var data []json.RawMessage
+		err = json.Unmarshal(output, &data)
+		if err != nil {
+			fmt.Println(err)
+		}
+	
+		// Unmarshal the first object as a Player
 		var player models.Player
-		json.Unmarshal(output, &player)
+		err = json.Unmarshal(data[0], &player)
+		if err != nil {
+			fmt.Println(err)
+		}
+	
+		// Unmarshal the second object as a slice of Badges
+		var badges []models.Badge
+		err = json.Unmarshal(data[1], &badges)
+		if err != nil {
+			fmt.Println(err)
+		}
 
 		err = m.DB.UpdatePlayer(player)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+
+		err = m.DB.UpdatePlayerBadges(player, badges)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}

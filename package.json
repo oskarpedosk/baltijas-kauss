@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "dependencies": {
     "bootstrap-table": "^1.21.0",
     "jquery": "^3.6.1",

@@ -1,9 +1,11 @@
+import fs from 'fs';
+import path from 'path';
+import puppeteer from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 const playerID = process.argv[2];
 const ratingsURL = process.argv[3];
 
 let page;
-const puppeteer = require('puppeteer-extra')
-const StealthPlugin = require('puppeteer-extra-plugin-stealth')
 puppeteer.use(StealthPlugin())
 
 puppeteer.launch({executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true }).then(async browser => {
@@ -11,11 +13,7 @@ puppeteer.launch({executablePath: '/Applications/Google Chrome.app/Contents/MacO
     page = await browser.newPage()
 
     const player_and_badges = await scrapePlayer(ratingsURL);
-    const player = player_and_badges[0];
-    const badges = player_and_badges[1];
-    //console.log(badges)
-    //console.log(player)
-    console.log(JSON.stringify(player));
+    console.log(JSON.stringify(player_and_badges));
     await browser.close();
 })
 
@@ -164,13 +162,8 @@ async function scrapeNBAcom(first_name, last_name) {
     const nba_com_scrape = {};
     try {
         // Search for player with DuckDuckGo
-        const query = first_name + ' ' + last_name + ' ' + 'nba.com';
-        await page.goto('https://www.duckduckgo.com/');
-        await page.waitForSelector('#searchbox_input');
-        const search = await page.$('#searchbox_input');
-        await search.type(query);
-        await page.keyboard.press('Enter');
-
+        const query = first_name + '+' + last_name + '+' + 'nba.com';
+        await page.goto('https://www.duckduckgo.com/?q=' + query);
         await page.waitForSelector('#r1-0 > div:nth-child(2) > h2:nth-child(1) > a:nth-child(1)');
         const player_url = await page.evaluate(() => document.querySelector('#r1-0 > div:nth-child(2) > h2:nth-child(1) > a:nth-child(1)').href);
 
@@ -188,13 +181,12 @@ async function scrapeNBAcom(first_name, last_name) {
                 return null;
             }
         });
-
         for (let i = 0; i < nba_com_info.length; i++) {
             if (nba_com_info[i].length === 2) {
                 const info = nba_com_info[i][0]
                 const data = nba_com_info[i][1]
                 if (info === "HEIGHT") {
-                    regex = /\((\d\d\d)m\)/;
+                    let regex = /\((\d\d\d)m\)/;
                     const height = data.replace('.', '');
                     if (regex.test(height)) {
                         nba_com_scrape.height = parseInt(getGroup(regex, height, 1));
@@ -232,7 +224,7 @@ async function scrapeNBAcom(first_name, last_name) {
             if (await page.$('img.PlayerImage_image__wH_YX') !== null) {
                 nba_com_scrape.img_url = await page.evaluate(() => document.querySelector('img.PlayerImage_image__wH_YX').src);
             } else {
-                nba_com_scrape.img_url = "/static/images/players/default_player.png";
+                nba_com_scrape.img_url = null;
             }
         }
 
@@ -293,7 +285,7 @@ function addAttributes(attributes_scrape) {
     }
     
     for (let i = 0; i < attributes_scrape.length; i++) {
-        regex = /(\S+) (.+\w)/;
+        let regex = /(\S+) (.+\w)/;
         let attribute_str = getGroup(regex, attributes_scrape[i], 2);
         attribute_str = attribute_str.replaceAll(' ', '');
         attribute_str = attribute_str.replaceAll('-', '');
@@ -355,9 +347,35 @@ async function scrapePlayerBadges() {
             name: name,
             type: type,
             info: info,
+            img_id: await saveImage("https://2kratings.com" + badges_levels[i], "static/images/badges", getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
+            level: getGroup(/_(\w+)\./, badges_levels[i], 1),
             url: "https://2kratings.com" + badges_levels[i],
         }
         badges.push(badge)
     }
     return badges
 }
+
+async function saveImage(url, folder, file_name) {
+    try {
+      let extension = '.png';
+      let regex = /(\.png|\.webp)$/;
+      if (regex.test(url)) {
+        extension = getGroup(regex, url, 1);
+      }
+      const filePath = path.join('.', folder, file_name + extension);
+      const response = await page.goto(url);
+      const buffer = await response.buffer();
+  
+      // Check if file exists
+      if (fs.existsSync(filePath)) {
+        return `${file_name}${extension}`;
+      }
+  
+      fs.writeFileSync(filePath, buffer);
+      return `${file_name}${extension}`;
+    } catch (error) {
+      console.error(`${folder} ${file_name} couldn't save image: ${error}`);
+      return 'default.png';
+    }
+  }

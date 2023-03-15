@@ -12,16 +12,16 @@
                     <tr style="background-color: white;">
                         <th>#</th>
                         <th></th>
-                        <th class="ps-2" style="text-align: start;">NAME</th>
-                        <th title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="top">OVR</th>
-                        <th title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="top">3PT</th>
-                        <th title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="top">DUNK</th>
-                        <th title="Athleticism" data-bs-toggle="tooltip" data-bs-placement="top">ATHL</th>
-                        <th title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="top">PER D</th>
-                        <th title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="top">INT D</th>
-                        <th title="Rebounding" data-bs-toggle="tooltip" data-bs-placement="top">REB</th>
-                        <th title="Badges" data-bs-toggle="tooltip" data-bs-placement="top">BADGES</th>
-                        <th title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="top">TOTAL</th>
+                        <th class="ps-2 pointer sortByCol" style="text-align: start;" data-col="lname">NAME</th>
+                        <th class="pointer sortByCol" title="Overall Rating" data-bs-toggle="tooltip" data-bs-placement="top" data-col="ovr" sorted="desc">OVR ↓</th>
+                        <th class="pointer sortByCol" title="Three Point Shot" data-bs-toggle="tooltip" data-bs-placement="top" data-col="3pt">3PT</th>
+                        <th class="pointer sortByCol" title="Driving Dunk" data-bs-toggle="tooltip" data-bs-placement="top" data-col="ddunk">DUNK</th>
+                        <th class="pointer sortByCol" title="Athleticism" data-bs-toggle="tooltip" data-bs-placement="top" data-col="ath">ATHL</th>
+                        <th class="pointer sortByCol" title="Perimeter Defense" data-bs-toggle="tooltip" data-bs-placement="top" data-col="perd">PER D</th>
+                        <th class="pointer sortByCol" title="Interior Defense" data-bs-toggle="tooltip" data-bs-placement="top" data-col="intd">INT D</th>
+                        <th class="pointer sortByCol" title="Rebounding" data-bs-toggle="tooltip" data-bs-placement="top" data-col="reb">REB</th>
+                        <th class="pointer sortByCol" title="Badges" data-bs-toggle="tooltip" data-bs-placement="top" data-col="bdg">BADGES</th>
+                        <th class="pointer sortByCol" title="Total Attributes" data-bs-toggle="tooltip" data-bs-placement="top" data-col="total">TOTAL</th>
                     </tr>
                 </thead>
                 <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
@@ -30,8 +30,8 @@
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
                         <td class="p-0 py-1">
-                            <!-- <a href="/players/{{$player.Player.PlayerID}}"><img src="{{$player.Player.ImgURL}}"
-                            alt="" class="header-image rounded-circle inline-block border"></a> -->
+                            <a href="/players/{{$player.Player.PlayerID}}"><img src="{{$player.Player.ImgURL}}"
+                            alt="" class="header-image rounded-circle inline-block border"></a>
                         </td>
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
@@ -85,16 +85,12 @@
             </div>
         </div>
         
-        <div class="col-md-3">
-            <div id="filterForm">
-            <div class="row">
-                <p class="fw-bold mt-1" style="font-size: 14px;">FILTER</p>
-            </div>
-                <!-- <div>
-                    <input id="name" type="text" placeholder="Name" class="form-control" value="">                  
-                </div> -->
+        <div class="col-md-3 p-0">
+            <div id="filterForm" class="bg-light p-3 pb-3 rounded-3">
 
-                <div id="positionsFilter">
+                <input id="search" class="form-control" type="text" name="search" autocomplete="off" placeholder="Search...">
+
+                <div id="positionsFilter" class="my-2">
                     <div>
                         <input class="form-check-input" type="checkbox" name="p1" checked>
                         <p>PG</p>
@@ -116,66 +112,81 @@
                         <p>C</p>
                     </div>
                 </div>
-                <div>
-                    <select class="form-select">
-                        <option value="0">All Teams</option>
-                        {{range $team := $.Data.teams}}
-                            <option value="{{$team.TeamID}}">{{$team.Name}}</option>
-                        {{end}}
-                        <option value="1">Free Agency</option>
-                      </select>                      
-                </div>
-                <hr>
-                <div class="filter-attribute">
+                
+                <div class="filter-attribute-height-weight">
                     <p>Height</p>
-                    <input name="hl" type="text" class="form-control" placeholder="150cm">
-                    <input name="hh" type="text" class="form-control" placeholder="250cm">
+                    <input name="hl" type="text" class="form-control inputMin" autocomplete="off" placeholder="150cm">
+                    <div></div>
+                    <input name="hh" type="text" class="form-control inputMax" autocomplete="off" placeholder="250cm">
                 </div>
-                <div class="filter-attribute">
+                <div class="filter-attribute-height-weight">
                     <p>Weight</p>
-                    <input name="wl" type="text" class="form-control" placeholder="50kg">
-                    <input name="wh" type="text" class="form-control" placeholder="150kg">
+                    <input name="wl" type="text" class="form-control inputMin" autocomplete="off" placeholder="50kg">
+                    <div></div>
+                    <input name="wh" type="text" class="form-control inputMax" autocomplete="off" placeholder="150kg">
                 </div>
+
                 <hr>
+
                 <div class="filter-attribute">
                     <p>Overall</p>
-                    <input name="ovrl" type="text" class="form-control" placeholder="1">
-                    <input name="ovrh" type="text" class="form-control" placeholder="99">
+                    <input name="ovrl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="ovrh" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Three Point Shot</p>
-                    <input name="3ptl" type="text" class="form-control" placeholder="1">
-                    <input name="3pth" type="text" class="form-control" placeholder="99">
+                    <input name="3ptl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="3pth" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Driving Dunk</p>
-                    <input name="ddunkl" type="text" class="form-control" placeholder="1">
-                    <input name="ddunkh" type="text" class="form-control" placeholder="99">
+                    <input name="ddunkl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="ddunkh" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Athleticism</p>
-                    <input name="athl" type="text" class="form-control" placeholder="1">
-                    <input name="athh" type="text" class="form-control" placeholder="99">
+                    <input name="athl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="athh" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Perimeter Defense</p>
-                    <input name="perdl" type="text" class="form-control" placeholder="1">
-                    <input name="perdh" type="text" class="form-control" placeholder="99">
+                    <input name="perdl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="perdh" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Interior Defense</p>
-                    <input name="intdl" type="text" class="form-control" placeholder="1">
-                    <input name="intdh" type="text" class="form-control" placeholder="99">
+                    <input name="intdl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="intdh" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
                 <div class="filter-attribute">
                     <p>Rebounding</p>
-                    <input name="rebl" type="text" class="form-control" placeholder="1">
-                    <input name="rebh" type="text" class="form-control" placeholder="99">
+                    <input name="rebl" type="text" class="form-control inputMin" autocomplete="off" placeholder="1">
+                    <div></div>
+                    <input name="rebh" type="text" class="form-control inputMax" autocomplete="off" placeholder="99">
                 </div>
 
-                <button class="btn btn-outline-dark" style="width: 100%;">Reset</button>
-                <button class="btn bkcolor btn-outline-light" style="width: 100%;" onclick="filterPlayers()">Submit</button>
+                <select id="teamSelect" class="form-select mb-2">
+                    <option value="0">All Teams</option>
+                    {{range $team := $.Data.teams}}
+                        <option value="{{$team.TeamID}}">{{$team.Name}}</option>
+                    {{end}}
+                    <option value="1">Free Agency</option>
+                </select>
 
+                <select id="limitSelect" class="form-select mb-2">
+                    <option value="20">20 players</option>
+                    <option value="30">30 players</option>
+                    <option value="50">50 players</option>
+                </select>
+
+                <button class="btn btn-primary my-2" style="width: 100%;" onclick="filterPlayers()">Submit</button>
+                <a href="/players"><button class="btn btn-light border border-dark" style="width: 100%;">Reset</button></a>
             </div>
         </div>
     </div>
@@ -257,18 +268,121 @@
         let url = new URL(URLWithoutQueries)
         let inputs = document.querySelectorAll('#filterForm input')
         inputs.forEach(input => {
-            if ((!input.checked) && input.type === 'checkbox') {
-                url.searchParams.set(input.name, 0)
-            } else if (input.value && input.type !== 'checkbox') {
-                url.searchParams.set(input.name, input.value)
+            if (input.name === 'search') {
+                url.searchParams.set("search", (input.value).replaceAll(' ', '+'))
+            } else {
+                if ((!input.checked) && input.type === 'checkbox') {
+                    url.searchParams.set(input.name, 0)
+                } else if (input.value && input.type !== 'checkbox') {
+                    url.searchParams.set(input.name, input.value)
+                }
             }
         })
-        let teams = document.querySelector('select')
+        let teams = document.getElementById('teamSelect')
         if (teams.value !== '0') {
             url.searchParams.set("team", teams.value)
+        }
+        let limit = document.getElementById('limitSelect')
+        if (limit.value !== '20') {
+            url.searchParams.set("limit", limit.value)
         }
         window.location.href = url.toString()
     }
 </script>
+
+<script>
+    let sortByCol = document.querySelectorAll(".sortByCol");
+
+    let currentURL = window.location.href
+    let url = new URL(currentURL)
+
+    sortByCol.forEach(function(col) {
+        col.addEventListener("click", function() {
+
+            sortByCol.forEach(function(otherCol) {
+                if (otherCol !== col) {
+                    otherCol.innerText = otherCol.innerText.replace(" ↓", "").replace(" ↑", "")
+                    otherCol.removeAttribute("sorted")
+                }
+            })
+
+            if ((this.getAttribute("sorted") === "desc")) {
+                this.innerText = this.innerText.replace(" ↓", "").replace(" ↑", "") + " ↑"
+                this.setAttribute("sorted", "asc")
+            } else if ((this.getAttribute("sorted") === "asc")) {
+                this.innerText = this.innerText.replace(" ↓", "").replace(" ↑", "") + " ↓"
+                this.setAttribute("sorted", "desc")
+            } else {
+                this.innerText += " ↓"
+                this.setAttribute("sorted", "desc")
+            }
+            url.searchParams.set("col", this.getAttribute("data-col"))
+            url.searchParams.set("sort", this.getAttribute("sorted"))
+            window.location.href = url.toString()
+        })
+    })
+</script>
+
+<script>
+    currentURL = new URL(window.location.href);
+    let searchParams = new URLSearchParams(currentURL.search)
+    let inputs = document.querySelectorAll('#filterForm input')
+    inputs.forEach(input => {
+        if (input.type === 'checkbox') {
+            if (searchParams.has(input.name)) {
+                input.checked = false
+            } else {
+                input.checked = true
+            }
+        } else {
+            if (input.name === 'search') {
+                if (searchParams.get(input.name)) {
+                    input.value = searchParams.get(input.name).replaceAll('+', ' ')
+                }
+            } else {
+                input.value = searchParams.get(input.name)
+            }
+        }
+    })
+
+    let teams = document.getElementById('teamSelect')
+    if (searchParams.has('team')) {
+        teams.value = searchParams.get('team')
+    }
+
+    let limit = document.getElementById('limitSelect')
+    if (searchParams.has('limit')) {
+        limit.value = searchParams.get('limit')
+    }
+
+    // Handle the table sorting
+    sortByCol = document.querySelectorAll('.sortByCol')
+    if (searchParams.has('col')) {
+        sortByCol.forEach(function(col) {
+            col.innerText = col.innerText.replace(" ↓", "").replace(" ↑", "")
+            col.removeAttribute("sorted")
+            if (col.getAttribute("data-col") === (searchParams.get('col'))) {
+                if (searchParams.get('sort') === "asc") {
+                    col.innerText += " ↑"
+                    col.setAttribute("sorted", "asc")
+                } else {
+                    col.innerText += " ↓"
+                    col.setAttribute("sorted", "desc")
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+    let search = document.getElementById("search");
+
+    search.addEventListener("keypress", function(event) {
+    if (event.keyCode === 13) {
+        filterPlayers()
+    }
+    })
+</script>
+
 
 {{end}}

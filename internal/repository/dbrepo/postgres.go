@@ -6,12 +6,41 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"reflect"
 	"strconv"
 	"time"
 
+	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"golang.org/x/crypto/bcrypt"
 )
+
+var queryFilters = map[string]string{
+	"team":   "TeamID",
+	"ovrl":   "OverallMin",
+	"ovrh":   "OverallMax",
+	"hl":     "HeightMin",
+	"hh":     "HeightMax",
+	"wl":     "WeightMin",
+	"wh":     "WeightMax",
+	"3ptl":   "ThreePointShotMin",
+	"3pth":   "ThreePointShotMax",
+	"ddunkl": "DrivingDunkMin",
+	"ddunkh": "DrivingDunkMax",
+	"athl":   "AthleticismMin",
+	"athh":   "AthleticismMax",
+	"perdl":  "PerimeterDefenseMin",
+	"perdh":  "PerimeterDefenseMax",
+	"intdl":  "InteriorDefenseMin",
+	"intdh":  "InteriorDefenseMax",
+	"rebl":   "ReboundingMin",
+	"rebh":   "ReboundingMax",
+	"p1":     "Position1",
+	"p2":     "Position2",
+	"p3":     "Position3",
+	"p4":     "Position4",
+	"p5":     "Position5",
+}
 
 func (m *postgresDBRepo) AllUsers() bool {
 	return true
@@ -1021,8 +1050,8 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 		player.PrimaryPosition,
 		player.SecondaryPosition,
 		player.Archetype,
-		*player.Height,
-		*player.Weight,
+		helpers.NewNullInt(*player.Height),
+		helpers.NewNullInt(*player.Weight),
 		player.NBATeam,
 		player.Nationality,
 		player.Birthdate,
@@ -1091,79 +1120,203 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 	return nil
 }
 
+func (m *postgresDBRepo) UpdatePlayerBadges(player models.Player, badges []models.Badge) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	delete from 
+		players_badges
+	where
+		player_id = $1
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt, player.PlayerID)
+
+	if err != nil {
+		return err
+	}
+
+	for _, badge := range badges {
+		badgeID, err := m.GetBadgeID(badge.URL)
+		if err != nil {
+			return err
+		}
+		if badgeID == 0 {
+			badgeID, err = m.CreateNewBadge(badge)
+			if err != nil {
+				return err
+			}
+		}
+		stmt := `
+		INSERT INTO
+			players_badges
+		(player_id, badge_id, first_name, last_name, name, level) 
+		values ($1, $2, $3, $4, $5, $6)`
+
+		_, err = m.DB.ExecContext(ctx, stmt,
+			player.PlayerID,
+			badgeID,
+			player.FirstName,
+			player.LastName,
+			badge.Name,
+			badge.Level,
+		)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	SELECT badge_id
+	FROM 
+		badges
+	WHERE
+		url = $1
+	`
+	var badgeID int
+
+	row, err := m.DB.QueryContext(ctx, query, url)
+	if err != nil {
+		return 0, err
+	}
+
+	defer row.Close()
+	for row.Next() {
+		err := row.Scan(
+			&badgeID,
+		)
+		if err != nil {
+			return 0, err
+		}
+	}
+
+	return badgeID, nil
+}
+
+func (m *postgresDBRepo) CreateNewBadge(badge models.Badge) (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	SELECT MAX(badge_id)
+	FROM badges;
+	`
+
+	var badgeID int
+
+	err := m.DB.QueryRowContext(ctx, query).Scan(&badgeID)
+	if err != nil {
+		return 0, err
+	}
+
+	stmt := `
+		INSERT INTO
+			badges
+		(badge_id, name, type, info, img_id, url) 
+		values ($1, $2, $3, $4, $5, $6)`
+
+	_, err = m.DB.ExecContext(ctx, stmt,
+		badgeID+1,
+		badge.Name,
+		badge.Type,
+		badge.Info,
+		badge.ImgID,
+		badge.URL,
+	)
+
+	if err != nil {
+		return 0, err
+	}
+
+	return badgeID, nil
+}
+
 // Filter players with pagination limit
 func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Values) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
 	filter := models.Filter{
-		TeamID: 0,
-		HeightMin: 150,
-		HeightMax: 250,
-		WeightMin: 50,
-		WeightMax: 150,
-		OverallMin: 1,
-		OverallMax: 99,
-		ThreePointShotMin: 1,
-		ThreePointShotMax: 99,
-		DrivingDunkMin: 1,
-		DrivingDunkMax: 99,
-		AthleticismMin: 1,
-		AthleticismMax: 99,
+		TeamID:              0,
+		HeightMin:           150,
+		HeightMax:           250,
+		WeightMin:           50,
+		WeightMax:           150,
+		OverallMin:          1,
+		OverallMax:          99,
+		ThreePointShotMin:   1,
+		ThreePointShotMax:   99,
+		DrivingDunkMin:      1,
+		DrivingDunkMax:      99,
+		AthleticismMin:      1,
+		AthleticismMax:      99,
 		PerimeterDefenseMin: 1,
 		PerimeterDefenseMax: 99,
-		InteriorDefenseMin: 1,
-		InteriorDefenseMax: 99,
-		ReboundingMin: 1,
-		ReboundingMax: 99,
+		InteriorDefenseMin:  1,
+		InteriorDefenseMax:  99,
+		ReboundingMin:       1,
+		ReboundingMax:       99,
+		Position1:           1,
+		Position2:           1,
+		Position3:           1,
+		Position4:           1,
+		Position5:           1,
+		Col1:                "overall",
+		Col2:                "\"attributes/TotalAttributes\"",
+		Order:               "desc",
 	}
 	var players []models.Player
 
 	for key, value := range queries {
-		queryInt, err := strconv.Atoi(value[0])
-		if err != nil {
-			continue
+		if key == "col" {
+			if value[0] == "lname" {
+				filter.Col1 = "last_name"
+			} else if value[0] == "ovr" {
+				filter.Col1 = "overall"
+				filter.Col2 = "\"attributes/TotalAttributes\""
+			} else if value[0] == "3pt" {
+				filter.Col1 = "\"attributes/ThreePointShot\""
+			} else if value[0] == "ddunk" {
+				filter.Col1 = "\"attributes/DrivingDunk\""
+			} else if value[0] == "ath" {
+				filter.Col1 = "\"attributes/Athleticism\""
+			} else if value[0] == "perd" {
+				filter.Col1 = "\"attributes/PerimeterDefense\""
+			} else if value[0] == "intd" {
+				filter.Col1 = "\"attributes/InteriorDefense\""
+			} else if value[0] == "reb" {
+				filter.Col1 = "\"attributes/Rebounding\""
+			} else if value[0] == "bdg" {
+				filter.Col1 = "total_badges"
+			} else if value[0] == "total" {
+				filter.Col1 = "\"attributes/TotalAttributes\""
+			}
+			if filter.Col1 != "overall" {
+				filter.Col2 = "overall"
+			}
+		} else if key == "sort" {
+			filter.Order = value[0]
+		} else if key == "search" {
+			filter.Search = value[0]
+		} else {
+			queryInt, err := strconv.Atoi(value[0])
+			if err != nil {
+				continue
+			}
+			if fieldName, ok := queryFilters[key]; ok {
+				field := reflect.ValueOf(&filter).Elem().FieldByName(fieldName)
+				field.SetInt(int64(queryInt))
+			}
 		}
-		switch key {
-		case "team":
-			filter.TeamID = queryInt
-		case "ovrl":
-			filter.OverallMin = queryInt
-		case "ovrh":
-			filter.OverallMax = queryInt
-		case "hl":
-			filter.HeightMin = queryInt
-		case "hh":
-			filter.HeightMax = queryInt
-		case "wl":
-			filter.WeightMin = queryInt
-		case "wh":
-			filter.WeightMax = queryInt
-		case "3ptl":
-			filter.ThreePointShotMin = queryInt
-		case "3pth":
-			filter.ThreePointShotMax = queryInt
-		case "ddunkl":
-			filter.DrivingDunkMin = queryInt
-		case "ddunkh":
-			filter.DrivingDunkMax = queryInt
-		case "athl":
-			filter.AthleticismMin = queryInt
-		case "athh":
-			filter.AthleticismMax = queryInt
-		case "perdl":
-			filter.PerimeterDefenseMin = queryInt
-		case "perdh":
-			filter.PerimeterDefenseMax = queryInt
-		case "intdl":
-			filter.InteriorDefenseMin = queryInt
-		case "intdh":
-			filter.InteriorDefenseMax = queryInt
-		case "rebl":
-			filter.ReboundingMin = queryInt
-		case "rebh":
-			filter.ReboundingMax = queryInt
-		} 
 	}
 
 	query := `
@@ -1179,9 +1332,15 @@ func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Valu
 	AND $14 <= "attributes/PerimeterDefense" AND "attributes/PerimeterDefense" <= $15
 	AND $16 <= "attributes/InteriorDefense" AND "attributes/InteriorDefense" <= $17
 	AND $18 <= "attributes/Rebounding" AND "attributes/Rebounding" <= $19
-	ORDER BY "overall" DESC, "attributes/TotalAttributes" DESC
-	LIMIT $20
-	OFFSET $21
+	AND (($20 = 1 AND (primary_position = 'PG' OR secondary_position = 'PG'))
+		OR ($21 = 1 AND (primary_position = 'SG' OR secondary_position = 'SG'))
+		OR ($22 = 1 AND (primary_position = 'SF' OR secondary_position = 'SF'))
+		OR ($23 = 1 AND (primary_position = 'PF' OR secondary_position = 'PF'))
+		OR ($24 = 1 AND (primary_position = 'C' OR secondary_position = 'C')))
+	AND lower(first_name || '+' || last_name) LIKE '%' || lower($25) || '%'
+	ORDER BY ` + filter.Col1 + ` ` + filter.Order + `, ` + filter.Col2 + ` DESC
+	LIMIT $26
+	OFFSET $27
 	`
 
 	rows, err := m.DB.QueryContext(ctx, query,
@@ -1204,6 +1363,12 @@ func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Valu
 		filter.InteriorDefenseMax,
 		filter.ReboundingMin,
 		filter.ReboundingMax,
+		filter.Position1,
+		filter.Position2,
+		filter.Position3,
+		filter.Position4,
+		filter.Position5,
+		filter.Search,
 		perPage,
 		offset,
 	)
