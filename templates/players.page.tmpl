@@ -268,7 +268,7 @@
         let url = new URL(URLWithoutQueries)
         let inputs = document.querySelectorAll('#filterForm input')
         inputs.forEach(input => {
-            if (input.name === 'search') {
+            if (input.name === 'search' && input.value) {
                 url.searchParams.set("search", (input.value).replaceAll(' ', '+'))
             } else {
                 if ((!input.checked) && input.type === 'checkbox') {
@@ -323,34 +323,30 @@
     })
 </script>
 
+
 <script>
     currentURL = new URL(window.location.href);
-    let searchParams = new URLSearchParams(currentURL.search)
-    let inputs = document.querySelectorAll('#filterForm input')
+    const searchParams = new URLSearchParams(currentURL.search)
+    const inputs = document.querySelectorAll('#filterForm input')
+
     inputs.forEach(input => {
         if (input.type === 'checkbox') {
-            if (searchParams.has(input.name)) {
-                input.checked = false
-            } else {
-                input.checked = true
-            }
+            input.checked = !searchParams.has(input.name)
         } else {
             if (input.name === 'search') {
-                if (searchParams.get(input.name)) {
-                    input.value = searchParams.get(input.name).replaceAll('+', ' ')
-                }
+                input.value = searchParams.get(input.name) ? searchParams.get(input.name).replaceAll('+', ' ') : ''
             } else {
                 input.value = searchParams.get(input.name)
             }
         }
-    })
+    });
 
-    let teams = document.getElementById('teamSelect')
+    const teams = document.getElementById('teamSelect')
     if (searchParams.has('team')) {
         teams.value = searchParams.get('team')
     }
 
-    let limit = document.getElementById('limitSelect')
+    const limit = document.getElementById('limitSelect')
     if (searchParams.has('limit')) {
         limit.value = searchParams.get('limit')
     }
@@ -358,29 +354,24 @@
     // Handle the table sorting
     sortByCol = document.querySelectorAll('.sortByCol')
     if (searchParams.has('col')) {
-        sortByCol.forEach(function(col) {
-            col.innerText = col.innerText.replace(" ↓", "").replace(" ↑", "")
-            col.removeAttribute("sorted")
-            if (col.getAttribute("data-col") === (searchParams.get('col'))) {
-                if (searchParams.get('sort') === "asc") {
-                    col.innerText += " ↑"
-                    col.setAttribute("sorted", "asc")
-                } else {
-                    col.innerText += " ↓"
-                    col.setAttribute("sorted", "desc")
-                }
+        sortByCol.forEach(col => {
+            col.innerText = col.innerText.replace(/[↑↓]/g, '')
+            col.removeAttribute('sorted')
+
+            if (col.getAttribute('data-col') === searchParams.get('col')) {
+                col.innerText += searchParams.get('sort') === 'asc' ? ' ↑' : ' ↓'
+                col.setAttribute('sorted', searchParams.get('sort'))
             }
         })
     }
 </script>
 
 <script>
-    let search = document.getElementById("search");
-
-    search.addEventListener("keypress", function(event) {
-    if (event.keyCode === 13) {
-        filterPlayers()
-    }
+    const search = document.getElementById("search")
+    search.addEventListener("keypress", event => {
+        if (event.keyCode === 13) {
+            filterPlayers()
+        }
     })
 </script>
 

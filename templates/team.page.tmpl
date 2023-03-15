@@ -76,11 +76,11 @@
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <div class="col-md-3">
                 <input type="text" class="form-control"
-                    name="team_name" value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}">
+                    name="team_name" value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}" autocomplete="off">
             </div>
             <div class="col-md-3">
                 <input type="text" class="form-control"
-                name="abbreviation" value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}">
+                name="abbreviation" value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}" autocomplete="off">
             </div>
             <div class="col-md-3 d-flex">
                 <input type="color" class="form-control form-control-color me-1" name="team_color1"

@@ -9,6 +9,20 @@
 {{end}}
 
 {{define "content"}}
+    <form method="post" action="/admin/players" novalidate>
+        <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+        <select class="form-select" name="limit">
+            <option value="0">All players</option>
+            <option value="5">Top 5</option>
+            <option value="20">Top 20</option>
+            <option value="50">Top 50</option>
+            <option value="100">Top 100</option>
+            <option value="150">Top 150</option>
+            <option value="250">Top 250</option>
+            <option value="450">Top 450</option>
+        </select>
+        <button class="btn btn-primary">Update</button>
+    </form>
     <div class="col-md-12">
         <table class="table table-lg table-striped table-hover" id="all-players">
             <thead>

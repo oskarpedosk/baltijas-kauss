@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os/exec"
+	"reflect"
 	"strconv"
 
 	"github.com/go-chi/chi/v5"
@@ -13,6 +14,35 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
+
+var queryFilters = map[string]string{
+	"team":   "TeamID",
+	"ovrl":   "OverallMin",
+	"ovrh":   "OverallMax",
+	"hl":     "HeightMin",
+	"hh":     "HeightMax",
+	"wl":     "WeightMin",
+	"wh":     "WeightMax",
+	"3ptl":   "ThreePointShotMin",
+	"3pth":   "ThreePointShotMax",
+	"ddunkl": "DrivingDunkMin",
+	"ddunkh": "DrivingDunkMax",
+	"athl":   "AthleticismMin",
+	"athh":   "AthleticismMax",
+	"perdl":  "PerimeterDefenseMin",
+	"perdh":  "PerimeterDefenseMax",
+	"intdl":  "InteriorDefenseMin",
+	"intdh":  "InteriorDefenseMax",
+	"rebl":   "ReboundingMin",
+	"rebh":   "ReboundingMax",
+	"p1":     "Position1",
+	"p2":     "Position2",
+	"p3":     "Position3",
+	"p4":     "Position4",
+	"p5":     "Position5",
+	"limit":  "Limit",
+	"offset": "Offset",
+}
 
 // Player is the single player handler
 func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
@@ -79,17 +109,78 @@ func (m *Repository) PostPlayer(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
-	limit := 20
-	offset := 0
-
-	limit, err := strconv.Atoi(r.URL.Query().Get("limit"))
-	if err != nil {
-		limit = 20
+	filter := models.Filter{
+		TeamID:              0,
+		HeightMin:           150,
+		HeightMax:           250,
+		WeightMin:           50,
+		WeightMax:           150,
+		OverallMin:          1,
+		OverallMax:          99,
+		ThreePointShotMin:   1,
+		ThreePointShotMax:   99,
+		DrivingDunkMin:      1,
+		DrivingDunkMax:      99,
+		AthleticismMin:      1,
+		AthleticismMax:      99,
+		PerimeterDefenseMin: 1,
+		PerimeterDefenseMax: 99,
+		InteriorDefenseMin:  1,
+		InteriorDefenseMax:  99,
+		ReboundingMin:       1,
+		ReboundingMax:       99,
+		Position1:           1,
+		Position2:           1,
+		Position3:           1,
+		Position4:           1,
+		Position5:           1,
+		Limit:               20,
+		Offset:              0,
+		Col1:                "overall",
+		Col2:                "\"attributes/TotalAttributes\"",
+		Order:               "desc",
 	}
-	if r.URL.Query().Has("offset") {
-		offset, err = strconv.Atoi(r.URL.Query().Get("offset"))
-		if err != nil {
-			offset = 20
+
+	for key, value := range r.URL.Query() {
+		if key == "col" {
+			if value[0] == "lname" {
+				filter.Col1 = "last_name"
+			} else if value[0] == "ovr" {
+				filter.Col1 = "overall"
+				filter.Col2 = "\"attributes/TotalAttributes\""
+			} else if value[0] == "3pt" {
+				filter.Col1 = "\"attributes/ThreePointShot\""
+			} else if value[0] == "ddunk" {
+				filter.Col1 = "\"attributes/DrivingDunk\""
+			} else if value[0] == "ath" {
+				filter.Col1 = "\"attributes/Athleticism\""
+			} else if value[0] == "perd" {
+				filter.Col1 = "\"attributes/PerimeterDefense\""
+			} else if value[0] == "intd" {
+				filter.Col1 = "\"attributes/InteriorDefense\""
+			} else if value[0] == "reb" {
+				filter.Col1 = "\"attributes/Rebounding\""
+			} else if value[0] == "bdg" {
+				filter.Col1 = "total_badges"
+			} else if value[0] == "total" {
+				filter.Col1 = "\"attributes/TotalAttributes\""
+			}
+			if filter.Col1 != "overall" {
+				filter.Col2 = "overall"
+			}
+		} else if key == "sort" {
+			filter.Order = value[0]
+		} else if key == "search" {
+			filter.Search = value[0]
+		} else {
+			queryInt, err := strconv.Atoi(value[0])
+			if err != nil {
+				continue
+			}
+			if fieldName, ok := queryFilters[key]; ok {
+				field := reflect.ValueOf(&filter).Elem().FieldByName(fieldName)
+				field.SetInt(int64(queryInt))
+			}
 		}
 	}
 
@@ -99,7 +190,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	players, err := m.DB.FilterPlayers(limit, offset, r.URL.Query())
+	players, err := m.DB.GetPlayers(filter)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -122,7 +213,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 
 	ranking := []int{}
 	for i := 1; i <= len(players); i++ {
-		ranking = append(ranking, i+offset)
+		ranking = append(ranking, i+filter.Offset)
 	}
 
 	data := make(map[string]interface{})
@@ -178,45 +269,48 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	playerID := r.FormValue("player_id")
 	ratingsURL := r.FormValue("ratings_url")
 
-	go func(playerID, ratingsURL string) {
-		filePath := "./static/js/script/updateplayer.js"
-		cmd := exec.Command("node", filePath, playerID, ratingsURL)
-		output, err := cmd.Output()
-		if err != nil {
-			fmt.Println(err)
-		}
+	if len(playerID) > 0 && len(ratingsURL) > 0 {
+		go func(playerID, ratingsURL string) {
+			filePath := "./static/js/script/updateplayer.js"
+			cmd := exec.Command("node", filePath, playerID, ratingsURL)
+			output, err := cmd.Output()
+			if err != nil {
+				fmt.Println(err)
+			}
 
-		// Parse the output as an array of two objects
-		var data []json.RawMessage
-		err = json.Unmarshal(output, &data)
-		if err != nil {
-			fmt.Println(err)
-		}
-	
-		// Unmarshal the first object as a Player
-		var player models.Player
-		err = json.Unmarshal(data[0], &player)
-		if err != nil {
-			fmt.Println(err)
-		}
-	
-		// Unmarshal the second object as a slice of Badges
-		var badges []models.Badge
-		err = json.Unmarshal(data[1], &badges)
-		if err != nil {
-			fmt.Println(err)
-		}
+			// Parse the output as an array of two objects
+			var data []json.RawMessage
+			err = json.Unmarshal(output, &data)
+			if err != nil {
+				fmt.Println(err)
+			}
 
-		err = m.DB.UpdatePlayer(player)
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
+			// Unmarshal the first object as a Player
+			var player models.Player
+			err = json.Unmarshal(data[0], &player)
+			if err != nil {
+				fmt.Println(err)
+			}
 
-		err = m.DB.UpdatePlayerBadges(player, badges)
-		if err != nil {
-			helpers.ServerError(w, err)
-		}
-	}(playerID, ratingsURL)
+			// Unmarshal the second object as a slice of Badges
+			var badges []models.Badge
+			err = json.Unmarshal(data[1], &badges)
+			if err != nil {
+				fmt.Println(err)
+			}
 
+			err = m.DB.UpdatePlayer(player)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+
+			err = m.DB.UpdatePlayerBadges(player, badges)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+		}(playerID, ratingsURL)
+	}
+
+	m.App.Session.Put(r.Context(), "warning", "Updating player "+playerID)
 	http.Redirect(w, r, "/players", http.StatusSeeOther)
 }

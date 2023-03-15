@@ -52,7 +52,10 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/dashboard", handlers.Repo.AdminDashboard)
 		
 		mux.Get("/teams", handlers.Repo.AdminNBATeams)
+
 		mux.Get("/players", handlers.Repo.AdminNBAPlayers)
+		mux.Post("/players", handlers.Repo.PostAdminPlayers)
+		
 		mux.Get("/{src}/{id}", handlers.Repo.AdminShowNBAPlayer)
 		mux.Get("/standings", handlers.Repo.AdminNBAResults)
 		

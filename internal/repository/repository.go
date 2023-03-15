@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"net/url"
-
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 )
 
@@ -11,7 +9,6 @@ type DatabaseRepo interface {
 
 	GetTeam(teamID int) (models.Team, error)
 	GetTeams() ([]models.Team, error)
-	GetPlayers(perPage int, offset int) ([]models.Player, error)
 	UpdateTeam(team models.Team) error
 	AddPlayer(playerID, teamID int) error
 	DropPlayer(playerID int) error
@@ -19,9 +16,10 @@ type DatabaseRepo interface {
 	GetBadgeID(url string) (int, error)
 	UpdatePlayer(player models.Player) error
 	UpdatePlayerBadges(models.Player, []models.Badge) error
+	CountPlayers() (int, error)
 	ResetPlayers() error
 	GetRandomPlayer(random int) (models.Player, error)
-	FilterPlayers(perPage int, offset int, queries url.Values) ([]models.Player, error)
+	GetPlayers(filter models.Filter) ([]models.Player, error)
 
 	GetPlayer(playerID int) (models.Player, error)
 	AssignPosition(player models.Player) error

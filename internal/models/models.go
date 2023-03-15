@@ -113,6 +113,8 @@ type Filter struct {
 	Position3           int
 	Position4           int
 	Position5           int
+	Limit               int
+	Offset              int
 	Col1                string
 	Col2                string
 	Order               string

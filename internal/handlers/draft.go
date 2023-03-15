@@ -11,11 +11,11 @@ import (
 func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 
-	players, err := m.DB.GetPlayers(200, 0)
-	if err != nil {
-		helpers.ServerError(w, err)
-		return
-	}
+	// players, err := m.DB.GetPlayers(200, 0)
+	// if err != nil {
+	// 	helpers.ServerError(w, err)
+	// 	return
+	// }
 
 	teams, err := m.DB.GetTeams()
 	if err != nil {
@@ -23,7 +23,7 @@ func (m *Repository) NBADraft(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data["nba_players"] = players
+	// data["nba_players"] = players
 	data["nba_teams"] = teams
 	data["positions"] = positions
 

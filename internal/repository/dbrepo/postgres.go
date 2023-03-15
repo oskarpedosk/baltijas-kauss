@@ -5,42 +5,12 @@ import (
 	"errors"
 	"fmt"
 	"math"
-	"net/url"
-	"reflect"
-	"strconv"
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"golang.org/x/crypto/bcrypt"
 )
-
-var queryFilters = map[string]string{
-	"team":   "TeamID",
-	"ovrl":   "OverallMin",
-	"ovrh":   "OverallMax",
-	"hl":     "HeightMin",
-	"hh":     "HeightMax",
-	"wl":     "WeightMin",
-	"wh":     "WeightMax",
-	"3ptl":   "ThreePointShotMin",
-	"3pth":   "ThreePointShotMax",
-	"ddunkl": "DrivingDunkMin",
-	"ddunkh": "DrivingDunkMax",
-	"athl":   "AthleticismMin",
-	"athh":   "AthleticismMax",
-	"perdl":  "PerimeterDefenseMin",
-	"perdh":  "PerimeterDefenseMax",
-	"intdl":  "InteriorDefenseMin",
-	"intdh":  "InteriorDefenseMax",
-	"rebl":   "ReboundingMin",
-	"rebh":   "ReboundingMax",
-	"p1":     "Position1",
-	"p2":     "Position2",
-	"p3":     "Position3",
-	"p4":     "Position4",
-	"p5":     "Position5",
-}
 
 func (m *postgresDBRepo) AllUsers() bool {
 	return true
@@ -222,115 +192,6 @@ func (m *postgresDBRepo) AssignPosition(player models.Player) error {
 	}
 
 	return nil
-}
-
-// Get all players pagination limit
-func (m *postgresDBRepo) GetPlayers(perPage int, offset int) ([]models.Player, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	var players []models.Player
-
-	query := `
-	select
-		*
-	from 
-		players
-	order by
-		"overall" desc,
-		"attributes/TotalAttributes" desc
-	limit $1
-	offset $2
-	`
-
-	rows, err := m.DB.QueryContext(ctx, query, perPage, offset)
-	if err != nil {
-		return players, err
-	}
-
-	defer rows.Close()
-	for rows.Next() {
-		var player models.Player
-		err := rows.Scan(
-			&player.PlayerID,
-			&player.FirstName,
-			&player.LastName,
-			&player.PrimaryPosition,
-			&player.SecondaryPosition,
-			&player.TeamID,
-			&player.AssignedPosition,
-			&player.Archetype,
-			&player.Height,
-			&player.Weight,
-			&player.NBATeam,
-			&player.Nationality,
-			&player.Birthdate,
-			&player.Jersey,
-			&player.Draft,
-			&player.ImgURL,
-			&player.RatingsURL,
-			&player.Overall,
-			&player.Attributes.OutsideScoring,
-			&player.Attributes.Athleticism,
-			&player.Attributes.InsideScoring,
-			&player.Attributes.Playmaking,
-			&player.Attributes.Defending,
-			&player.Attributes.Rebounding,
-			&player.Attributes.Intangibles,
-			&player.Attributes.Potential,
-			&player.Attributes.TotalAttributes,
-			&player.Attributes.CloseShot,
-			&player.Attributes.MidRangeShot,
-			&player.Attributes.ThreePointShot,
-			&player.Attributes.FreeThrow,
-			&player.Attributes.ShotIQ,
-			&player.Attributes.OffensiveConsistency,
-			&player.Attributes.Speed,
-			&player.Attributes.Acceleration,
-			&player.Attributes.Strength,
-			&player.Attributes.Vertical,
-			&player.Attributes.Stamina,
-			&player.Attributes.Hustle,
-			&player.Attributes.OverallDurability,
-			&player.Attributes.Layup,
-			&player.Attributes.StandingDunk,
-			&player.Attributes.DrivingDunk,
-			&player.Attributes.PostHook,
-			&player.Attributes.PostFade,
-			&player.Attributes.PostControl,
-			&player.Attributes.DrawFoul,
-			&player.Attributes.Hands,
-			&player.Attributes.PassAccuracy,
-			&player.Attributes.BallHandle,
-			&player.Attributes.SpeedWithBall,
-			&player.Attributes.PassIQ,
-			&player.Attributes.PassVision,
-			&player.Attributes.InteriorDefense,
-			&player.Attributes.PerimeterDefense,
-			&player.Attributes.Steal,
-			&player.Attributes.Block,
-			&player.Attributes.LateralQuickness,
-			&player.Attributes.HelpDefenseIQ,
-			&player.Attributes.PassPerception,
-			&player.Attributes.DefensiveConsistency,
-			&player.Attributes.OffensiveRebound,
-			&player.Attributes.DefensiveRebound,
-			&player.BronzeBadges,
-			&player.SilverBadges,
-			&player.GoldBadges,
-			&player.HOFBadges,
-			&player.TotalBadges,
-			&player.CreatedAt,
-			&player.UpdatedAt,
-		)
-		if err != nil {
-			return players, err
-		}
-
-		players = append(players, player)
-	}
-
-	return players, nil
 }
 
 // Get all teams
@@ -1117,6 +978,7 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 		return err
 	}
 
+	fmt.Println(player.FirstName, player.LastName, "successfully updated")
 	return nil
 }
 
@@ -1241,83 +1103,11 @@ func (m *postgresDBRepo) CreateNewBadge(badge models.Badge) (int, error) {
 }
 
 // Filter players with pagination limit
-func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Values) ([]models.Player, error) {
+func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	filter := models.Filter{
-		TeamID:              0,
-		HeightMin:           150,
-		HeightMax:           250,
-		WeightMin:           50,
-		WeightMax:           150,
-		OverallMin:          1,
-		OverallMax:          99,
-		ThreePointShotMin:   1,
-		ThreePointShotMax:   99,
-		DrivingDunkMin:      1,
-		DrivingDunkMax:      99,
-		AthleticismMin:      1,
-		AthleticismMax:      99,
-		PerimeterDefenseMin: 1,
-		PerimeterDefenseMax: 99,
-		InteriorDefenseMin:  1,
-		InteriorDefenseMax:  99,
-		ReboundingMin:       1,
-		ReboundingMax:       99,
-		Position1:           1,
-		Position2:           1,
-		Position3:           1,
-		Position4:           1,
-		Position5:           1,
-		Col1:                "overall",
-		Col2:                "\"attributes/TotalAttributes\"",
-		Order:               "desc",
-	}
 	var players []models.Player
-
-	for key, value := range queries {
-		if key == "col" {
-			if value[0] == "lname" {
-				filter.Col1 = "last_name"
-			} else if value[0] == "ovr" {
-				filter.Col1 = "overall"
-				filter.Col2 = "\"attributes/TotalAttributes\""
-			} else if value[0] == "3pt" {
-				filter.Col1 = "\"attributes/ThreePointShot\""
-			} else if value[0] == "ddunk" {
-				filter.Col1 = "\"attributes/DrivingDunk\""
-			} else if value[0] == "ath" {
-				filter.Col1 = "\"attributes/Athleticism\""
-			} else if value[0] == "perd" {
-				filter.Col1 = "\"attributes/PerimeterDefense\""
-			} else if value[0] == "intd" {
-				filter.Col1 = "\"attributes/InteriorDefense\""
-			} else if value[0] == "reb" {
-				filter.Col1 = "\"attributes/Rebounding\""
-			} else if value[0] == "bdg" {
-				filter.Col1 = "total_badges"
-			} else if value[0] == "total" {
-				filter.Col1 = "\"attributes/TotalAttributes\""
-			}
-			if filter.Col1 != "overall" {
-				filter.Col2 = "overall"
-			}
-		} else if key == "sort" {
-			filter.Order = value[0]
-		} else if key == "search" {
-			filter.Search = value[0]
-		} else {
-			queryInt, err := strconv.Atoi(value[0])
-			if err != nil {
-				continue
-			}
-			if fieldName, ok := queryFilters[key]; ok {
-				field := reflect.ValueOf(&filter).Elem().FieldByName(fieldName)
-				field.SetInt(int64(queryInt))
-			}
-		}
-	}
 
 	query := `
 	SELECT *
@@ -1369,8 +1159,8 @@ func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Valu
 		filter.Position4,
 		filter.Position5,
 		filter.Search,
-		perPage,
-		offset,
+		filter.Limit,
+		filter.Offset,
 	)
 	if err != nil {
 		return players, err
@@ -1459,4 +1249,22 @@ func (m *postgresDBRepo) FilterPlayers(perPage int, offset int, queries url.Valu
 	}
 
 	return players, nil
+}
+
+func (m *postgresDBRepo) CountPlayers() (int, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	SELECT COUNT(*) FROM players;
+	`
+
+	var count int
+
+	err := m.DB.QueryRowContext(ctx, query).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
 }
