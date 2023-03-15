@@ -1099,6 +1099,8 @@ func (m *postgresDBRepo) CreateNewBadge(badge models.Badge) (int, error) {
 		return 0, err
 	}
 
+	msg := fmt.Sprintf("New badge %s with url: %s", badge.Name, badge.URL)
+	fmt.Println(msg)
 	return badgeID, nil
 }
 
