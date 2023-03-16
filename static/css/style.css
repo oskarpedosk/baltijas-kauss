@@ -94,7 +94,8 @@ html {
     font-size: 70px;
     font-weight: 600;
     padding: 0px;
-    margin: 8px;
+    margin-top: 32px;
+    margin-bottom: 0;
     width: 110px;
     display: inline-block;
     text-align: center;

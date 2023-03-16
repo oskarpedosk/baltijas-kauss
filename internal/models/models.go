@@ -194,3 +194,9 @@ type Standings struct {
 	AgainstAvg     float64
 	LastFive       []string
 }
+
+type Season struct {
+	SeasonID  int
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}

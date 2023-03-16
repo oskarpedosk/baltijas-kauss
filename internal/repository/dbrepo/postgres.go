@@ -21,92 +21,15 @@ func (m *postgresDBRepo) UpdateTeam(team models.Team) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `update teams set name = $2, abbreviation = $3, team_color1 = $4, team_color2 = $5, dark_text = $6 where team_id = $1`
+	stmt := `update teams set name = $1, abbreviation = $2, team_color1 = $3, team_color2 = $4, dark_text = $5 where team_id = $6`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		team.TeamID,
 		team.Name,
 		team.Abbreviation,
 		team.Color1,
 		team.Color2,
 		team.DarkText,
-	)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// Adds a result to NBA results table
-func (m *postgresDBRepo) AddResult(res models.Result) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	stmt := `insert into results (home_team_id, home_score, away_score, away_team_id) 
-	values ($1, $2, $3, $4)`
-
-	_, err := m.DB.ExecContext(ctx, stmt,
-		res.HomeTeamID,
-		res.HomeScore,
-		res.AwayScore,
-		res.AwayTeamID,
-	)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// Update NBA result
-func (m *postgresDBRepo) UpdateResult(res models.Result) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	stmt := `
-	update 
-		results
-	set 
-		home_team_id = $1,
-		home_score = $2,
-		away_score = $3,
-		away_team_id = $4
-	where
-		created_at = $5
-	`
-
-	_, err := m.DB.ExecContext(ctx, stmt,
-		res.HomeTeamID,
-		res.HomeScore,
-		res.AwayScore,
-		res.AwayTeamID,
-		res.CreatedAt,
-	)
-
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-// Delete NBA result from database
-func (m *postgresDBRepo) DeleteResult(res models.Result) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	stmt := `
-	delete from 
-		results
-	where
-		created_at = $1
-	`
-
-	_, err := m.DB.ExecContext(ctx, stmt,
-		res.CreatedAt,
+		team.TeamID,
 	)
 
 	if err != nil {
@@ -125,15 +48,15 @@ func (m *postgresDBRepo) SwitchTeam(player models.Player) error {
 	update 
 		players
 	set 
-		team_id = $2,
+		team_id = $1,
 		assigned_position = 0
 	where
-		player_id = $1
+		player_id = $2
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		player.PlayerID,
 		player.TeamID,
+		player.PlayerID,
 	)
 
 	if err != nil {
@@ -174,17 +97,17 @@ func (m *postgresDBRepo) AssignPosition(player models.Player) error {
 	update 
 		players
 	set 
-		assigned_position = $3
+		assigned_position = $1
 	where
-		player_id = $1
+		player_id = $2
 	and
-		team_id = $2
+		team_id = $3
 	`
 
 	_, err = m.DB.ExecContext(ctx, stmt,
+		player.AssignedPosition,
 		player.PlayerID,
 		player.TeamID,
-		player.AssignedPosition,
 	)
 
 	if err != nil {
@@ -816,7 +739,7 @@ func (m *postgresDBRepo) GetPlayer(playerID int) (models.Player, error) {
 			if err != nil {
 				fmt.Println(err)
 			}
-			player.Age = fmt.Sprintf("%dy.o.", int(time.Since(timestamp).Hours()/24/365))
+			player.Age = fmt.Sprintf("%d y.o.", int(time.Since(timestamp).Hours()/24/365))
 		}
 
 		if err != nil {
@@ -978,7 +901,7 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 		return err
 	}
 
-	fmt.Println(player.FirstName, player.LastName, "successfully updated")
+	fmt.Println(player.FirstName, player.LastName, "stats successfully updated")
 	return nil
 }
 
@@ -996,23 +919,17 @@ func (m *postgresDBRepo) UpdatePlayerBadges(player models.Player, badges []model
 	_, err := m.DB.ExecContext(ctx, stmt, player.PlayerID)
 
 	if err != nil {
-		fmt.Println(err)
-		fmt.Println("SIIN läheb666")
 		return err
 	}
 
 	for _, badge := range badges {
 		badgeID, err := m.GetBadgeID(badge.URL)
 		if err != nil {
-			fmt.Println(err)
-			fmt.Println("SIIN läheb")
 			return err
 		}
 		if badgeID == 0 {
 			badgeID, err = m.CreateNewBadge(badge)
 			if err != nil {
-				fmt.Println(err)
-				fmt.Println("SIIN läheb 22")
 				return err
 			}
 		}
@@ -1054,8 +971,6 @@ func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
 
 	row, err := m.DB.QueryContext(ctx, query, url)
 	if err != nil {
-		fmt.Println(err)
-		fmt.Println("SIIN läheb 3333")
 		return 0, err
 	}
 
@@ -1065,8 +980,6 @@ func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
 			&badgeID,
 		)
 		if err != nil {
-			fmt.Println(err)
-			fmt.Println("SIIN läheb 4444")
 			return 0, err
 		}
 	}
@@ -1098,8 +1011,6 @@ func (m *postgresDBRepo) CreateNewBadge(badge models.Badge) (int, error) {
 		return 0, err
 	}
 
-	msg := fmt.Sprintf("New badge %s with url: %s", badge.Name, badge.URL)
-	fmt.Println(msg)
 	return badgeID, nil
 }
 
@@ -1309,7 +1220,7 @@ func (m *postgresDBRepo) GetPlayerBadges(playerID int) ([]models.Badge, error) {
 }
 
 // Create a new season
-func (m *postgresDBRepo) NewSeason() error {
+func (m *postgresDBRepo) CreateNewSeason() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 

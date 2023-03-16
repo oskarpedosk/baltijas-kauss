@@ -26,9 +26,12 @@ type DatabaseRepo interface {
 	AssignPosition(player models.Player) error
 	SwitchTeam(player models.Player) error
 
+	GetAllResults() ([]models.Result, error)
+	GetSeasonResults(seasonID int) ([]models.Result, error)
 	GetStandings() ([]models.Standings, error)
 	GetLastResults(count int) ([]models.Result, error)
-	NewSeason() error
+	CreateNewSeason() error
+	GetSeasons() ([]models.Season, error)
 	AddResult(res models.Result) error
 	UpdateResult(res models.Result) error
 	DeleteResult(res models.Result) error

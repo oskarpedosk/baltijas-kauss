@@ -43,6 +43,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/standings", handlers.Repo.Standings)
 		mux.Post("/standings", handlers.Repo.PostStandings)
 
+		mux.Get("/alltime", handlers.Repo.AllTime)
+
 		mux.Get("/draft", handlers.Repo.NBADraft)
 		mux.Get("/ws", handlers.Repo.WsEndPoint)
 	})

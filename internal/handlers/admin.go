@@ -94,6 +94,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	filePath := "./static/js/script/updateplayer.js"
 	success := 0
 	for _, player := range players {
+		successMsg := fmt.Sprintf("%s %s update SUCCESS", player.FirstName, player.LastName)
 		failMsg := fmt.Sprintf("%s %s update FAILED", player.FirstName, player.LastName)
 		cmd := exec.Command("node", filePath, strconv.Itoa(player.PlayerID), player.RatingsURL)
 		output, err := cmd.Output()
@@ -144,6 +145,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 		success++
+		fmt.Println(successMsg)
 	}
 	fmt.Println("------------")
 	msg := fmt.Sprintf("%d of %d players updated successfully", success, filter.Limit)
