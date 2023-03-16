@@ -299,8 +299,6 @@ html {
     #players_table table th:nth-child(9),
     #players_table table th:nth-child(10),
     #players_table table th:nth-child(11),
-    #players_table table th:nth-child(12),
-    #players_table table th:nth-child(13),
 
     #players_table table td:nth-child(1),
     #players_table table td:nth-child(2),
@@ -310,8 +308,6 @@ html {
     #players_table table td:nth-child(9),
     #players_table table td:nth-child(10),
     #players_table table td:nth-child(11),
-    #players_table table td:nth-child(12),
-    #players_table table td:nth-child(13),
 
     #draft_single_player th:nth-child(3),
     #draft_single_player th:nth-child(5),

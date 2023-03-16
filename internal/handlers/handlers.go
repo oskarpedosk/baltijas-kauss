@@ -446,5 +446,35 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 
-	render.Template(w, r, "home.page.tmpl", &models.TemplateData{})
+	seasons, err := m.DB.GetSeasons()
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	results, err := m.DB.GetSeasonResults(0)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	
+	teams, err := m.DB.GetTeams()
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	var teamsWithoutFA = []models.Team{}
+	for _, team := range teams {
+		if team.TeamID != 1 {
+			teamsWithoutFA = append(teamsWithoutFA, team)
+		}
+	}
+	standings := CalculateStandings(teamsWithoutFA, results)
+
+
+	data := make(map[string]interface{})
+	data["teams"] = teamsWithoutFA
+	data["standings"] = standings
+	data["activeSeason"] = seasons[0].SeasonID
+
+	render.Template(w, r, "home.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }

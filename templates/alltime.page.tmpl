@@ -1,0 +1,81 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<title>All-Time Rankings</title>
+
+<div class="container p-3">
+    <div class="row align-items-md-stretch">
+      <div class="col-md-12">
+        <div class="h-100 p-5 rounded-3 bkcolor border text-white">
+          <h2>All-Time Rankings</h2>
+          <table id="season_results" class="table text-center text-white">
+              <thead>
+                  <tr>
+                      <th scope="col"></th>
+                      <th scope="col"></th>
+                      <th scope="col">P</th>
+                      <th scope="col">W</th>
+                      <th scope="col">L</th>
+                      <th scope="col">WIN%</th>
+                      <th scope="col">HOME</th>
+                      <th scope="col">ROAD</th>
+                      <th scope="col">LAST 5</th>
+                      <th scope="col">STRK</th>
+                      <th scope="col">FOR</th>
+                      <th scope="col">AGT</th>
+                      <th scope="col">+-</th>
+                      <th scope="col">FA</th>
+                      <th scope="col">AA</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {{range $index, $standings := index .Data "standings"}}
+                          <tr>
+                              <th scope="row">{{add $index 1}}</th>
+                              <td class="text-start">{{$standings.Team.Name}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.Played}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.TotalWins}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.TotalLosses}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">
+                                  {{if eq $standings.WinPercentage 1000}}
+                                      1.000
+                                  {{else}}
+                                      .{{if lt $standings.WinPercentage 100}}0{{if eq $standings.WinPercentage 0}}0{{end}}{{end}}{{$standings.WinPercentage}}{{end}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.HomeWins}}-{{$standings.HomeLosses}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.AwayWins}}-{{$standings.AwayLosses}}</td>
+                              <td>
+                                  <div style="margin: 0 auto;">
+                                      {{range $lastFive := $standings.LastFive}}
+                                          {{if eq $lastFive "W"}}
+                                              <div class="dot bg-success border border-white"></div>
+                                          {{end}}
+                                          {{if eq $lastFive "L"}}
+                                              <div class="dot bg-danger border border-white"></div>
+                                          {{end}}
+                                          {{if eq $lastFive ""}}
+                                              <div class="dot bg-secondary border border-white"></div>
+                                          {{end}}
+                                      {{end}}
+                                  </div>
+                              </td>
+                              <td style="font-variant-numeric: tabular-nums;">
+                                  {{if ne $standings.Streak ""}}
+                                      {{$standings.StreakCount}} {{$standings.Streak}}
+                                  {{end}}
+                              </td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.BasketsFor}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.BasketsAgainst}}</td>
+                              <td>{{$standings.BasketsSum}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.ForAvg}}</td>
+                              <td style="font-variant-numeric: tabular-nums;">{{$standings.AgainstAvg}}</td>
+                          </tr>
+
+                  {{end}}
+              </tbody>
+          </table>
+      </div>
+      </div>
+    </div>
+</div>
+{{end}}

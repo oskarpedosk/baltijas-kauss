@@ -7,7 +7,7 @@
 <div class="container p-3">
     <div class="d-flex">
         {{range $team := index .Data.teams}}
-        <div class="col text-center fw-semibold" style="background-image: linear-gradient(90deg, {{$team.Color1}}, {{$team.Color2}});">
+        <div class="col rounded-3 mx-2 text-center fw-semibold" style="background-image: linear-gradient(90deg, {{$team.Color1}}, {{$team.Color2}});">
             <a class="nav-link {{if eq $team.DarkText "false"}}text-white{{end}}" href="/teams/{{$team.TeamID}}">{{$team.Abbreviation}}</a>
         </div>
         {{end}}
@@ -48,7 +48,7 @@
             </div>
             
         </div>
-        <div class="row justify-content-between">
+        <div class="row justify-content-between my-3">
             <div class="col-md-2">
                 <div class="bg-dark text-secondary border border-dark border-2 rounded-3">
                     <img class="img-fluid" src="/static/images/players/default_player.png" alt="">

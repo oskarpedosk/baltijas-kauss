@@ -26,10 +26,12 @@ func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+
 	teams, err := m.DB.GetTeams()
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+
 	var teamsWithoutFA = []models.Team{}
 	for _, team := range teams {
 		if team.TeamID != 1 {
@@ -362,6 +364,30 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) AllTime(w http.ResponseWriter, r *http.Request) {
-	m.App.Session.Put(r.Context(), "flash", "TBA")
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	results, err := m.DB.GetAllResults()
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	
+	teams, err := m.DB.GetTeams()
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
+	var teamsWithoutFA = []models.Team{}
+	for _, team := range teams {
+		if team.TeamID != 1 {
+			teamsWithoutFA = append(teamsWithoutFA, team)
+		}
+	}
+	standings := CalculateStandings(teamsWithoutFA, results)
+
+
+	data := make(map[string]interface{})
+	data["teams"] = teamsWithoutFA
+	data["standings"] = standings
+
+	render.Template(w, r, "alltime.page.tmpl", &models.TemplateData{
+		Data: data,
+	})
 }
