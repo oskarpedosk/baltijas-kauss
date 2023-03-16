@@ -1,0 +1,5 @@
+add_foreign_key("results", "season_id", {"seasons": ["season_id"]},  {
+    "name": "season_id_fk_key",
+    "on_delete": "cascade",
+    "on_update": "cascade",
+})

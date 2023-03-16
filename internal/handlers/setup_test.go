@@ -63,17 +63,17 @@ func getRoutes() http.Handler {
 	// mux.Use(NoSurf)
 	mux.Use(SessionLoad)
 
-	mux.Get("/", Repo.Login)
+	mux.Get("/login", Repo.Login)
 
-	mux.Get("/home", Repo.NBAHome)
+	mux.Get("/", Repo.Home)
 
 	mux.Get("/players", Repo.Players)
 
 	mux.Get("/teams", Repo.Team)
 	mux.Post("/teams", Repo.PostTeam)
 
-	mux.Get("/standings", Repo.NBAResults)
-	mux.Post("/standings", Repo.PostNBAResults)
+	mux.Get("/standings", Repo.Standings)
+	mux.Post("/standings", Repo.PostStandings)
 
 	fileServer := http.FileServer(http.Dir("../../static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileServer))

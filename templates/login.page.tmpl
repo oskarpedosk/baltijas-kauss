@@ -23,8 +23,8 @@
     <main class="form-signin w-100 m-auto text-center">
         <div class="row justify-content-center">
             <div class="col" style="max-width: 350px;">
-                <form method="post" action="/" novalidate>
-                    <a href="/"><img class="mb-4" src="/static/images/baltijaskauss/bk.png" alt="" width="120"></a>
+                <form method="post" action="/login" novalidate>
+                    <img class="mb-4" src="/static/images/baltijaskauss/bk.png" alt="" width="120">
                     <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                     <div class="form-group text-start">
                         {{with .Form.Errors.Get "email"}}

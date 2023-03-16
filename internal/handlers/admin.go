@@ -13,8 +13,8 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
 
-func (m *Repository) AdminDashboard(w http.ResponseWriter, r *http.Request) {
-	render.Template(w, r, "admin-dashboard.page.tmpl", &models.TemplateData{})
+func (m *Repository) AdminHome(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "admin-home.page.tmpl", &models.TemplateData{})
 }
 
 func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
@@ -148,7 +148,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("------------")
 	msg := fmt.Sprintf("%d of %d players updated successfully", success, filter.Limit)
 	fmt.Println(msg)
-	http.Redirect(w, r, "/admin/dashboard", http.StatusSeeOther)
+	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
 func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {

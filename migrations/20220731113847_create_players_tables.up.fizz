@@ -1,5 +1,5 @@
 create_table("players") {
-    t.Column("player_id", "integer", {primary: true})
+    t.Column("player_id", "integer", {"primary": true, "generated always": "as identity"})
     t.Column("first_name", "string", {"default": ""})
     t.Column("last_name", "string", {"default": ""})
     t.Column("primary_position", "string", {"default": ""})

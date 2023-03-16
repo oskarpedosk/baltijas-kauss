@@ -1,0 +1,5 @@
+create_table("seasons") {
+    t.Column("season_id", "integer", {"primary": true, "generated always": "as identity"})
+    t.Column("created_at", "timestamp", {"default": "now()"})
+    t.Column("updated_at", "timestamp", {"default": "now()"})
+}

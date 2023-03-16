@@ -161,17 +161,19 @@
             </div>
         </div>
     </div>
-    <div class="badges-container mt-2">
-        {{ range $badge := $.Data.badges }}
-            <div class="badge-detail d-flex bg-light rounded-3 p-3">
-                <img class="img-fluid" src="/static/images/badges/{{.ImgID}}" alt="">
-                <div>
-                    <h4>{{ .Name }}</h4>
-                    <p>{{ .Type }}</p>
-                    <p>{{ .Info }}</p>
-                </div>
-            </div>
-        {{ end }}
+    <div class="row">
+        <div class="badges-container mt-3">
+            {{ range $badge := $.Data.badges }}
+                    <div class="badge-detail d-flex bg-light p-3 rounded-3">
+                        <img class="img-fluid" src="/static/images/badges/{{.ImgID}}" alt="">
+                        <div class="ms-2">
+                            <p class="badge-name">{{ .Name }}</p>
+                            <p class="badge-type badge rounded-pill">{{ .Type }}</p>
+                            <p class="badge-info">{{ .Info }}</p>
+                        </div>
+                    </div>
+            {{ end }}
+        </div>
     </div>
 </div>
 

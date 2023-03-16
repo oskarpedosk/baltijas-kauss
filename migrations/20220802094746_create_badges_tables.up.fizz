@@ -1,5 +1,5 @@
 create_table("badges") {
-    t.Column("badge_id", "integer", {primary: true})
+    t.Column("badge_id", "integer", {"primary": true, "generated always": "as identity"})
     t.Column("name", "string", {"default": ""})
     t.Column("type", "string", {"default": ""})
     t.Column("info", "string", {"default": ""})

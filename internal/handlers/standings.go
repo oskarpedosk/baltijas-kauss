@@ -11,7 +11,8 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
 
-func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
+	m.DB.NewSeason()
 	if r.FormValue("action") == "add" {
 		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
 		if err != nil {
@@ -120,7 +121,7 @@ func (m *Repository) NBAResults(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func (m *Repository) PostNBAResults(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		helpers.ServerError(w, err)

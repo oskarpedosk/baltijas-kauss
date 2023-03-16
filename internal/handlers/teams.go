@@ -32,7 +32,7 @@ func (m *Repository) Team(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	render.Template(w, r, "team.page.tmpl", &models.TemplateData{
+	render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
 		Form: forms.New(nil),
 		Data: data,
 	})
@@ -94,7 +94,7 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 			errMsg = form.Errors.Get("abbreviation")
 		}
 		m.App.Session.Put(r.Context(), "error", errMsg)
-		render.Template(w, r, "team.page.tmpl", &models.TemplateData{
+		render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
 			Form: form,
 			Data: data,
 		})

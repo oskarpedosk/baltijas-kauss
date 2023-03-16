@@ -996,17 +996,23 @@ func (m *postgresDBRepo) UpdatePlayerBadges(player models.Player, badges []model
 	_, err := m.DB.ExecContext(ctx, stmt, player.PlayerID)
 
 	if err != nil {
+		fmt.Println(err)
+		fmt.Println("SIIN läheb666")
 		return err
 	}
 
 	for _, badge := range badges {
 		badgeID, err := m.GetBadgeID(badge.URL)
 		if err != nil {
+			fmt.Println(err)
+			fmt.Println("SIIN läheb")
 			return err
 		}
 		if badgeID == 0 {
 			badgeID, err = m.CreateNewBadge(badge)
 			if err != nil {
+				fmt.Println(err)
+				fmt.Println("SIIN läheb 22")
 				return err
 			}
 		}
@@ -1044,10 +1050,12 @@ func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
 	WHERE
 		url = $1
 	`
-	var badgeID int
+	badgeID := 0
 
 	row, err := m.DB.QueryContext(ctx, query, url)
 	if err != nil {
+		fmt.Println(err)
+		fmt.Println("SIIN läheb 3333")
 		return 0, err
 	}
 
@@ -1057,6 +1065,8 @@ func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
 			&badgeID,
 		)
 		if err != nil {
+			fmt.Println(err)
+			fmt.Println("SIIN läheb 4444")
 			return 0, err
 		}
 	}
@@ -1068,32 +1078,21 @@ func (m *postgresDBRepo) CreateNewBadge(badge models.Badge) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	query := `
-	SELECT MAX(badge_id)
-	FROM badges;
-	`
-
-	var badgeID int
-
-	err := m.DB.QueryRowContext(ctx, query).Scan(&badgeID)
-	if err != nil {
-		return 0, err
-	}
-
 	stmt := `
 		INSERT INTO
 			badges
-		(badge_id, name, type, info, img_id, url) 
-		values ($1, $2, $3, $4, $5, $6)`
+		(name, type, info, img_id, url) 
+		values ($1, $2, $3, $4, $5)
+		RETURNING badge_id`
 
-	_, err = m.DB.ExecContext(ctx, stmt,
-		badgeID+1,
+	var badgeID int
+	err := m.DB.QueryRowContext(ctx, stmt,
 		badge.Name,
 		badge.Type,
 		badge.Info,
 		badge.ImgID,
 		badge.URL,
-	)
+	).Scan(&badgeID)
 
 	if err != nil {
 		return 0, err
@@ -1307,4 +1306,23 @@ func (m *postgresDBRepo) GetPlayerBadges(playerID int) ([]models.Badge, error) {
 	}
 
 	return badges, nil
+}
+
+// Create a new season
+func (m *postgresDBRepo) NewSeason() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	INSERT INTO seasons (created_at, updated_at) 
+	VALUES (NOW(), NOW())
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
