@@ -173,10 +173,9 @@ func (m *Repository) AdminStandings(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) PostAdminStandings(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("posted")
 	m.DB.StartNewSeason()
 	m.App.Session.Put(r.Context(), "flash", "New season started")
-	http.Redirect(w, r, "/admin", http.StatusSeeOther)
+	http.Redirect(w, r, "/standings", http.StatusSeeOther)
 }
 
 // Shows a single players stats

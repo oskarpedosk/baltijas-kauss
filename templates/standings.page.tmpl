@@ -97,7 +97,7 @@
             <div class="col-md-12">
                 <div class="p-5 bg-light border border-dark rounded-3">
 
-                    <form method="post" action="/standings">
+                    <form method="post" action="/standings?s={{ .Data.activeSeason }}">
                         <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
                         <input type="hidden" name="season_id" value="{{ .Data.activeSeason }}">
                         <div class="row justify-content-center">
@@ -115,14 +115,14 @@
                                 <div class="row">
                                     <div class="col-md-5">
                                         <label for="away_score" class="visually-hidden">Away score</label>
-                                        <input name="away_score" type="number" min="0" class="form-control" value=0>
+                                        <input name="away_score" type="number" min="0" class="form-control">
                                     </div>
                                     <div class="col-md-2 text-center">
                                         <p class="m-0 fw-light" style="font-size: 24px;">@</p>
                                     </div>
                                     <div class="col-md-5">
                                         <label for="home_score" class="visually-hidden">Home score</label>
-                                        <input name="home_score" type="number" min="0" class="form-control" value=0>
+                                        <input name="home_score" type="number" min="0" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +183,9 @@
                                     {{end}}
                             </div>
                             <div class="col-md-1 d-flex justify-content-end pe-4">
+                                {{ if eq $.User.AccessLevel 2 }}
                                 <div class="pointer" onclick="editResult('{{$index2}}')" style="font-size: 12px;">EDIT</div>
+                                {{ end }}
                             </div>
                         </div>
                         

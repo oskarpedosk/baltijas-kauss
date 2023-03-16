@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -297,24 +296,14 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	path := r.URL.Path
-	fmt.Println(r.URL.RawPath)
-	queries := r.URL.RawQuery
-	fmt.Println(queries)
-	fullPath := path
-	if queries != "" {
-		fullPath += "?" + queries
-	}
-	fmt.Println(fullPath)
-
 	if r.FormValue("home_team") == "" || r.FormValue("away_team") == "" {
 		m.App.Session.Put(r.Context(), "error", "Please choose teams")
-		http.Redirect(w, r, fullPath, http.StatusSeeOther)
+		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 		return
 	}
 	if r.FormValue("home_score") == "" || r.FormValue("away_score") == "" {
 		m.App.Session.Put(r.Context(), "error", "Please insert score")
-		http.Redirect(w, r, fullPath, http.StatusSeeOther)
+		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 		return
 	}
 
@@ -353,7 +342,7 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 
 	if !form.Valid() {
 		m.App.Session.Put(r.Context(), "error", "Error adding the result")
-		http.Redirect(w, r, fullPath, http.StatusSeeOther)
+		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 		// data := make(map[string]interface{})
 		// data["NBAresult"] = result
 
@@ -368,13 +357,11 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
-
-	m.App.Session.Put(r.Context(), "result", result)
-
-	fmt.Println(fullPath)
-	http.Redirect(w, r, fullPath, http.StatusSeeOther)
+	m.App.Session.Put(r.Context(), "flash", "Result added!")
+	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 }
 
 func (m *Repository) AllTime(w http.ResponseWriter, r *http.Request) {
+	m.App.Session.Put(r.Context(), "flash", "TBA")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
