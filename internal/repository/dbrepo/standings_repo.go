@@ -7,18 +7,19 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 )
 
-func (m *postgresDBRepo) AddResult(res models.Result) error {
+func (m *postgresDBRepo) AddResult(result models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `insert into results (home_team_id, home_score, away_score, away_team_id) 
-	values ($1, $2, $3, $4)`
+	stmt := `insert into results (season_id, home_team_id, home_score, away_score, away_team_id, created_at) 
+	values ($1, $2, $3, $4, $5, now())`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.HomeTeamID,
-		res.HomeScore,
-		res.AwayScore,
-		res.AwayTeamID,
+		result.SeasonID,
+		result.HomeTeam.TeamID,
+		result.HomeScore,
+		result.AwayScore,
+		result.AwayTeam.TeamID,
 	)
 
 	if err != nil {
@@ -28,7 +29,7 @@ func (m *postgresDBRepo) AddResult(res models.Result) error {
 	return nil
 }
 
-func (m *postgresDBRepo) UpdateResult(res models.Result) error {
+func (m *postgresDBRepo) UpdateResult(result models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -41,15 +42,15 @@ func (m *postgresDBRepo) UpdateResult(res models.Result) error {
 		away_score = $3,
 		away_team_id = $4
 	where
-		created_at = $5
+		result_id = $5
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.HomeTeamID,
-		res.HomeScore,
-		res.AwayScore,
-		res.AwayTeamID,
-		res.CreatedAt,
+		result.HomeTeam.TeamID,
+		result.HomeScore,
+		result.AwayScore,
+		result.AwayTeam.TeamID,
+		result.ResultID,
 	)
 
 	if err != nil {
@@ -67,11 +68,11 @@ func (m *postgresDBRepo) DeleteResult(res models.Result) error {
 	delete from 
 		results
 	where
-		created_at = $1
+		result_id = $1
 	`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
-		res.CreatedAt,
+		res.ResultID,
 	)
 
 	if err != nil {
@@ -90,6 +91,7 @@ func (m *postgresDBRepo) GetSeasons() ([]models.Season, error) {
 	query := `
 		SELECT *
 		FROM seasons
+		ORDER BY season_id DESC
 		`
 		rows, err := m.DB.QueryContext(ctx, query)
 		if err != nil {
@@ -128,34 +130,34 @@ func (m *postgresDBRepo) GetSeasonResults(seasonID int) ([]models.Result, error)
 		if err != nil {
 			return results, err
 		}
-	} else {
-		query := `
-			SELECT *
-			FROM results
-			WHERE season_id = $1
-			`
-		rows, err := m.DB.QueryContext(ctx, query, seasonID)
+	}
+	query := `
+		SELECT *
+		FROM results
+		WHERE season_id = $1
+		ORDER BY result_id DESC
+		`
+	rows, err := m.DB.QueryContext(ctx, query, seasonID)
+	if err != nil {
+		return results, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var result models.Result
+		err := rows.Scan(
+			&result.ResultID,
+			&result.SeasonID,
+			&result.HomeTeam.TeamID,
+			&result.HomeScore,
+			&result.AwayScore,
+			&result.AwayTeam.TeamID,
+			&result.CreatedAt,
+			&result.UpdatedAt,
+		)
 		if err != nil {
 			return results, err
 		}
-		defer rows.Close()
-		for rows.Next() {
-			var result models.Result
-			err := rows.Scan(
-				&result.ResultID,
-				&result.Season,
-				&result.HomeTeamID,
-				&result.HomeScore,
-				&result.AwayScore,
-				&result.AwayTeamID,
-				&result.CreatedAt,
-				&result.UpdatedAt,
-			)
-			if err != nil {
-				return results, err
-			}
-			results = append(results, result)
-		}
+		results = append(results, result)
 	}
 
 	return results, nil
@@ -169,6 +171,7 @@ func (m *postgresDBRepo) GetAllResults() ([]models.Result, error) {
 	query := `
 		SELECT *
 		FROM results
+		ORDER BY result_id DESC
 		`
 	rows, err := m.DB.QueryContext(ctx, query)
 	if err != nil {
@@ -180,11 +183,11 @@ func (m *postgresDBRepo) GetAllResults() ([]models.Result, error) {
 		var result models.Result
 		err := rows.Scan(
 			&result.ResultID,
-			&result.Season,
-			&result.HomeTeamID,
+			&result.SeasonID,
+			&result.HomeTeam.TeamID,
 			&result.HomeScore,
 			&result.AwayScore,
-			&result.AwayTeamID,
+			&result.AwayTeam.TeamID,
 			&result.CreatedAt,
 			&result.UpdatedAt,
 		)

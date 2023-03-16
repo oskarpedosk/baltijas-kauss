@@ -56,6 +56,10 @@ func run() (*driver.DB, error) {
 	gob.Register(models.Team{})
 	gob.Register(models.Standings{})
 	gob.Register(models.Result{})
+	gob.Register(models.Season{})
+	gob.Register(models.Positions{})
+	gob.Register(models.Attributes{})
+	gob.Register(models.PlayerWithTeamInfo{})
 	gob.Register(models.Filter{})
 
 	// Read flags

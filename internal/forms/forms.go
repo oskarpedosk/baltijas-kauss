@@ -33,6 +33,7 @@ func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
 		value := f.Get(field)
 		if strings.TrimSpace(value) == "" {
+			fmt.Println("empty field: ", field)
 			f.Errors.Add(field, "This field cannot be empty")
 		}
 	}
@@ -72,6 +73,17 @@ func (f *Form) IsDuplicate(field string, field2 string, msg string) bool {
 	x := f.Get(field)
 	y := f.Get(field2)
 	if x != y {
+		f.Errors.Add(field, msg)
+		f.Errors.Add(field2, msg)
+		return false
+	}
+	return true
+}
+
+func (f *Form) AreDifferent(field string, field2 string, msg string) bool {
+	x := f.Get(field)
+	y := f.Get(field2)
+	if x == y {
 		f.Errors.Add(field, msg)
 		f.Errors.Add(field2, msg)
 		return false

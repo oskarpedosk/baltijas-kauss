@@ -30,14 +30,14 @@ type Team struct {
 }
 
 type Result struct {
-	ResultID   int
-	Season     int
-	HomeTeamID int
-	HomeScore  int
-	AwayScore  int
-	AwayTeamID int
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	ResultID  int
+	SeasonID    int
+	HomeTeam  Team
+	HomeScore int
+	AwayScore int
+	AwayTeam  Team
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 type PlayerWithTeamInfo struct {
@@ -176,7 +176,7 @@ type Badge struct {
 }
 
 type Standings struct {
-	TeamID         int
+	Team           Team
 	WinPercentage  int
 	Played         int
 	TotalWins      int

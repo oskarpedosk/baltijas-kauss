@@ -30,7 +30,7 @@ type DatabaseRepo interface {
 	GetSeasonResults(seasonID int) ([]models.Result, error)
 	GetStandings() ([]models.Standings, error)
 	GetLastResults(count int) ([]models.Result, error)
-	CreateNewSeason() error
+	StartNewSeason() error
 	GetSeasons() ([]models.Season, error)
 	AddResult(res models.Result) error
 	UpdateResult(res models.Result) error

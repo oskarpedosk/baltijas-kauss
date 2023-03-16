@@ -60,7 +60,9 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Post("/players", handlers.Repo.PostAdminPlayers)
 
 		mux.Get("/{src}/{id}", handlers.Repo.AdminShowNBAPlayer)
-		mux.Get("/standings", handlers.Repo.AdminNBAResults)
+		
+		mux.Get("/standings", handlers.Repo.AdminStandings)
+		mux.Post("/standings", handlers.Repo.PostAdminStandings)
 		
 	})
 

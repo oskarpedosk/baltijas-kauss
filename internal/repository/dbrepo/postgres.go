@@ -243,11 +243,11 @@ func (m *postgresDBRepo) GetStandings() ([]models.Standings, error) {
 		for rows.Next() {
 			err := rows.Scan(
 				&singleGame.ResultID,
-				&singleGame.Season,
-				&singleGame.HomeTeamID,
+				&singleGame.SeasonID,
+				&singleGame.HomeTeam.TeamID,
 				&singleGame.HomeScore,
 				&singleGame.AwayScore,
-				&singleGame.AwayTeamID,
+				&singleGame.AwayTeam.TeamID,
 				&singleGame.CreatedAt,
 				&singleGame.UpdatedAt,
 			)
@@ -255,7 +255,7 @@ func (m *postgresDBRepo) GetStandings() ([]models.Standings, error) {
 				return standingsSlice, err
 			}
 
-			if singleGame.HomeTeamID == i {
+			if singleGame.HomeTeam.TeamID == i {
 				basketsFor += singleGame.HomeScore
 				basketsAgainst += singleGame.AwayScore
 				if singleGame.HomeScore > singleGame.AwayScore {
@@ -328,8 +328,9 @@ func (m *postgresDBRepo) GetStandings() ([]models.Standings, error) {
 			againstAvg = toFixed(float64(basketsAgainst)/float64(totalGames), 1)
 		}
 
+		team := models.Team{TeamID: i}
 		teamStandings := models.Standings{
-			TeamID:         i,
+			Team:         team,
 			WinPercentage:  winPercentage,
 			Played:         totalGames,
 			TotalWins:      homeWins + awayWins,
@@ -405,23 +406,23 @@ func (m *postgresDBRepo) GetLastResults(count int) ([]models.Result, error) {
 	for rows.Next() {
 		err := rows.Scan(
 			&singleGame.ResultID,
-			&singleGame.Season,
-			&singleGame.HomeTeamID,
+			&singleGame.SeasonID,
+			&singleGame.HomeTeam.TeamID,
 			&singleGame.HomeScore,
 			&singleGame.AwayScore,
-			&singleGame.AwayTeamID,
+			&singleGame.AwayTeam.TeamID,
 			&singleGame.CreatedAt,
 			&singleGame.UpdatedAt,
 		)
 		if err != nil {
 			return resultsSlice, err
 		}
-
+		
 		result := models.Result{
-			HomeTeamID: singleGame.HomeTeamID,
+			// HomeTeamID: singleGame.HomeTeam,
 			HomeScore:  singleGame.HomeScore,
 			AwayScore:  singleGame.AwayScore,
-			AwayTeamID: singleGame.AwayTeamID,
+			// AwayTeamID: singleGame.AwayTeam,
 			CreatedAt:  singleGame.CreatedAt.Round(15 * time.Minute),
 		}
 
@@ -1220,17 +1221,24 @@ func (m *postgresDBRepo) GetPlayerBadges(playerID int) ([]models.Badge, error) {
 }
 
 // Create a new season
-func (m *postgresDBRepo) CreateNewSeason() error {
+func (m *postgresDBRepo) StartNewSeason() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `
-	INSERT INTO seasons (created_at, updated_at) 
-	VALUES (NOW(), NOW())
+	stmt := `SELECT MAX(season_id) FROM seasons`
+
+	var seasonID int
+	err := m.DB.QueryRowContext(ctx, stmt).Scan(&seasonID)
+	if err != nil {
+		return err
+	}
+
+	stmt = `
+	INSERT INTO seasons (season_id, created_at, updated_at) 
+	VALUES ($1, NOW(), NOW())
 	`
 
-	_, err := m.DB.ExecContext(ctx, stmt)
-
+	_, err = m.DB.ExecContext(ctx, stmt, seasonID + 1)
 	if err != nil {
 		return err
 	}
