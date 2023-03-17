@@ -167,19 +167,19 @@ func toFixed(num float64, precision int) float64 {
 
 func order(slice []models.Standings) []models.Standings {
 	for i := 0; i < len(slice)-1; i++ {
-		if slice[i].WinPercentage < slice[i+1].WinPercentage {
-			slice[i], slice[i+1] = slice[i+1], slice[i]
-			order(slice)
-		}
-		if slice[i].WinPercentage == slice[i+1].WinPercentage {
-			if slice[i].BasketsSum < slice[i+1].BasketsSum {
-				slice[i], slice[i+1] = slice[i+1], slice[i]
+		for j := 0; j < len(slice)-i-1; j++ {
+			if slice[j].WinPercentage < slice[j+1].WinPercentage {
+				slice[j], slice[j+1] = slice[j+1], slice[j]
+			} else if slice[j].WinPercentage == slice[j+1].WinPercentage {
+				if slice[j].BasketsSum < slice[j+1].BasketsSum {
+					slice[j], slice[j+1] = slice[j+1], slice[j]
+				}
 			}
 		}
-
 	}
 	return slice
 }
+
 
 // func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
 // 	m.DB.CreateNewSeason()

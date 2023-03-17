@@ -5,14 +5,12 @@
 <title>{{.Data.team.Name}} | Baltijas Kauss</title>
 
 <div class="container p-3">
-    <div class="d-flex">
+    <div class="d-flex mb-2">
         {{range $team := index .Data.teams}}
         <div class="col rounded-3 mx-2 text-center fw-semibold" style="background-image: linear-gradient(90deg, {{$team.Color1}}, {{$team.Color2}});">
             <a class="nav-link {{if eq $team.DarkText "false"}}text-white{{end}}" href="/teams/{{$team.TeamID}}">{{$team.Abbreviation}}</a>
         </div>
         {{end}}
-    </div>
-    <div class="px-5 mb-2">
     </div>
     <div class="rounded-3 p-4 px-5" style="background-image: linear-gradient(90deg, {{.Data.team.Color1}}, {{.Data.team.Color2}});">
         <div class="row justify-content-between">

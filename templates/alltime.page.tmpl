@@ -48,13 +48,13 @@
                                   <div style="margin: 0 auto;">
                                       {{range $lastFive := $standings.LastFive}}
                                           {{if eq $lastFive "W"}}
-                                              <div class="dot bg-success border border-white"></div>
+                                              <div style="background-color: rgb(161, 226, 146);" class="dot"></div>
                                           {{end}}
                                           {{if eq $lastFive "L"}}
-                                              <div class="dot bg-danger border border-white"></div>
+                                              <div style="background-color: rgb(255, 0, 200);" class="dot"></div>
                                           {{end}}
                                           {{if eq $lastFive ""}}
-                                              <div class="dot bg-secondary border border-white"></div>
+                                              <div class="dot bg-white"></div>
                                           {{end}}
                                       {{end}}
                                   </div>

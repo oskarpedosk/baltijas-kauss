@@ -13,7 +13,7 @@ func NoSurf(next http.Handler) http.Handler {
 
 	csfrHandler.SetBaseCookie(http.Cookie{
 		HttpOnly: true,
-		Path:     "/login",
+		Path:     "/",
 		Secure:   app.InProduction,
 		SameSite: http.SameSiteLaxMode,
 	})
