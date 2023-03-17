@@ -279,11 +279,10 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	if len(playerID) > 0 && len(ratingsURL) > 0 {
 			filePath := "./static/js/script/updateplayer.js"
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
-			output, err := cmd.Output()
+			output, err := cmd.CombinedOutput()
 			if err != nil {
 				fmt.Println(err)
 			}
-
 
 			// Parse the output as an array of two objects
 			var data []json.RawMessage
