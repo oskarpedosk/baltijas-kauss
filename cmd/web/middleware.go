@@ -13,14 +13,14 @@ func NoSurf(next http.Handler) http.Handler {
 
 	csfrHandler.SetBaseCookie(http.Cookie{
 		HttpOnly: true,
-		Path:     "/",
+		Path:     "/login",
 		Secure:   app.InProduction,
 		SameSite: http.SameSiteLaxMode,
 	})
 	return csfrHandler
 }
 
-// SessionLoad loads and saves session on every requestt
+// SessionLoad loads and saves session on every request
 func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
