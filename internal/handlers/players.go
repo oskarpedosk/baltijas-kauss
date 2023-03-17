@@ -283,6 +283,10 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				fmt.Println(err)
 			}
+			msg:=fmt.Sprintf("%v", err)
+			m.App.Session.Put(r.Context(), "warning", msg)
+			http.Redirect(w, r, "/players", http.StatusSeeOther)
+			return
 
 			// Parse the output as an array of two objects
 			var data []json.RawMessage
@@ -291,7 +295,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 
-			msg:=fmt.Sprintf("%v and data lenght: %d", err, len(data))
+			msg=fmt.Sprintf("%v and data lenght: %d", err, len(data))
 			m.App.Session.Put(r.Context(), "warning", msg)
 			http.Redirect(w, r, "/players", http.StatusSeeOther)
 			return
