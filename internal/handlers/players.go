@@ -293,6 +293,9 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			err = json.Unmarshal(output, &data)
 			if err != nil {
 				fmt.Println(err)
+				m.App.Session.Put(r.Context(), "warning", err)
+				http.Redirect(w, r, "/players", http.StatusSeeOther)
+				return
 			}
 
 			// Unmarshal the first object as a Player
@@ -300,6 +303,9 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			err = json.Unmarshal(data[0], &player)
 			if err != nil {
 				fmt.Println(err)
+				m.App.Session.Put(r.Context(), "warning", err)
+				http.Redirect(w, r, "/players", http.StatusSeeOther)
+				return
 			}
 
 			// Unmarshal the second object as a slice of Badges
