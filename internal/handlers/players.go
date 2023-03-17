@@ -285,10 +285,6 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 
-			m.App.Session.Put(r.Context(), "warning", output)
-			http.Redirect(w, r, "/players", http.StatusSeeOther)
-			return
-
 			// Parse the output as an array of two objects
 			var data []json.RawMessage
 			err = json.Unmarshal(output, &data)
