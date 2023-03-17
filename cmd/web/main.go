@@ -49,7 +49,7 @@ func main() {
 
 
 func run() (*driver.DB, error) {
-	// What am I going to put in the session
+	// What am I going to put in the sessionn
 	gob.Register(models.User{})
 	gob.Register(models.Badge{})
 	gob.Register(models.Player{})
