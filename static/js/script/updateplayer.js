@@ -348,7 +348,7 @@ async function scrapePlayerBadges() {
             name: name,
             type: type,
             info: info,
-            img_id: await saveImage("https://2kratings.com" + badges_levels[i], "static/images/badges", getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
+            img_id: await saveImage("https://2kratings.com" + badges_levels[i], "/var/www/bkauss/static/images/badges", getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
             level: getGroup(/_(\w+)\./, badges_levels[i], 1),
             url: "https://2kratings.com" + badges_levels[i],
         }
@@ -364,7 +364,7 @@ async function saveImage(url, folder, file_name) {
       if (regex.test(url)) {
         extension = getGroup(regex, url, 1);
       }
-      const filePath = path.join('.', folder, file_name + extension);
+      const filePath = folder + '/' + (file_name + extension);
       const response = await page.goto(url);
       const buffer = await response.buffer();
   
