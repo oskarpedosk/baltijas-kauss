@@ -9,7 +9,7 @@ let page;
 puppeteer.use(StealthPlugin())
 
 const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-const ubuntuPath = '/usr/bin/chromium-browser'
+const ubuntuPath = '/usr/bin/google-chrome'
 puppeteer.launch({executablePath: ubuntuPath, headless: true }).then(async browser => {
     page = await browser.newPage()
 

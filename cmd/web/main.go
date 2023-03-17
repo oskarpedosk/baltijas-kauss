@@ -49,7 +49,7 @@ func main() {
 
 
 func run() (*driver.DB, error) {
-	// What am I going to put in the sessionn
+	// What am I going to put in the session
 	gob.Register(models.User{})
 	gob.Register(models.Badge{})
 	gob.Register(models.Player{})
@@ -91,7 +91,7 @@ func run() (*driver.DB, error) {
 
 	// Set up the session
 	session = scs.New()
-	session.Lifetime = 1 * time.Hour
+	session.Lifetime = 24 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
