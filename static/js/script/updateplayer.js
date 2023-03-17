@@ -10,7 +10,7 @@ puppeteer.use(StealthPlugin())
 
 const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 const ubuntuPath = '/usr/bin/chromium-browser'
-puppeteer.launch({executablePath: ubuntuPath, headless: true }).then(async browser => {
+puppeteer.launch({executablePath: '/usr/bin/chromium-browser', headless: true }).then(async browser => {
     page = await browser.newPage()
 
     const player_and_badges = await scrapePlayer(ratingsURL);
