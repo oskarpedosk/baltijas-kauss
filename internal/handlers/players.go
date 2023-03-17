@@ -292,10 +292,14 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 
+			msg:=fmt.Sprintf("%v and data lenght: %d", err, len(data))
+			m.App.Session.Put(r.Context(), "warning", msg)
+			http.Redirect(w, r, "/players", http.StatusSeeOther)
 			// Unmarshal the first object as a Player
 			var player models.Player
 			err = json.Unmarshal(data[0], &player)
 			if err != nil {
+				fmt.Println("gay4")
 				fmt.Println(err)
 			}
 
