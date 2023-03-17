@@ -20,7 +20,7 @@ func NoSurf(next http.Handler) http.Handler {
 	return csfrHandler
 }
 
-// SessionLoad loads and saves session on every request
+// SessionLoad loads and saves session on every requestt
 func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
