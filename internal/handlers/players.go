@@ -277,7 +277,6 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	ratingsURL := r.FormValue("ratings_url")
 
 	if len(playerID) > 0 && len(ratingsURL) > 0 {
-		go func(playerID, ratingsURL string) {
 			filePath := "./static/js/script/updateplayer.js"
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 			output, err := cmd.Output()
@@ -295,6 +294,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			msg:=fmt.Sprintf("%v and data lenght: %d", err, len(data))
 			m.App.Session.Put(r.Context(), "warning", msg)
 			http.Redirect(w, r, "/players", http.StatusSeeOther)
+			return
 			// Unmarshal the first object as a Player
 			var player models.Player
 			err = json.Unmarshal(data[0], &player)
@@ -319,7 +319,6 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				helpers.ServerError(w, err)
 			}
-		}(playerID, ratingsURL)
 	}
 
 	m.App.Session.Put(r.Context(), "warning", "Updating player ID: " + playerID)
