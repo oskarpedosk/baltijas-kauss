@@ -8,8 +8,9 @@ const ratingsURL = process.argv[3];
 let page;
 puppeteer.use(StealthPlugin())
 
-puppeteer.launch({executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', headless: true }).then(async browser => {
-    //console.log('Running scrape...')
+const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+const ubuntuPath = '/usr/bin/chromium-browser'
+puppeteer.launch({executablePath: ubuntuPath, headless: true }).then(async browser => {
     page = await browser.newPage()
 
     const player_and_badges = await scrapePlayer(ratingsURL);
