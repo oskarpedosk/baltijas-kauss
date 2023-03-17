@@ -429,9 +429,9 @@ func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	remoteIP := r.RemoteAddr
-	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
-	m.App.Session.Put(r.Context(), "user_name", user.FirstName)
 	m.App.Session.Put(r.Context(), "user_id", id)
+	m.App.Session.Put(r.Context(), "user_name", user.FirstName)
+	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	m.App.Session.Put(r.Context(), "access_level", accessLevel)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

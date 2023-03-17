@@ -1,0 +1,1 @@
+delete from seasons where season_id = 1;
