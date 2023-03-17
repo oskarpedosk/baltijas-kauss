@@ -282,11 +282,11 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			output, err := cmd.Output()
 			if err != nil {
 				fmt.Println(err)
+				m.App.Session.Put(r.Context(), "warning", err)
+				http.Redirect(w, r, "/players", http.StatusSeeOther)
+				return
 			}
 
-			m.App.Session.Put(r.Context(), "warning", string(output))
-			http.Redirect(w, r, "/players", http.StatusSeeOther)
-			return
 
 			// Parse the output as an array of two objects
 			var data []json.RawMessage
