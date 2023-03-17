@@ -11,11 +11,16 @@ puppeteer.use(StealthPlugin())
 const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 const ubuntuPath = '/usr/bin/google-chrome'
 puppeteer.launch({executablePath: ubuntuPath, headless: true }).then(async browser => {
-    page = await browser.newPage()
+    try {
+        page = await browser.newPage()
 
-    const player_and_badges = await scrapePlayer(ratingsURL);
-    console.log(JSON.stringify(player_and_badges));
-    await browser.close();
+        const player_and_badges = await scrapePlayer(ratingsURL);
+        console.log(JSON.stringify(player_and_badges));
+        await browser.close();
+    } catch (error) {
+        console.log(error)
+    }
+    
 })
 
 
