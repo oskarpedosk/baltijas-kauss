@@ -284,7 +284,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 			}
 
-			m.App.Session.Put(r.Context(), "warning", output)
+			m.App.Session.Put(r.Context(), "warning", string(output))
 			http.Redirect(w, r, "/players", http.StatusSeeOther)
 			return
 
