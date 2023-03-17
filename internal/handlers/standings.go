@@ -38,6 +38,7 @@ func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
 			teamsWithoutFA = append(teamsWithoutFA, team)
 		}
 	}
+
 	standings := CalculateStandings(teamsWithoutFA, results)
 
 	activeSeason := seasonID
