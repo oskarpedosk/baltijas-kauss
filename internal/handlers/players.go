@@ -278,9 +278,9 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 
 	if len(playerID) > 0 && len(ratingsURL) > 0 {
 		go func(playerID, ratingsURL string) {
-			ubuntuFilePath := "/var/www/bkauss/static/js/script/updateplayer.js"
-			// filePath := "./static/js/script/updateplayer.js"
-			cmd := exec.Command("node", ubuntuFilePath, playerID, ratingsURL)
+			// ubuntuFilePath := "/var/www/bkauss/static/js/script/updateplayer.js"
+			filePath := "./static/js/script/updateplayer.js"
+			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 			output, err := cmd.Output()
 			if err != nil {
 				fmt.Println(err)
@@ -320,5 +320,5 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	m.App.Session.Put(r.Context(), "warning", "Updating player ID: " + playerID)
-	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
+	http.Redirect(w, r, "/players/" + playerID, http.StatusSeeOther)
 }

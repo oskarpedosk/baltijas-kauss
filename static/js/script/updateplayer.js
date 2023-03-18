@@ -4,13 +4,19 @@ import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 const playerID = process.argv[2];
 const ratingsURL = process.argv[3];
-
+let ubuntu = false
 let page;
 puppeteer.use(StealthPlugin())
 
-const macPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-const ubuntuPath = '/usr/bin/google-chrome-stable'
-puppeteer.launch({executablePath: ubuntuPath, headless: true }).then(async browser => {
+let browserPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+let imagesPath = './static/images/badges'
+
+if (ubuntu) {
+    browserPath = '/usr/bin/google-chrome-stable'
+    imagesPath = '/var/www/bkauss/static/images/badges'
+}
+
+puppeteer.launch({executablePath: browserPath, headless: true }).then(async browser => {
     page = await browser.newPage()
 
     const player_and_badges = await scrapePlayer(ratingsURL);
@@ -348,7 +354,7 @@ async function scrapePlayerBadges() {
             name: name,
             type: type,
             info: info,
-            img_id: await saveImage("https://2kratings.com" + badges_levels[i], "/var/www/bkauss/static/images/badges", getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
+            img_id: await saveImage("https://2kratings.com" + badges_levels[i], imagesPath, getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
             level: getGroup(/_(\w+)\./, badges_levels[i], 1),
             url: "https://2kratings.com" + badges_levels[i],
         }

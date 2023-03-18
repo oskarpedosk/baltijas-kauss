@@ -66,8 +66,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	limitStr := r.FormValue("limit")
-	limit, err := strconv.Atoi(limitStr)
+	limit, err := strconv.Atoi(r.FormValue("limit"))
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
@@ -77,8 +76,8 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	} else if 0 < limit && limit <= playerCount {
 		filter.Limit = limit
 	}
-	offsetStr := r.FormValue("offset")
-	offset, err := strconv.Atoi(offsetStr)
+
+	offset, err := strconv.Atoi(r.FormValue("offset"))
 	if err != nil {
 		helpers.ServerError(w, err)
 		return

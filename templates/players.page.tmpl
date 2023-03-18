@@ -30,8 +30,13 @@
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
                         <td class="p-0 py-1">
-                            <a href="/players/{{$player.Player.PlayerID}}"><img src="{{$player.Player.ImgURL}}"
-                            alt="" class="header-image rounded-circle inline-block border"></a>
+                            <a href="/players/{{$player.Player.PlayerID}}">
+                                {{ if $player.Player.ImgURL }}
+                                    <img src="{{$player.Player.ImgURL}}" alt="" class="header-image rounded-circle inline-block border">
+                                {{ else }}
+                                    <img src="/static/images/players/default_player.png" alt="" class="header-image rounded-circle inline-block border">
+                                {{ end }}
+                            </a>
                         </td>
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
