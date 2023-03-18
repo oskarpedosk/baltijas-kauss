@@ -11,10 +11,19 @@ func (m *postgresDBRepo) AddResult(result models.Result) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `insert into results (season_id, home_team_id, home_score, away_score, away_team_id, created_at, updated_at) 
-	values ($1, $2, $3, $4, $5, now(), now())`
+	stmt := `SELECT MAX(result_id) FROM results`
 
-	_, err := m.DB.ExecContext(ctx, stmt,
+	var resultID int
+	err := m.DB.QueryRowContext(ctx, stmt).Scan(&resultID)
+	if err != nil {
+		return err
+	}
+
+	stmt = `insert into results (result_id, season_id, home_team_id, home_score, away_score, away_team_id, created_at, updated_at) 
+	values ($1, $2, $3, $4, $5, $6, now(), now())`
+
+	_, err = m.DB.ExecContext(ctx, stmt,
+		resultID + 1,
 		result.SeasonID,
 		result.HomeTeam.TeamID,
 		result.HomeScore,
