@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"strconv"
@@ -358,7 +359,10 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 
 	err = m.DB.AddResult(result)
 	if err != nil {
-		helpers.ServerError(w, err)
+		msg := fmt.Sprintf("error is %v", err)
+		m.App.Session.Put(r.Context(), "flash", msg)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
 	}
 	m.App.Session.Put(r.Context(), "flash", "Result added!")
 	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
