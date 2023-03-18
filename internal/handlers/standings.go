@@ -360,7 +360,7 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
-	m.App.Session.Put(r.Context(), "flash", err)
+	m.App.Session.Put(r.Context(), "flash", "Result added!")
 	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 }
 
