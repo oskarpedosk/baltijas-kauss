@@ -350,7 +350,7 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 		// data := make(map[string]interface{})
 		// data["NBAresult"] = result
 
-		// render.Template(w, r, "standings.page.tmpl", &models.TemplateData{
+		// rrender.Template(w, r, "standings.page.tmpl", &models.TemplateData{
 		// 	Form: form,
 		// 	Data: data,
 		// })
