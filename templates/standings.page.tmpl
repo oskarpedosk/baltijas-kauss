@@ -57,7 +57,7 @@
                                         <td style="font-variant-numeric: tabular-nums;">{{$standings.HomeWins}}-{{$standings.HomeLosses}}</td>
                                         <td style="font-variant-numeric: tabular-nums;">{{$standings.AwayWins}}-{{$standings.AwayLosses}}</td>
                                         <td>
-                                            <div class="d-flex">
+                                            <div style="margin: 0 auto;">
                                                 {{range $lastFive := $standings.LastFive}}
                                                     {{if eq $lastFive "W"}}
                                                         <div class="dot bg-success"></div>
