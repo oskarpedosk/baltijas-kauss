@@ -9,7 +9,7 @@
       <div class="col-md-12">
         <div class="teams-container">
             {{ range .Data.teams }}
-                <div class="team rounded-3 p-3 text-dark {{if eq .DarkText "false"}}text-white{{end}}" style="background-image: linear-gradient(90deg, {{.Color1}}, {{.Color2}});">
+                <div class="team rounded-3 p-4 text-dark {{if eq .DarkText "false"}}text-white{{end}}" style="background-image: linear-gradient(90deg, {{.Color1}}, {{.Color2}});">
                     <p class="text-center">{{ .Name }}</p>
                     {{ range $line := seq 1 12 }}
                         {{ if eq $line 6}}
