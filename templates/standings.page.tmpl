@@ -7,7 +7,7 @@
 <div class="container p-3">
     <div id="standings">
         <div id="standingsreload" class="row align-items-md-stretch mb-4">
-            <div class="col-md-12">
+            <div class="col-md-12" style="overflow-x:auto;">
                 <div class="h-100 p-5 rounded-3 bg-light border border-1">
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -57,7 +57,7 @@
                                         <td style="font-variant-numeric: tabular-nums;">{{$standings.HomeWins}}-{{$standings.HomeLosses}}</td>
                                         <td style="font-variant-numeric: tabular-nums;">{{$standings.AwayWins}}-{{$standings.AwayLosses}}</td>
                                         <td>
-                                            <div style="margin: 0 auto;">
+                                            <div class="d-flex">
                                                 {{range $lastFive := $standings.LastFive}}
                                                     {{if eq $lastFive "W"}}
                                                         <div class="dot bg-success"></div>

@@ -9,7 +9,7 @@
       <div class="col-md-12">
         <div class="teams-container">
             {{ range $team := .Data.teams }}
-                <div class="team rounded-3 p-4 text-dark {{if eq $team.Team.DarkText "false"}}text-white{{end}}" style="background-image: linear-gradient(90deg, {{$team.Team.Color1}}, {{$team.Team.Color2}});">
+                <div class="rounded-3 p-4 text-dark {{if eq $team.Team.DarkText "false"}}text-white{{end}}" style="background-image: linear-gradient(90deg, {{$team.Team.Color1}}, {{$team.Team.Color2}});">
                     <p class="text-center" style="font-weight: 500; font-size: 18px; text-transform: uppercase;">{{ .Team.Name }}</p>
                     {{ range $line := seq 1 12 }}
                         {{ if eq $line 6}}
@@ -22,19 +22,19 @@
                         {{ range $player := $team.Players }}
                             {{ if eq $player.AssignedPosition $line }}
                                 {{ $counter = add $counter 1}}
-                                <p class="mb-1" style="font-weight: 300;">{{ $player.FirstName }} {{ $player.LastName }}</p>
+                                <p class="mb-1 px-3" style="font-weight: 300;">{{ $player.FirstName }} {{ $player.LastName }}</p>
                             {{ end }}
                         {{ end }}
                         {{ if eq $counter 0 }}
-                        <p class="mb-1" style="font-weight: 300;"><br></p>
+                        <p class="mb-1 px-3" style="font-weight: 300;"><br></p>
                         {{ end }}
                     {{ end }}
                 </div>
             {{ end }}
           </div>
       </div>
-      <div class="col-md-12 mt-3">
-        <div class="h-100 p-5 rounded-3 bg-light border border-1">
+      <div class="col-md-12" style="margin-top: 20px;">
+        <div class="p-5 rounded-3 bg-light border border-1">
           <h2>Season {{ .Data.activeSeason }}</h2>
           <table id="season_results" class="table text-center">
               <thead>

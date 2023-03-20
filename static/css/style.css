@@ -424,15 +424,22 @@ html {
     margin-top: 5px;
     max-height: 50px;
 }
-@media (max-width: 767px) {
-    .badges-container {
-      grid-template-columns: 100%;
-    }
-  }
 
 .teams-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
     grid-gap: 20px;
 }
-  
+
+@media (max-width: 767px) {
+    .badges-container {
+        grid-template-columns: 100%;
+    }
+    .teams-container {
+        grid-template-columns: 100%;
+    }
+    .main {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
