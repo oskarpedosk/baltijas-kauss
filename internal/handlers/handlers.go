@@ -461,16 +461,25 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var teamsWithoutFA = []models.Team{}
+	var teamsAndPlayers = []models.TeamAndPlayers{}
 	for _, team := range teams {
 		if team.TeamID != 1 {
-			teamsWithoutFA = append(teamsWithoutFA, team)
+			players, err := m.DB.GetTeamPlayers(team.TeamID)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+			var teamAndPlayers = models.TeamAndPlayers{
+				Team: team,
+				Players: players,
+			}
+			teamsAndPlayers = append(teamsAndPlayers, teamAndPlayers)
 		}
 	}
 	standings := CalculateStandings(teamsWithoutFA, results)
 
 
 	data := make(map[string]interface{})
-	data["teams"] = teamsWithoutFA
+	data["teams"] = teamsAndPlayers
 	data["standings"] = standings
 	data["activeSeason"] = seasons[0].SeasonID
 

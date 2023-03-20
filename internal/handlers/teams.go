@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -60,64 +59,64 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 
 	switch r.FormValue("action") {
 	case "updateTeam":
-	text := r.FormValue("dark_text")
-	if text == "" {
-		text = "false"
-	}
+		text := r.FormValue("dark_text")
+		if text == "" {
+			text = "false"
+		}
 
-	teamInfo := models.Team{
-		TeamID:       teamID,
-		Name:         r.FormValue("team_name"),
-		Abbreviation: r.FormValue("abbreviation"),
-		Color1:       r.FormValue("team_color1"),
-		Color2:       r.FormValue("team_color2"),
-		DarkText:     text,
-	}
+		teamInfo := models.Team{
+			TeamID:       teamID,
+			Name:         r.FormValue("team_name"),
+			Abbreviation: r.FormValue("abbreviation"),
+			Color1:       r.FormValue("team_color1"),
+			Color2:       r.FormValue("team_color2"),
+			DarkText:     text,
+		}
 
-	form := forms.New(r.PostForm)
+		form := forms.New(r.PostForm)
 
-	form.Required("team_name", "abbreviation")
-	form.AlphaNumeric("team_name", "abbreviation")
-	form.MaxLength("team_name", 20)
-	form.IsUpper("abbreviation")
-	form.MaxLength("abbreviation", 4)
+		form.Required("team_name", "abbreviation")
+		form.AlphaNumeric("team_name", "abbreviation")
+		form.MaxLength("team_name", 20)
+		form.IsUpper("abbreviation")
+		form.MaxLength("abbreviation", 4)
 
-	if !form.Valid() {
-		data := make(map[string]interface{})
+		if !form.Valid() {
+			data := make(map[string]interface{})
 
-		teams, err := m.DB.GetTeams()
+			teams, err := m.DB.GetTeams()
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+
+			data["teams"] = teams[1:]
+
+			for _, team := range teams {
+				if team.TeamID == teamID {
+					data["team"] = team
+					break
+				}
+			}
+
+			errMsg := form.Errors.Get("team_name")
+			if errMsg == "" {
+				errMsg = form.Errors.Get("abbreviation")
+			}
+			m.App.Session.Put(r.Context(), "error", errMsg)
+			render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
+				Form: form,
+				Data: data,
+			})
+			return
+		}
+
+		err = m.DB.UpdateTeam(teamInfo)
 		if err != nil {
 			helpers.ServerError(w, err)
 		}
 
-		data["teams"] = teams[1:]
-
-		for _, team := range teams {
-			if team.TeamID == teamID {
-				data["team"] = team
-				break
-			}
-		}
-
-		errMsg := form.Errors.Get("team_name")
-		if errMsg == "" {
-			errMsg = form.Errors.Get("abbreviation")
-		}
-		m.App.Session.Put(r.Context(), "error", errMsg)
-		render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
-			Form: form,
-			Data: data,
-		})
-		return
-	}
-
-	err = m.DB.UpdateTeam(teamInfo)
-	if err != nil {
-		helpers.ServerError(w, err)
-	}
-
-	m.App.Session.Put(r.Context(), "flash", "Team updated successfully!")
-	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
+		m.App.Session.Put(r.Context(), "flash", "Team updated successfully!")
+		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 	case "updatePosition":
 		playerID, err := strconv.Atoi(r.FormValue("player_id"))
 		if err != nil {
@@ -128,7 +127,7 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 			helpers.ServerError(w, err)
 		}
 		removePlayerStr := r.FormValue("remove_player_id")
-		fmt.Println(removePlayerStr)
+
 		if removePlayerStr != "" {
 			removePlayer, err := strconv.Atoi(removePlayerStr)
 			if err != nil {

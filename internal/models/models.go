@@ -31,7 +31,7 @@ type Team struct {
 
 type Result struct {
 	ResultID  int
-	SeasonID    int
+	SeasonID  int
 	HomeTeam  Team
 	HomeScore int
 	AwayScore int
@@ -199,4 +199,9 @@ type Season struct {
 	SeasonID  int
 	CreatedAt time.Time
 	UpdatedAt time.Time
+}
+
+type TeamAndPlayers struct {
+	Team    Team
+	Players []Player
 }
