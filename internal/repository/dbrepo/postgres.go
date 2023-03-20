@@ -66,47 +66,22 @@ func (m *postgresDBRepo) SwitchTeam(player models.Player) error {
 }
 
 // Assigns NBA player to a position
-func (m *postgresDBRepo) AssignPosition(player models.Player) error {
+func (m *postgresDBRepo) AssignPosition(playerID, position int) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	// Remove previous player from position
 	stmt := `
-	update 
-		players
-	set 
-		assigned_position = 0
-	where
-		team_id = $1
-	and
-		assigned_position = $2
-	`
-
-	_, err := m.DB.ExecContext(ctx, stmt,
-		player.TeamID,
-		player.AssignedPosition,
-	)
-
-	if err != nil {
-		return err
-	}
-
-	// Add new player to position
-	stmt = `
 	update 
 		players
 	set 
 		assigned_position = $1
 	where
 		player_id = $2
-	and
-		team_id = $3
 	`
 
-	_, err = m.DB.ExecContext(ctx, stmt,
-		player.AssignedPosition,
-		player.PlayerID,
-		player.TeamID,
+	_, err := m.DB.ExecContext(ctx, stmt,
+		position,
+		playerID,
 	)
 
 	if err != nil {
@@ -204,6 +179,49 @@ func (m *postgresDBRepo) GetTeams() ([]models.Team, error) {
 	}
 
 	return teams, nil
+}
+
+func (m *postgresDBRepo) GetTeamPlayers(teamID int) ([]models.Player, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	query := `
+	select 
+		player_id, team_id, first_name, last_name, img_url, assigned_position, overall
+	from 
+		players
+	where
+		"team_id" = $1
+	order by
+		"overall" desc
+	`
+
+	var players []models.Player
+
+	row, err := m.DB.QueryContext(ctx, query, teamID)
+	if err != nil {
+		return players, err
+	}
+
+	defer row.Close()
+	for row.Next() {
+		var player models.Player
+		err := row.Scan(
+			&player.PlayerID,
+			&player.TeamID,
+			&player.FirstName,
+			&player.LastName,
+			&player.ImgURL,
+			&player.AssignedPosition,
+			&player.Overall,
+		)
+		if err != nil {
+			return players, err
+		}
+		players = append(players, player)
+	}
+
+	return players, nil
 }
 
 // Drop NBA player from a team

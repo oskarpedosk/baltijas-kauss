@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -22,8 +23,15 @@ func (m *Repository) Team(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 	}
 
+	players, err := m.DB.GetTeamPlayers(teamID)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
 	data := make(map[string]interface{})
+	data["players"] = players
 	data["teams"] = teams[1:]
+	data["starters"] = []string{"1", "2", "3", "4", "5"}
 
 	for _, team := range teams {
 		if team.TeamID == teamID {
@@ -50,6 +58,8 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	switch r.FormValue("action") {
+	case "updateTeam":
 	text := r.FormValue("dark_text")
 	if text == "" {
 		text = "false"
@@ -108,4 +118,29 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 
 	m.App.Session.Put(r.Context(), "flash", "Team updated successfully!")
 	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
+	case "updatePosition":
+		playerID, err := strconv.Atoi(r.FormValue("player_id"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		position, err := strconv.Atoi(r.FormValue("position"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		removePlayerStr := r.FormValue("remove_player_id")
+		fmt.Println(removePlayerStr)
+		if removePlayerStr != "" {
+			removePlayer, err := strconv.Atoi(removePlayerStr)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+			if removePlayer != playerID {
+				m.DB.AssignPosition(removePlayer, 0)
+			}
+		}
+		m.DB.AssignPosition(playerID, position)
+	default:
+		m.App.Session.Put(r.Context(), "warning", "Error, wrong post")
+		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
+	}
 }

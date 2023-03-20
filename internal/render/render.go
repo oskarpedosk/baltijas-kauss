@@ -17,6 +17,7 @@ import (
 var pathToTemplates = "./templates"
 var functions = template.FuncMap{
 	"add": add,
+	"seq": seq,
 }
 
 var app *config.AppConfig
@@ -116,4 +117,12 @@ func CreateTemplateCache() (map[string]*template.Template, error) {
 
 func add(x, y int) int {
 	return x + y
+}
+
+func seq(start, end int) []int {
+    var s []int
+    for i := start; i <= end; i++ {
+        s = append(s, i)
+    }
+    return s
 }

@@ -459,6 +459,7 @@ func (m *Repository) Home(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+
 	var teamsWithoutFA = []models.Team{}
 	for _, team := range teams {
 		if team.TeamID != 1 {

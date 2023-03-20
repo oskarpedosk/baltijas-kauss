@@ -429,3 +429,10 @@ html {
       grid-template-columns: 100%;
     }
   }
+
+.teams-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-gap: 20px;
+}
+  
