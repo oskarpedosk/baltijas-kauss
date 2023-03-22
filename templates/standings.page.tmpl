@@ -143,8 +143,8 @@
                 <div class="col-md-3 text-end">
                         {{range $teamInfo := index $.Data "teams"}}
                             {{if eq $results.AwayTeam.TeamID $teamInfo.TeamID}}
-                            <p class="mb-0 p-2 fw-semibold badge text-{{$teamInfo.TextColor}}" 
-                            style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%">
+                            <p class="mb-0 p-2 fw-semibold badge" 
+                            style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%; color: {{$teamInfo.TextColor}}">
                             {{$teamInfo.Name}}
                             </p>
                             {{end}}
@@ -166,8 +166,8 @@
                 <div class="col-md-3 text-start">
                         {{range $teamInfo := index $.Data "teams"}}
                             {{if eq $results.HomeTeam.TeamID $teamInfo.TeamID}}
-                            <p class="mb-0 p-2 fw-semibold badge text-{{$teamInfo.TextColor}}" 
-                            style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%">
+                            <p class="mb-0 p-2 fw-semibold badge" 
+                            style="font-size: 16px; text-transform:uppercase; background-image: linear-gradient(90deg, {{$teamInfo.Color1}}, {{$teamInfo.Color2}}); display:inline-block; width: 100%; color: {{$teamInfo.TextColor}}">
                             {{$teamInfo.Name}}
                             </p>
                             {{end}}

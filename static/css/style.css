@@ -442,6 +442,9 @@ html {
     grid-template-columns: 20% 10% 10% 10% 10% 30%;
     grid-gap: 2%;
 }
+.team-settings-btn:hover {
+    filter: brightness(75%);
+}
 
 @media (max-width: 767px) {
     .container {
