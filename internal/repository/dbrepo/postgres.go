@@ -20,7 +20,7 @@ func (m *postgresDBRepo) UpdateTeam(team models.Team) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `update teams set name = $1, abbreviation = $2, team_color1 = $3, team_color2 = $4, text_color = $5 where team_id = $6`
+	stmt := `update teams set name = $1, abbreviation = $2, team_color1 = $3, team_color2 = $4, text_color = $5, updated_at = now() where team_id = $6`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		team.Name,

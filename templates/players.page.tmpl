@@ -50,7 +50,7 @@
                                         <div class="dropdown-menu">
                                             {{range $team := $.Data.teams}}
                                                 <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$team.TeamID}}', '{{$team.Abbreviation}}', '{{$team.TextColor}}', '{{$.CSRFToken}}')">
-                                                    <span style="color: '{{$team.TextColor}}'">{{$team.Abbreviation}}</span> {{$team.Name}}
+                                                    <span style="color: {{$team.TextColor}}">{{$team.Abbreviation}}</span> {{$team.Name}}
                                                 </li>
                                             {{end}}
                                             <hr class="dropdown-divider">
