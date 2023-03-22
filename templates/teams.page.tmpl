@@ -72,18 +72,18 @@
         </div>
         <hr>
         <form action="/teams/{{.Data.team.TeamID}}" method="post">
-        <div class="team-settings mb-2">
+        <div class="team-settings">
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <input type="hidden" name="action" value="updateTeam">
-            <input type="text" class="form-control"
+            <input type="text" class="form-control mb-2"
                 name="team_name" value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}" autocomplete="off">
-            <input type="text" class="form-control"
+            <input type="text" class="form-control mb-2"
             name="abbreviation" value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}" autocomplete="off">
-            <input style="width: 100%;" type="color" class="form-control form-control-color" name="team_color1"
+            <input style="width: 100%;" type="color" class="form-control form-control-color mb-2" name="team_color1"
             value="{{with $.Form.Values.Get `team_color1`}}{{.}}{{else}}{{.Data.team.Color1}}{{end}}" title="Choose your color">
-            <input style="width: 100%;" type="color" class="form-control form-control-color" name="team_color2"
+            <input style="width: 100%;" type="color" class="form-control form-control-color mb-2" name="team_color2"
             value="{{with $.Form.Values.Get `team_color2`}}{{.}}{{else}}{{.Data.team.Color2}}{{end}}" title="Choose your color">
-            <select name="text_color" class="form-select">
+            <select name="text_color" class="form-select mb-2">
                 <option {{if eq $.Data.team.TextColor "dark"}}selected{{end}} value="dark">Black</option>
                 <option {{if eq $.Data.team.TextColor "primary"}}selected{{end}} value="primary">Blue</option>
                 <option {{if eq $.Data.team.TextColor "info"}}selected{{end}} value="info">Cyan</option>
@@ -93,7 +93,7 @@
                 <option {{if eq $.Data.team.TextColor "danger"}}selected{{end}} value="danger">Red</option>
                 <option {{if eq $.Data.team.TextColor "light"}}selected{{end}} value="light">White</option>
             </select>
-            <button style="width: 100%;" type="submit" class="btn btn-outline-{{$.Data.team.TextColor}}">Update</button>
+            <button style="width: 100%;" type="submit" class="btn btn-outline-{{$.Data.team.TextColor}} mb-2">Update</button>
         </div>
         <div class="row justify-content-around" style="font-size: 14px; color: red;">
             <div class="col-md-3">

@@ -453,6 +453,10 @@ html {
     .teams-container {
         grid-template-columns: 100%;
     }
+    .team-settings {
+        grid-template-columns: 100%;
+        grid-gap: 0;
+    }
     .table-container {
         padding: 40px 20px;
         white-space: nowrap;
