@@ -59,18 +59,13 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 
 	switch r.FormValue("action") {
 	case "updateTeam":
-		text := r.FormValue("dark_text")
-		if text == "" {
-			text = "false"
-		}
-
 		teamInfo := models.Team{
 			TeamID:       teamID,
 			Name:         r.FormValue("team_name"),
 			Abbreviation: r.FormValue("abbreviation"),
 			Color1:       r.FormValue("team_color1"),
 			Color2:       r.FormValue("team_color2"),
-			DarkText:     text,
+			TextColor:    r.FormValue("text_color"),
 		}
 
 		form := forms.New(r.PostForm)

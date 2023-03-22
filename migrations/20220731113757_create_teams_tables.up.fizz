@@ -4,7 +4,7 @@ create_table("teams") {
     t.Column("abbreviation", "string", {"default": "", "size": 4})
     t.Column("team_color1", "string", {"default": ""})
     t.Column("team_color2", "string", {"default": ""})
-    t.Column("dark_text", "bool", {"default": false})
+    t.Column("text_color", "string", {"default": "dark"})
     t.Column("user_id", "integer", {})
     t.Column("created_at", "timestamp", {"default": "now()"})
     t.Column("updated_at", "timestamp", {"default": "now()"})

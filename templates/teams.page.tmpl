@@ -8,7 +8,7 @@
     <div class="d-flex mb-2">
         {{range $team := index .Data.teams}}
         <div class="col rounded-3 mx-2 text-center fw-semibold" style="background-image: linear-gradient(90deg, {{$team.Color1}}, {{$team.Color2}});">
-            <a class="nav-link {{if eq $team.DarkText "false"}}text-white{{end}}" href="/teams/{{$team.TeamID}}">{{$team.Abbreviation}}</a>
+            <a class="nav-link text-{{$team.TextColor}}" href="/teams/{{$team.TeamID}}">{{$team.Abbreviation}}</a>
         </div>
         {{end}}
     </div>
@@ -16,7 +16,7 @@
         <div class="row justify-content-between">
             {{range $pos := seq 1 5}}
                 <div class="col-md-2 mt-3 dropend">
-                    <div class="player-shadow border border-dark text-dark {{if eq $.Data.team.DarkText "false"}}border-white text-white{{end}} border-2 rounded-3"
+                    <div class="player-shadow border border-{{$.Data.team.TextColor}} border-2 rounded-3"
                         style="background-image: linear-gradient(90deg, {{$.Data.team.Color1}}, {{$.Data.team.Color2}});" data-bs-toggle="dropdown" aria-expanded="false">
                         <img id="pos{{$pos}}" class="img-fluid playerImage" src="/static/images/players/default_player.png" alt="" data-player_id="">
                     </div>
@@ -56,13 +56,13 @@
                 </div>
             {{end}}
             <div class="col-md-2 text-center lh-1 dropend mt-3">
-                <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
+                <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-2 d-flex align-items-center justify-content-center">
                     <img class="img-fluid logo-white opacity-50" style="max-height: 50px"
                         src="/static/images/buttons/add.png" alt="">
                 </div>
             </div>
             <div class="col-md-2 text-center lh-1 dropend mt-3">
-                <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-3 d-flex align-items-center justify-content-center">
+                <div class="h-100 player-shadow bg-dark border border-dark border-3 rounded-2 d-flex align-items-center justify-content-center">
                     <img class="img-fluid logo-white opacity-50" style="max-height: 50px"
                         src="/static/images/buttons/remove.png" alt="">
                 </div>
@@ -70,34 +70,30 @@
             
             <div class="col-md-2"></div>
         </div>
-        <hr class="my-4">
+        <hr>
         <form action="/teams/{{.Data.team.TeamID}}" method="post">
-        <div class="row justify-content-between mb-2">
+        <div class="team-settings mb-2">
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <input type="hidden" name="action" value="updateTeam">
-            <div class="col-md-3">
-                <input type="text" class="form-control"
-                    name="team_name" value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}" autocomplete="off">
-            </div>
-            <div class="col-md-3">
-                <input type="text" class="form-control"
-                name="abbreviation" value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}" autocomplete="off">
-            </div>
-            <div class="col-md-3 d-flex">
-                <input type="color" class="form-control form-control-color me-1" name="team_color1"
-                value="{{with $.Form.Values.Get `team_color1`}}{{.}}{{else}}{{.Data.team.Color1}}{{end}}" title="Choose your color">
-                <input style="margin-left: 10px;" type="color" class="form-control form-control-color" name="team_color2"
-                value="{{with $.Form.Values.Get `team_color2`}}{{.}}{{else}}{{.Data.team.Color2}}{{end}}" title="Choose your color">
-                <div class="form-check align-self-center" style="margin-left: 20px;">
-                    <input class="form-check-input" type="checkbox" name="dark_text" value="true" {{if eq .Data.team.DarkText "true"}}checked{{else}}{{end}}>
-                    <label class="form-check-label">
-                        Dark Text
-                    </label>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <button style="width: 100%;" type="submit" class="btn btn-outline-{{if eq .Data.team.DarkText "true"}}dark{{else}}light{{end}}">Update</button>
-            </div>
+            <input type="text" class="form-control"
+                name="team_name" value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}" autocomplete="off">
+            <input type="text" class="form-control"
+            name="abbreviation" value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}" autocomplete="off">
+            <input style="width: 100%;" type="color" class="form-control form-control-color" name="team_color1"
+            value="{{with $.Form.Values.Get `team_color1`}}{{.}}{{else}}{{.Data.team.Color1}}{{end}}" title="Choose your color">
+            <input style="width: 100%;" type="color" class="form-control form-control-color" name="team_color2"
+            value="{{with $.Form.Values.Get `team_color2`}}{{.}}{{else}}{{.Data.team.Color2}}{{end}}" title="Choose your color">
+            <select name="text_color" class="form-select">
+                <option {{if eq $.Data.team.TextColor "dark"}}selected{{end}} value="dark">Black</option>
+                <option {{if eq $.Data.team.TextColor "primary"}}selected{{end}} value="primary">Blue</option>
+                <option {{if eq $.Data.team.TextColor "info"}}selected{{end}} value="info">Cyan</option>
+                <option {{if eq $.Data.team.TextColor "secondary"}}selected{{end}} value="secondary">Gray</option>
+                <option {{if eq $.Data.team.TextColor "success"}}selected{{end}} value="success">Green</option>
+                <option {{if eq $.Data.team.TextColor "warning"}}selected{{end}} value="warning">Orange</option>
+                <option {{if eq $.Data.team.TextColor "danger"}}selected{{end}} value="danger">Red</option>
+                <option {{if eq $.Data.team.TextColor "light"}}selected{{end}} value="light">White</option>
+            </select>
+            <button style="width: 100%;" type="submit" class="btn btn-outline-{{$.Data.team.TextColor}}">Update</button>
         </div>
         <div class="row justify-content-around" style="font-size: 14px; color: red;">
             <div class="col-md-3">

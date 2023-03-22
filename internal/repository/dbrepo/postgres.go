@@ -20,14 +20,14 @@ func (m *postgresDBRepo) UpdateTeam(team models.Team) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	stmt := `update teams set name = $1, abbreviation = $2, team_color1 = $3, team_color2 = $4, dark_text = $5 where team_id = $6`
+	stmt := `update teams set name = $1, abbreviation = $2, team_color1 = $3, team_color2 = $4, text_color = $5 where team_id = $6`
 
 	_, err := m.DB.ExecContext(ctx, stmt,
 		team.Name,
 		team.Abbreviation,
 		team.Color1,
 		team.Color2,
-		team.DarkText,
+		team.TextColor,
 		team.TeamID,
 	)
 
@@ -120,7 +120,7 @@ func (m *postgresDBRepo) GetTeam(teamID int) (models.Team, error) {
 			&team.Abbreviation,
 			&team.Color1,
 			&team.Color2,
-			&team.DarkText,
+			&team.TextColor,
 			&team.UserID,
 			&team.CreatedAt,
 			&team.UpdatedAt,
@@ -163,7 +163,7 @@ func (m *postgresDBRepo) GetTeams() ([]models.Team, error) {
 			&team.Abbreviation,
 			&team.Color1,
 			&team.Color2,
-			&team.DarkText,
+			&team.TextColor,
 			&team.UserID,
 			&team.CreatedAt,
 			&team.UpdatedAt,

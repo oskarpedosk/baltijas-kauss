@@ -23,7 +23,7 @@ type Team struct {
 	Abbreviation string
 	Color1       string
 	Color2       string
-	DarkText     string
+	TextColor    string
 	UserID       int
 	CreatedAt    time.Time
 	UpdatedAt    time.Time

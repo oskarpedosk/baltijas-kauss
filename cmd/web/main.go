@@ -36,12 +36,12 @@ func main() {
 
 	fmt.Printf("Starting application on http://localhost%s\n", portNumber)
 
-	serve := &http.Server{
+	server := &http.Server{
 		Addr:    portNumber,
 		Handler: routes(&app),
 	}
 
-	err = serve.ListenAndServe()
+	err = server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -91,7 +91,7 @@ func run() (*driver.DB, error) {
 
 	// Set up the session
 	session = scs.New()
-	session.Lifetime = 24 * time.Hour
+	session.Lifetime = 168 * time.Hour
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction

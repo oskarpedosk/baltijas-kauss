@@ -437,6 +437,11 @@ html {
 .table-container {
     padding: 40px;
 }
+.team-settings {
+    display: grid;
+    grid-template-columns: 20% 10% 10% 10% 10% 30%;
+    grid-gap: 2%;
+}
 
 @media (max-width: 767px) {
     .container {
