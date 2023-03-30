@@ -91,6 +91,32 @@ func (m *postgresDBRepo) DeleteResult(res models.Result) error {
 	return nil
 }
 
+// Create a new season
+func (m *postgresDBRepo) StartNewSeason() error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `SELECT MAX(season_id) FROM seasons`
+
+	var seasonID int
+	err := m.DB.QueryRowContext(ctx, stmt).Scan(&seasonID)
+	if err != nil {
+		return err
+	}
+
+	stmt = `
+	INSERT INTO seasons (season_id, created_at, updated_at) 
+	VALUES ($1, NOW(), NOW())
+	`
+
+	_, err = m.DB.ExecContext(ctx, stmt, seasonID+1)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (m *postgresDBRepo) GetSeasons() ([]models.Season, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()

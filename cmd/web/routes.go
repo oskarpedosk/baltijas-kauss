@@ -45,7 +45,7 @@ func routes(app *config.AppConfig) http.Handler {
 
 		mux.Get("/alltime", handlers.Repo.AllTime)
 
-		mux.Get("/draft", handlers.Repo.NBADraft)
+		mux.Get("/draft", handlers.Repo.Draft)
 		mux.Get("/ws", handlers.Repo.WsEndPoint)
 	})
 

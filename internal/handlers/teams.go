@@ -30,7 +30,6 @@ func (m *Repository) Team(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["players"] = players
 	data["teams"] = teams[1:]
-	data["starters"] = []string{"1", "2", "3", "4", "5"}
 
 	for _, team := range teams {
 		if team.TeamID == teamID {

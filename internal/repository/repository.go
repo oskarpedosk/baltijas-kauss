@@ -36,6 +36,5 @@ type DatabaseRepo interface {
 	DeleteResult(res models.Result) error
 
 	GetUser(userID int) (models.User, error)
-	UpdateUser(u models.User) error
 	Authenticate(email, testPassword string) (int, string, int, error)
 }
