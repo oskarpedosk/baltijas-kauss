@@ -4,16 +4,11 @@
 
 <title>Draft | Baltijas Kauss</title>
 
-<div class="container bg-light rounded-3 border p-4">
+<div class="container bg-light rounded-3 border p-4" style="user-select: none;">
   <div class="row">
-    <div class="col-md-1">
-      <p id="countdown">00</p>
-      <p>Round 1</p>
-      <p>Pick 3</p>
-    </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
       <table class="table table-sm table-responsive table-borderless">
-        <thead style="font-size: 14px; white-space: nowrap; text-align: center;">
+        <thead style="font-size: 14px; text-align: center;">
             <tr>
                 <th></th>
                 <th class="ps-2 pointer" style="text-align: start;">NAME</th>
@@ -65,45 +60,62 @@
             </tr>
         </tbody>
       </table>
+      <div class="progress mb-3" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 10px">
+        <div class="progress-bar bkcolor" style="width: 25%"></div>
+      </div>
     </div>
     <div class="col-md-3">
-      <button class="btn btn-primary" style="width: 100%;">Draft</button>
+      <div class="d-flex">
+        <p class="text-center m-0 p-0" id="countdown" style="font-size: 50px;">00</p>
+        <div>
+          <p class="m-0" style="font-size: 10px;">Round 1</p>
+          <p class="m-0" style="font-size: 10px;">Pick 3</p>
+          <p class="m-0" style="font-size: 20px;">Ametiühing Keskus</p>
+        </div>
+      </div>
+      <p id="player-id" class="hidden"></p>
+      <button class="btn btn-primary" style="width: 100%;" onclick="draftPlayer()">Draft</button>
     </div>
   </div>
-  <div class="progress mb-3" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 10px">
-    <div class="progress-bar bkcolor" style="width: 25%"></div>
-  </div>
+  <hr class="mt-2 mb-3">
   <div class="row">
     <div class="col-md-9">
-      <table class="table table-condensed table-borderless table-responsive">
+      <table id="draft-table" class="table table-condensed table-borderless table-responsive rounded rounded-3 overflow-hidden">
         <thead style="text-align: center;">
             <tr style="border: 0.1px solid rgb(190, 190, 190);">
-                <th style="font-size: 14px; width: 5%">Pick</th>
-                {{ range $index, $team := index .Data "teams" }}
-                  <th id="pick1" style="font-size: 14px; border: 0.1px solid rgb(190, 190, 190);">Team 1</th>
+                <th style="font-size: 12px; width: 5%"></th>
+                {{ range $pick := seq 1 (len $.Data.teams) }}
+                  <th id="pick{{$pick}}" style="font-size: 12px; border: 0.1px solid rgb(190, 190, 190); width: 23.75%;">Pick {{$pick}}</th>
                 {{ end }}
             </tr>
         </thead>
         <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
-            <tr style="border: 0.1px solid rgb(190, 190, 190);">
+          {{ range $row := seq 1 12 }}
+            <tr style="border: 0.1px solid rgb(190, 190, 190); font-size: 12px;">
               <td>
-                1
+                {{ $row }}
               </td>
+              {{ range $col := seq 1 (len $.Data.teams) }}
               <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
-                <div id="row1col1" class="py-1">
+                <div id="row{{$row}}col{{$col}}" class="py-1">
                   <br>
                   <br>
                 </div>
               </td>
+              {{ end }}
             </tr>
+          {{ end }}
         </tbody>
       </table>
     </div>
     <div class="col-md-3">
-      <ul class="list-group" style="overflow:scroll; scrollbar-width: none; max-height: 500px;">
+      <input id="search" class="form-control mb-2" type="text" name="search" autocomplete="off" placeholder="Search...">
+      <ul id="draft-players-list" class="list-group">
         {{range $index, $player := index .Data "players"}}
-            <li class="list-group-item d-flex justify-content-between align-items-center" onclick="viewPlayer({{$player}})">
-              <p class="m-0">{{$player.Overall}} {{$player.FirstName}} {{$player.LastName}}</p><span style="color: rgb(205, 205, 205);" onclick="console.log('clicked star')">☆</span>
+            <li class="list-group-item py-1 px-3" onclick="viewPlayer({{$player}})">
+              <div class="d-flex justify-content-between align-items-center pointer">
+                <p class="m-0"><span class="overall-text me-2" overall-color="{{$player.Overall}}">{{$player.Overall}}</span> {{$player.FirstName}} {{$player.LastName}}</p><span style="color: rgb(212, 0, 255);" onclick="console.log('clicked star')">☆</span>
+              </div>
             </li>
         {{end}}
       </ul>
@@ -119,7 +131,7 @@
     </div>
   </div>
   <div class="row px-3">
-    <div id="draftControls" class="col-md-9 my-3 hidden">
+    <div id="draftControls" class="col-md-9 my-3">
       <div class="d-flex flex-row justify-content-between">
           <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetAllPlayers();">Reset All Teams</div>
           <div>
@@ -266,11 +278,7 @@
           for (let i = 0; i < data.teams.length; i++) {
             document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase();
             document.getElementById("pick" + (i+1)).style.backgroundImage = 'linear-gradient(90deg,' + data.teams[i].Color1 + ', ' + data.teams[i].Color2 +  ')';
-            if (data.teams[i].DarkText !== "true") {
-              document.getElementById("pick" + (i+1)).style.color = "white";
-            } else {
-              document.getElementById("pick" + (i+1)).style.color = "black";
-            }
+            document.getElementById("pick" + (i+1)).style.color = data.teams[i].TextColor;
           } 
           break;
         
@@ -374,14 +382,15 @@
     socket.send(JSON.stringify(jsonData))
   }
 
-  function draftPlayer(playerID, firstName, lastName, primaryPos, secondaryPos) {
-    var playerInfo = [firstName, lastName, primaryPos, secondaryPos];
+  function draftPlayer() {
+    // var playerInfo = [firstName, lastName, primaryPos, secondaryPos];
     
-    let jsonData = {};
-    jsonData["action"] = "draft_player";
-    jsonData["player_id"] = parseInt(playerID);
-    jsonData["player_info"] = playerInfo;
-    socket.send(JSON.stringify(jsonData))
+    // let jsonData = {};
+    // jsonData["action"] = "draft_player";
+    // jsonData["player_id"] = parseInt(playerID);
+    // jsonData["player_info"] = playerInfo;
+    // socket.send(JSON.stringify(jsonData))
+    console.log(document.getElementById('player-id').innerText)
   }
 
   function resetAllPlayers() {
@@ -401,6 +410,7 @@
   function viewPlayer(player) {
     let img = (player.img_url) ? player.img_url : '/static/images/players/default_player.png'
     let playerInfo = `${player.primary_position}${player.secondary_position ? '/' + player.secondary_position : ''}${player.height ? ` | ${player.height}cm` : ''}${player.weight ? ` | ${player.weight}kg` : ''}`;
+    document.getElementById('player-id').innerText = player.player_id
     document.getElementById('name').innerText = player.first_name + ' ' + player.last_name
     document.getElementById('name').href = '/players/' + player.player_id
     document.getElementById('player-info').innerText = playerInfo
@@ -425,11 +435,11 @@
 <script>
   $(document).ready(function(){
   let colorRange = {
-      '91-99' :'overall1',
-      '86-90' :'overall2',
-      '81-85' :'overall3',
-      '1-80'  :'overall4',
-      '0-0'   :'overall5',
+      '91-99' :'overall1-text',
+      '86-90' :'overall2-text',
+      '81-85' :'overall3-text',
+      '1-80'  :'overall4-text',
+      '0-0'   :'overall5-text',
   };
   
   function between(value, min, max) {
@@ -441,7 +451,7 @@
   let second;
   let overall;
   
-  $('.overall-badge').each(function(index){
+  $('.overall-text').each(function(index){
       
       overall = $(this);
       color = parseInt($(this).attr('overall-color'),10);
@@ -461,4 +471,16 @@
   });
 </script>
 
+// Search
+<script>
+  $(document).ready(function() {
+    $("#search").on("keyup", function() {
+      var value = $(this).val().toLowerCase()
+      console.log(value)
+      $("#draft-players-list li").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      })
+    })
+  })
+</script>
 {{end}}

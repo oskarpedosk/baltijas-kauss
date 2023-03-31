@@ -1,10 +1,10 @@
-add_foreign_key("draft", "player_id", {"players": ["player_id"]},  {
+add_foreign_key("drafts", "player_id", {"players": ["player_id"]},  {
     "name": "player_id_fk_key",
     "on_delete": "cascade",
     "on_update": "cascade",
 })
 
-add_foreign_key("draft", "team_id", {"teams": ["team_id"]}, {
+add_foreign_key("drafts", "team_id", {"teams": ["team_id"]}, {
     "name": "team_id_fk_key",
     "on_delete": "cascade",
     "on_update": "cascade",

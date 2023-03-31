@@ -19,10 +19,11 @@ type WebSocketConnection struct {
 }
 
 var wsChan = make(chan WsPayload)
+var messengerChan = make(chan WsPayload)
 
 var clients = make(map[WebSocketConnection]string)
 
-// WsJsonResponse defines the response sent back from websocket
+// Define the response sent back from websocket
 type WsJsonResponse struct {
 	Action         string        `json:"action"`
 	Message        string        `json:"message"`
@@ -49,6 +50,21 @@ type WsPayload struct {
 	Column       int                 `json:"column"`
 	DraftSeconds int                 `json:"draft_seconds"`
 	Teams        []models.Team       `json:"nba_teams"`
+	Message      string              `json:"message"`
+	Conn         WebSocketConnection `json:"-"`
+}
+
+type MessengerJsonResponse struct {
+	Action         string        `json:"action"`
+	Message        string        `json:"message"`
+	MessageType    string        `json:"message_type"`
+	ConnectedUsers []string      `json:"connected_users"`
+}
+
+
+type MessengerPayload struct {
+	Action       string              `json:"action"`
+	Username     string              `json:"username"`
 	Message      string              `json:"message"`
 	Conn         WebSocketConnection `json:"-"`
 }
@@ -92,6 +108,17 @@ func ListenForWs(conn *WebSocketConnection) {
 		} else {
 			payload.Conn = *conn
 			wsChan <- payload
+		}
+	}
+}
+
+func broadcastToAll(response WsJsonResponse) {
+	for client := range clients {
+		err := client.WriteJSON(response)
+		if err != nil {
+			log.Println("Websocket error")
+			_ = client.Close()
+			delete(clients, client)
 		}
 	}
 }
@@ -147,7 +174,7 @@ func ListenToWsChannel() {
 
 		case "generate_order":
 			response.Action = "generate_order"
-			teams := Repo.getDraftOrder()
+			teams := Repo.GenerateDraftOrder()
 			draftOrder = []int{}
 			for _, team := range teams {
 				draftOrder = append(draftOrder, int(team.TeamID))
@@ -323,26 +350,17 @@ func (m *Repository) resetPlayers() {
 	}
 }
 
-func (m *Repository) getDraftOrder() []models.Team {
+func (m *Repository) GenerateDraftOrder() []models.Team {
 	teams, err := m.DB.GetTeams()
 	if err != nil {
 		return nil
 	}
+	teamsWithoutFA := teams[1:]
+
 	// Shuffle teams
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(teams), func(i, j int) { teams[i], teams[j] = teams[j], teams[i] })
-	return teams
-}
-
-func broadcastToAll(response WsJsonResponse) {
-	for client := range clients {
-		err := client.WriteJSON(response)
-		if err != nil {
-			log.Println("Websocket error")
-			_ = client.Close()
-			delete(clients, client)
-		}
-	}
+	rand.Shuffle(len(teamsWithoutFA), func(i, j int) { teamsWithoutFA[i], teamsWithoutFA[j] = teamsWithoutFA[j], teamsWithoutFA[i] })
+	return teamsWithoutFA
 }
 
 func (m *Repository) Draft(w http.ResponseWriter, r *http.Request) {
@@ -392,8 +410,10 @@ func (m *Repository) Draft(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	teamsWithoutFA := teams[1:]
+
 	data["players"] = players
-	data["teams"] = teams
+	data["teams"] = teamsWithoutFA
 
 	render.Template(w, r, "draft.page.tmpl", &models.TemplateData{
 		Data: data,

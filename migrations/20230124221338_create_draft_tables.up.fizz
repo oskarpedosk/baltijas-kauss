@@ -1,4 +1,4 @@
-create_table("draft") {
+create_table("drafts") {
     t.Column("draft_id", "integer", {primary: true})
     t.Column("pick", "integer", {})
     t.Column("player_id", "integer", {})

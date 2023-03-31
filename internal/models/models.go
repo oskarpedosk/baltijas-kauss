@@ -205,3 +205,12 @@ type TeamAndPlayers struct {
 	Team    Team
 	Players []Player
 }
+
+type DraftPick struct {
+	DraftID   int
+	Pick      int
+	PlayerID  int
+	TeamID    int
+	CreatedAt time.Time
+	UpdatedAt time.Time
+}
