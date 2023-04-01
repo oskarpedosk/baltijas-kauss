@@ -31,23 +31,23 @@ type DraftJsonResponse struct {
 	PlayerInfo     []string      `json:"player_info"`
 	Row            int           `json:"row"`
 	Col            int           `json:"col"`
-	DraftSeconds   int           `json:"draft_seconds"`
+	TimeLimit      int           `json:"time_limit"`
 	Teams          []models.Team `json:"teams"`
 	ConnectedUsers []string      `json:"connected_users"`
 }
 
 type DraftPayload struct {
-	Action       string              `json:"action"`
-	Username     string              `json:"username"`
-	Countdown    int                 `json:"countdown"`
-	PlayerID     int                 `json:"player_id"`
-	PlayerInfo   []string            `json:"player_info"`
-	Row          int                 `json:"row"`
-	Col          int                 `json:"col"`
-	DraftSeconds int                 `json:"draft_seconds"`
-	Teams        []models.Team       `json:"nba_teams"`
-	Message      string              `json:"message"`
-	Conn         WebSocketConnection `json:"-"`
+	Action     string              `json:"action"`
+	Username   string              `json:"username"`
+	Countdown  int                 `json:"countdown"`
+	PlayerID   int                 `json:"player_id"`
+	PlayerInfo []string            `json:"player_info"`
+	Row        int                 `json:"row"`
+	Col        int                 `json:"col"`
+	TimeLimit  int                 `json:"time_limit"`
+	Teams      []models.Team       `json:"nba_teams"`
+	Message    string              `json:"message"`
+	Conn       WebSocketConnection `json:"-"`
 }
 
 type MessengerJsonResponse struct {
@@ -175,12 +175,13 @@ func GetUserList() []string {
 func ListenToDraftWsChannel() {
 	var response DraftJsonResponse
 
-	reset := false
-	quit := false
+	// reset := false
+	// quit := false
 	draftOrder := []int{}
-	var rowCounter int
-	var colCounter int
-	var draftCountdown int
+	draft := false
+	// var rowCounter int
+	// var colCounter int
+	// var draftCountdown int
 
 	for {
 		e := <-draftChan
@@ -204,109 +205,110 @@ func ListenToDraftWsChannel() {
 		case "stop_draft":
 			fmt.Println("draft stopped")
 			// response.Action = "stop_draft"
-			quit = true
+			// quit = true
 			BroadcastToAll(response)
 
-		case "start_draft":
-			response.Action = "draft_started"
+		case "start":
+			response.Action = "start"
+			draft = true
 			BroadcastToAll(response)
 			fmt.Println("draft started")
-			rowCounter = 1
-			colCounter = 1
-			response.Action = ""
-			draftCountdown = e.Countdown
-			go func() {
-				timeLeft := draftCountdown
-				for {
-					switch {
-					case reset:
-						timeLeft = draftCountdown
-						reset = false
-						continue
-					case quit:
-						response.Action = "draft_ended"
-						BroadcastToAll(response)
-						reset = false
-						quit = false
-						rowCounter = 1
-						colCounter = 1
-						fmt.Println("draft ended")
-						return
-					default:
-						response.Action = "timer"
-						response.Countdown = timeLeft
-						response.DraftSeconds = draftCountdown
-						BroadcastToAll(response)
-						time.Sleep(1000 * time.Millisecond)
-						if timeLeft <= 0 {
-							playerID, firstName, lastName, primary, secondary := Repo.GetRandomPlayer()
-							Repo.DraftPlayer(draftOrder[colCounter-1], playerID)
-							response.Action = "draft_player"
-							reset = true
-							response.Row = rowCounter
-							response.Col = colCounter
-							response.PlayerID = playerID
-							positions := primary
-							if secondary != "" {
-								positions += "/" + secondary
-							}
-							response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
-							BroadcastToAll(response)
-							if rowCounter%2 == 0 {
-								colCounter -= 1
-							} else {
-								colCounter += 1
-							}
-							if rowCounter == 12 && colCounter == 0 {
-								quit = true
-							}
-							if colCounter == 5 {
-								colCounter = 4
-								rowCounter += 1
-							} else if colCounter == 0 {
-								colCounter = 1
-								rowCounter += 1
-							}
-							continue
-						}
-						timeLeft -= 1
-					}
-				}
-			}()
+			// rowCounter = 1
+			// colCounter = 1
+			// response.Action = ""
+			// draftCountdown = e.Countdown
+			// go func() {
+			// 	timeLeft := draftCountdown
+			// 	for {
+			// 		switch {
+			// 		case reset:
+			// 			timeLeft = draftCountdown
+			// 			reset = false
+			// 			continue
+			// 		case quit:
+			// 			response.Action = "draft_ended"
+			// 			BroadcastToAll(response)
+			// 			reset = false
+			// 			quit = false
+			// 			rowCounter = 1
+			// 			colCounter = 1
+			// 			fmt.Println("draft ended")
+			// 			return
+			// 		default:
+			// 			response.Action = "timer"
+			// 			response.Countdown = timeLeft
+			// 			response.TimeLimit = draftCountdown
+			// 			BroadcastToAll(response)
+			// 			time.Sleep(1000 * time.Millisecond)
+			// 			if timeLeft <= 0 {
+			// 				playerID, firstName, lastName, primary, secondary := Repo.GetRandomPlayer()
+			// 				Repo.DraftPlayer(draftOrder[colCounter-1], playerID)
+			// 				response.Action = "draft_player"
+			// 				reset = true
+			// 				response.Row = rowCounter
+			// 				response.Col = colCounter
+			// 				response.PlayerID = playerID
+			// 				positions := primary
+			// 				if secondary != "" {
+			// 					positions += "/" + secondary
+			// 				}
+			// 				response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
+			// 				BroadcastToAll(response)
+			// 				if rowCounter%2 == 0 {
+			// 					colCounter -= 1
+			// 				} else {
+			// 					colCounter += 1
+			// 				}
+			// 				if rowCounter == 12 && colCounter == 0 {
+			// 					quit = true
+			// 				}
+			// 				if colCounter == 5 {
+			// 					colCounter = 4
+			// 					rowCounter += 1
+			// 				} else if colCounter == 0 {
+			// 					colCounter = 1
+			// 					rowCounter += 1
+			// 				}
+			// 				continue
+			// 			}
+			// 			timeLeft -= 1
+			// 		}
+			// 	}
+			// }()
 
 		case "reset_players":
 			response.Action = "reset_players"
-			quit = true
+			// quit = true
 			Repo.ResetPlayers()
 			BroadcastToAll(response)
 
 		case "draft_player":
-			Repo.DraftPlayer(draftOrder[colCounter-1], e.PlayerID)
+			// Repo.DraftPlayer(draftOrder[colCounter-1], e.PlayerID)
 			response.Action = "draft_player"
-			reset = true
-			response.Row = rowCounter
-			response.Col = colCounter
+			// reset = true
+			// response.Row = rowCounter
+			// response.Col = colCounter
 			response.PlayerID = e.PlayerID
 			firstName := e.PlayerInfo[0]
 			lastName := e.PlayerInfo[1]
 			positions := e.PlayerInfo[2]
 			response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
 			BroadcastToAll(response)
-			if rowCounter%2 == 0 {
-				colCounter -= 1
-			} else {
-				colCounter += 1
-			}
-			if rowCounter == 12 && colCounter == 0 {
-				quit = true
-			}
-			if colCounter == 5 {
-				colCounter = 4
-				rowCounter += 1
-			} else if colCounter == 0 {
-				colCounter = 1
-				rowCounter += 1
-			}
+			// if rowCounter%2 == 0 {
+			// 	colCounter -= 1
+			// } else {
+			// 	colCounter += 1
+			// }
+			// if rowCounter == 12 && colCounter == 0 {
+			// 	quit = true
+			// }
+			// if colCounter == 5 {
+			// 	colCounter = 4
+			// 	rowCounter += 1
+			// } else if colCounter == 0 {
+			// 	colCounter = 1
+			// 	rowCounter += 1
+			// }
 		}
 	}
 }

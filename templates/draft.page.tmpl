@@ -135,7 +135,7 @@
       <div class="d-flex flex-row justify-content-between">
           <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetAllPlayers();">Reset All Teams</div>
           <div>
-            <select id="draftSeconds" class="form-select">
+            <select id="timeLimit" class="form-select">
               <option value="1">Random</option>
               <option value="15">15</option>
               <option value="30">30</option>
@@ -353,7 +353,7 @@
           }
           break;
 
-        case "draft_started":
+        case "start":
           document.getElementById("row" + "1" + "col" + "1").innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick1").innerHTML) + "</span>"
           break;  
 
@@ -374,8 +374,8 @@
 
   function startDraft() {
     let jsonData = {}
-    jsonData["action"] = "start_draft"
-    jsonData["countdown"] = parseInt(document.getElementById("draftSeconds").value)
+    jsonData["action"] = "start"
+    jsonData["time_limit"] = parseInt(document.getElementById("timeLimit").value)
     draftSocket.send(JSON.stringify(jsonData))
   }
 
