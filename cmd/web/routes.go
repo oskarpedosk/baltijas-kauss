@@ -46,7 +46,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/alltime", handlers.Repo.AllTime)
 
 		mux.Get("/draft", handlers.Repo.Draft)
-		mux.Get("/ws", handlers.Repo.WsEndPoint)
+		mux.Get("/draftws", handlers.Repo.DraftEndPoint)
+		mux.Get("/messengerws", handlers.Repo.MessengerEndPoint)
 	})
 
 	mux.Route("/admin", func(mux chi.Router) {

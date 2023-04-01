@@ -154,7 +154,7 @@
   
       <div class="form-group hidden">
         <label for="username">Username:</label>
-        <input type="text" name="username" id="username" class="form-control" autocomplete="off" value="{{.StringMap.user}}">
+        <input type="text" name="username" id="username" class="form-control" autocomplete="off" value="{{.User.FirstName}}">
       </div>
 
       <input type="hidden" name="action" id="action">
@@ -169,7 +169,7 @@
 
     </div>
     <div class="col-md-3">
-      <h3>Online</h3>
+      <h5>Online</h5>
       <ul id="online_users" style="padding-left: 1em; font-size: 16px;">
         
       </ul>
@@ -181,228 +181,230 @@
 
 {{define "js"}}
 
+<!-- Messenger WS -->
 <script>
-  var countdownTimer;
-  let socket = null;
-  let o = document.getElementById("output");
-  let clock = document.getElementById("countdown");
-  let userField = document.getElementById("username");
-  let messageField = document.getElementById("message");
-  let pick = 1;
-
+  let messengerSocket = null
+  let userField = document.getElementById("username")
+  let messengerField = document.getElementById("message")
+  let messengerOutput = document.getElementById("output")
 
   window.onbeforeunload = function() {
-    console.log("Leaving");
-    let jsonData = {};
-    jsonData["action"] = "left";
-    socket.send(JSON.stringify(jsonData))
+    let jsonData = {}
+    jsonData["action"] = "left"
+    messengerSocket.send(JSON.stringify(jsonData))
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    socket = new ReconnectingWebSocket("ws://" + document.location.host + "/ws", null, {debug: true, reconnectInterval: 3000});
+    messengerSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/messengerws", null, {debug: true, reconnectInterval: 3000})
 
-    const online = `<span class="badge bg-success">Connected</span>`
-    const offline = `<span class="badge bg-danger">Not connected</span>`
-    let statusDiv = document.getElementById("status");
-
-    socket.onopen = () => {
-      console.log("Successfully connected");
-      statusDiv.innerHTML = online;
-      let jsonData = {};
-      jsonData["action"] = "username";
-      jsonData["username"] = userField.value;
-      socket.send(JSON.stringify(jsonData));
+    messengerSocket.onopen = () => {
+      let jsonData = {}
+      jsonData["action"] = "username"
+      jsonData["username"] = userField.value
+      messengerSocket.send(JSON.stringify(jsonData))
     }
 
-    socket.onclose = () => {
-      console.log("Connection closed");
-      statusDiv.innerHTML = offline;
+    messengerSocket.onclose = () => {
+      console.log('messengerSocket closed')
+      // do something
     }
 
-    socket.onerror = error => {
-      console.log("There was an error");
-      statusDiv.innerHTML = offline;
+    messengerSocket.onerror = error => {
+      console.log('messengerSocket error')
+      // do something
     }
 
-    socket.onmessage = msg => {
+    messengerSocket.onmessage = msg => {
       let data = JSON.parse(msg.data);
-      console.log("Action is", data.action);
+      console.log("Action is", data.action)
 
       switch (data.action) {
         case "list_users":
-          let ul = document.getElementById("online_users");
-          while (ul.firstChild) ul.removeChild(ul.firstChild);
+          let ul = document.getElementById("online_users")
+          while (ul.firstChild) ul.removeChild(ul.firstChild)
 
           if (data.connected_users.length > 0) {
             data.connected_users.forEach(function(item) {
-              let li = document.createElement("li");
+              let li = document.createElement("li")
               li.appendChild(document.createTextNode(item))
               ul.appendChild(li)
             })
           }
-          break;
+          break
 
         case "broadcast":
-          o.innerHTML = o.innerHTML + data.message + "<br>";
-          break;
+          messengerOutput.innerHTML = messengerOutput.innerHTML + data.message + "<br>"
+          scrollToBottom()
+          break
+      }
+    }
 
+    userField.addEventListener("change", function () {
+          let jsonData = {}
+          jsonData["action"] = "username"
+          jsonData["username"] = this.value
+          messengerSocket.send(JSON.stringify(jsonData))
+      })
+
+    messengerField.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        if (!messengerSocket) {
+          console.log("No connection")
+          return false
+        }
+
+        if ((userField.value === "") || (messengerField.value === "")) {
+          return false
+        } else {
+          sendMessage()
+        }
+
+        event.preventDefault()
+        event.stopPropagation()
+      }
+    })
+
+  })
+
+  function sendMessage() {
+    let jsonData = {}
+    jsonData["action"] = "broadcast"
+    jsonData["username"] = userField.value
+    jsonData["message"] = messengerField.value
+    messengerSocket.send(JSON.stringify(jsonData))
+    messengerField.value = ""
+  }
+
+  function scrollToBottom() {
+    messengerOutput.scrollTop = messengerOutput.scrollHeight
+  }
+
+</script>
+
+<!-- Draft WS -->
+<script>
+  let countdownTimer
+  let draftSocket = null
+  let countdown = document.getElementById("countdown")
+  let pick = 1
+
+  document.addEventListener("DOMContentLoaded", function() {
+    draftSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/draftws", null, {debug: true, reconnectInterval: 3000})
+
+    const online = `<span class="badge bg-success">Draft connected</span>`
+    const offline = `<span class="badge bg-danger">Draft disconnected</span>`
+    let statusDiv = document.getElementById("status")
+
+    draftSocket.onopen = () => {
+      statusDiv.innerHTML = online
+    }
+
+    draftSocket.onclose = () => {
+      statusDiv.innerHTML = offline
+    }
+
+    draftSocket.onerror = error => {
+      statusDiv.innerHTML = offline
+    }
+
+    draftSocket.onmessage = msg => {
+      let data = JSON.parse(msg.data);
+      console.log("Action is", data.action);
+
+      switch (data.action) {
         case "reset_players":
-          var elems = document.querySelectorAll("#list-tab .hidden");
-          var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
-          var stars = document.querySelectorAll("#list-tab i");
-          elems.forEach(el => {
-            el.classList.remove('hidden');
-            el.classList.add('d-flex');
-          });
-          buttons.forEach(button => {
-            button.classList.remove('btn-dark');
-            button.classList.remove('disabled');
-          });
-          stars.forEach(star => {
-            star.style.display = "inline-block"
-          });
           for (let row = 1; row <= 12; row++) {
             for (let col = 1; col <= 4; col++) {
-              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>";
-              document.getElementById("row" + row + "col" + col).style.backgroundColor = "";
+              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>"
             }
           }
-          break;
+          break
 
         case "timer":
-          clock.innerHTML = data.countdown;
-          document.getElementById("countdown_bar").style.width = (data.countdown/data.draft_seconds)*100 + "%";
-          break;
+          countdown.innerHTML = data.countdown
+          document.getElementById("countdown_bar").style.width = (data.countdown/data.draft_seconds)*100 + "%"
+          break
 
         case "generate_order":
           for (let i = 0; i < data.teams.length; i++) {
-            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase();
-            document.getElementById("pick" + (i+1)).style.backgroundImage = 'linear-gradient(90deg,' + data.teams[i].Color1 + ', ' + data.teams[i].Color2 +  ')';
-            document.getElementById("pick" + (i+1)).style.color = data.teams[i].TextColor;
+            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase()
+            document.getElementById("pick" + (i+1)).style.backgroundImage = 'linear-gradient(90deg,' + data.teams[i].Color1 + ', ' + data.teams[i].Color2 +  ')'
+            document.getElementById("pick" + (i+1)).style.color = data.teams[i].TextColor
           } 
           break;
         
         case "draft_player":
-          document.getElementById("row" + (data.row) + "col" + (data.column)).innerHTML = data.message;
-          document.getElementById("row" + (data.row) + "col" + (data.column)).style.backgroundColor = data.color;
-          document.getElementById("row" + (data.row) + "col" + (data.column)).style.color = "black";
-          document.getElementById("player" + (data.player_id) + "-list").classList.remove("d-flex");
-          document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden");
-          document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark");
-          document.getElementById("draft_" + (data.player_id)).classList.add("disabled");
-          document.getElementById((data.player_id) + "-star").style.display = "none";
+          document.getElementById("row" + (data.row) + "col" + (data.col)).innerHTML = data.message
+          document.getElementById("player" + (data.player_id) + "-list").classList.remove("d-flex")
+          document.getElementById("player" + (data.player_id) + "-list").classList.add("hidden")
+          document.getElementById("draft_" + (data.player_id)).classList.add("btn-dark")
+          document.getElementById("draft_" + (data.player_id)).classList.add("disabled")
+          document.getElementById((data.player_id) + "-star").style.display = "none"
           pick++
-          let row = Math.floor((pick - 1) / 4 + 1);
+          let row = Math.floor((pick - 1) / 4 + 1)
           let col;
           if (row % 2 !== 0) {
             col = Math.floor(pick - (row - 1) * 4)
           } else {
             col = Math.floor(row * 4 - pick + 1)
           }
-          console.log("pick", pick)
-          console.log("row", row)
-          console.log("col", col)
           if (pick < 49) {
-            document.getElementById("row" + row.toString() + "col" + col.toString()).innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick" + col).innerHTML) + "</span>";
-            // document.getElementById("row" + row.toString() + "col" + col.toString()).style.color = 'white';
-            // document.getElementById("row" + row.toString() + "col" + col.toString()).style.backgroundColor = '#0d6efd';
+            document.getElementById("row" + row.toString() + "col" + col.toString()).innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick" + col).innerHTML) + "</span>"
           }
           break;
 
         case "draft_started":
-          document.getElementById("row" + "1" + "col" + "1").innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick1").innerHTML) + "</span>";
-          var buttons = document.querySelectorAll("#nav-tabContent .btn-dark");
-          buttons.forEach(button => {
-            button.classList.remove('disabled');
-            button.classList.remove('btn-dark');
-            button.classList.add('btn-primary');
-          });
+          document.getElementById("row" + "1" + "col" + "1").innerHTML = "PICK " + pick.toString() + "<br><span class=\"fw-semibold\">" + (document.getElementById("pick1").innerHTML) + "</span>"
           break;  
 
         case "draft_ended":
-          clock.innerHTML = "<br>";
-          pick = 1;
-          document.getElementById("countdown_bar").style.width = "100%";
-          break;
+          countdown.innerHTML = "<br>"
+          pick = 1
+          document.getElementById("countdown_bar").style.width = "100%"
+          break
         }
     }
-
-    userField.addEventListener("change", function () {
-          let jsonData = {};
-          jsonData["action"] = "username";
-          jsonData["username"] = this.value;
-          socket.send(JSON.stringify(jsonData));
-      })
-
-    messageField.addEventListener("keydown", function(event) {
-      if (event.code === "Enter") {
-        if (!socket) {
-          console.log("No connection");
-          return false
-        }
-
-        if ((userField.value === "") || (messageField.value === "")) {
-          // errorMessage("Fill out username and message!");
-          return false;
-        } else {
-          sendMessage();
-        }
-
-        event.preventDefault();
-        event.stopPropagation();
-      }
-    })
   })
 
-  function sendMessage() {
-    let jsonData = {};
-    jsonData["action"] = "broadcast";
-    jsonData["username"] = userField.value;
-    jsonData["message"] = messageField.value;
-    socket.send(JSON.stringify(jsonData))
-    messageField.value = "";
-  }
-
   function generateOrder() {
-    let jsonData = {};
-    jsonData["action"] = "generate_order";
-    socket.send(JSON.stringify(jsonData))
+    let jsonData = {}
+    jsonData["action"] = "generate_order"
+    draftSocket.send(JSON.stringify(jsonData))
   }
 
   function startDraft() {
-    let jsonData = {};
-    jsonData["action"] = "start_draft";
-    jsonData["countdown"] = parseInt(document.getElementById("draftSeconds").value);
-    socket.send(JSON.stringify(jsonData))
+    let jsonData = {}
+    jsonData["action"] = "start_draft"
+    jsonData["countdown"] = parseInt(document.getElementById("draftSeconds").value)
+    draftSocket.send(JSON.stringify(jsonData))
   }
 
   function stopDraft() {
-    let jsonData = {};
-    jsonData["action"] = "stop_draft";
-    socket.send(JSON.stringify(jsonData))
+    let jsonData = {}
+    jsonData["action"] = "stop_draft"
+    draftSocket.send(JSON.stringify(jsonData))
   }
 
   function draftPlayer() {
-    // var playerInfo = [firstName, lastName, primaryPos, secondaryPos];
+    // let playerInfo = [firstName, lastName, primaryPos, secondaryPos];
     
     // let jsonData = {};
     // jsonData["action"] = "draft_player";
     // jsonData["player_id"] = parseInt(playerID);
     // jsonData["player_info"] = playerInfo;
-    // socket.send(JSON.stringify(jsonData))
+    // draftSocket.send(JSON.stringify(jsonData))
     console.log(document.getElementById('player-id').innerText)
   }
 
   function resetAllPlayers() {
-    let jsonData = {};
-    jsonData["action"] = "reset_players";
-    socket.send(JSON.stringify(jsonData))
+    let jsonData = {}
+    jsonData["action"] = "reset_players"
+    draftSocket.send(JSON.stringify(jsonData))
   }
 
   function draftSettings() {
-        const str = 'draftControls';
-        $('#' + str).toggleClass("hidden");
-    }
+    $('#draftControls').toggleClass("hidden")
+  }
 
 </script>
 
@@ -443,26 +445,26 @@
   };
   
   function between(value, min, max) {
-      return value >= min && value <= max;
+      return value >= min && value <= max
   }
   
-  let color;
-  let first; 
-  let second;
-  let overall;
+  let color
+  let first;
+  let second
+  let overall
   
   $('.overall-text').each(function(index){
       
-      overall = $(this);
-      color = parseInt($(this).attr('overall-color'),10);
+      overall = $(this)
+      color = parseInt($(this).attr('overall-color'),10)
       
       $.each(colorRange, function(name, value){
           
-          first = parseInt(name.split('-')[0],10);
-          second = parseInt(name.split('-')[1],10);
+          first = parseInt(name.split('-')[0],10)
+          second = parseInt(name.split('-')[1],10)
           
           if( between(color, first, second) ){
-              overall.addClass(value);
+              overall.addClass(value)
           }
       
       });
@@ -471,11 +473,11 @@
   });
 </script>
 
-// Search
+<!-- Search -->
 <script>
   $(document).ready(function() {
     $("#search").on("keyup", function() {
-      var value = $(this).val().toLowerCase()
+      let value = $(this).val().toLowerCase()
       console.log(value)
       $("#draft-players-list li").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)

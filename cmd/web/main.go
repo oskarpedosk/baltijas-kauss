@@ -108,7 +108,8 @@ func run() (*driver.DB, error) {
 	log.Println("Connected to database!")
 
 	log.Println("Starting channel listener")
-	go handlers.ListenToWsChannel()
+	go handlers.ListenToDraftWsChannel()
+	go handlers.ListenToMessengerWsChannel()
 
 	templateCache, err := render.CreateTemplateCache()
 	if err != nil {
