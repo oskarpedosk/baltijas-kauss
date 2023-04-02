@@ -18,7 +18,7 @@ type DatabaseRepo interface {
 	UpdatePlayerBadges(models.Player, []models.Badge) error
 	CountPlayers() (int, error)
 	ResetPlayers() error
-	GetRandomPlayer(random int) (models.Player, error)
+	SelectRandomPlayer(random int) (models.Player, error)
 	GetPlayers(filter models.Filter) ([]models.Player, error)
 
 	GetTeamPlayers(teamID int) ([]models.Player, error)

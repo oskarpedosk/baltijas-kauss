@@ -14,6 +14,17 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
 
+var (
+	timeLimit    = 0
+	pick         = 1
+	rounds       = 2
+	randomPlayer = 5
+	draft        = false
+	pause        = false
+	countdown    time.Duration
+	draftPicks   = []models.DraftPick{}
+)
+
 type WebSocketConnection struct {
 	*websocket.Conn
 }
@@ -24,16 +35,21 @@ var clients = make(map[WebSocketConnection]string)
 
 // Define the response sent back from websocket
 type DraftJsonResponse struct {
-	Action         string        `json:"action"`
-	Message        string        `json:"message"`
-	Countdown      int           `json:"countdown"`
-	PlayerID       int           `json:"player_id"`
-	PlayerInfo     []string      `json:"player_info"`
-	Row            int           `json:"row"`
-	Col            int           `json:"col"`
-	TimeLimit      int           `json:"time_limit"`
-	Teams          []models.Team `json:"teams"`
-	ConnectedUsers []string      `json:"connected_users"`
+	Action         string             `json:"action"`
+	Message        string             `json:"message"`
+	Countdown      int                `json:"countdown"`
+	PlayerID       int                `json:"player_id"`
+	PlayerInfo     []string           `json:"player_info"`
+	Row            int                `json:"row"`
+	Col            int                `json:"col"`
+	NextRow        int                `json:"next_row"`
+	NextCol        int                `json:"next_col"`
+	Pick           int                `json:"pick"`
+	TimeLimit      int                `json:"time_limit"`
+	TeamName       string             `json:"team_name"`
+	Teams          []models.Team      `json:"teams"`
+	DraftPicks     []models.DraftPick `json:"draft_picks"`
+	ConnectedUsers []string           `json:"connected_users"`
 }
 
 type DraftPayload struct {
@@ -44,8 +60,13 @@ type DraftPayload struct {
 	PlayerInfo []string            `json:"player_info"`
 	Row        int                 `json:"row"`
 	Col        int                 `json:"col"`
+	NextRow    int                 `json:"next_row"`
+	NextCol    int                 `json:"next_col"`
+	Pick       int                 `json:"pick"`
 	TimeLimit  int                 `json:"time_limit"`
+	TeamName   string              `json:"team_name"`
 	Teams      []models.Team       `json:"nba_teams"`
+	DraftPicks []models.DraftPick  `json:"draft_picks"`
 	Message    string              `json:"message"`
 	Conn       WebSocketConnection `json:"-"`
 }
@@ -74,6 +95,10 @@ func (m *Repository) DraftEndPoint(w http.ResponseWriter, r *http.Request) {
 
 	var draftResponse DraftJsonResponse
 	draftResponse.Message = `<em><small>Connected to server</small><em>`
+	fmt.Println(draft)
+	if draft {
+		draftResponse.DraftPicks = draftPicks
+	}
 
 	conn := WebSocketConnection{Conn: ws}
 	clients[conn] = ""
@@ -163,7 +188,6 @@ func BroadcastToAll(response interface{}) {
 func GetUserList() []string {
 	var userList []string
 	for _, user := range clients {
-		fmt.Println(user)
 		if user != "" {
 			userList = append(userList, user)
 		}
@@ -175,142 +199,172 @@ func GetUserList() []string {
 func ListenToDraftWsChannel() {
 	var response DraftJsonResponse
 
-	// reset := false
-	// quit := false
-	draftOrder := []int{}
-	draft := false
-	// var rowCounter int
-	// var colCounter int
-	// var draftCountdown int
-
 	for {
 		e := <-draftChan
 
 		switch e.Action {
-		case "timer":
-			response.Action = "timer"
-			response.Countdown = e.Countdown
-			BroadcastToAll(response)
 
 		case "generate_order":
-			response.Action = "generate_order"
-			teams := Repo.GenerateDraftOrder()
-			draftOrder = []int{}
-			for _, team := range teams {
-				draftOrder = append(draftOrder, int(team.TeamID))
+			if !draft {
+				resetDraft()
+				generateDraft()
 			}
-			response.Teams = teams
-			BroadcastToAll(response)
 
-		case "stop_draft":
-			fmt.Println("draft stopped")
-			// response.Action = "stop_draft"
-			// quit = true
-			BroadcastToAll(response)
+		case "stop":
+			draft = false
 
-		case "start":
-			response.Action = "start"
-			draft = true
-			BroadcastToAll(response)
-			fmt.Println("draft started")
-			// rowCounter = 1
-			// colCounter = 1
-			// response.Action = ""
-			// draftCountdown = e.Countdown
-			// go func() {
-			// 	timeLeft := draftCountdown
-			// 	for {
-			// 		switch {
-			// 		case reset:
-			// 			timeLeft = draftCountdown
-			// 			reset = false
-			// 			continue
-			// 		case quit:
-			// 			response.Action = "draft_ended"
-			// 			BroadcastToAll(response)
-			// 			reset = false
-			// 			quit = false
-			// 			rowCounter = 1
-			// 			colCounter = 1
-			// 			fmt.Println("draft ended")
-			// 			return
-			// 		default:
-			// 			response.Action = "timer"
-			// 			response.Countdown = timeLeft
-			// 			response.TimeLimit = draftCountdown
-			// 			BroadcastToAll(response)
-			// 			time.Sleep(1000 * time.Millisecond)
-			// 			if timeLeft <= 0 {
-			// 				playerID, firstName, lastName, primary, secondary := Repo.GetRandomPlayer()
-			// 				Repo.DraftPlayer(draftOrder[colCounter-1], playerID)
-			// 				response.Action = "draft_player"
-			// 				reset = true
-			// 				response.Row = rowCounter
-			// 				response.Col = colCounter
-			// 				response.PlayerID = playerID
-			// 				positions := primary
-			// 				if secondary != "" {
-			// 					positions += "/" + secondary
-			// 				}
-			// 				response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
-			// 				BroadcastToAll(response)
-			// 				if rowCounter%2 == 0 {
-			// 					colCounter -= 1
-			// 				} else {
-			// 					colCounter += 1
-			// 				}
-			// 				if rowCounter == 12 && colCounter == 0 {
-			// 					quit = true
-			// 				}
-			// 				if colCounter == 5 {
-			// 					colCounter = 4
-			// 					rowCounter += 1
-			// 				} else if colCounter == 0 {
-			// 					colCounter = 1
-			// 					rowCounter += 1
-			// 				}
-			// 				continue
-			// 			}
-			// 			timeLeft -= 1
-			// 		}
-			// 	}
-			// }()
-
-		case "reset_players":
-			response.Action = "reset_players"
-			// quit = true
-			Repo.ResetPlayers()
-			BroadcastToAll(response)
+		case "pause":
+			if draft {
+				pause = !pause
+			}
 
 		case "draft_player":
-			// Repo.DraftPlayer(draftOrder[colCounter-1], e.PlayerID)
-			response.Action = "draft_player"
-			// reset = true
-			// response.Row = rowCounter
-			// response.Col = colCounter
-			response.PlayerID = e.PlayerID
-			firstName := e.PlayerInfo[0]
-			lastName := e.PlayerInfo[1]
-			positions := e.PlayerInfo[2]
-			response.Message = fmt.Sprintf("%s <span class=\"fw-semibold\">%s</span><br>%s", firstName, lastName, positions)
-			BroadcastToAll(response)
-			// if rowCounter%2 == 0 {
-			// 	colCounter -= 1
-			// } else {
-			// 	colCounter += 1
-			// }
-			// if rowCounter == 12 && colCounter == 0 {
-			// 	quit = true
-			// }
-			// if colCounter == 5 {
-			// 	colCounter = 4
-			// 	rowCounter += 1
-			// } else if colCounter == 0 {
-			// 	colCounter = 1
-			// 	rowCounter += 1
-			// }
+			if draft {
+				draftPlayer(e)
+				pick++
+				if pick > len(draftPicks) {
+					draft = false
+				}
+			}
+
+		case "start":
+			if !draft {
+				startDraft(e)
+				go draftCountdown()
+			}
+
+		case "reset_players":
+			if !draft {
+				response.Action = "reset_players"
+				Repo.ResetPlayers()
+				BroadcastToAll(response)
+			}
 		}
 	}
+}
+
+func draftPlayer(e DraftPayload) {
+	var response DraftJsonResponse
+	response.Action = "draft_player"
+	name := e.PlayerInfo[0]
+	positions := e.PlayerInfo[1]
+
+	countdown = time.Duration(timeLimit) * time.Second
+
+	if pick < len(draftPicks) {
+		response.NextRow = draftPicks[pick].Row
+		response.NextCol = draftPicks[pick].Col
+		response.TeamName = draftPicks[pick].TeamName
+	}
+
+	response.Pick = pick + 1
+	response.PlayerID = e.PlayerID
+	response.Row = draftPicks[pick-1].Row
+	response.Col = draftPicks[pick-1].Col
+	response.Message = fmt.Sprintf("<span class=\"fw-semibold\">%s</span><br>%s", name, positions)
+	BroadcastToAll(response)
+
+	Repo.DraftPlayer(draftPicks[pick-1].TeamID, e.PlayerID)
+	draftPicks[pick-1].PlayerID = e.PlayerID
+	draftPicks[pick-1].Name = name
+	draftPicks[pick-1].Positions = positions
+}
+
+func generateDraft() {
+	teams := Repo.GenerateDraftOrder()
+	for row := 1; row <= rounds; row++ {
+		if row%2 != 0 {
+			col := 1
+			for j := 0; j < len(teams); j++ {
+				draftPick := models.DraftPick{
+					Row:      row,
+					Col:      col,
+					Pick:     pick,
+					TeamID:   teams[j].TeamID,
+					TeamName: teams[j].Name,
+				}
+				draftPicks = append(draftPicks, draftPick)
+				pick++
+				col++
+			}
+		} else {
+			col := len(teams)
+			for j := len(teams) - 1; j >= 0; j-- {
+				draftPick := models.DraftPick{
+					Row:      row,
+					Col:      col,
+					Pick:     pick,
+					TeamID:   teams[j].TeamID,
+					TeamName: teams[j].Name,
+				}
+				draftPicks = append(draftPicks, draftPick)
+				pick++
+				col--
+			}
+		}
+	}
+	pick = 1
+	var response DraftJsonResponse
+	response.Teams = teams
+	response.Action = "generate_order"
+	BroadcastToAll(response)
+}
+
+func draftCountdown() {
+	var response DraftJsonResponse
+	for draft {
+		if !pause {
+			response.Action = "countdown"
+			response.Countdown = int(countdown / time.Second)
+			response.TimeLimit = timeLimit
+			BroadcastToAll(response)
+			countdown -= time.Second
+			time.Sleep(time.Second)
+			if countdown < 0 {
+				fmt.Println("Time's up!")
+				playerID, firstName, lastName, primary, secondary := Repo.SelectRandomPlayer()
+				e := DraftPayload{}
+				name := firstName + " " + lastName
+				positions := primary
+				if secondary != "" {
+					positions += "/" + secondary
+				}
+				e.PlayerID = playerID
+				e.PlayerInfo = []string{name, positions}
+				draftPlayer(e)
+				pick++
+				if pick > len(draftPicks) {
+					draft = false
+				}
+				countdown = time.Duration(timeLimit) * time.Second
+			}
+		}
+	}
+	// add draft data to db
+}
+
+func startDraft(e DraftPayload) {
+	pick = 1
+	draft = true
+	pause = false
+	timeLimit = 0
+	countdown = 0
+
+	var response DraftJsonResponse
+	response.Action = "start"
+	response.TeamName = draftPicks[pick-1].TeamName
+	BroadcastToAll(response)
+
+	timeLimit = e.TimeLimit
+	countdown = time.Duration(timeLimit) * time.Second
+}
+
+func resetDraft() {
+	pick = 1
+	timeLimit = 0
+	countdown = 0
+	pause = false
+	draftPicks = []models.DraftPick{}
 }
 
 func ListenToMessengerWsChannel() {
@@ -343,9 +397,9 @@ func ListenToMessengerWsChannel() {
 	}
 }
 
-func (m *Repository) GetRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
-	random := rand.Intn(5)
-	player, err := m.DB.GetRandomPlayer(random)
+func (m *Repository) SelectRandomPlayer() (playerID int, firstName, lastName, primary, secondary string) {
+	random := rand.Intn(randomPlayer)
+	player, err := m.DB.SelectRandomPlayer(random)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -435,24 +489,3 @@ func (m *Repository) Draft(w http.ResponseWriter, r *http.Request) {
 		Data: data,
 	})
 }
-
-// duration := 5 * time.Second
-// 	draft := true
-// 	counter := 3
-
-// 	for draft {
-// 		if duration < 0 {
-// 			fmt.Println("Time's up!")
-// 			duration = 3 * time.Second
-// 			counter--
-// 			if counter == 0 {
-// 				draft = false
-// 				continue
-// 			}
-// 		}
-
-// 		fmt.Printf("Time remaining: %d\n", duration/time.Second)
-// 		duration -= time.Second
-// 		time.Sleep(time.Second)
-// 	}
-// 	fmt.Println("Time's up!")

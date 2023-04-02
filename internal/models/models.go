@@ -208,9 +208,14 @@ type TeamAndPlayers struct {
 
 type DraftPick struct {
 	DraftID   int
+	TeamName  string
+	Name      string
+	Positions string
 	Pick      int
 	PlayerID  int
 	TeamID    int
+	Row       int
+	Col       int
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

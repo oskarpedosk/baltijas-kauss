@@ -176,12 +176,10 @@ func (m *postgresDBRepo) AddPlayer(playerID, teamID int) error {
 }
 
 // Add a random player to a team
-func (m *postgresDBRepo) GetRandomPlayer(random int) (models.Player, error) {
+func (m *postgresDBRepo) SelectRandomPlayer(random int) (models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	fmt.Println("-------------------")
-	fmt.Println("random=", random)
 	// Remove team and position
 	stmt := `
 	select
