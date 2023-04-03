@@ -473,6 +473,11 @@ html {
     overflow-x: hidden;
 }
 
+.progress {
+    margin-bottom: 12px;
+}
+
+
 /* Messenger */
 /* Hide scrollbar for Chrome, Safari and Opera */
 #output::-webkit-scrollbar {
@@ -507,6 +512,16 @@ html {
         display:none;
     }
 
+    .progress 
+    {
+        margin-bottom: 4px;
+    }
+
+    #draft-table tbody td div
+    {
+        padding: 12px;
+    }
+
     #draft-table-container
     {
         overflow-x: scroll;
@@ -514,7 +529,7 @@ html {
 
     #draft-players-list
     {
-        min-height: 100px;
+        min-height: 170px;
     }
 
     #search
