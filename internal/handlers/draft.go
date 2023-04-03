@@ -95,10 +95,7 @@ func (m *Repository) DraftEndPoint(w http.ResponseWriter, r *http.Request) {
 
 	var draftResponse DraftJsonResponse
 	draftResponse.Message = `<em><small>Connected to server</small><em>`
-	fmt.Println(draft)
-	if draft {
-		draftResponse.DraftPicks = draftPicks
-	}
+	draftResponse.DraftPicks = draftPicks
 
 	conn := WebSocketConnection{Conn: ws}
 	clients[conn] = ""
@@ -204,7 +201,7 @@ func ListenToDraftWsChannel() {
 
 		switch e.Action {
 
-		case "generate_order":
+		case "generate_draft":
 			if !draft {
 				resetDraft()
 				generateDraft()
@@ -306,7 +303,7 @@ func generateDraft() {
 	pick = 1
 	var response DraftJsonResponse
 	response.Teams = teams
-	response.Action = "generate_order"
+	response.Action = "generate_draft"
 	BroadcastToAll(response)
 }
 
@@ -323,15 +320,15 @@ func draftCountdown() {
 			if countdown < 0 {
 				fmt.Println("Time's up!")
 				playerID, firstName, lastName, primary, secondary := Repo.SelectRandomPlayer()
-				e := DraftPayload{}
 				name := firstName + " " + lastName
 				positions := primary
 				if secondary != "" {
 					positions += "/" + secondary
 				}
-				e.PlayerID = playerID
-				e.PlayerInfo = []string{name, positions}
-				draftPlayer(e)
+				draftPlayer(DraftPayload{
+					PlayerID:   playerID,
+					PlayerInfo: []string{name, positions},
+				})
 				pick++
 				if pick > len(draftPicks) {
 					draft = false

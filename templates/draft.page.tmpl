@@ -7,7 +7,7 @@
 <div class="container bg-light rounded-3 border p-4" style="user-select: none;">
   <div class="row">
     <div class="col-md-9">
-      <table class="table table-sm table-responsive table-borderless">
+      <table id="draft-player-view" class="table table-sm table-responsive table-borderless mb-2">
         <thead style="font-size: 14px; text-align: center;">
             <tr>
                 <th></th>
@@ -31,31 +31,31 @@
                 <td class="p-0 ps-2">
                     <div class="d-flex player-card">
                         <div class="p-0 inline-block">
-                            <p class="m-0"><a id="name" class="player-link" href="#" target="_blank">Kareem Ajabbari</a></p>
+                            <p class="m-0"><a id="name" class="player-link" href="#" target="_blank"><br></a></p>
                             <div class="my-0">
                                 <p id="player-info" class="text-muted my-0" style="font-size: 12px;">
-                                    PF/C | 240cm | 130kg
+                                    <br>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </td>
-                <td><span id="overall" class="overall-badge overall5">00</span></td>
-                <td id="three-point">25</td>
-                <td id="driving-dunk">88</td>
-                <td id="athleticism">91</td>
-                <td id="perimeter-d">67</td>
-                <td id="interior-d">93</td>
-                <td id="rebounding">96</td>
+                <td><span id="overall" class="overall-badge"></span></td>
+                <td id="three-point"></td>
+                <td id="driving-dunk"></td>
+                <td id="athleticism"></td>
+                <td id="perimeter-d"></td>
+                <td id="interior-d"></td>
+                <td id="rebounding"></td>
                 <td>
-                    <span id="bronze-badges" class="playerbadge badge badge-pill p-1 bronze">7</span>
-                    <span id="silver-badges" class="playerbadge badge badge-pill p-1 silver">4</span>
-                    <span id="gold-badges" class="playerbadge badge badge-pill p-1 gold">2</span>
-                    <span id="hof-badges" class="playerbadge badge badge-pill p-1 hof">0</span>
-                    <span id="total-badges" class="playerbadge badge badge-pill p-1 total">13</span>
+                    <span id="bronze-badges" class="playerbadge badge badge-pill p-1 bronze"></span>
+                    <span id="silver-badges" class="playerbadge badge badge-pill p-1 silver"></span>
+                    <span id="gold-badges" class="playerbadge badge badge-pill p-1 gold"></span>
+                    <span id="hof-badges" class="playerbadge badge badge-pill p-1 hof"></span>
+                    <span id="total-badges" class="playerbadge badge badge-pill p-1 total"></span>
                 </td>
                 <td>
-                    <span id="total-attributes" class="playerbadge badge badge-pill p-1 text-dark bg-light border" style="background-color: rgb(237, 237, 237); width: 50px;">2832</span>
+                    <span id="total-attributes" class="playerbadge badge badge-pill p-1 text-dark bg-light border" style="background-color: rgb(237, 237, 237); width: 50px;"></span>
                 </td>
             </tr>
         </tbody>
@@ -65,14 +65,20 @@
       </div>
     </div>
     <div class="col-md-3">
-      <div class="row">
-        <div class="col-md-4 d-flex justify-content-center align-items-center">
-          <p id="countdown" class="m-0" style="font-size: 60px; font-family: sans-serif;">00</p>
+      <div class="d-flex">
+        <div class="d-flex justify-content-center align-items-center" style="width: 25%;">
+          <p id="countdown" class="m-0" style="font-size: 50px; font-family: sans-serif;">00</p>
         </div>
-        <div class="col-md-8 pt-3 ps-0">
-          <p class="m-0" style="font-size: 10px;">Pick <span id="pickNumber">1</span></p>
-          <p class="m-0" style="font-size: 10px;">Round <span id="roundNumber">1</span></p>
-          <p id="activeTeam" class="m-0" style="font-size: 18px;"></p>
+        <div class="ps-0 align-self-center" style="width: 65%;">
+          <p class="mb-0" style="font-size: 10px;">Pick <span id="pickNumber"></span></p>
+          <p class="mb-0" style="font-size: 10px;">Round <span id="roundNumber"></span></p>
+          <p id="activeTeam" class="mb-1" style="font-size: 16px;">Baltijas Kauss Draft</p>
+        </div>
+        <div class="text-center" style="width: 10%;">
+            <img id="volume" class="pointer" src="/static/images/buttons/volume-on.png" alt="" style="max-height: 20px; opacity: 45%;" onclick="toggleMute();">
+            {{if eq .User.AccessLevel 2}}
+              <img class="pointer" src="/static/images/buttons/settings.png" alt="" style="max-height: 18px; opacity: 45%;" onclick="draftSettings();">
+            {{end}}
         </div>
       </div>
       <p id="player-id" class="hidden"></p>
@@ -80,64 +86,58 @@
     </div>
   </div>
   <hr class="mt-2 mb-3">
-  <div class="row">
+  <div class="row mb-3">
     <div class="col-md-9">
-      <table id="draft-table" class="table table-condensed table-borderless table-responsive rounded rounded-3 overflow-hidden">
-        <thead style="text-align: center;">
-            <tr style="border: 0.1px solid rgb(190, 190, 190);">
-                <th style="font-size: 12px; width: 5%"></th>
-                {{ range $pick := seq 1 (len $.Data.teams) }}
-                  <th id="pick{{$pick}}" style="font-size: 12px; border: 0.1px solid rgb(190, 190, 190); width: 23.75%;">Pick {{$pick}}</th>
+      <div id="draft-table-container" class="rounded-3 border">
+        <table id="draft-table" class="table table-condensed table-borderless table-responsive m-0">
+          <thead style="text-align: center;">
+              <tr>
+                  <th style="font-size: 12px; width: 5%"></th>
+                  {{ range $pick := seq 1 (len $.Data.teams) }}
+                    <th id="pick{{$pick}}" style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%; text-decoration: underline;">Pick {{$pick}}</th>
+                  {{ end }}
+              </tr>
+          </thead>
+          <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+            {{ range $row := seq 1 12 }}
+              <tr style="border-top: 0.1px solid rgb(190, 190, 190); font-size: 12px;">
+                <td>
+                  {{ $row }}
+                </td>
+                {{ range $col := seq 1 (len $.Data.teams) }}
+                <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                  <div id="row{{$row}}col{{$col}}" class="py-1">
+                    <br>
+                    <br>
+                  </div>
+                </td>
                 {{ end }}
-            </tr>
-        </thead>
-        <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
-          {{ range $row := seq 1 12 }}
-            <tr style="border: 0.1px solid rgb(190, 190, 190); font-size: 12px;">
-              <td>
-                {{ $row }}
-              </td>
-              {{ range $col := seq 1 (len $.Data.teams) }}
-              <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
-                <div id="row{{$row}}col{{$col}}" class="py-1">
-                  <br>
-                  <br>
-                </div>
-              </td>
-              {{ end }}
-            </tr>
-          {{ end }}
-        </tbody>
-      </table>
+              </tr>
+            {{ end }}
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="col-md-3">
       <input id="search" class="form-control mb-2" type="text" name="search" autocomplete="off" placeholder="Search...">
-      <ul id="draft-players-list" class="list-group">
-        {{range $index, $player := index .Data "players"}}
-          {{ if eq $player.TeamID 1 }}
-            <li id="draft-players-list-{{$player.PlayerID}}" class="list-group-item py-1 px-3" onclick="viewPlayer({{$player}})">
-              <div class="d-flex justify-content-between align-items-center pointer">
-                <p class="m-0"><span class="overall-text me-2" overall-color="{{$player.Overall}}">{{$player.Overall}}</span> {{$player.FirstName}} {{$player.LastName}}</p><span id="star-{{$player.PlayerID}}" style="color: #E6E6E6; font-size: 18px;" onclick="toggleStar('{{$player.PlayerID}}')">☆</span>
-              </div>
-            </li>
-          {{ end }}
-        {{end}}
-      </ul>
-      <div class="d-flex justify-content-between" style="padding-top: 6px;">
-        <div>
-          <img class="pointer me-3" src="/static/images/buttons/volume-on.png" alt="" style="max-height: 20px; opacity: 45%;">
-          {{if eq .User.AccessLevel 2}}
-            <img class="pointer" src="/static/images/buttons/settings.png" alt="" style="max-height: 18px; opacity: 45%;" onclick="draftSettings();">
+      <div class="rounded-3 border">
+        <ul id="draft-players-list" class="list-group">
+          {{range $index, $player := index .Data "players"}}
+            {{ if eq $player.TeamID 1 }}
+              <li id="draft-players-list-{{$player.PlayerID}}" class="list-group-item py-1 px-3" style="border-style: none; border-bottom: 1px solid rgb(220, 220, 220);" onclick="viewPlayer({{$player}})">
+                <div class="d-flex justify-content-between align-items-center pointer">
+                  <p class="m-0"><span class="overall-text me-2" overall-color="{{$player.Overall}}">{{$player.Overall}}</span> {{$player.FirstName}} {{$player.LastName}}</p><span id="star-{{$player.PlayerID}}" style="color: #E6E6E6; font-size: 18px;" onclick="toggleStar('{{$player.PlayerID}}')">☆</span>
+                </div>
+              </li>
+            {{ end }}
           {{end}}
-        </div>
-        <div id="status"></div>
+        </ul>
       </div>
     </div>
   </div>
-  <div class="row px-3">
-    <div id="draft-buttons" class="col-md-9 my-3">
-      <div class="d-flex flex-row justify-content-between">
-          <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetAllPlayers();">Reset All Teams</div>
+  <div id="draft-buttons" class="row hidden">
+    <div class="col-md-9 mb-3 d-flex justify-content-between">
+          <div id="resetPlayersBtn" class="btn btn-warning" onclick="resetTeams();">Reset Teams</div>
           <div>
             <select id="timeLimit" class="form-select">
               <option value="1">Random</option>
@@ -147,11 +147,10 @@
               <option value="60">60</option>
             </select>
           </div>
-          <div id="generateOrderBtn" class="btn btn-success" onclick="generateOrder();">Generate Draft Order</div>
+          <div id="generateOrderBtn" class="btn btn-success" onclick="generateDraft();">Generate Draft</div>
           <div id="startDraftBtn" class="btn btn-primary" onclick="startDraft();">Start Draft</div>
           <div id="pauseDraftBtn" class="btn btn-info" onclick="pauseDraft();">Pause</div>
           <div id="stopDraftBtn" class="btn btn-danger" onclick="stopDraft();">Stop Draft</div>
-      </div>
     </div>
   </div>
   <div class="row">
@@ -174,9 +173,7 @@
 
     </div>
     <div class="col-md-3">
-      <h5>Online</h5>
-      <ul id="online_users" style="padding-left: 1em; font-size: 16px;">
-        
+      <ul id="online_users" class="text-success" style="padding-left: 1em; font-size: 16px; list-style: disc;">
       </ul>
     </div>
   </div>
@@ -185,6 +182,203 @@
 {{end}}
 
 {{define "js"}}
+
+<!-- Draft WS -->
+<script>
+  let draftSocket = null
+  let online = false
+  const volume = document.getElementById('volume')
+  const countdown = document.getElementById("countdown")
+  const pickNumber = document.getElementById("pickNumber")
+  const activeTeam = document.getElementById("activeTeam")
+  const roundNumber = document.getElementById("roundNumber")
+
+  document.addEventListener("DOMContentLoaded", function() {
+    draftSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/draftws", null, {debug: true, reconnectInterval: 3000})
+
+    // const online = `<span class="badge bg-success">Draft connected</span>`
+    // const offline = `<span class="badge bg-danger">Draft disconnected</span>`
+    let statusDiv = document.getElementById("status")
+
+    draftSocket.onopen = () => {
+      online = true
+    }
+
+    draftSocket.onclose = () => {
+      online = false
+    }
+
+    draftSocket.onerror = error => {
+      online = false
+    }
+
+    draftSocket.onmessage = msg => {
+      let data = JSON.parse(msg.data)
+      if (data.draft_picks) {
+        data.draft_picks.forEach(element => {
+          if (element.Name) {
+            document.getElementById("row" + element.Row + "col" + element.Col).innerHTML = "<span class=\"fw-semibold\">" + element.Name + "</span><br>" + element.Positions
+          }
+          if (element.Row === 1) {
+              document.getElementById("pick" + element.Col).innerHTML = element.TeamName.toUpperCase()
+            }
+        })
+      }
+      switch (data.action) {
+        case "reset_players":
+          window.location.reload()
+          break
+
+        case "countdown":
+          if (volume.getAttribute('src') === '/static/images/buttons/volume-on.png') {
+            if (data.countdown === 10) {
+              const beep = new Audio('./static/audio/clink.mp3')
+              beep.play()
+            } else if (0 < data.countdown && data.countdown <= 5) {
+              const beep = new Audio('./static/audio/beep.mp3')
+              beep.volume = 0.4
+              beep.play()
+            } else if (data.countdown === 0) {
+              const beep = new Audio('./static/audio/time-up.mp3')
+              beep.volume = 0.6
+              beep.play()
+            }
+          }
+          (data.countdown < 10) ? countdown.innerHTML = '0' + data.countdown : countdown.innerHTML = data.countdown
+          document.getElementById("countdown-bar").style.width = (data.countdown/data.time_limit)*100 + "%"
+          break
+
+        case "generate_draft":
+          for (let i = 0; i < data.teams.length; i++) {
+            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase()
+          }
+          pickNumber.textContent = 1
+          roundNumber.textContent = 1
+          activeTeam.textContent = data.teams[0].Name
+          const rows = document.querySelectorAll('#draft-table tr').length 
+          const cols = document.querySelectorAll('#draft-table th').length
+          for (let row = 1; row < rows; row++) {
+            for (let col = 1; col < cols; col++) {
+              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>"
+            }
+          }
+          break;
+        
+        case "draft_player":
+          if (data.team_name) {
+            pickNumber.textContent = data.pick
+            roundNumber.textContent = data.next_row
+            activeTeam.textContent = data.team_name
+            const next = document.getElementById("row" + data.next_row + "col" + data.next_col)
+            next.style.color = 'white'
+            next.classList.add('bkcolor')
+            next.innerHTML = `PICK ${data.pick}<br>${data.team_name}</span>`
+          }
+          document.getElementById("draft-players-list-" + data.player_id).outerHTML = ''
+          const current = document.getElementById("row" + data.row + "col" + data.col)
+          current.innerHTML = data.message
+          current.style.color = 'black'
+          current.classList.remove('bkcolor')
+          break
+
+        case "start":
+          const firstPick = document.getElementById("row1col1")
+          firstPick.style.color = 'white'
+          firstPick.classList.add('bkcolor')
+          activeTeam.textContent = data.team_name
+          firstPick.innerHTML = `PICK 1<br>${data.team_name}</span>`
+          break  
+
+        case "draft_ended":
+          countdown.innerHTML = "<br>"
+          pick = 1
+          document.getElementById("countdown_bar").style.width = "100%"
+          break
+        }
+    }
+  })
+
+  function generateDraft() {
+    let jsonData = {}
+    jsonData["action"] = "generate_draft"
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function startDraft() {
+    let jsonData = {}
+    jsonData["action"] = "start"
+    jsonData["time_limit"] = parseInt(document.getElementById("timeLimit").value)
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function pauseDraft() {
+    let jsonData = {}
+    jsonData["action"] = "pause"
+    const pauseBtn = document.getElementById("pauseDraftBtn")
+    if (pauseBtn.innerText === 'Pause') {
+      pauseBtn.innerText = 'Resume'
+    } else {
+      pauseBtn.innerText = 'Pause'
+    }
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function stopDraft() {
+    let jsonData = {}
+    jsonData["action"] = "stop"
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function setCountdown() {
+    let jsonData = {}
+    jsonData["action"] = "set_countdown"
+    jsonData["time_limit"] = parseInt(document.getElementById("timeLimit").value)
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function draftPlayer() {
+    let name = document.getElementById('name').innerText
+    let player_id = document.getElementById('player-id').innerText
+    let positions = document.getElementById('player-info').innerText
+    positions = positions.substring(0, positions.indexOf(' '))
+
+    let jsonData = {}
+    jsonData["action"] = "draft_player"
+    jsonData["player_id"] = parseInt(player_id)
+    jsonData["player_info"] = [name, positions]
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function resetTeams() {
+    let jsonData = {}
+    jsonData["action"] = "reset_players"
+    draftSocket.send(JSON.stringify(jsonData))
+  }
+
+  function draftSettings() {
+    $('#draft-buttons').toggleClass("hidden")
+  }
+
+  function toggleStar(id) {
+    const star = document.getElementById('star-' + id)
+    if (star.style.color === 'rgb(230, 230, 230)') {
+      star.style.color = '#E600FF';
+    } else {
+      star.style.color = '#E6E6E6';
+    }
+    event.stopPropagation()
+  }
+
+  function toggleMute() {
+    if (volume.getAttribute('src') === '/static/images/buttons/volume-on.png') {
+      volume.setAttribute('src', '/static/images/buttons/volume-off.png')
+    } else {
+      volume.setAttribute('src', '/static/images/buttons/volume-on.png')
+    }
+    
+  }
+
+</script>
 
 <!-- Messenger WS -->
 <script>
@@ -228,10 +422,10 @@
           let ul = document.getElementById("online_users")
           while (ul.firstChild) ul.removeChild(ul.firstChild)
 
-          if (data.connected_users.length > 0) {
+          if (data.connected_users.length > 0 && online) {
             data.connected_users.forEach(function(item) {
               let li = document.createElement("li")
-              li.appendChild(document.createTextNode(item))
+              li.innerHTML = `<span class="text-dark">${item}</span>`
               ul.appendChild(li)
             })
           }
@@ -282,175 +476,6 @@
 
   function scrollToBottom() {
     messengerOutput.scrollTop = messengerOutput.scrollHeight
-  }
-
-</script>
-
-<!-- Draft WS -->
-<script>
-  let draftSocket = null
-  const countdown = document.getElementById("countdown")
-  const pickNumber = document.getElementById("pickNumber")
-  const activeTeam = document.getElementById("activeTeam")
-  const roundNumber = document.getElementById("roundNumber")
-
-  document.addEventListener("DOMContentLoaded", function() {
-    draftSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/draftws", null, {debug: true, reconnectInterval: 3000})
-
-    const online = `<span class="badge bg-success">Draft connected</span>`
-    const offline = `<span class="badge bg-danger">Draft disconnected</span>`
-    let statusDiv = document.getElementById("status")
-
-    draftSocket.onopen = () => {
-      statusDiv.innerHTML = online
-    }
-
-    draftSocket.onclose = () => {
-      statusDiv.innerHTML = offline
-    }
-
-    draftSocket.onerror = error => {
-      statusDiv.innerHTML = offline
-    }
-
-    draftSocket.onmessage = msg => {
-      let data = JSON.parse(msg.data)
-      if (data.draft_picks) {
-        console.log('ADDING PICKS')
-        data.draft_picks.forEach(element => {
-          if (element.Name) {
-            document.getElementById("row" + element.Row + "col" + element.Col).innerHTML = "<span class=\"fw-semibold\">" + element.Name + "</span><br>" + element.Positions
-          }
-          if (element.Row === 1) {
-              document.getElementById("pick" + element.Col).innerHTML = element.TeamName.toUpperCase()
-            }
-        })
-      }
-      switch (data.action) {
-        case "reset_players":
-          for (let row = 1; row <= 12; row++) {
-            for (let col = 1; col <= 4; col++) {
-              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>"
-            }
-          }
-          break
-
-        case "countdown":
-          (data.countdown < 10) ? countdown.innerHTML = '0' + data.countdown : countdown.innerHTML = data.countdown
-          document.getElementById("countdown-bar").style.width = (data.countdown/data.time_limit)*100 + "%"
-          break
-
-        case "generate_order":
-          for (let i = 0; i < data.teams.length; i++) {
-            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase()
-            // document.getElementById("pick" + (i+1)).style.backgroundImage = 'linear-gradient(90deg,' + data.teams[i].Color1 + ', ' + data.teams[i].Color2 +  ')'
-            // document.getElementById("pick" + (i+1)).style.color = data.teams[i].TextColor
-          } 
-          break;
-        
-        case "draft_player":
-          if (data.team_name) {
-            pickNumber.textContent = data.pick
-            roundNumber.textContent = data.next_row
-            activeTeam.textContent = data.team_name
-            const next = document.getElementById("row" + data.next_row + "col" + data.next_col)
-            next.style.color = 'white'
-            next.classList.add('bkcolor')
-            next.innerHTML = `PICK ${data.pick}<br>${data.team_name}</span>`
-          }
-          document.getElementById("draft-players-list-" + data.player_id).outerHTML = ''
-          const current = document.getElementById("row" + data.row + "col" + data.col)
-          current.innerHTML = data.message
-          current.style.color = 'black'
-          current.classList.remove('bkcolor')
-          break
-
-        case "start":
-          const firstPick = document.getElementById("row1col1")
-          firstPick.style.color = 'white'
-          firstPick.classList.add('bkcolor')
-          activeTeam.textContent = data.team_name
-          firstPick.innerHTML = `PICK 1<br>${data.team_name}</span>`
-          break  
-
-        case "draft_ended":
-          countdown.innerHTML = "<br>"
-          pick = 1
-          document.getElementById("countdown_bar").style.width = "100%"
-          break
-        }
-    }
-  })
-
-  function generateOrder() {
-    let jsonData = {}
-    jsonData["action"] = "generate_order"
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function startDraft() {
-    let jsonData = {}
-    jsonData["action"] = "start"
-    jsonData["time_limit"] = parseInt(document.getElementById("timeLimit").value)
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function pauseDraft() {
-    let jsonData = {}
-    jsonData["action"] = "pause"
-    const pauseBtn = document.getElementById("pauseDraftBtn")
-    if (pauseBtn.innerText === 'Pause') {
-      pauseBtn.innerText = 'Resume'
-    } else {
-      pauseBtn.innerText = 'Pause'
-    }
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function stopDraft() {
-    let jsonData = {}
-    jsonData["action"] = "stop"
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function setCountdown() {
-    let jsonData = {}
-    jsonData["action"] = "set_countdown"
-    jsonData["time_limit"] = parseInt(document.getElementById("timeLimit").value)
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function draftPlayer() {
-    let name = document.getElementById('name').innerText
-    let player_id = document.getElementById('player-id').innerText
-    let positions = document.getElementById('player-info').innerText
-    positions = positions.substring(0, positions.indexOf(' '))
-
-    let jsonData = {}
-    jsonData["action"] = "draft_player"
-    jsonData["player_id"] = parseInt(player_id)
-    jsonData["player_info"] = [name, positions]
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function resetAllPlayers() {
-    let jsonData = {}
-    jsonData["action"] = "reset_players"
-    draftSocket.send(JSON.stringify(jsonData))
-  }
-
-  function draftSettings() {
-    $('#draft-buttons').toggleClass("hidden")
-  }
-
-  function toggleStar(id) {
-    const star = document.getElementById('star-' + id)
-    if (star.style.color === 'rgb(230, 230, 230)') {
-      star.style.color = '#E600FF';
-    } else {
-      star.style.color = '#E6E6E6';
-    }
-    event.stopPropagation()
   }
 
 </script>

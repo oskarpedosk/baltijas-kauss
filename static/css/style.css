@@ -467,8 +467,68 @@ html {
 }
 
 #draft-players-list {
-    min-height: 600px;
-    max-height: 600px;
+    min-height: 594.5px;
+    max-height: 594.5px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+/* Messenger */
+/* Hide scrollbar for Chrome, Safari and Opera */
+#output::-webkit-scrollbar {
+    display: none;
+}
+  
+/* Hide scrollbar for IE, Edge and Firefox */
+#output {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+@media (max-width:768px) {
+    #draft-player-view th:nth-child(1),
+    #draft-player-view th:nth-child(4),
+    #draft-player-view th:nth-child(5),
+    #draft-player-view th:nth-child(6),
+    #draft-player-view th:nth-child(7),
+    #draft-player-view th:nth-child(8),
+    #draft-player-view th:nth-child(9),
+    #draft-player-view th:nth-child(10),
+
+    #draft-player-view td:nth-child(1),
+    #draft-player-view td:nth-child(4),
+    #draft-player-view td:nth-child(5),
+    #draft-player-view td:nth-child(6),
+    #draft-player-view td:nth-child(7),
+    #draft-player-view td:nth-child(8),
+    #draft-player-view td:nth-child(9),
+    #draft-player-view td:nth-child(10)
+    {
+        display:none;
+    }
+
+    #draft-table-container
+    {
+        overflow-x: scroll;
+    }
+
+    #draft-players-list
+    {
+        min-height: 100px;
+    }
+
+    #search
+    {
+        margin-top: 10px;
+    }
+
+    #draft-buttons div
+    {
+        display: inline-flex;
+        flex-direction: column;
+    }
+    #draft-buttons div div
+    {
+        margin-bottom: 10px;
+    }
 }
