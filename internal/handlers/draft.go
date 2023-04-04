@@ -15,14 +15,16 @@ import (
 )
 
 var (
-	timeLimit    = 0
-	pick         = 1
-	rounds       = 2
-	randomPlayer = 5
-	draft        = false
-	pause        = false
-	countdown    time.Duration
-	draftPicks   = []models.DraftPick{}
+	timeLimit      = 0
+	pick           = 1
+	rounds         = 2
+	randomPlayer   = 5
+	draft          = false
+	pause          = false
+	draftGenerated = false
+	draftCompleted = false
+	countdown      time.Duration
+	draftPicks     = []models.DraftPick{}
 )
 
 type WebSocketConnection struct {
@@ -205,6 +207,7 @@ func ListenToDraftWsChannel() {
 			if !draft {
 				resetDraft()
 				generateDraft()
+				draftGenerated = true
 			}
 
 		case "stop":
@@ -221,11 +224,12 @@ func ListenToDraftWsChannel() {
 				pick++
 				if pick > len(draftPicks) {
 					draft = false
+					draftCompleted = true
 				}
 			}
 
 		case "start":
-			if !draft {
+			if !draft && draftGenerated {
 				startDraft(e)
 				go draftCountdown()
 			}
@@ -318,7 +322,6 @@ func draftCountdown() {
 			countdown -= time.Second
 			time.Sleep(time.Second)
 			if countdown < 0 {
-				fmt.Println("Time's up!")
 				playerID, firstName, lastName, primary, secondary := Repo.SelectRandomPlayer()
 				name := firstName + " " + lastName
 				positions := primary
@@ -332,12 +335,27 @@ func draftCountdown() {
 				pick++
 				if pick > len(draftPicks) {
 					draft = false
+					draftCompleted = true
 				}
 				countdown = time.Duration(timeLimit) * time.Second
 			}
 		}
 	}
-	// add draft data to db
+	if draftCompleted {
+		draftID, err := Repo.DB.GetDraftID()
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		for _, pick := range draftPicks {
+			err = Repo.DB.AddDraftPick(draftID, pick)
+			if err != nil {
+				log.Println(err)
+				return
+			}
+		}
+		draftGenerated = false
+	}
 }
 
 func startDraft(e DraftPayload) {
@@ -361,6 +379,8 @@ func resetDraft() {
 	timeLimit = 0
 	countdown = 0
 	pause = false
+	draftGenerated = false
+	draftCompleted = false
 	draftPicks = []models.DraftPick{}
 }
 
@@ -398,7 +418,7 @@ func (m *Repository) SelectRandomPlayer() (playerID int, firstName, lastName, pr
 	random := rand.Intn(randomPlayer)
 	player, err := m.DB.SelectRandomPlayer(random)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 	return player.PlayerID, player.FirstName, player.LastName, player.PrimaryPosition, player.SecondaryPosition
 }
@@ -406,14 +426,14 @@ func (m *Repository) SelectRandomPlayer() (playerID int, firstName, lastName, pr
 func (m *Repository) DraftPlayer(teamID, playerID int) {
 	err := m.DB.AddPlayer(playerID, teamID)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }
 
 func (m *Repository) ResetPlayers() {
 	err := m.DB.ResetPlayers()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 	}
 }
 

@@ -175,50 +175,6 @@ func (m *postgresDBRepo) AddPlayer(playerID, teamID int) error {
 	return nil
 }
 
-// Add a random player to a team
-func (m *postgresDBRepo) SelectRandomPlayer(random int) (models.Player, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
-	defer cancel()
-
-	// Remove team and position
-	stmt := `
-	select
-		"player_id",
-		"first_name",
-		"last_name",
-		"primary_position",
-		"secondary_position"
-	from 
-		players
-	where
-		"team_id" = 1
-	order by
-		"overall" desc,
-		"attributes/TotalAttributes" desc
-	limit
-		1
-	offset
-		$1
-	`
-
-	row := m.DB.QueryRowContext(ctx, stmt, random)
-
-	var player models.Player
-	err := row.Scan(
-		&player.PlayerID,
-		&player.FirstName,
-		&player.LastName,
-		&player.PrimaryPosition,
-		&player.SecondaryPosition,
-	)
-
-	if err != nil {
-		return player, err
-	}
-
-	return player, nil
-}
-
 // Get player by ID
 func (m *postgresDBRepo) GetPlayer(playerID int) (models.Player, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

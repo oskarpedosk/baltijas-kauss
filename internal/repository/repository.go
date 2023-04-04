@@ -5,36 +5,46 @@ import (
 )
 
 type DatabaseRepo interface {
+	// Users
 	AllUsers() bool
+	GetUser(userID int) (models.User, error)
+	Authenticate(email, testPassword string) (int, string, int, error)
 
+	// Teams
 	GetTeam(teamID int) (models.Team, error)
 	GetTeams() ([]models.Team, error)
 	UpdateTeam(team models.Team) error
+
+	// Players
 	AddPlayer(playerID, teamID int) error
 	DropPlayer(playerID int) error
-	CreateNewBadge(models.Badge) (int, error)
+	SwitchTeam(player models.Player) error
+	AssignPosition(playerID, position int) error
+
 	GetBadgeID(url string) (int, error)
+	CreateNewBadge(models.Badge) (int, error)
+	GetPlayerBadges(playerID int) ([]models.Badge, error)
+
+	ResetPlayers() error
+	CountPlayers() (int, error)
 	UpdatePlayer(player models.Player) error
 	UpdatePlayerBadges(models.Player, []models.Badge) error
-	CountPlayers() (int, error)
-	ResetPlayers() error
-	SelectRandomPlayer(random int) (models.Player, error)
-	GetPlayers(filter models.Filter) ([]models.Player, error)
-
-	GetTeamPlayers(teamID int) ([]models.Player, error)
 	GetPlayer(playerID int) (models.Player, error)
-	GetPlayerBadges(playerID int) ([]models.Badge, error)
-	AssignPosition(playerID, position int) error
-	SwitchTeam(player models.Player) error
+	GetPlayers(filter models.Filter) ([]models.Player, error)
+	GetTeamPlayers(teamID int) ([]models.Player, error)
 
-	GetAllResults() ([]models.Result, error)
-	GetSeasonResults(seasonID int) ([]models.Result, error)
-	StartNewSeason() error
-	GetSeasons() ([]models.Season, error)
+	// Draft
+	GetDraftID() (int, error)
+	AddDraftPick(draftID int, draftPick models.DraftPick) error
+	SelectRandomPlayer(random int) (models.Player, error)
+
+	// Standinds
 	AddResult(res models.Result) error
 	UpdateResult(res models.Result) error
 	DeleteResult(res models.Result) error
 
-	GetUser(userID int) (models.User, error)
-	Authenticate(email, testPassword string) (int, string, int, error)
+	StartNewSeason() error
+	GetSeasons() ([]models.Season, error)
+	GetSeasonResults(seasonID int) ([]models.Result, error)
+	GetAllResults() ([]models.Result, error)
 }

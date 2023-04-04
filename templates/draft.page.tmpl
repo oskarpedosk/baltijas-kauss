@@ -69,7 +69,7 @@
         <div class="d-flex justify-content-center align-items-center" style="width: 25%;">
           <p id="countdown" class="m-0" style="font-size: 50px; font-family: sans-serif;">00</p>
         </div>
-        <div class="ps-0 align-self-center" style="width: 65%;">
+        <div class="ps-1 align-self-center" style="width: 65%;">
           <p class="mb-0" style="font-size: 10px;">Pick <span id="pickNumber"></span></p>
           <p class="mb-0" style="font-size: 10px;">Round <span id="roundNumber"></span></p>
           <p id="activeTeam" class="mb-1" style="font-size: 16px;">Baltijas Kauss Draft</p>
@@ -82,7 +82,7 @@
         </div>
       </div>
       <p id="player-id" class="hidden"></p>
-      <button class="btn btn-primary" style="width: 100%;" onclick="draftPlayer()">Draft</button>
+      <button id="draftPlayerBtn" class="btn btn-primary" style="width: 100%;" onclick="draftPlayer()">Draft</button>
     </div>
   </div>
   <hr class="mt-2 mb-3">
@@ -173,6 +173,7 @@
 
     </div>
     <div class="col-md-3">
+      <h4>Online</h4>
       <ul id="online_users" class="text-success" style="padding-left: 1em; font-size: 16px; list-style: disc;">
       </ul>
     </div>
@@ -206,10 +207,12 @@
 
     draftSocket.onclose = () => {
       online = false
+      document.getElementById("online_users").outerHTML = '<p class="text-danger">You are offline<p>'
     }
 
     draftSocket.onerror = error => {
       online = false
+      document.getElementById("online_users").outerHTML = '<p class="text-danger">You are offline<p>'
     }
 
     draftSocket.onmessage = msg => {
@@ -265,6 +268,12 @@
           break;
         
         case "draft_player":
+          const player_id = document.getElementById('player-id').innerText
+          if (parseInt(player_id) === data.player_id) {
+            document.getElementById('draftPlayerBtn').classList.remove('btn-primary')
+            document.getElementById('draftPlayerBtn').classList.add('btn-dark')
+            document.getElementById('draftPlayerBtn').classList.add('disabled')
+          }
           if (data.team_name) {
             pickNumber.textContent = data.pick
             roundNumber.textContent = data.next_row
@@ -337,8 +346,8 @@
   }
 
   function draftPlayer() {
-    let name = document.getElementById('name').innerText
-    let player_id = document.getElementById('player-id').innerText
+    const name = document.getElementById('name').innerText
+    const player_id = document.getElementById('player-id').innerText
     let positions = document.getElementById('player-info').innerText
     positions = positions.substring(0, positions.indexOf(' '))
 
@@ -482,6 +491,13 @@
 
 <script>
   function viewPlayer(player) {
+    const draftPlayerBtn = document.getElementById('draftPlayerBtn')
+    if (!draftPlayerBtn.classList.contains('btn-primary')) {
+      draftPlayerBtn.classList.remove('disabled')
+      draftPlayerBtn.classList.remove('btn-dark')
+      draftPlayerBtn.classList.add('btn-primary')
+    } 
+    
     let img = (player.img_url) ? player.img_url : '/static/images/players/default_player.png'
     let playerInfo = `${player.primary_position}${player.secondary_position ? '/' + player.secondary_position : ''}${player.height ? ` | ${player.height}cm` : ''}${player.weight ? ` | ${player.weight}kg` : ''}`;
     document.getElementById('player-id').innerText = player.player_id

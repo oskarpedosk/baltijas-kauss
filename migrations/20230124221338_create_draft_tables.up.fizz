@@ -1,5 +1,5 @@
 create_table("drafts") {
-    t.Column("draft_id", "integer", {primary: true})
+    t.Column("draft_id", "integer", {})
     t.Column("pick", "integer", {})
     t.Column("player_id", "integer", {})
     t.Column("team_id", "integer", {})
