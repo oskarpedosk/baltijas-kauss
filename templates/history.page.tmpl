@@ -1,0 +1,58 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<title>Standings | Baltijas Kauss</title>
+
+<div class="container">
+    <div class="table-container rounded-3 bg-light border border-1">
+        <div class="table-responsive standings-table">
+            <div class="dropdown mb-3">
+                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    DRAFT {{ .Data.activeDraft }}
+                </a>
+                
+                <ul class="dropdown-menu">
+                    {{ range $index, $draft := index .Data "drafts" }}
+                        <li><a class="dropdown-item" href="/history?draft={{$draft.DraftID}}">Draft {{.DraftID}}</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+
+            <div id="draft-table-container" class="rounded-3 border">
+                <table id="draft-table" class="table table-condensed table-borderless table-responsive m-0">
+                  <thead style="text-align: center;">
+                      <tr>
+                          <th style="font-size: 12px; width: 5%"></th>
+                          {{ range $team := .Data.teams }}
+                            <th style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%;">{{ $team.Name }}</th>
+                          {{ end }}
+                      </tr>
+                  </thead>
+                  <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+                    {{ range $row := seq 1 12 }}
+                      <tr style="border-top: 0.1px solid rgb(190, 190, 190); font-size: 12px;">
+                        <td>
+                          {{ $row }}
+                        </td>
+                        {{ range $col := seq 1 (len $.Data.teams) }}
+                        <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                          <div id="row{{$row}}col{{$col}}" class="py-1">
+                            <br>
+                            <br>
+                          </div>
+                        </td>
+                        {{ end }}
+                      </tr>
+                    {{ end }}
+                  </tbody>
+                </table>
+              </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+{{define "js"}}
+
+{{end}}

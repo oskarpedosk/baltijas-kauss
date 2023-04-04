@@ -35,6 +35,8 @@ type DatabaseRepo interface {
 
 	// Draft
 	GetDraftID() (int, error)
+	GetDrafts() ([]models.DraftPick, error)
+	GetDraft(draftID int) ([]models.DraftPick, error)
 	AddDraftPick(draftID int, draftPick models.DraftPick) error
 	SelectRandomPlayer(random int) (models.Player, error)
 

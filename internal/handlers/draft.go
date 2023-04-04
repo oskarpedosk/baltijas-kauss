@@ -348,7 +348,7 @@ func draftCountdown() {
 			return
 		}
 		for _, pick := range draftPicks {
-			err = Repo.DB.AddDraftPick(draftID, pick)
+			err = Repo.DB.AddDraftPick(draftID + 1, pick)
 			if err != nil {
 				log.Println(err)
 				return

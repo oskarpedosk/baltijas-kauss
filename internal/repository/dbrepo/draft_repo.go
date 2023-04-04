@@ -52,6 +52,38 @@ func (m *postgresDBRepo) SelectRandomPlayer(random int) (models.Player, error) {
 	return player, nil
 }
 
+func (m *postgresDBRepo) GetDrafts() ([]models.DraftPick, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var drafts = []models.DraftPick{}
+
+	query := `
+		SELECT draft_id, created_at, updated_at
+		FROM drafts
+		ORDER BY draft_id DESC
+		`
+		rows, err := m.DB.QueryContext(ctx, query)
+		if err != nil {
+			return drafts, err
+		}
+		defer rows.Close()
+		for rows.Next() {
+			var draft models.DraftPick
+			err := rows.Scan(
+				&draft.DraftID,
+				&draft.CreatedAt,
+				&draft.UpdatedAt,
+			)
+			if err != nil {
+				return drafts, err
+			}
+			drafts = append(drafts, draft)
+		}
+
+	return drafts, nil
+}
+
 func (m *postgresDBRepo) GetDraftID() (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -64,7 +96,7 @@ func (m *postgresDBRepo) GetDraftID() (int, error) {
 		fmt.Println(err)
 		return draftID, err
 	}
-	return draftID + 1, nil
+	return draftID, nil
 }
 
 func (m *postgresDBRepo) AddDraftPick(draftID int, draftPick models.DraftPick) error {
@@ -86,4 +118,39 @@ func (m *postgresDBRepo) AddDraftPick(draftID int, draftPick models.DraftPick) e
 	}
 
 	return nil
+}
+
+func (m *postgresDBRepo) GetDraft(draftID int) ([]models.DraftPick, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var draft []models.DraftPick
+
+	query := `
+	SELECT drafts.pick, drafts.team_id, CONCAT(players.first_name, ' ', players.last_name) AS name
+	FROM drafts
+	JOIN players ON players.player_id = drafts.player_id
+	WHERE draft_id = $1;
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query, draftID)
+	if err != nil {
+		return draft, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var pick models.DraftPick
+		err := rows.Scan(
+			&pick.Pick,
+			&pick.TeamID,
+			&pick.Name,
+		)
+		if err != nil {
+			return draft, err
+		}
+		draft = append(draft, pick)
+	}
+
+	return draft, nil
 }

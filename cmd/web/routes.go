@@ -48,6 +48,8 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Get("/draft", handlers.Repo.Draft)
 		mux.Get("/draftws", handlers.Repo.DraftEndPoint)
 		mux.Get("/messengerws", handlers.Repo.MessengerEndPoint)
+
+		mux.Get("/history", handlers.Repo.History)
 	})
 
 	mux.Route("/admin", func(mux chi.Router) {

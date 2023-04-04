@@ -15,7 +15,11 @@ import (
 func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
 	seasonID := 0
 	if r.URL.Query().Has("s") {
-		seasonID, _ = strconv.Atoi(r.URL.Query().Get("s"))
+		var err error
+		seasonID, err = strconv.Atoi(r.URL.Query().Get("s"))
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
 	}
 
 	seasons, err := m.DB.GetSeasons()
