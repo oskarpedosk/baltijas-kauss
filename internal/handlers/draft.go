@@ -17,13 +17,14 @@ import (
 var (
 	timeLimit      = 0
 	pick           = 1
-	rounds         = 2
+	rounds         = 12
 	randomPlayer   = 5
 	draft          = false
 	pause          = false
 	draftGenerated = false
 	draftCompleted = false
 	countdown      time.Duration
+	draftOrder     = []models.Team{}
 	draftPicks     = []models.DraftPick{}
 )
 
@@ -67,7 +68,7 @@ type DraftPayload struct {
 	Pick       int                 `json:"pick"`
 	TimeLimit  int                 `json:"time_limit"`
 	TeamName   string              `json:"team_name"`
-	Teams      []models.Team       `json:"nba_teams"`
+	Teams      []models.Team       `json:"teams"`
 	DraftPicks []models.DraftPick  `json:"draft_picks"`
 	Message    string              `json:"message"`
 	Conn       WebSocketConnection `json:"-"`
@@ -98,6 +99,7 @@ func (m *Repository) DraftEndPoint(w http.ResponseWriter, r *http.Request) {
 	var draftResponse DraftJsonResponse
 	draftResponse.Message = `<em><small>Connected to server</small><em>`
 	draftResponse.DraftPicks = draftPicks
+	draftResponse.Teams = draftOrder
 
 	conn := WebSocketConnection{Conn: ws}
 	clients[conn] = ""
@@ -306,6 +308,7 @@ func generateDraft() {
 	}
 	pick = 1
 	var response DraftJsonResponse
+	draftOrder = teams
 	response.Teams = teams
 	response.Action = "generate_draft"
 	BroadcastToAll(response)
@@ -348,7 +351,7 @@ func draftCountdown() {
 			return
 		}
 		for _, pick := range draftPicks {
-			err = Repo.DB.AddDraftPick(draftID + 1, pick)
+			err = Repo.DB.AddDraftPick(draftID+1, pick)
 			if err != nil {
 				log.Println(err)
 				return
@@ -381,6 +384,7 @@ func resetDraft() {
 	pause = false
 	draftGenerated = false
 	draftCompleted = false
+	draftOrder = []models.Team{}
 	draftPicks = []models.DraftPick{}
 }
 

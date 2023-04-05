@@ -94,7 +94,7 @@
               <tr>
                   <th style="font-size: 12px; width: 5%"></th>
                   {{ range $pick := seq 1 (len $.Data.teams) }}
-                    <th id="pick{{$pick}}" style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%; text-decoration: underline;">Pick {{$pick}}</th>
+                    <th id="pick{{$pick}}" style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%;">Pick {{$pick}}</th>
                   {{ end }}
               </tr>
           </thead>
@@ -222,9 +222,15 @@
           if (element.Name) {
             document.getElementById("row" + element.Row + "col" + element.Col).innerHTML = "<span class=\"fw-semibold\">" + element.Name + "</span><br>" + element.Positions
           }
-          if (element.Row === 1) {
-              document.getElementById("pick" + element.Col).innerHTML = element.TeamName.toUpperCase()
-            }
+        })
+      }
+      if (data.teams) {
+        let counter = 1
+        data.teams.forEach(team => {
+          const pick = document.getElementById("pick" + counter)
+          pick.innerHTML = team.Name.toUpperCase()
+          pick.style.color = team.TextColor
+          counter++
         })
       }
       switch (data.action) {
@@ -253,7 +259,9 @@
 
         case "generate_draft":
           for (let i = 0; i < data.teams.length; i++) {
-            document.getElementById("pick" + (i+1)).innerHTML = data.teams[i].Name.toUpperCase()
+            const pick = document.getElementById("pick" + (i+1))
+            pick.innerHTML = data.teams[i].Name.toUpperCase()
+            pick.style.color = data.teams[i].TextColor
           }
           pickNumber.textContent = 1
           roundNumber.textContent = 1

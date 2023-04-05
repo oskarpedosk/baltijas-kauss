@@ -50,7 +50,7 @@
                         </div>
                         <p class="text-muted">Height <span class="text-dark">{{.Data.player.Height}}cm</span></p>
                         <p class="text-muted">Weight <span class="text-dark">{{.Data.player.Weight}}kg</span></p>
-                        <p class="text-muted">Kauss ADP <span class="text-dark">-</span></p>
+                        <p class="text-muted">Kauss ADP <span class="text-dark">{{if gt .Data.ADP 0.0}}{{.Data.ADP}}{{else}}Undrafted{{end}} </span></p>
                         <hr>
                         <p class="text-muted">Age <span class="text-dark">{{.Data.player.Age}}</span></p>
                         <p class="text-muted">Birthdate <span class="text-dark">{{.Data.player.Birthdate}}</span></p>

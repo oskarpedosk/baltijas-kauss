@@ -68,6 +68,7 @@ func (m *postgresDBRepo) GetDrafts() ([]models.DraftPick, error) {
 			return drafts, err
 		}
 		defer rows.Close()
+		previousDraft := 0
 		for rows.Next() {
 			var draft models.DraftPick
 			err := rows.Scan(
@@ -78,7 +79,10 @@ func (m *postgresDBRepo) GetDrafts() ([]models.DraftPick, error) {
 			if err != nil {
 				return drafts, err
 			}
-			drafts = append(drafts, draft)
+			if draft.DraftID != previousDraft {
+				drafts = append(drafts, draft)
+			}
+			previousDraft = draft.DraftID
 		}
 
 	return drafts, nil
@@ -130,7 +134,8 @@ func (m *postgresDBRepo) GetDraft(draftID int) ([]models.DraftPick, error) {
 	SELECT drafts.pick, drafts.team_id, CONCAT(players.first_name, ' ', players.last_name) AS name
 	FROM drafts
 	JOIN players ON players.player_id = drafts.player_id
-	WHERE draft_id = $1;
+	WHERE draft_id = $1
+	ORDER BY drafts.pick ASC
 	`
 
 	rows, err := m.DB.QueryContext(ctx, query, draftID)

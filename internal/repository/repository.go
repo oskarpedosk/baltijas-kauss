@@ -27,6 +27,7 @@ type DatabaseRepo interface {
 
 	ResetPlayers() error
 	CountPlayers() (int, error)
+	GetADP(playerID int) (float64, error)
 	UpdatePlayer(player models.Player) error
 	UpdatePlayerBadges(models.Player, []models.Badge) error
 	GetPlayer(playerID int) (models.Player, error)

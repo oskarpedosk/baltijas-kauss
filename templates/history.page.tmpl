@@ -2,57 +2,71 @@
 
 {{define "content"}}
 
-<title>Standings | Baltijas Kauss</title>
+<title>History | Baltijas Kauss</title>
 
 <div class="container">
-    <div class="table-container rounded-3 bg-light border border-1">
-        <div class="table-responsive standings-table">
-            <div class="dropdown mb-3">
-                <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    DRAFT {{ .Data.activeDraft }}
-                </a>
-                
-                <ul class="dropdown-menu">
-                    {{ range $index, $draft := index .Data "drafts" }}
-                        <li><a class="dropdown-item" href="/history?draft={{$draft.DraftID}}">Draft {{.DraftID}}</a></li>
-                    {{ end }}
-                </ul>
-            </div>
-
-            <div id="draft-table-container" class="rounded-3 border">
-                <table id="draft-table" class="table table-condensed table-borderless table-responsive m-0">
-                  <thead style="text-align: center;">
-                      <tr>
-                          <th style="font-size: 12px; width: 5%"></th>
-                          {{ range $team := .Data.teams }}
-                            <th style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%;">{{ $team.Name }}</th>
-                          {{ end }}
-                      </tr>
-                  </thead>
-                  <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
-                    {{ range $row := seq 1 12 }}
-                      <tr style="border-top: 0.1px solid rgb(190, 190, 190); font-size: 12px;">
-                        <td>
-                          {{ $row }}
-                        </td>
-                        {{ range $col := seq 1 (len $.Data.teams) }}
-                        <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
-                          <div id="row{{$row}}col{{$col}}" class="py-1">
-                            <br>
-                            <br>
-                          </div>
-                        </td>
+    <div class="round">
+        <div class="table-container rounded-3 bg-light border">
+            {{ if .Data }}
+                <div class="dropdown mb-3">
+                    <a class="btn btn-primary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        DRAFT #{{ .Data.activeDraft }}
+                    </a>
+                    
+                    <ul class="dropdown-menu">
+                        {{ range $index, $draft := index .Data.drafts }}
+                            <li><a class="dropdown-item" href="/history?draft={{$draft.DraftID}}"><span class="fw-semibold">Draft #{{ .DraftID }}</span> <span class="date">{{ .CreatedAt }}</span></a></li>
                         {{ end }}
-                      </tr>
-                    {{ end }}
-                  </tbody>
-                </table>
-              </div>
+                    </ul>
+                </div>
+    
+                <div id="draft-table-container" class="rounded-3 border">
+                    <table id="draft-table" class="table table-condensed table-borderless table-responsive m-0">
+                        <thead style="text-align: center;">
+                            <tr>
+                                <th style="font-size: 12px; width: 5%"></th>
+                                {{ range $team := .Data.teams }}
+                                    <th style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%; color: {{$team.TextColor}};">{{ $team.Name }}</th>
+                                {{ end }}
+                            </tr>
+                        </thead>
+                        <tbody style="white-space: nowrap; text-align: center; vertical-align: middle;">
+                        {{ range $index, $round := index .Data.draft }}
+                            <tr style="border-top: 0.1px solid rgb(190, 190, 190); font-size: 12px;">
+                            <td>
+                                {{ add $index 1 }}
+                            </td>
+                            {{ range $pick := $round }}
+                            <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
+                                <div class="py-1">
+                                {{ $pick.Name }}
+                                </div>
+                            </td>
+                            {{ end }}
+                            </tr>
+                        {{ end }}
+                        </tbody>
+                    </table>
+                </div>
+            {{ else }}
+                <h4 class="mb-0">No drafts yet</h4>
+            {{ end }}
         </div>
     </div>
 </div>
 {{end}}
 
 {{define "js"}}
+
+<script>
+    const dates = document.querySelectorAll('.date')
+    dates.forEach(element => {
+        let date = new Date(element.innerHTML)
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const formattedDate = date.toLocaleDateString('est', options);
+
+        element.innerHTML = formattedDate
+    })
+</script>
 
 {{end}}

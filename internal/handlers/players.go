@@ -78,8 +78,15 @@ func (m *Repository) Player(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	ADP, err := m.DB.GetADP(playerID)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
 	data := make(map[string]interface{})
 	data["player"] = player
+	data["ADP"] = ADP
 	data["badges"] = badges
 	data["team"] = playersTeam
 	data["teams"] = teams[1:]

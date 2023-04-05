@@ -3,6 +3,7 @@ package dbrepo
 import (
 	"context"
 	"fmt"
+	"math"
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
@@ -752,4 +753,45 @@ func (m *postgresDBRepo) GetPlayerBadges(playerID int) ([]models.Badge, error) {
 	}
 
 	return badges, nil
+}
+
+func (m *postgresDBRepo) GetADP(playerID int) (float64, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	sum := 0.0
+	counter := 0.0
+
+	query := `
+	SELECT
+		pick
+	FROM
+		drafts
+	WHERE
+		player_id = $1
+	`
+
+	rows, err := m.DB.QueryContext(ctx, query, playerID)
+	if err != nil {
+		return sum, err
+	}
+
+	defer rows.Close()
+	for rows.Next() {
+		var pick int
+		err := rows.Scan(&pick)
+		if err != nil {
+			return sum, err
+		}
+		sum += float64(pick)
+		counter++
+	}
+
+	if sum == 0.0 {
+		return sum, nil
+	}
+
+	adp := math.Round(sum/counter*10) / 10
+
+	return adp, nil
 }

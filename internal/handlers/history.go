@@ -1,11 +1,10 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
-	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
@@ -13,25 +12,30 @@ import (
 
 func (m *Repository) History(w http.ResponseWriter, r *http.Request) {
 	draftID := 0
+	drafts, err := m.DB.GetDrafts()
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+
 	if r.URL.Query().Has("draft") {
-		var err error
 		draftID, err = strconv.Atoi(r.URL.Query().Get("draft"))
 		if err != nil {
 			helpers.ServerError(w, err)
 			return
 		}
-	}
-
-	var draft []models.DraftPick
-	if draftID != 0 {
-		var err error
-		draft, err = m.DB.GetDraft(draftID)
-		if err != nil {
-			helpers.ServerError(w, err)
+	} else {
+		if len(drafts) > 0 {
+			draftID = drafts[0].DraftID
 		}
 	}
 
-	drafts, err := m.DB.GetDrafts()
+	if draftID == 0 {
+		render.Template(w, r, "history.page.tmpl", &models.TemplateData{})
+		return
+	}
+
+	var draft []models.DraftPick
+	draft, err = m.DB.GetDraft(draftID)
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
@@ -41,31 +45,52 @@ func (m *Repository) History(w http.ResponseWriter, r *http.Request) {
 		helpers.ServerError(w, err)
 	}
 
-	var draftOrder = []models.Team{}
-	counter := 0
-	for _, pick := range draft {
-		for _, team := range teams {
-			if pick.TeamID == team.TeamID {
-				draftOrder = append(draftOrder, team)
-				counter++
-				break
-			}
-		}
-		if counter == len(teams) - 1 {
-			break
-		}
+	teamMap := make(map[int]models.Team)
+	for _, team := range teams[1:] {
+		team.Name = strings.ToUpper(team.Name)
+		teamMap[team.TeamID] = team
 	}
 
-	fmt.Println(draftOrder)
+	round := 1
+	prevTeam := 0
+	var row = []models.DraftPick{}
+	var draftOrder = []models.Team{}
+	var ordererDraft = [][]models.DraftPick{}
+
+	for _, pick := range draft {
+		if prevTeam == pick.TeamID {
+			if round%2 == 0 {
+				reverse(row)
+			}
+			ordererDraft = append(ordererDraft, row)
+			row = []models.DraftPick{}
+			round++
+		}
+		row = append(row, pick)
+		if round == 1 {
+			draftOrder = append(draftOrder, teamMap[pick.TeamID])
+		}
+		prevTeam = pick.TeamID
+	}
+	if round%2 == 0 {
+		reverse(row)
+	}
+	ordererDraft = append(ordererDraft, row)
 
 	data := make(map[string]interface{})
 	data["drafts"] = drafts
 	data["teams"] = draftOrder
-	data["draft"] = draftPicks
+	data["draft"] = ordererDraft
 	data["activeDraft"] = draftID
 
 	render.Template(w, r, "history.page.tmpl", &models.TemplateData{
-		Form: forms.New(nil),
 		Data: data,
 	})
+}
+
+func reverse(s []models.DraftPick) {
+	for i := 0; i < len(s)/2; i++ {
+		j := len(s) - i - 1
+		s[i], s[j] = s[j], s[i]
+	}
 }
