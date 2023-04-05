@@ -15,7 +15,7 @@
                     
                     <ul class="dropdown-menu">
                         {{ range $index, $draft := index .Data.drafts }}
-                            <li><a class="dropdown-item" href="/history?draft={{$draft.DraftID}}"><span class="fw-semibold">Draft #{{ .DraftID }}</span> <span class="date">{{ .CreatedAt }}</span></a></li>
+                            <li><a class="dropdown-item" href="/history?draft={{$draft.DraftID}}"><span class="fw-semibold">#{{ .DraftID }}</span> <span class="date">{{ .CreatedAt }}</span></a></li>
                         {{ end }}
                     </ul>
                 </div>

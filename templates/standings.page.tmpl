@@ -181,7 +181,7 @@
             </div>
             
             <div class="row text-center">
-                <p class="mt-1 mb-0" style="font-size: 14px;">{{$results.CreatedAt}}</p>
+                <p class="mt-1 mb-0 date" style="font-size: 14px;">{{$results.CreatedAt}}</p>
             </div>
             <div id="edit_result_{{$index2}}" class="mt-3 mb-4 hidden" >
 
@@ -355,6 +355,22 @@
         }, 100)
     }
 
+</script>
+
+<script>
+    const dates = document.querySelectorAll('.date')
+    dates.forEach(element => {
+    let date = new Date(element.innerHTML)
+    const options = { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric'
+    };
+    const formattedDate = date.toLocaleDateString('est', options).replace(',', '').replaceAll('.', '/').split(' ', -1)
+    element.innerHTML = formattedDate[1] + ' - ' + formattedDate[0]
+    })
 </script>
 
 {{end}}

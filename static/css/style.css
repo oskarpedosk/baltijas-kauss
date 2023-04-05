@@ -467,8 +467,8 @@ html {
 }
 
 #draft-players-list {
-    min-height: 594.5px;
-    max-height: 594.5px;
+    min-height: 588px;
+    max-height: 588px;
     overflow-y: scroll;
     overflow-x: hidden;
 }

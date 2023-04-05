@@ -105,8 +105,8 @@
                   {{ $row }}
                 </td>
                 {{ range $col := seq 1 (len $.Data.teams) }}
-                <td class="p-0" style="font-size: 14px; border-left: 0.1px solid rgb(190, 190, 190);">
-                  <div id="row{{$row}}col{{$col}}" class="py-1">
+                <td class="p-0" style="font-size: 11px; border-left: 0.1px solid rgb(190, 190, 190);">
+                  <div id="row{{$row}}col{{$col}}" style="padding: 6px;">
                     <br>
                     <br>
                   </div>
@@ -220,7 +220,7 @@
       if (data.draft_picks) {
         data.draft_picks.forEach(element => {
           if (element.Name) {
-            document.getElementById("row" + element.Row + "col" + element.Col).innerHTML = "<span class=\"fw-semibold\">" + element.Name + "</span><br>" + element.Positions
+            document.getElementById("row" + element.Row + "col" + element.Col).innerHTML = "<span style=\"font-size: 14px\">" + element.Name + "</span><br>" + element.Positions
           }
         })
       }
