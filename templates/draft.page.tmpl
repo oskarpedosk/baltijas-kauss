@@ -291,7 +291,7 @@
             const next = document.getElementById("row" + data.next_row + "col" + data.next_col)
             next.style.color = 'white'
             next.classList.add('bkcolor')
-            next.innerHTML = `<span style="font-size: 14px">${data.team_name}</span><br>PICK ${data.pick}`
+            next.innerHTML = `<span style="font-size: 14px">PICK ${data.pick}</span><br>${data.team_name}`
           }
           document.getElementById("draft-players-list-" + data.player_id).outerHTML = ''
           const current = document.getElementById("row" + data.row + "col" + data.col)
@@ -305,7 +305,7 @@
           firstPick.style.color = 'white'
           firstPick.classList.add('bkcolor')
           activeTeam.textContent = data.team_name
-          firstPick.innerHTML = `<span style="font-size: 14px">${data.team_name}</span><br>PICK 1`
+          firstPick.innerHTML = `<span style="font-size: 14px">PICK 1</span><br>${data.team_name}`
           break  
 
         case "draft_ended":

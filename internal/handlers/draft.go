@@ -94,7 +94,6 @@ func (m *Repository) DraftEndPoint(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	log.Println("Client connected to draft endpoint")
 
 	var draftResponse DraftJsonResponse
 	draftResponse.Message = `<em><small>Connected to server</small><em>`
@@ -118,8 +117,6 @@ func (m *Repository) MessengerEndPoint(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-
-	log.Println("Client connected to messenger endpoint")
 
 	var messengerResponse MessengerJsonResponse
 	messengerResponse.Message = `<em><small>Connected to server</small><em>`

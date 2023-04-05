@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 	"os/exec"
 	"reflect"
@@ -290,42 +290,44 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 			output, err := cmd.Output()
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 			}
 
 			// Parse the output as an array of two objects
 			var data []json.RawMessage
 			err = json.Unmarshal(output, &data)
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 			}
 
 			// Unmarshal the first object as a Player
 			var player models.Player
 			err = json.Unmarshal(data[0], &player)
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 			}
 
 			// Unmarshal the second object as a slice of Badges
 			var badges []models.Badge
 			err = json.Unmarshal(data[1], &badges)
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 			}
 
 			err = m.DB.UpdatePlayer(player)
 			if err != nil {
+				log.Println(err)
 				helpers.ServerError(w, err)
 			}
 
 			err = m.DB.UpdatePlayerBadges(player, badges)
 			if err != nil {
+				log.Println(err)
 				helpers.ServerError(w, err)
 			}
 		}(playerID, ratingsURL)
 	}
 
-	m.App.Session.Put(r.Context(), "warning", "Updating player ID: " + playerID)
-	http.Redirect(w, r, "/players/" + playerID, http.StatusSeeOther)
+	m.App.Session.Put(r.Context(), "warning", "Updating player ID: "+playerID)
+	http.Redirect(w, r, "/players/"+playerID, http.StatusSeeOther)
 }

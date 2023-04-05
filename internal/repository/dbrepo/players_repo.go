@@ -3,6 +3,7 @@ package dbrepo
 import (
 	"context"
 	"fmt"
+	"log"
 	"math"
 	"time"
 
@@ -437,7 +438,7 @@ func (m *postgresDBRepo) UpdatePlayer(player models.Player) error {
 		return err
 	}
 
-	fmt.Println(player.FirstName, player.LastName, "stats successfully updated")
+	log.Println(player.FirstName, player.LastName, "stats successfully updated")
 	return nil
 }
 

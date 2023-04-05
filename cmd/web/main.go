@@ -41,6 +41,13 @@ func main() {
 		Handler: routes(&app),
 	}
 
+	logFile, err := os.OpenFile("./logs/logfile.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer logFile.Close()
+	log.SetOutput(logFile)
+
 	err = server.ListenAndServe()
 	if err != nil {
 		log.Fatal(err)

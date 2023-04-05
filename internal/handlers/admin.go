@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"os/exec"
 	"strconv"
@@ -93,13 +94,13 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	filePath := "./static/js/script/updateplayer.js"
 	success := 0
 	for _, player := range players {
-		successMsg := fmt.Sprintf("%s %s update SUCCESS", player.FirstName, player.LastName)
-		failMsg := fmt.Sprintf("%s %s update FAILED", player.FirstName, player.LastName)
+		successMsg := fmt.Sprintf("%s %s update success", player.FirstName, player.LastName)
+		failMsg := fmt.Sprintf("%s %s update failed", player.FirstName, player.LastName)
 		cmd := exec.Command("node", filePath, strconv.Itoa(player.PlayerID), player.RatingsURL)
 		output, err := cmd.Output()
 		if err != nil {
-			fmt.Println(err)
-			fmt.Println(failMsg)
+			log.Println(err)
+			log.Println(failMsg)
 			continue
 		}
 
@@ -107,8 +108,8 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		var data []json.RawMessage
 		err = json.Unmarshal(output, &data)
 		if err != nil {
-			fmt.Println(err)
-			fmt.Println(failMsg)
+			log.Println(err)
+			log.Println(failMsg)
 			continue
 		}
 
@@ -116,8 +117,8 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		var player models.Player
 		err = json.Unmarshal(data[0], &player)
 		if err != nil {
-			fmt.Println(err)
-			fmt.Println(failMsg)
+			log.Println(err)
+			log.Println(failMsg)
 			continue
 		}
 
@@ -125,30 +126,30 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		var badges []models.Badge
 		err = json.Unmarshal(data[1], &badges)
 		if err != nil {
-			fmt.Println(err)
-			fmt.Println(failMsg)
+			log.Println(err)
+			log.Println(failMsg)
 			continue
 		}
 
 		err = m.DB.UpdatePlayer(player)
 		if err != nil {
-			fmt.Println(failMsg)
+			log.Println(err)
+			log.Println(failMsg)
 			continue
-			helpers.ServerError(w, err)
 		}
 
 		err = m.DB.UpdatePlayerBadges(player, badges)
 		if err != nil {
-			fmt.Println(failMsg)
+			log.Println(err)
+			log.Println(failMsg)
 			continue
-			helpers.ServerError(w, err)
 		}
 		success++
-		fmt.Println(successMsg)
+		log.Println(successMsg)
 	}
-	fmt.Println("------------")
+	log.Println("------------")
 	msg := fmt.Sprintf("%d of %d players updated successfully", success, filter.Limit)
-	fmt.Println(msg)
+	log.Println(msg)
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
