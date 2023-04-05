@@ -264,7 +264,7 @@ func draftPlayer(e DraftPayload) {
 	response.PlayerID = e.PlayerID
 	response.Row = draftPicks[pick-1].Row
 	response.Col = draftPicks[pick-1].Col
-	response.Message = fmt.Sprintf("<span class=\"fw-semibold\">%s</span><br>%s", name, positions)
+	response.Message = fmt.Sprintf("<span style=\"font-size: 14px\">%s</span><br>%s", name, positions)
 	BroadcastToAll(response)
 
 	Repo.DraftPlayer(draftPicks[pick-1].TeamID, e.PlayerID)

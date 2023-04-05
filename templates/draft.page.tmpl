@@ -108,7 +108,9 @@
                 <td class="p-0" style="font-size: 11px; border-left: 0.1px solid rgb(190, 190, 190);">
                   <div id="row{{$row}}col{{$col}}" style="padding: 6px;">
                     <br>
-                    <br>
+                    <span style="font-size: 14px;">
+                      <br>
+                    </span>
                   </div>
                 </td>
                 {{ end }}
@@ -270,7 +272,7 @@
           const cols = document.querySelectorAll('#draft-table th').length
           for (let row = 1; row < rows; row++) {
             for (let col = 1; col < cols; col++) {
-              document.getElementById("row" + row + "col" + col).innerHTML = "<br><br>"
+              document.getElementById("row" + row + "col" + col).innerHTML = "<br><span style=\"font-size: 14px\"><br></span>"
             }
           }
           break;
@@ -289,7 +291,7 @@
             const next = document.getElementById("row" + data.next_row + "col" + data.next_col)
             next.style.color = 'white'
             next.classList.add('bkcolor')
-            next.innerHTML = `PICK ${data.pick}<br>${data.team_name}</span>`
+            next.innerHTML = `<span style="font-size: 14px">${data.team_name}</span><br>PICK ${data.pick}`
           }
           document.getElementById("draft-players-list-" + data.player_id).outerHTML = ''
           const current = document.getElementById("row" + data.row + "col" + data.col)
@@ -303,7 +305,7 @@
           firstPick.style.color = 'white'
           firstPick.classList.add('bkcolor')
           activeTeam.textContent = data.team_name
-          firstPick.innerHTML = `PICK 1<br>${data.team_name}</span>`
+          firstPick.innerHTML = `<span style="font-size: 14px">${data.team_name}</span><br>PICK 1`
           break  
 
         case "draft_ended":
