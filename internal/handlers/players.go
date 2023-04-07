@@ -292,6 +292,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 			}
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
+			log.Println(cmd)
 			output, err := cmd.Output()
 			if err != nil {
 				log.Println("error siin")
