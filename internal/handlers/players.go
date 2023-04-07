@@ -296,7 +296,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				log.Printf("Command failed with error: %v\n", err)
 			}
-			log.Panicln(out)
+			log.Panicln(string(out))
 
 			output, err := cmd.Output()
 			if err != nil {
