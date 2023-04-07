@@ -92,6 +92,9 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filePath := "./static/js/script/updateplayer.js"
+	if ubuntu {
+		filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
+	}
 	success := 0
 	for _, player := range players {
 		successMsg := fmt.Sprintf("%s %s update success", player.FirstName, player.LastName)

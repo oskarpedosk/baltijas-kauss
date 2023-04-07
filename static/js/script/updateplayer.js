@@ -4,7 +4,7 @@ import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
 const playerID = process.argv[2]
 const ratingsURL = process.argv[3]
-let ubuntu = false
+let ubuntu = true
 let page
 puppeteer.use(StealthPlugin())
 

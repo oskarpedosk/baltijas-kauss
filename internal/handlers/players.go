@@ -15,6 +15,8 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
 
+const ubuntu = true
+
 var queryFilters = map[string]string{
 	"team":   "TeamID",
 	"ovrl":   "OverallMin",
@@ -285,8 +287,10 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 
 	if len(playerID) > 0 && len(ratingsURL) > 0 {
 		go func(playerID, ratingsURL string) {
-			// ubuntuFilePath := "/var/www/bkauss/static/js/script/updateplayer.js"
 			filePath := "./static/js/script/updateplayer.js"
+			if ubuntu {
+				filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
+			}
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 			output, err := cmd.Output()
 			if err != nil {
