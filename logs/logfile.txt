@@ -4,3 +4,9 @@
 2023/04/05 14:41:53 Error repeated read on failed websocket connection
 2023/04/05 14:41:53 Error repeated read on failed websocket connection
 2023/04/05 14:47:36 Joel Embiid stats successfully updated
+2023/04/05 17:28:15 Error repeated read on failed websocket connection
+2023/04/05 17:28:15 Error repeated read on failed websocket connection
+2023/04/05 17:28:32 Websocket error
+2023/04/05 17:28:35 Error repeated read on failed websocket connection
+2023/04/05 17:28:35 Error repeated read on failed websocket connection
+2023/04/05 17:28:35 Websocket error
