@@ -12,7 +12,7 @@ let browserPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 let imagesPath = './static/images/badges'
 
 if (ubuntu) {
-    browserPath = '/usr/bin/google-chrome-stable'
+    browserPath = '/usr/bin/chromium-browser'
     imagesPath = '/var/www/bkauss/static/images/badges'
 }
 
