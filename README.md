@@ -7,7 +7,7 @@ Server runs on Ubuntu 22.04.2 LTS
 [baltijaskauss.ee](https://www.baltijaskauss.ee)
 
 ### Built with
-- Go version 1.20.3: https://golang.org/doc/go1.12  
+- Go version 1.20.3: https://go.dev/doc/go1.20
 Programming language used for the backend development of your project.
 - Chi router: https://github.com/go-chi/chi  
 Lightweight and fast HTTP router for Go.
