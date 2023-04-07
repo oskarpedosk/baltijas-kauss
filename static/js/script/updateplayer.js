@@ -6,7 +6,6 @@ const playerID = process.argv[2]
 const ratingsURL = process.argv[3]
 let ubuntu = true
 let page
-puppeteer.use(StealthPlugin())
 
 let browserPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 let imagesPath = './static/images/badges'
@@ -16,6 +15,7 @@ if (ubuntu) {
     imagesPath = '/var/www/bkauss/static/images/badges'
 }
 
+puppeteer.use(StealthPlugin())
 puppeteer.launch({executablePath: browserPath, headless: true }).then(async browser => {
     page = await browser.newPage()
 

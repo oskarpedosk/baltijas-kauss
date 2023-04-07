@@ -10,3 +10,6 @@
 2023/04/05 17:28:35 Error repeated read on failed websocket connection
 2023/04/05 17:28:35 Error repeated read on failed websocket connection
 2023/04/05 17:28:35 Websocket error
+2023/04/07 09:51:58 listen tcp :8080: bind: address already in use
+2023/04/07 09:52:30 /usr/local/bin/node ./static/js/script/updateplayer.js 34 https://www.2kratings.com/kevin-durant
+2023/04/07 09:53:22 Kevin Durant stats successfully updated

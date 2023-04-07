@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os/exec"
@@ -292,7 +293,12 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 				filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 			}
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
-			log.Println(cmd)
+			out, err := cmd.CombinedOutput()
+			if err != nil {
+				log.Printf("Command failed with error: %v\n", err)
+			}
+			log.Panicln(out)
+
 			output, err := cmd.Output()
 			if err != nil {
 				log.Println("error siin")
