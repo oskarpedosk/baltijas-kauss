@@ -35,7 +35,6 @@ func routes(app *config.AppConfig) http.Handler {
 		mux.Post("/players/{id}", handlers.Repo.PostPlayer)
 
 		mux.Post("/update", handlers.Repo.PostUpdatePlayer)
-		
 
 		mux.Get("/teams/{id}", handlers.Repo.Team)
 		mux.Post("/teams/{id}", handlers.Repo.PostTeam)

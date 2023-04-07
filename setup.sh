@@ -40,7 +40,7 @@ git config --global user.name "Oskar Pedosk"
 git config --global credential.helper store
 
 # THIS PART DOESNT WORK 
-echo "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" | git credential-store --file ~/.git-credentials store
+echo "#ACCESS TOKEN" | git credential-store --file ~/.git-credentials store
 # THIS PART DOESNT WORK 
 
 # Edit PostgreSQL configuration file
@@ -110,7 +110,7 @@ import conf.d/*.conf
 sudo mkdir /etc/caddy/conf.d
 
 sudo sh -c "echo '
-185.7.252.159 {
+baltijaskauss.ee {
     encode zstd gzip
     import static
     import security
@@ -174,7 +174,7 @@ sudo chmod 777 update.sh
 # Run update.sh
 ./update.sh << EOL
 oskar.pedosk@gmail.com
-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
+ACCESS TOKEN
 EOL
 
 # Update package list
