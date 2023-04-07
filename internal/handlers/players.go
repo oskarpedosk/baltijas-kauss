@@ -294,6 +294,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 			output, err := cmd.Output()
 			if err != nil {
+				log.Println("error siin")
 				log.Println(err)
 			}
 
@@ -301,6 +302,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			var data []json.RawMessage
 			err = json.Unmarshal(output, &data)
 			if err != nil {
+				log.Println("error siin2")
 				log.Println(err)
 			}
 
@@ -308,6 +310,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			var player models.Player
 			err = json.Unmarshal(data[0], &player)
 			if err != nil {
+				log.Println("error siin3")
 				log.Println(err)
 			}
 
@@ -315,17 +318,20 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			var badges []models.Badge
 			err = json.Unmarshal(data[1], &badges)
 			if err != nil {
+				log.Println("error siin4")
 				log.Println(err)
 			}
 
 			err = m.DB.UpdatePlayer(player)
 			if err != nil {
+				log.Println("error siin5")
 				log.Println(err)
 				helpers.ServerError(w, err)
 			}
 
 			err = m.DB.UpdatePlayerBadges(player, badges)
 			if err != nil {
+				log.Println("error siin6")
 				log.Println(err)
 				helpers.ServerError(w, err)
 			}
