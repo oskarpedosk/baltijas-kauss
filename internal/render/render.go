@@ -36,7 +36,10 @@ func AddDefaultData(tmplData *models.TemplateData, r *http.Request) *models.Temp
 	if app.Session.Exists(r.Context(), "user_id") {
 		tmplData.User = models.User{
 			UserID:      app.Session.GetInt(r.Context(), "user_id"),
-			FirstName:   app.Session.GetString(r.Context(), "user_name"),
+			FirstName:   app.Session.GetString(r.Context(), "first_name"),
+			LastName:    app.Session.GetString(r.Context(), "last_name"),
+			Email:       app.Session.GetString(r.Context(), "email"),
+			ImgID:       app.Session.GetString(r.Context(), "img"),
 			AccessLevel: app.Session.GetInt(r.Context(), "access_level"),
 		}
 	}
@@ -120,9 +123,9 @@ func add(x, y int) int {
 }
 
 func seq(start, end int) []int {
-    var s []int
-    for i := start; i <= end; i++ {
-        s = append(s, i)
-    }
-    return s
+	var s []int
+	for i := start; i <= end; i++ {
+		s = append(s, i)
+	}
+	return s
 }

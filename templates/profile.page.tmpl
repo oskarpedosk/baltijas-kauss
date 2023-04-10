@@ -1,0 +1,25 @@
+{{template "base" .}}
+
+{{define "content"}}
+
+<title>Profile | Baltijas Kauss</title>
+
+<div class="container">
+    <form enctype="multipart/form-data" action="/profile" method="post">
+    <div class="mx-auto text-center" style="max-width: 350px;">
+        <form method="post" action="/profile">
+            <img class="profile-image rounded-circle inline-block border mb-4" src="/static/images/users/{{ .User.ImgID}}" alt="" width="120">
+            <input class="form-control mb-4" type="file" name="profile_img"/>
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <input type="hidden" name="user_id" value="{{ .User.UserID}}">
+            <input class="form-control mb-2" type="text" autocomplete="off" name="first_name" placeholder="First name" value="{{ .User.FirstName }}">
+            <input class="form-control mb-2" type="text" autocomplete="off" name="last_name" placeholder="Last name" value="{{ .User.LastName }}">
+            <input class="form-control mb-4" type="email" autocomplete="off" name="email" placeholder="E-mail" value="{{ .User.Email }}">
+            <input class="form-control mb-2" type="password" autocomplete="off" name="password_old" placeholder="Old password">
+            <input class="form-control mb-2" type="password" autocomplete="off" name="password_new" placeholder="New password">
+            <input class="form-control mb-4" type="password" autocomplete="off" name="password_confirm" placeholder="Confirm password">
+            <button class="w-100 btn btn-primary" type="submit">Update</button>
+        </form>
+    </div>
+</div>
+{{end}}

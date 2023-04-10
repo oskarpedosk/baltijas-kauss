@@ -253,6 +253,13 @@ html {
     width: 45px;
 }
 
+.profile-image {
+    object-fit: cover;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+}
+
 .player-card {
     text-align: start;
     vertical-align: middle;

@@ -59,13 +59,12 @@
             <li class="nav-item">
               <a class="nav-link" href="#">{{.User.FirstName}}</a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown d-flex">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/static/images/users/default_user.png" width="20" height="20" class="rounded-circle mb-1 border">
+                <img src="/static/images/users/{{ .User.ImgID }}" width="20" height="20" class="rounded-circle mb-1 border">
               </a>
               <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
                 <li><a class="dropdown-item" href="/logout">Logout</a></li>
               </ul>
             </li>

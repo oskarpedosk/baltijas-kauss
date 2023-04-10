@@ -8,7 +8,7 @@ type DatabaseRepo interface {
 	// Users
 	AllUsers() bool
 	GetUser(userID int) (models.User, error)
-	Authenticate(email, testPassword string) (int, string, int, error)
+	Authenticate(email, password string) (int, string, int, error)
 
 	// Teams
 	GetTeam(teamID int) (models.Team, error)

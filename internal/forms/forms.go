@@ -98,6 +98,25 @@ func (f *Form) IsEmail(field string) {
 	}
 }
 
+// ValidPassword checks for valid password
+func (f *Form) ValidPassword(field string) {
+	pw := f.Get(field)
+	if len(pw) < 7 {
+		f.Errors.Add(field, "1 uppercase, 1 lowercase, 1 number, minimum length 7 characters")
+		return
+	}
+	if !govalidator.HasUpperCase(pw) && !govalidator.HasLowerCase(pw) {
+		f.Errors.Add(field, "1 uppercase, 1 lowercase, 1 number, minimum length 7 characters")
+		return
+	}
+	for _, char := range pw {
+		if govalidator.IsNumeric(string(char)) {
+			return
+		}
+	}
+	f.Errors.Add(field, "1 uppercase, 1 lowercase, 1 number, minimum length 7 characters")
+}
+
 // Alphanumeric checks for alphanumeric and spaces
 func (f *Form) AlphaNumeric(fields ...string) {
 	regexp, _ := regexp.Compile(`^[a-zA-Z0-9õäöüÕÄÖÜ ]*$`)
@@ -116,4 +135,18 @@ func (f *Form) IsUpper(field string) {
 	if !match {
 		f.Errors.Add(field, "Only uppercase letters and numbers allowed")
 	}
+}
+
+func ValidExtension(fileName string, extensions ...string) bool {
+	for _, extension := range extensions {
+		regex := fmt.Sprintf("\\.%s", extension)
+		re, err := regexp.Compile(regex)
+		if err != nil {
+			return false
+		}
+		if re.MatchString(fileName) {
+			return true
+		}
+	}
+	return false
 }

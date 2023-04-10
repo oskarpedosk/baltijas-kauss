@@ -1,14 +1,95 @@
 package handlers
 
 import (
+	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
+	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/forms"
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
+
+func (m *Repository) Profile(w http.ResponseWriter, r *http.Request) {
+	render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
+		Form: forms.New(nil),
+	})
+}
+
+func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseMultipartForm(20 << 20)
+	if err != nil {
+		helpers.ServerError(w, err)
+	}
+	form := forms.New(r.PostForm)
+	form.Required("first_name", "last_name", "email")
+	form.IsEmail("email")
+
+	userID, err := strconv.Atoi(form.Get("user_id"))
+	if err != nil {
+		helpers.ClientError(w, http.StatusBadRequest)
+		return
+	}
+
+	if form.Has("password_new") {
+		_, _, _, err = m.DB.Authenticate(form.Get("email"), form.Get("password_old"))
+		if err != nil {
+			form.Errors.Add("password_old", err.Error())
+		} else {
+			form.ValidPassword("password_new")
+			form.IsDuplicate("password_new", "password_confirm", "Passwords don't match")
+		}
+	}
+
+	file, handler, err := r.FormFile("profile_img")
+	if err != nil {
+		if !os.IsNotExist(err) {
+			helpers.ServerError(w, err)
+		}
+	}
+
+	fmt.Println(userID)
+
+	if file != nil {
+		defer file.Close()
+		if forms.ValidExtension(handler.Filename, "png", "jpg", "jpeg") {
+			form.Errors.Add("profile_img", "Only .png .jpg .jpeg files allowed")
+		}
+		if handler.Size > 1024*1024*0.5 {
+			form.Errors.Add("profile_img", "Files larger than 500KB are not supported")
+		}
+		re, err := regexp.Compile(`\.\w+$`)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		extension := re.FindString(handler.Filename)
+
+		tempFile, err := os.CreateTemp("./static/images/users", "*"+extension)
+		if err != nil {
+			form.Errors.Add("profile_img", err.Error())
+		}
+		defer tempFile.Close()
+		imageID := strings.Split(tempFile.Name(), "/")[4]
+
+		fmt.Println(imageID)
+
+		fileBytes, err := io.ReadAll(file)
+		if err != nil {
+			form.Errors.Add("post_image", err.Error())
+		}
+
+		tempFile.Write(fileBytes)
+	}
+	render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
+		Form: form,
+	})
+}
 
 func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {
 	if helpers.IsAuthenticated(r) {
@@ -57,7 +138,10 @@ func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
 	}
 	remoteIP := r.RemoteAddr
 	m.App.Session.Put(r.Context(), "user_id", id)
-	m.App.Session.Put(r.Context(), "user_name", user.FirstName)
+	m.App.Session.Put(r.Context(), "first_name", user.FirstName)
+	m.App.Session.Put(r.Context(), "last_name", user.LastName)
+	m.App.Session.Put(r.Context(), "email", user.Email)
+	m.App.Session.Put(r.Context(), "img", user.ImgID)
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	m.App.Session.Put(r.Context(), "access_level", accessLevel)
 	http.Redirect(w, r, "/", http.StatusSeeOther)

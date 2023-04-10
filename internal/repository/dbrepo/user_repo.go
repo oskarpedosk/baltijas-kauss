@@ -50,7 +50,7 @@ func (m *postgresDBRepo) GetUser(userID int) (models.User, error) {
 }
 
 // Authenticates a user
-func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, int, error) {
+func (m *postgresDBRepo) Authenticate(email, password string) (int, string, int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -64,7 +64,7 @@ func (m *postgresDBRepo) Authenticate(email, testPassword string) (int, string, 
 		return id, "", 0, err
 	}
 
-	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(testPassword))
+	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err == bcrypt.ErrMismatchedHashAndPassword {
 		return 0, "", 0, errors.New("incorrect password")
 	} else if err != nil {
