@@ -33,7 +33,6 @@ func (f *Form) Required(fields ...string) {
 	for _, field := range fields {
 		value := f.Get(field)
 		if strings.TrimSpace(value) == "" {
-			fmt.Println("empty field: ", field)
 			f.Errors.Add(field, "This field cannot be empty")
 		}
 	}
@@ -43,7 +42,6 @@ func (f *Form) Required(fields ...string) {
 func (f *Form) Has(field string) bool {
 	x := f.Get(field)
 	if x == "" {
-		f.Errors.Add(field, "This field cannot be empty")
 		return false
 	}
 	return true
@@ -138,13 +136,18 @@ func (f *Form) IsUpper(field string) {
 }
 
 func ValidExtension(fileName string, extensions ...string) bool {
+	fmt.Println(fileName)
 	for _, extension := range extensions {
+		fmt.Println(extension)
 		regex := fmt.Sprintf("\\.%s", extension)
 		re, err := regexp.Compile(regex)
+		fmt.Println(regex)
+		fmt.Println(re)
 		if err != nil {
 			return false
 		}
 		if re.MatchString(fileName) {
+			fmt.Println("match")
 			return true
 		}
 	}

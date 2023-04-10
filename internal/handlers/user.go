@@ -27,17 +27,29 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
+
 	form := forms.New(r.PostForm)
 	form.Required("first_name", "last_name", "email")
 	form.IsEmail("email")
 
-	userID, err := strconv.Atoi(form.Get("user_id"))
+	fmt.Println(form.Get("user_id"))
+	fmt.Println(form.Has("password_old"))
+	fmt.Println(form.Has("password_new"))
+	fmt.Println(form.Has("password_confirm"))
+
+	user := models.User{
+		FirstName: form.Get("first_name"),
+		LastName:  form.Get("last_name"),
+		Email:     form.Get("email"),
+	}
+
+	user.UserID, err = strconv.Atoi(form.Get("user_id"))
 	if err != nil {
 		helpers.ClientError(w, http.StatusBadRequest)
 		return
 	}
 
-	if form.Has("password_new") {
+	if form.Has("password_new") && form.Has("password_confirm") {
 		_, _, _, err = m.DB.Authenticate(form.Get("email"), form.Get("password_old"))
 		if err != nil {
 			form.Errors.Add("password_old", err.Error())
@@ -54,15 +66,13 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println(userID)
-
-	if file != nil {
+	if form.Valid() && file != nil {
 		defer file.Close()
-		if forms.ValidExtension(handler.Filename, "png", "jpg", "jpeg") {
+		if !forms.ValidExtension(handler.Filename, "png", "jpg", "jpeg") {
 			form.Errors.Add("profile_img", "Only .png .jpg .jpeg files allowed")
 		}
-		if handler.Size > 1024*1024*0.5 {
-			form.Errors.Add("profile_img", "Files larger than 500KB are not supported")
+		if handler.Size > 1024*200 {
+			form.Errors.Add("profile_img", "Files larger than 200KB are not supported")
 		}
 		re, err := regexp.Compile(`\.\w+$`)
 		if err != nil {
@@ -70,25 +80,52 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 		}
 		extension := re.FindString(handler.Filename)
 
-		tempFile, err := os.CreateTemp("./static/images/users", "*"+extension)
-		if err != nil {
-			form.Errors.Add("profile_img", err.Error())
+		if form.Valid() {
+			tempFile, err := os.CreateTemp("./static/images/users", "*"+extension)
+			if err != nil {
+				form.Errors.Add("profile_img", err.Error())
+			}
+			defer tempFile.Close()
+			user.ImgID = strings.Split(tempFile.Name(), "/")[4]
+
+			fileBytes, err := io.ReadAll(file)
+			if err != nil {
+				form.Errors.Add("post_image", err.Error())
+			}
+
+			tempFile.Write(fileBytes)
+			err = m.DB.UpdateUserImage(user.UserID, user.ImgID)
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+			m.App.Session.Put(r.Context(), "img", user.ImgID)
 		}
-		defer tempFile.Close()
-		imageID := strings.Split(tempFile.Name(), "/")[4]
-
-		fmt.Println(imageID)
-
-		fileBytes, err := io.ReadAll(file)
-		if err != nil {
-			form.Errors.Add("post_image", err.Error())
-		}
-
-		tempFile.Write(fileBytes)
 	}
-	render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
-		Form: form,
-	})
+
+	fmt.Println("invalid form")
+	fmt.Println(form)
+
+	if form.Valid() {
+		fmt.Println("valid form")
+		fmt.Println(form)
+		err = m.DB.UpdateUserInfo(user.UserID, user.FirstName, user.LastName, user.Email)
+		if err != nil {
+			helpers.ServerError(w, err)
+		}
+		if form.Has("password_new") {
+			err = m.DB.ChangePassword(user.UserID, form.Get("password_new"))
+			if err != nil {
+				helpers.ServerError(w, err)
+			}
+		}
+		render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
+			Form: forms.New(nil),
+		})
+	} else {
+		render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
+			Form: form,
+		})
+	}
 }
 
 func (m *Repository) Login(w http.ResponseWriter, r *http.Request) {

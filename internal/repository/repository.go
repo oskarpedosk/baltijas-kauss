@@ -9,6 +9,10 @@ type DatabaseRepo interface {
 	AllUsers() bool
 	GetUser(userID int) (models.User, error)
 	Authenticate(email, password string) (int, string, int, error)
+	
+	ChangePassword(userID int, password string) error
+	UpdateUserImage(userID int, img string) error
+	UpdateUserInfo(userID int, firstName, lastName, email string) error
 
 	// Teams
 	GetTeam(teamID int) (models.Team, error)
@@ -41,7 +45,7 @@ type DatabaseRepo interface {
 	AddDraftPick(draftID int, draftPick models.DraftPick) error
 	SelectRandomPlayer(random int) (models.Player, error)
 
-	// Standinds
+	// Standings
 	AddResult(res models.Result) error
 	UpdateResult(res models.Result) error
 	DeleteResult(res models.Result) error

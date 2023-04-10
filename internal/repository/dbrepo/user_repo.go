@@ -3,6 +3,7 @@ package dbrepo
 import (
 	"context"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
@@ -72,4 +73,78 @@ func (m *postgresDBRepo) Authenticate(email, password string) (int, string, int,
 	}
 
 	return id, hashedPassword, accessLevel, nil
+}
+
+func (m *postgresDBRepo) ChangePassword(userID int, password string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.MinCost)
+	if err != nil {
+		log.Println(err)
+	}
+
+	stmt := `
+		UPDATE 
+			users
+		SET 
+			password = $1,
+		WHERE
+			user_id = $2
+		`
+
+	_, err = m.DB.ExecContext(ctx, stmt, hashedPassword, userID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *postgresDBRepo) UpdateUserInfo(userID int, firstName, lastName, email string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+		UPDATE 
+			users
+		SET 
+			first_name = $1,
+			last_name = $2,
+			email = $3,
+			updated_at = now()
+		WHERE
+			user_id = $4
+		`
+
+	_, err := m.DB.ExecContext(ctx, stmt, firstName, lastName, email, userID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *postgresDBRepo) UpdateUserImage(userID int, img string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+		UPDATE 
+			users
+		SET 
+			img_id = $1
+		WHERE
+			user_id = $2
+		`
+
+	_, err := m.DB.ExecContext(ctx, stmt, img, userID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
