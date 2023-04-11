@@ -9,7 +9,7 @@
     <div class="mx-auto" style="max-width: 350px;">
         <form method="post" action="/profile">
             <div class="text-center">
-                <img class="profile-image rounded-circle inline-block border mb-4 text-center" src="/static/images/users/{{ .User.ImgID }}" alt="" width="120">
+                <img class="profile-image rounded-circle inline-block border mb-3 text-center" src="/static/images/users/{{ .User.ImgID }}" alt="" width="120">
             </div>
             <button class="w-100 btn btn-danger mb-2" type="button">Remove image</button>
             {{ with $.Form.Errors.Get "profile_img" }}
