@@ -197,7 +197,7 @@
   const roundNumber = document.getElementById("roundNumber")
 
   document.addEventListener("DOMContentLoaded", function() {
-    draftSocket = new ReconnectingWebSocket("wss://" + document.location.host + "/draftws", null, {debug: true, reconnectInterval: 3000})
+    draftSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/draftws", null, {debug: false, reconnectInterval: 3000})
 
     // const online = `<span class="badge bg-success">Draft connected</span>`
     // const offline = `<span class="badge bg-danger">Draft disconnected</span>`
@@ -205,6 +205,10 @@
 
     draftSocket.onopen = () => {
       online = true
+      let jsonData = {}
+      jsonData["action"] = "connected"
+      jsonData["user_id"] = parseInt('{{.User.UserID}}')
+      draftSocket.send(JSON.stringify(jsonData))
     }
 
     draftSocket.onclose = () => {
@@ -240,6 +244,15 @@
           window.location.reload()
           break
 
+        case "your_turn":
+          if (volume.getAttribute('src') === '/static/images/buttons/volume-on.png') {
+            const turn = new Audio('./static/audio/your_turn.mp3')
+            turn.play()
+          }
+          (data.countdown < 10) ? countdown.innerHTML = '0' + data.countdown : countdown.innerHTML = data.countdown
+          document.getElementById("countdown-bar").style.width = (data.countdown/data.time_limit)*100 + "%"
+          break
+
         case "countdown":
           if (volume.getAttribute('src') === '/static/images/buttons/volume-on.png') {
             if (data.countdown === 10) {
@@ -247,7 +260,7 @@
               beep.play()
             } else if (0 < data.countdown && data.countdown <= 5) {
               const beep = new Audio('./static/audio/beep.mp3')
-              beep.volume = 0.4
+              beep.volume = 0.3
               beep.play()
             } else if (data.countdown === 0) {
               const beep = new Audio('./static/audio/time-up.mp3')
@@ -275,7 +288,7 @@
               document.getElementById("row" + row + "col" + col).innerHTML = "<br><span style=\"font-size: 14px\"><br></span>"
             }
           }
-          break;
+          break
         
         case "draft_player":
           const player_id = document.getElementById('player-id').innerText
@@ -308,10 +321,10 @@
           firstPick.innerHTML = `<span style="font-size: 14px">PICK 1</span><br>${data.team_name}`
           break  
 
-        case "draft_ended":
+        case "draft_complete":
           countdown.innerHTML = "<br>"
-          pick = 1
-          document.getElementById("countdown_bar").style.width = "100%"
+          document.getElementById("countdown-bar").style.width = "100%"
+          notify("Draft completed, good luck!", "info")
           break
         }
     }
@@ -413,7 +426,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    messengerSocket = new ReconnectingWebSocket("wss://" + document.location.host + "/messengerws", null, {debug: true, reconnectInterval: 3000})
+    messengerSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/messengerws", null, {debug: false, reconnectInterval: 3000})
 
     messengerSocket.onopen = () => {
       let jsonData = {}
@@ -434,7 +447,6 @@
 
     messengerSocket.onmessage = msg => {
       let data = JSON.parse(msg.data);
-      console.log("Action is", data.action)
 
       switch (data.action) {
         case "list_users":

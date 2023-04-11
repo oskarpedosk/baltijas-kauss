@@ -17,7 +17,7 @@ import (
 var (
 	timeLimit      = 0
 	pick           = 1
-	rounds         = 12
+	rounds         = 2
 	randomPlayer   = 5
 	draft          = false
 	pause          = false
@@ -35,42 +35,31 @@ type WebSocketConnection struct {
 var draftChan = make(chan DraftPayload)
 var messengerChan = make(chan MessengerPayload)
 var clients = make(map[WebSocketConnection]string)
+var clientsUserIDs = make(map[int]WebSocketConnection)
 
 // Define the response sent back from websocket
 type DraftJsonResponse struct {
-	Action         string             `json:"action"`
-	Message        string             `json:"message"`
-	Countdown      int                `json:"countdown"`
-	PlayerID       int                `json:"player_id"`
-	PlayerInfo     []string           `json:"player_info"`
-	Row            int                `json:"row"`
-	Col            int                `json:"col"`
-	NextRow        int                `json:"next_row"`
-	NextCol        int                `json:"next_col"`
-	Pick           int                `json:"pick"`
-	TimeLimit      int                `json:"time_limit"`
-	TeamName       string             `json:"team_name"`
-	Teams          []models.Team      `json:"teams"`
-	DraftPicks     []models.DraftPick `json:"draft_picks"`
-	ConnectedUsers []string           `json:"connected_users"`
+	Action     string             `json:"action"`
+	Message    string             `json:"message"`
+	Countdown  int                `json:"countdown"`
+	PlayerID   int                `json:"player_id"`
+	Row        int                `json:"row"`
+	Col        int                `json:"col"`
+	NextRow    int                `json:"next_row"`
+	NextCol    int                `json:"next_col"`
+	Pick       int                `json:"pick"`
+	TimeLimit  int                `json:"time_limit"`
+	TeamName   string             `json:"team_name"`
+	Teams      []models.Team      `json:"teams"`
+	DraftPicks []models.DraftPick `json:"draft_picks"`
 }
 
 type DraftPayload struct {
 	Action     string              `json:"action"`
-	Username   string              `json:"username"`
-	Countdown  int                 `json:"countdown"`
+	UserID     int                 `json:"user_id"`
 	PlayerID   int                 `json:"player_id"`
 	PlayerInfo []string            `json:"player_info"`
-	Row        int                 `json:"row"`
-	Col        int                 `json:"col"`
-	NextRow    int                 `json:"next_row"`
-	NextCol    int                 `json:"next_col"`
-	Pick       int                 `json:"pick"`
 	TimeLimit  int                 `json:"time_limit"`
-	TeamName   string              `json:"team_name"`
-	Teams      []models.Team       `json:"teams"`
-	DraftPicks []models.DraftPick  `json:"draft_picks"`
-	Message    string              `json:"message"`
 	Conn       WebSocketConnection `json:"-"`
 }
 
@@ -93,7 +82,6 @@ func (m *Repository) DraftEndPoint(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-
 
 	var draftResponse DraftJsonResponse
 	draftResponse.Message = `<em><small>Connected to server</small><em>`
@@ -183,6 +171,18 @@ func BroadcastToAll(response interface{}) {
 	}
 }
 
+func BroadcastToUser(userID int, response interface{}) {
+	_, ok := clientsUserIDs[userID]
+	if ok {
+		err := clientsUserIDs[userID].WriteJSON(response)
+		if err != nil {
+			log.Println("Websocket error")
+			_ = clientsUserIDs[userID].Close()
+			delete(clientsUserIDs, userID)
+		}
+	}
+}
+
 func GetUserList() []string {
 	var userList []string
 	for _, user := range clients {
@@ -201,6 +201,9 @@ func ListenToDraftWsChannel() {
 		e := <-draftChan
 
 		switch e.Action {
+
+		case "connected":
+			clientsUserIDs[e.UserID] = e.Conn
 
 		case "generate_draft":
 			if !draft {
@@ -246,17 +249,20 @@ func ListenToDraftWsChannel() {
 func draftPlayer(e DraftPayload) {
 	var response DraftJsonResponse
 	response.Action = "draft_player"
+
 	name := e.PlayerInfo[0]
 	positions := e.PlayerInfo[1]
 
 	countdown = time.Duration(timeLimit) * time.Second
 
 	if pick < len(draftPicks) {
+		BroadcastToUser(draftPicks[pick].TeamID, DraftJsonResponse{Action: "your_turn"})
 		response.NextRow = draftPicks[pick].Row
 		response.NextCol = draftPicks[pick].Col
 		response.TeamName = draftPicks[pick].TeamName
 	}
 
+	
 	response.Pick = pick + 1
 	response.PlayerID = e.PlayerID
 	response.Row = draftPicks[pick-1].Row
@@ -342,6 +348,9 @@ func draftCountdown() {
 		}
 	}
 	if draftCompleted {
+		response = DraftJsonResponse{}
+		response.Action = "draft_complete"
+		BroadcastToAll(response)
 		draftID, err := Repo.DB.GetDraftID()
 		if err != nil {
 			log.Println(err)
@@ -369,6 +378,7 @@ func startDraft(e DraftPayload) {
 	response.Action = "start"
 	response.TeamName = draftPicks[pick-1].TeamName
 	BroadcastToAll(response)
+	BroadcastToUser(draftPicks[pick-1].TeamID, DraftJsonResponse{Action: "your_turn"})
 
 	timeLimit = e.TimeLimit
 	countdown = time.Duration(timeLimit) * time.Second

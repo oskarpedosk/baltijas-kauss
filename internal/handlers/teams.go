@@ -96,7 +96,7 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 			if errMsg == "" {
 				errMsg = form.Errors.Get("abbreviation")
 			}
-			m.App.Session.Put(r.Context(), "error", errMsg)
+			m.App.Session.Put(r.Context(), "warning", errMsg)
 			render.Template(w, r, "teams.page.tmpl", &models.TemplateData{
 				Form: form,
 				Data: data,
@@ -133,7 +133,7 @@ func (m *Repository) PostTeam(w http.ResponseWriter, r *http.Request) {
 		}
 		m.DB.AssignPosition(playerID, position)
 	default:
-		m.App.Session.Put(r.Context(), "warning", "Error, wrong post")
+		m.App.Session.Put(r.Context(), "error", "Oops, something went wrong!")
 		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 	}
 }

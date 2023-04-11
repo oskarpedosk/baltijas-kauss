@@ -305,12 +305,12 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if r.FormValue("home_team") == "" || r.FormValue("away_team") == "" {
-		m.App.Session.Put(r.Context(), "error", "Please choose teams")
+		m.App.Session.Put(r.Context(), "warning", "Please choose teams")
 		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 		return
 	}
 	if r.FormValue("home_score") == "" || r.FormValue("away_score") == "" {
-		m.App.Session.Put(r.Context(), "error", "Please insert score")
+		m.App.Session.Put(r.Context(), "warning", "Please insert score")
 		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 		return
 	}
@@ -351,24 +351,17 @@ func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 	if !form.Valid() {
 		m.App.Session.Put(r.Context(), "error", "Error adding the result")
 		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
-		// data := make(map[string]interface{})
-		// data["NBAresult"] = result
-
-		// render.Template(w, r, "standings.page.tmpl", &models.TemplateData{
-		// 	Form: form,
-		// 	Data: data,
-		// })
 		return
 	}
 
 	err = m.DB.AddResult(result)
 	if err != nil {
 		msg := fmt.Sprintf("error is %v", err)
-		m.App.Session.Put(r.Context(), "flash", msg)
+		m.App.Session.Put(r.Context(), "error", msg)
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	m.App.Session.Put(r.Context(), "flash", "Result added!")
+	m.App.Session.Put(r.Context(), "flash", "Result successfully added!")
 	http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 }
 

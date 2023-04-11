@@ -136,18 +136,13 @@ func (f *Form) IsUpper(field string) {
 }
 
 func ValidExtension(fileName string, extensions ...string) bool {
-	fmt.Println(fileName)
 	for _, extension := range extensions {
-		fmt.Println(extension)
 		regex := fmt.Sprintf("\\.%s", extension)
 		re, err := regexp.Compile(regex)
-		fmt.Println(regex)
-		fmt.Println(re)
 		if err != nil {
 			return false
 		}
 		if re.MatchString(fileName) {
-			fmt.Println("match")
 			return true
 		}
 	}

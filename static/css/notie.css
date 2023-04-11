@@ -1,0 +1,12 @@
+.notie-background-warning {
+    background-image: linear-gradient(90deg, #ff8800, #ffa602);
+}
+.notie-background-error {
+    background-image: linear-gradient(90deg, #df0000, #f44141);
+}
+.notie-background-success {
+    background-image: linear-gradient(90deg, #00a71f, #00c32e);
+}
+.notie-background-info {
+    background-image: linear-gradient(90deg, #8100ff, #e002ff);
+}

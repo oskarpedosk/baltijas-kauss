@@ -67,7 +67,7 @@ func (m *postgresDBRepo) Authenticate(email, password string) (int, string, int,
 
 	err = bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err == bcrypt.ErrMismatchedHashAndPassword {
-		return 0, "", 0, errors.New("incorrect password")
+		return 0, "", 0, errors.New("Incorrect password")
 	} else if err != nil {
 		return 0, "", 0, err
 	}
@@ -89,6 +89,7 @@ func (m *postgresDBRepo) ChangePassword(userID int, password string) error {
 			users
 		SET 
 			password = $1,
+			updated_at = now()
 		WHERE
 			user_id = $2
 		`
@@ -135,7 +136,8 @@ func (m *postgresDBRepo) UpdateUserImage(userID int, img string) error {
 		UPDATE 
 			users
 		SET 
-			img_id = $1
+			img_id = $1,
+			updated_at = now()
 		WHERE
 			user_id = $2
 		`

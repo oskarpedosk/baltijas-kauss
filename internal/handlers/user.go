@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -32,11 +31,6 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 	form.Required("first_name", "last_name", "email")
 	form.IsEmail("email")
 
-	fmt.Println(form.Get("user_id"))
-	fmt.Println(form.Has("password_old"))
-	fmt.Println(form.Has("password_new"))
-	fmt.Println(form.Has("password_confirm"))
-
 	user := models.User{
 		FirstName: form.Get("first_name"),
 		LastName:  form.Get("last_name"),
@@ -61,12 +55,12 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 
 	file, handler, err := r.FormFile("profile_img")
 	if err != nil {
-		if !os.IsNotExist(err) {
+		if os.IsNotExist(err) {
 			helpers.ServerError(w, err)
 		}
 	}
 
-	if form.Valid() && file != nil {
+	if file != nil {
 		defer file.Close()
 		if !forms.ValidExtension(handler.Filename, "png", "jpg", "jpeg") {
 			form.Errors.Add("profile_img", "Only .png .jpg .jpeg files allowed")
@@ -102,15 +96,14 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	fmt.Println("invalid form")
-	fmt.Println(form)
-
 	if form.Valid() {
-		fmt.Println("valid form")
-		fmt.Println(form)
 		err = m.DB.UpdateUserInfo(user.UserID, user.FirstName, user.LastName, user.Email)
 		if err != nil {
 			helpers.ServerError(w, err)
+		} else {
+			m.App.Session.Put(r.Context(), "first_name", user.FirstName)
+			m.App.Session.Put(r.Context(), "last_name", user.LastName)
+			m.App.Session.Put(r.Context(), "email", user.Email)
 		}
 		if form.Has("password_new") {
 			err = m.DB.ChangePassword(user.UserID, form.Get("password_new"))
@@ -118,9 +111,8 @@ func (m *Repository) PostProfile(w http.ResponseWriter, r *http.Request) {
 				helpers.ServerError(w, err)
 			}
 		}
-		render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
-			Form: forms.New(nil),
-		})
+		m.App.Session.Put(r.Context(), "flash", "Profile updated!")
+		http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
 	} else {
 		render.Template(w, r, "profile.page.tmpl", &models.TemplateData{
 			Form: form,
@@ -160,10 +152,9 @@ func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
 	password := r.Form.Get("password")
 
 	id, _, accessLevel, err := m.DB.Authenticate(email, password)
-
 	if err != nil {
 		log.Println(err)
-		m.App.Session.Put(r.Context(), "error", "Invalid login credentials")
+		m.App.Session.Put(r.Context(), "warning", "Incorrect e-mail or password")
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
@@ -181,6 +172,7 @@ func (m *Repository) PostLogin(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "img", user.ImgID)
 	m.App.Session.Put(r.Context(), "remote_ip", remoteIP)
 	m.App.Session.Put(r.Context(), "access_level", accessLevel)
+	m.App.Session.Put(r.Context(), "info", "Welcome, "+user.FirstName+"!")
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 

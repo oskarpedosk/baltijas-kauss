@@ -334,6 +334,6 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 		}(playerID, ratingsURL)
 	}
 
-	m.App.Session.Put(r.Context(), "warning", "Updating player ID: "+playerID)
+	m.App.Session.Put(r.Context(), "info", "Updating player ID: "+playerID)
 	http.Redirect(w, r, "/players/"+playerID, http.StatusSeeOther)
 }

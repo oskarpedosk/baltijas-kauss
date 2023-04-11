@@ -6,18 +6,48 @@
 
 <div class="container">
     <form enctype="multipart/form-data" action="/profile" method="post">
-    <div class="mx-auto text-center" style="max-width: 350px;">
+    <div class="mx-auto" style="max-width: 350px;">
         <form method="post" action="/profile">
-            <img class="profile-image rounded-circle inline-block border mb-4" src="/static/images/users/{{ .User.ImgID }}" alt="" width="120">
+            <div class="text-center">
+                <img class="profile-image rounded-circle inline-block border mb-4 text-center" src="/static/images/users/{{ .User.ImgID }}" alt="" width="120">
+            </div>
+            <button class="w-100 btn btn-danger mb-2" type="button">Remove image</button>
+            {{ with $.Form.Errors.Get "profile_img" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
             <input class="form-control mb-4" type="file" name="profile_img"/>
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <input type="hidden" name="user_id" value="{{ .User.UserID }}">
-            <input class="form-control mb-2" type="text" autocomplete="off" name="first_name" placeholder="First name" value="{{ .User.FirstName }}">
-            <input class="form-control mb-2" type="text" autocomplete="off" name="last_name" placeholder="Last name" value="{{ .User.LastName }}">
-            <input class="form-control mb-4" type="email" autocomplete="off" name="email" placeholder="E-mail" value="{{ .User.Email }}">
-            <input class="form-control mb-2" type="password" autocomplete="off" name="password_old" placeholder="Old password">
-            <input class="form-control mb-2" type="password" autocomplete="off" name="password_new" placeholder="New password">
-            <input class="form-control mb-4" type="password" autocomplete="off" name="password_confirm" placeholder="Confirm password">
+            {{ with $.Form.Errors.Get "first_name" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
+            <input class="form-control mb-2 {{with .Form.Errors.Get `first_name`}}is-invalid{{end}}" type="text" autocomplete="off" name="first_name"
+            placeholder="First name" value="{{with $.Form.Values.Get `first_name`}}{{.}}{{else}}{{ .User.FirstName }}{{end}}">
+            {{ with $.Form.Errors.Get "last_name" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
+            <input class="form-control mb-2 {{with .Form.Errors.Get `last_name`}}is-invalid{{end}}" type="text" autocomplete="off" name="last_name"
+            placeholder="Last name" value="{{with $.Form.Values.Get `last_name`}}{{.}}{{else}}{{ .User.LastName }}{{end}}">
+            {{ with $.Form.Errors.Get "email" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
+            <input class="form-control mb-4 {{with .Form.Errors.Get `email`}}is-invalid{{end}}" type="email" autocomplete="off" name="email"
+            placeholder="E-mail" value="{{with $.Form.Values.Get `email`}}{{.}}{{else}}{{ .User.Email }}{{end}}">
+            {{ with $.Form.Errors.Get "password_old" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
+            <input class="form-control mb-2 {{with .Form.Errors.Get `password_old`}}is-invalid{{end}}" type="password" autocomplete="off" name="password_old"
+            placeholder="Old password">
+            {{ with $.Form.Errors.Get "password_new" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
+            <input class="form-control mb-2 {{with .Form.Errors.Get `password_new`}}is-invalid{{end}}" type="password" autocomplete="off" name="password_new"
+            placeholder="New password">
+            {{ with $.Form.Errors.Get "password_confirm" }}
+                <label class="text-danger">{{.}}</label>
+            {{ end }}
+            <input class="form-control mb-4 {{with .Form.Errors.Get `password_confirm`}}is-invalid{{end}}" type="password" autocomplete="off" name="password_confirm"
+            placeholder="Confirm password">
             <button class="w-100 btn btn-primary" type="submit">Update</button>
         </form>
     </div>

@@ -75,35 +75,31 @@
         <div class="team-settings">
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <input type="hidden" name="action" value="updateTeam">
-            <input type="text" class="form-control mb-2"
-                name="team_name" value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}" autocomplete="off">
-            <input type="text" class="form-control mb-2"
-            name="abbreviation" value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}" autocomplete="off">
+            <div>
+                <input type="text" class="form-control mb-2" name="team_name"
+                value="{{with $.Form.Values.Get `team_name`}}{{.}}{{else}}{{.Data.team.Name}}{{end}}" autocomplete="off">
+                {{with $.Form.Errors.Get "team_name"}}
+                    <p style="font-size: 14px; color: red;">
+                        {{.}}
+                    </p>
+                {{end}}
+            </div>
+            <div>
+                <input type="text" class="form-control mb-2" name="abbreviation"
+                value="{{with $.Form.Values.Get `abbreviation`}}{{.}}{{else}}{{.Data.team.Abbreviation}}{{end}}" autocomplete="off">
+                {{with $.Form.Errors.Get "abbreviation"}}
+                    <p style="font-size: 14px; color: red;">
+                        {{.}}
+                    </p>
+                {{end}}
+            </div>
             <input style="width: 100%;" type="color" class="form-control form-control-color mb-2" name="team_color1"
             value="{{with $.Form.Values.Get `team_color1`}}{{.}}{{else}}{{.Data.team.Color1}}{{end}}" title="Choose your color">
             <input style="width: 100%;" type="color" class="form-control form-control-color mb-2" name="team_color2"
             value="{{with $.Form.Values.Get `team_color2`}}{{.}}{{else}}{{.Data.team.Color2}}{{end}}" title="Choose your color">
             <input style="width: 100%;" type="color" class="form-control form-control-color mb-2" name="text_color"
             value="{{with $.Form.Values.Get `text-color`}}{{.}}{{else}}{{.Data.team.TextColor}}{{end}}" title="Choose your color">
-            <button style="width: 100%; border: 1px solid {{.Data.team.TextColor}}; color: {{.Data.team.TextColor}};" type="submit" class="btn team-settings-btn mb-2">Update</button>
-        </div>
-        <div class="row justify-content-around" style="font-size: 14px; color: red;">
-            <div class="col-md-3">
-                {{with $.Form.Errors.Get "team_name"}}
-                    <p>
-                        {{.}}
-                    </p>
-                {{end}}
-            </div>
-            <div class="col-md-3">
-                {{with $.Form.Errors.Get "abbreviation"}}
-                    <p>
-                        {{.}}
-                    </p>
-                {{end}}
-            </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
+            <button style="width: 100%; max-height: 38px; border: 1px solid {{.Data.team.TextColor}}; color: {{.Data.team.TextColor}};" type="submit" class="btn team-settings-btn mb-2">Update</button>
         </div>
         </form>
     </div>

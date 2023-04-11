@@ -14,6 +14,8 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/login.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/notie/dist/notie.min.css">
+    <link href="/static/css/notie.css" rel="stylesheet">
 </head>
 
 <body>
@@ -30,19 +32,43 @@
                         {{with .Form.Errors.Get "email"}}
                             <label class="text-danger">{{.}}</label>
                         {{end}}
-                        <input style="min-height: 50px;" type="email" autocomplete="off" class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}" name="email" id="email" placeholder="name@example.com" value="" required>
+                        <input style="min-height: 50px;" type="email" autocomplete="off" class="form-control {{with .Form.Errors.Get `email`}} is-invalid {{end}}" name="email" id="email" placeholder="name@example.com" value="">
                     </div>
                     <div class="form-group text-start mt-2 mb-4">
                         {{with .Form.Errors.Get "password"}}
                             <label class="text-danger">{{.}}</label>
                         {{end}}
-                        <input style="min-height: 50px;" type="password" autocomplete="off" class="form-control {{with .Form.Errors.Get "email"}} is-invalid {{end}}" name="password" id="password" placeholder="Password" value="" required>
+                        <input style="min-height: 50px;" type="password" autocomplete="off" class="form-control {{with .Form.Errors.Get `password`}} is-invalid {{end}}" name="password" id="password" placeholder="Password" value="">
                     </div>
                     <button class="w-100 btn btn-lg bkcolor text-white" type="submit">Sign in</button>
                 </form>
             </div>
         </div>
     </main>
+
+    <script src="https://unpkg.com/notie"></script>
+
+    <script>
+        function notify(msg, msgType) {
+          notie.alert({
+              text: msg,
+              type: msgType,
+          })
+        }
+      
+        {{with .Flash}}
+          notify("{{.}}", "success")
+        {{end}}
+        {{with .Error}}
+          notify("{{.}}", "error")
+        {{end}}
+        {{with .Info}}
+          notify("{{.}}", "info")
+        {{end}}
+        {{with .Warning}}
+          notify("{{.}}", "warning")
+        {{end}}
+      </script>
 
 </body>
 
