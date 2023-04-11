@@ -293,17 +293,9 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			}
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 
-			// Capture the output and any errors
-			out, err := cmd.CombinedOutput()
+			output, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Printf("Command failed with error: %v\n", err)
-			}
-
-			log.Println("Output:")
-			log.Println(string(out))
-			output, err := cmd.Output()
-			if err != nil {
-				log.Println(err)
 			}
 
 			// Parse the output as an array of two objects

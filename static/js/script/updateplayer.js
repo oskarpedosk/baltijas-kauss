@@ -16,7 +16,7 @@ if (ubuntu) {
 }
 
 puppeteer.use(StealthPlugin())
-puppeteer.launch({executablePath: browserPath, headless: true, args: [
+puppeteer.launch({executablePath: browserPath, headless: false, args: [
     '--no-sandbox',
     '--disable-setuid-sandbox'
   ]}).then(async browser => {
