@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/config"
 	"github.com/oskarpedosk/baltijas-kauss/internal/driver"
@@ -96,7 +95,7 @@ func run() (*driver.DB, error) {
 
 	// Set up the session
 	session = scs.New()
-	session.Lifetime = 1 * time.Hour
+	session.Lifetime = -1
 	session.Cookie.Persist = true
 	session.Cookie.SameSite = http.SameSiteLaxMode
 	session.Cookie.Secure = app.InProduction
