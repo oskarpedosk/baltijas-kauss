@@ -17,7 +17,7 @@ import (
 var (
 	timeLimit      = 0
 	pick           = 1
-	rounds         = 2
+	rounds         = 12
 	randomPlayer   = 5
 	draft          = false
 	pause          = false
