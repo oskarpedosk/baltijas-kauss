@@ -219,3 +219,9 @@ type DraftPick struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+type HeadToHead struct {
+	Home      Team
+	Away      Team
+	Standings Standings
+}

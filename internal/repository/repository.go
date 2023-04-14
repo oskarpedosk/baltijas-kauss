@@ -54,4 +54,5 @@ type DatabaseRepo interface {
 	GetSeasons() ([]models.Season, error)
 	GetSeasonResults(seasonID int) ([]models.Result, error)
 	GetAllResults() ([]models.Result, error)
+	GetHeadToHeadResults(team1, team2 int) ([]models.Result, error)
 }

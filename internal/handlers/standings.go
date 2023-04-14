@@ -186,117 +186,6 @@ func order(slice []models.Standings) []models.Standings {
 	return slice
 }
 
-
-// func (m *Repository) Standings(w http.ResponseWriter, r *http.Request) {
-// 	m.DB.CreateNewSeason()
-// 	if r.FormValue("action") == "add" {
-// 		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		homeScore, err := strconv.Atoi(r.FormValue("home_score"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		awayScore, err := strconv.Atoi(r.FormValue("away_score"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		awayTeam, err := strconv.Atoi(r.FormValue("away_team_id"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		result := models.Result{
-// 			HomeTeamID: homeTeam,
-// 			HomeScore:  homeScore,
-// 			AwayScore:  awayScore,
-// 			AwayTeamID: awayTeam,
-// 		}
-// 		err = m.DB.AddResult(result)
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 	} else if r.FormValue("action") == "update" {
-// 		homeTeam, err := strconv.Atoi(r.FormValue("home_team_id"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		homeScore, err := strconv.Atoi(r.FormValue("home_score"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		awayScore, err := strconv.Atoi(r.FormValue("away_score"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 		awayTeam, err := strconv.Atoi(r.FormValue("away_team_id"))
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 			return
-// 		}
-
-// 		result := models.Result{
-// 			HomeTeamID: homeTeam,
-// 			HomeScore:  homeScore,
-// 			AwayScore:  awayScore,
-// 			AwayTeamID: awayTeam,
-// 		}
-// 		err = m.DB.UpdateResult(result)
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-
-// 	} else if r.FormValue("action") == "delete" {
-// 		timestampString := r.FormValue("timestamp")
-// 		layout := "2006-01-02 15:04:05 -0700 MST"
-// 		timestamp, err := time.Parse(layout, timestampString)
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 			return
-// 		}
-// 		result := models.Result{
-// 			CreatedAt: timestamp,
-// 		}
-// 		err = m.DB.DeleteResult(result)
-// 		if err != nil {
-// 			helpers.ServerError(w, err)
-// 		}
-// 	}
-
-// 	var emptyStandings models.Result
-// 	data := make(map[string]interface{})
-
-// 	teams, err := m.DB.GetTeams()
-// 	if err != nil {
-// 		helpers.ServerError(w, err)
-// 		return
-// 	}
-// 	standings, err := m.DB.GetStandings()
-// 	if err != nil {
-// 		helpers.ServerError(w, err)
-// 		return
-// 	}
-// 	lastResults, err := m.DB.GetLastResults(10)
-// 	if err != nil {
-// 		helpers.ServerError(w, err)
-// 		return
-// 	}
-
-// 	data["result"] = emptyStandings
-// 	data["teams"] = teams
-// 	data["standings"] = standings
-// 	data["last_results"] = lastResults
-
-// 	render.Template(w, r, "standings.page.tmpl", &models.TemplateData{
-// 		Form: forms.New(nil),
-// 		Data: data,
-// 	})
-// }
-
 func (m *Repository) PostStandings(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
@@ -370,7 +259,7 @@ func (m *Repository) AllTime(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		helpers.ServerError(w, err)
 	}
-	
+
 	teams, err := m.DB.GetTeams()
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -384,12 +273,118 @@ func (m *Repository) AllTime(w http.ResponseWriter, r *http.Request) {
 	}
 	standings := CalculateStandings(teamsWithoutFA, results)
 
+	var allTeamsHeadToHead = [][]models.HeadToHead{}
+	for i := 0; i < len(teamsWithoutFA); i++ {
+		team1 := teamsWithoutFA[i]
+		var team1HeadToHead = []models.HeadToHead{}
+		for j := 0; j < len(teamsWithoutFA); j++ {
+			team2 := teamsWithoutFA[j]
+			if team1.TeamID != team2.TeamID {
+				headToHeadResults, err := m.DB.GetHeadToHeadResults(team1.TeamID, team2.TeamID)
+				if err != nil {
+					helpers.ServerError(w, err)
+				}
+				team1HeadToHead = append(team1HeadToHead, models.HeadToHead{
+					Home:      team1,
+					Away:      team2,
+					Standings: CalculateHeadToHead(team1, team2, headToHeadResults),
+				})
+			}
+		}
+		allTeamsHeadToHead = append(allTeamsHeadToHead, team1HeadToHead)
+	}
 
 	data := make(map[string]interface{})
 	data["teams"] = teamsWithoutFA
 	data["standings"] = standings
+	data["allTeamsHeadToHead"] = allTeamsHeadToHead
 
 	render.Template(w, r, "alltime.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
+}
+
+func CalculateHeadToHead(team1, team2 models.Team, results []models.Result) models.Standings {
+	headToHead := models.Standings{}
+
+	// Count wins and losses
+	for _, result := range results {
+		if result.HomeScore > result.AwayScore {
+			if result.HomeTeam.TeamID == team1.TeamID {
+				headToHead.HomeWins++
+				headToHead.Streak += "W"
+				headToHead.BasketsFor += result.HomeScore
+				headToHead.BasketsAgainst += result.AwayScore
+			} else {
+				headToHead.AwayLosses++
+				headToHead.Streak += "L"
+				headToHead.BasketsFor += result.AwayScore
+				headToHead.BasketsAgainst += result.HomeScore
+			}
+		} else {
+			if result.HomeTeam.TeamID == team1.TeamID {
+				headToHead.HomeLosses++
+				headToHead.Streak += "L"
+				headToHead.BasketsFor += result.HomeScore
+				headToHead.BasketsAgainst += result.AwayScore
+			} else {
+				headToHead.AwayWins++
+				headToHead.Streak += "W"
+				headToHead.BasketsFor += result.AwayScore
+				headToHead.BasketsAgainst += result.HomeScore
+			}
+
+		}
+	}
+
+	headToHead.TotalWins = headToHead.HomeWins + headToHead.AwayWins
+	headToHead.TotalLosses = headToHead.HomeLosses + headToHead.AwayLosses
+	headToHead.TotalLosses = headToHead.HomeLosses + headToHead.AwayLosses
+	headToHead.Played = headToHead.TotalWins + headToHead.TotalLosses
+	winsLosses := headToHead.Streak
+	if len(headToHead.Streak) > 0 {
+		headToHead.Streak = string(headToHead.Streak[0])
+		streakCount := 0
+		for _, char := range winsLosses {
+			if string(char) == string(headToHead.Streak[0]) {
+				streakCount++
+			} else {
+				break
+			}
+		}
+		headToHead.StreakCount = streakCount
+	} else {
+		headToHead.Streak = ""
+		headToHead.StreakCount = 0
+	}
+	headToHead.BasketsSum = headToHead.BasketsFor - headToHead.BasketsAgainst
+
+	winPercentage := 0
+	forAvg := 0.0
+	againstAvg := 0.0
+	if headToHead.Played != 0 {
+		winPercentage = headToHead.TotalWins * 1000 / headToHead.Played
+		forAvg = toFixed(float64(headToHead.BasketsFor)/float64(headToHead.Played), 1)
+		againstAvg = toFixed(float64(headToHead.BasketsAgainst)/float64(headToHead.Played), 1)
+	}
+	headToHead.WinPercentage = winPercentage
+	headToHead.ForAvg = forAvg
+	headToHead.AgainstAvg = againstAvg
+
+	lastGames := []string{"", "", "", "", "", "", "", "", "", ""}
+	x := 10
+	y := 0
+
+	if len(winsLosses) < x {
+		x = len(winsLosses)
+	}
+
+	for i := x; i > 0; i-- {
+		lastGames[i-1] = string(winsLosses[y])
+		y++
+	}
+
+	headToHead.LastFive = lastGames
+
+	return headToHead
 }

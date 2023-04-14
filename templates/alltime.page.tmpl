@@ -75,5 +75,71 @@
             </table>
         </div>
     </div>
+
+    <div class="teams-container mt-3">
+        {{ range $team := .Data.allTeamsHeadToHead }}
+            <div class="rounded-3 p-3 bg-light border">
+                {{ $headToHead := index $team 0 }}
+                <p class="m-0 mb-1 fw-semibold">{{ $headToHead.Home.Name }}</p>
+                {{ range $standings := $team }} 
+                    <div class="table-responsive head-to-head-table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                   <p class="m-0 fw-light" style="font-size: 14px;">vs {{ $standings.Away.Name }}</p>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th style="width: 25%" scope="row">PLAYED</th>
+                                    <td style="width: 30%">{{ $standings.Standings.Played }}</td>
+                                    <th style="width: 25%" scope="row">WIN %</th>
+                                    <td style="width: 20%">.{{ $standings.Standings.WinPercentage }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%" scope="row">TOTAL</th>
+                                    <td style="width: 30%">{{ $standings.Standings.TotalWins }}-{{ $standings.Standings.TotalLosses }}</td>
+                                    <th style="width: 25%" scope="row">+-</th>
+                                    <td style="width: 20%">{{ $standings.Standings.BasketsSum }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%" scope="row">HOME</th>
+                                    <td style="width: 30%">{{ $standings.Standings.HomeWins }}-{{ $standings.Standings.HomeLosses }}</td>
+                                    <th style="width: 25%" scope="row">FA</th>
+                                    <td style="width: 20%">{{ $standings.Standings.ForAvg }}</td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 25%" scope="row">ROAD</th>
+                                    <td style="width: 30%">{{ $standings.Standings.AwayWins }}-{{ $standings.Standings.AwayLosses }}</td>
+                                    <th style="width: 25%" scope="row">AA</th>
+                                    <td style="width: 20%">{{ $standings.Standings.AgainstAvg }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">L 10</th>
+                                    <td class="text-center" colspan="3">
+                                        <div>
+                                            {{range $lastFive := $standings.Standings.LastFive}}
+                                                {{if eq $lastFive "W"}}
+                                                    <div style="background-color: rgb(127, 255, 127);" class="dot"></div>
+                                                {{end}}
+                                                {{if eq $lastFive "L"}}
+                                                    <div style="background-color: rgb(255, 16, 240);" class="dot"></div>
+                                                {{end}}
+                                                {{if eq $lastFive ""}}
+                                                    <div class="dot bg-secondary"></div>
+                                                {{end}}
+                                            {{end}}
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {{ end }}
+            </div>
+        {{ end }}
+    </div>
+    
 </div>
 {{end}}
+

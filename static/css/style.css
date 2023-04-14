@@ -558,3 +558,14 @@ html {
         margin-bottom: 10px;
     }
 }
+
+.head-to-head-table th {
+    padding: 4px;
+    font-size: 14px;
+}
+.head-to-head-table td {
+    padding: 4px;
+    font-size: 14px;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}

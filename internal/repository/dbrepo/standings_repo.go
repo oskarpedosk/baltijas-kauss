@@ -234,3 +234,47 @@ func (m *postgresDBRepo) GetAllResults() ([]models.Result, error) {
 
 	return results, nil
 }
+
+func (m *postgresDBRepo) GetHeadToHeadResults(team1, team2 int) ([]models.Result, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var results []models.Result
+
+	query := `
+		SELECT
+			*
+		FROM
+			results
+		WHERE
+			home_team_id = $1 AND away_team_id = $2
+		OR
+			home_team_id = $3 AND away_team_id = $4
+		ORDER BY
+			result_id DESC
+		`
+	rows, err := m.DB.QueryContext(ctx, query, team1, team2, team2, team1)
+	if err != nil {
+		return results, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var result models.Result
+		err := rows.Scan(
+			&result.ResultID,
+			&result.SeasonID,
+			&result.HomeTeam.TeamID,
+			&result.HomeScore,
+			&result.AwayScore,
+			&result.AwayTeam.TeamID,
+			&result.CreatedAt,
+			&result.UpdatedAt,
+		)
+		if err != nil {
+			return results, err
+		}
+		results = append(results, result)
+	}
+
+	return results, nil
+}

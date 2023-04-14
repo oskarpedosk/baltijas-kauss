@@ -1,1 +1,5 @@
 2023/04/13 14:02:43 listen tcp :8080: bind: address already in use
+2023/04/14 18:58:51 template: alltime.page.tmpl:79: undefined variable "$home"
+2023/04/14 19:26:35 template: alltime.page.tmpl:82: undefined variable "$away"
+2023/04/14 19:29:35 template: alltime.page.tmpl:82: undefined variable "$home"
+2023/04/14 20:01:10 template: alltime.page.tmpl:116: undefined variable "$index"
