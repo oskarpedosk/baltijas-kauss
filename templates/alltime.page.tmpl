@@ -75,7 +75,9 @@
             </table>
         </div>
     </div>
-
+    <div class="p-3 mt-3 bg-light border rounded-3">
+        <h2 class="m-0">Head to Head Statistics</h2>
+    </div>
     <div class="teams-container mt-3">
         {{ range $team := .Data.allTeamsHeadToHead }}
             <div class="rounded-3 p-3 bg-light border">
@@ -83,7 +85,7 @@
                 <p class="m-0 mb-1 fw-semibold">{{ $headToHead.Home.Name }}</p>
                 {{ range $standings := $team }} 
                     <div class="table-responsive head-to-head-table">
-                        <table class="table">
+                        <table class="table mb-3">
                             <thead>
                                 <tr>
                                    <p class="m-0 fw-light" style="font-size: 14px;">vs {{ $standings.Away.Name }}</p>
@@ -91,31 +93,31 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <th style="width: 25%" scope="row">PLAYED</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">PLAYED</td>
                                     <td style="width: 30%">{{ $standings.Standings.Played }}</td>
-                                    <th style="width: 25%" scope="row">WIN %</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">WIN %</td>
                                     <td style="width: 20%">.{{ $standings.Standings.WinPercentage }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%" scope="row">TOTAL</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">TOTAL</td>
                                     <td style="width: 30%">{{ $standings.Standings.TotalWins }}-{{ $standings.Standings.TotalLosses }}</td>
-                                    <th style="width: 25%" scope="row">+-</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">+-</td>
                                     <td style="width: 20%">{{ $standings.Standings.BasketsSum }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%" scope="row">HOME</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">HOME</td>
                                     <td style="width: 30%">{{ $standings.Standings.HomeWins }}-{{ $standings.Standings.HomeLosses }}</td>
-                                    <th style="width: 25%" scope="row">FA</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">FA</td>
                                     <td style="width: 20%">{{ $standings.Standings.ForAvg }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="width: 25%" scope="row">ROAD</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">ROAD</td>
                                     <td style="width: 30%">{{ $standings.Standings.AwayWins }}-{{ $standings.Standings.AwayLosses }}</td>
-                                    <th style="width: 25%" scope="row">AA</th>
+                                    <td class="text-start fw-semibold" style="width: 25%" scope="row">AA</td>
                                     <td style="width: 20%">{{ $standings.Standings.AgainstAvg }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">L 10</th>
+                                    <td class="text-start fw-semibold" scope="row">L 10</td>
                                     <td class="text-center" colspan="3">
                                         <div>
                                             {{range $lastFive := $standings.Standings.LastFive}}
