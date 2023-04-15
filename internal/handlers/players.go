@@ -291,8 +291,8 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			if ubuntu {
 				filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 			}
+			
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
-
 			output, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Printf("Command failed with error: %v\n", err)

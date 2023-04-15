@@ -16,10 +16,12 @@ if (ubuntu) {
 }
 
 puppeteer.use(StealthPlugin())
-puppeteer.launch({executablePath: browserPath, headless: true, args: [
-    '--no-sandbox',
-    '--disable-setuid-sandbox'
-  ]}).then(async browser => {
+puppeteer.launch({
+    executablePath: browserPath, 
+    headless: true, 
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    timeout: 40000
+    }).then(async browser => {
     page = await browser.newPage()
 
     const player_and_badges = await scrapePlayer(ratingsURL);
