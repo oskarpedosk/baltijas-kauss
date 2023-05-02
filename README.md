@@ -8,7 +8,7 @@ Server runs on Ubuntu 22.04.2 LTS
 
 ### Built with
 - Go version 1.20.3: https://go.dev/doc/go1.20
-Programming language used for the backend development of your project.
+Programming language used for the backend development.
 - Chi router: https://github.com/go-chi/chi  
 Lightweight and fast HTTP router for Go.
 - Alex Edwards SCS: https://github.com/alexedwards/scs  
@@ -22,7 +22,7 @@ Package manager for Node.js and JavaScript.
 - Caddy: https://caddyserver.com/  
 Open-source web server with automatic HTTPS.
 - Node.js: https://nodejs.org/  
-JavaScript runtime used to build the frontend of your project.
+Used with Puppeteer for web scraping for data.
 - Chromium: https://www.chromium.org/Home  
 Open-source web browser project on which Google Chrome is based.
 - Puppeteer: https://pptr.dev/  
