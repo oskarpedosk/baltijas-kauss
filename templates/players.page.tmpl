@@ -31,7 +31,7 @@
                         <td class="p-0">{{index $ranking $index}}</td>
                         <td class="p-0 py-1">
                             <a href="/players/{{$player.Player.PlayerID}}">
-                                {{ if ne $player.Player.ImgURL ""}}
+                                {{ if $player.Player.ImgURL}}
                                     <img src="{{$player.Player.ImgURL}}" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
                                 {{ else }}
                                     <img src="/static/images/players/default_player.png" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
