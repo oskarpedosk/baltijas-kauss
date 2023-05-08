@@ -94,7 +94,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-1"></div>
                 <div class="col-md-3">
-                    <select name="away_team" class="form-select">
+                    <select name="away_team" class="form-select text-center">
                         <option selected disabled value="0">Away team</option>
                         {{range $teamInfo := index $.Data "teams"}}
                             <option value="{{$teamInfo.TeamID}}">{{$teamInfo.Name}}</option>
@@ -106,20 +106,20 @@
                     <div class="row">
                         <div class="col-md-5">
                             <label for="away_score" class="visually-hidden">Away score</label>
-                            <input id="away_score" name="away_score" placeholder="0" type="number" min="0" class="form-control">
+                            <input id="away_score" name="away_score" placeholder="0" type="number" min="0" class="form-control text-center">
                         </div>
                         <div class="col-md-2 text-center">
                             <p class="m-0 fw-light" style="font-size: 24px;">@</p>
                         </div>
                         <div class="col-md-5">
                             <label for="home_score" class="visually-hidden">Home score</label>
-                            <input name="home_score" placeholder="0" type="number" min="0" class="form-control">
+                            <input name="home_score" placeholder="0" type="number" min="0" class="form-control text-center">
                         </div>
                     </div>
                 </div>
 
                 <div class="col-md-3">
-                    <select name="home_team" class="form-select">
+                    <select name="home_team" class="form-select text-center">
                         <option selected disabled value="0">Home team</option>
                         {{range $teamInfo := index $.Data "teams"}}
                             <option value="{{$teamInfo.TeamID}}">{{$teamInfo.Name}}</option>
