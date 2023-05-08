@@ -20,7 +20,7 @@ puppeteer.launch({
     executablePath: browserPath, 
     headless: true, 
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    timeout: 40000
+    timeout: 45000
     }).then(async browser => {
     page = await browser.newPage()
 
