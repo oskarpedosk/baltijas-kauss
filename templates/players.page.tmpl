@@ -29,16 +29,16 @@
                     {{range $index, $player := index .Data.players}}
                     <tr class="searchable" style="border-top: 0.5px solid rgb(190, 190, 190);">
                         <td class="p-0">{{index $ranking $index}}</td>
-                        <td class="p-0 py-1">
+                        <td class="p-0 ps-1 py-1">
                             <a href="/players/{{$player.Player.PlayerID}}">
-                                {{ if $player.Player.ImgURL}}
+                                {{ if $player.Player.ImgURL }}
                                     <img src="{{$player.Player.ImgURL}}" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
                                 {{ else }}
-                                    <img src="/static/images/players/default_player.png" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
+                                    <img src="/static/images/players/default_playerrrrr.png" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
                                 {{ end }}
                             </a>
                         </td>
-                        <td class="p-0 ps-2">
+                        <td class="p-0 ps-1">
                             <div class="d-flex player-card">
                                 <div class="p-0 inline-block">
                                     <p class="m-0"><a class="player-link" {{if eq $player.Player.Legend 1}}style="color: #d300ea;"{{end}} href="/players/{{$player.Player.PlayerID}}">{{$player.Player.FirstName}} {{$player.Player.LastName}}</a>
