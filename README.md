@@ -4,7 +4,7 @@ Baltijas Kauss is an e-sports league web application that enables users to creat
 
 ## Server
 Server runs on Ubuntu 22.04.2 LTS  
-[baltijaskauss.ee](https://www.baltijaskauss.ee)
+[baltijaskauss.ee](http://www.baltijaskauss.ee)
 
 ### Built with
 - Go version 1.20.3: https://go.dev/doc/go1.20
