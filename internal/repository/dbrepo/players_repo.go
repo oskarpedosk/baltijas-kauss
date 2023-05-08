@@ -267,6 +267,7 @@ func (m *postgresDBRepo) GetPlayer(playerID int) (models.Player, error) {
 			&player.GoldBadges,
 			&player.HOFBadges,
 			&player.TotalBadges,
+			&player.Legend,
 			&player.CreatedAt,
 			&player.UpdatedAt,
 		)
@@ -685,6 +686,7 @@ func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, erro
 			&player.GoldBadges,
 			&player.HOFBadges,
 			&player.TotalBadges,
+			&player.Legend,
 			&player.CreatedAt,
 			&player.UpdatedAt,
 		)

@@ -128,7 +128,7 @@
             {{ if eq $player.TeamID 1 }}
               <li id="draft-players-list-{{$player.PlayerID}}" class="list-group-item py-1 px-3" style="border-style: none; border-bottom: 1px solid rgb(220, 220, 220);" onclick="viewPlayer({{$player}})">
                 <div class="d-flex justify-content-between align-items-center pointer">
-                  <p class="m-0"><span class="overall-text me-2" overall-color="{{$player.Overall}}">{{$player.Overall}}</span> {{$player.FirstName}} {{$player.LastName}}</p><span id="star-{{$player.PlayerID}}" style="color: #E6E6E6; font-size: 18px;" onclick="toggleStar('{{$player.PlayerID}}')">☆</span>
+                  <p class="m-0" {{if eq $player.Legend 1}}style="color: #d300ea;"{{end}}><span class="overall-text me-2" overall-color="{{$player.Overall}}">{{$player.Overall}}</span> {{$player.FirstName}} {{$player.LastName}}</p><span id="star-{{$player.PlayerID}}" style="color: #E6E6E6; font-size: 18px;" onclick="toggleStar('{{$player.PlayerID}}')">☆</span>
                 </div>
               </li>
             {{ end }}

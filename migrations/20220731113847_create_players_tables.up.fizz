@@ -67,6 +67,7 @@ create_table("players") {
     t.Column("gold_badges", "integer", {"default": 0})
     t.Column("hof_badges", "integer", {"default": 0})
     t.Column("total_badges", "integer", {"default": 0})
+    t.Column("legend", "integer", {"default": 0})
     t.Column("created_at", "timestamp", {"default": "now()"})
     t.Column("updated_at", "timestamp", {"default": "now()"})
 }

@@ -3,3 +3,14 @@
 2023/04/14 19:26:35 template: alltime.page.tmpl:82: undefined variable "$away"
 2023/04/14 19:29:35 template: alltime.page.tmpl:82: undefined variable "$home"
 2023/04/14 20:01:10 template: alltime.page.tmpl:116: undefined variable "$index"
+2023/05/08 10:58:00 Command failed with error: exit status 1
+2023/05/08 10:58:00 invalid character 'o' in literal null (expecting 'u')
+2023/05/08 10:59:29 626 https://www.2kratings.com/tim-duncan-2013-14-san-antonio-spurs updated
+2023/05/08 11:03:20 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:22 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:31 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:31 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:32 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:33 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:34 template: players.page.tmpl:66: unterminated quoted string
+2023/05/08 11:03:36 template: players.page.tmpl:66: unterminated quoted string

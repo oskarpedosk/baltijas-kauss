@@ -72,6 +72,7 @@ type Player struct {
 	GoldBadges        int        `json:"gold_badges"`
 	HOFBadges         int        `json:"hof_badges"`
 	TotalBadges       int        `json:"total_badges"`
+	Legend            int        `json:"legend"`
 	CreatedAt         time.Time
 	UpdatedAt         time.Time
 }

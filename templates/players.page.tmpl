@@ -32,7 +32,7 @@
                         <td class="p-0 py-1">
                             <a href="/players/{{$player.Player.PlayerID}}">
                                 {{ if $player.Player.ImgURL }}
-                                    <img src="{{$player.Player.ImgURL}}" alt="" class="header-image rounded-circle inline-block border">
+                                    <img src="{{$player.Player.ImgURL}}" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
                                 {{ else }}
                                     <img src="/static/images/players/default_player.png" alt="" class="header-image rounded-circle inline-block border">
                                 {{ end }}
@@ -41,7 +41,7 @@
                         <td class="p-0 ps-2">
                             <div class="d-flex player-card">
                                 <div class="p-0 inline-block">
-                                    <p class="m-0"><a class="player-link" href="/players/{{$player.Player.PlayerID}}">{{$player.Player.FirstName}} {{$player.Player.LastName}}</a></p>
+                                    <p class="m-0"><a class="player-link" {{if eq $player.Player.Legend 1}}style="color: #d300ea;"{{end}} href="/players/{{$player.Player.PlayerID}}">{{$player.Player.FirstName}} {{$player.Player.LastName}}</a>
                                     <div class="my-0">
                                         <p class="text-muted my-0 pointer" style="font-size: 12px;" data-bs-toggle="dropdown" aria-expanded="false">
                                             {{$player.Player.PrimaryPosition}}{{if $player.Player.SecondaryPosition}}/{{$player.Player.SecondaryPosition}}{{end}}
@@ -49,12 +49,12 @@
                                         </p>
                                         <div class="dropdown-menu">
                                             {{range $team := $.Data.teams}}
-                                                <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$team.TeamID}}', '{{$team.Abbreviation}}', '{{$team.TextColor}}', '{{$.CSRFToken}}')">
+                                                <li class="dropdown-item pointer" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$team.TeamID}}', '{{$team.Abbreviation}}', '{{$team.TextColor}}', '{{$.CSRFToken}}')">
                                                     <span style="color: {{$team.TextColor}}">{{$team.Abbreviation}}</span> {{$team.Name}}
                                                 </li>
                                             {{end}}
                                             <hr class="dropdown-divider">
-                                            <li class="dropdown-item" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$.Data.FA.TeamID}}', '{{$.Data.FA.Abbreviation}}', '{{$.Data.FA.TextColor}}', '{{$.CSRFToken}}')">
+                                            <li class="dropdown-item pointer" onclick="changeTeam('{{$player.Player.PlayerID}}', '{{$player.Player.FirstName}}', '{{$player.Player.LastName}}', '{{$.Data.FA.TeamID}}', '{{$.Data.FA.Abbreviation}}', '{{$.Data.FA.TextColor}}', '{{$.CSRFToken}}')">
                                                 {{$.Data.FA.Name}}
                                             </li>
                                         </div>

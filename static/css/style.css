@@ -569,3 +569,7 @@ html {
     text-align: center;
     font-variant-numeric: tabular-nums;
 }
+
+.legend-border {
+    border: 1px solid #d300ea;
+}

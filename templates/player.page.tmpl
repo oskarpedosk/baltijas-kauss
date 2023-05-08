@@ -14,8 +14,8 @@
             {{ end }}
         </div>
         <div class="col-md-4 align-self-end">
-            <h1 class="mb-0">{{.Data.player.FirstName}}</h1>
-            <h1 class="mb-0">{{.Data.player.LastName}}</h1>
+            <h1 class="mb-0" {{if eq .Data.player.Legend 1}}style="color: #d300ea;"{{end}}>{{.Data.player.FirstName}}</h1>
+            <h1 class="mb-0" {{if eq .Data.player.Legend 1}}style="color: #d300ea;"{{end}}>{{.Data.player.LastName}}</h1>
             <p class="mb-1 text-muted">{{.Data.player.Archetype}}</p>
             <p class="mb-1" style="margin-top: 2px;">
                 <span class="player-badge-big bronze">{{.Data.player.BronzeBadges}}</span>
