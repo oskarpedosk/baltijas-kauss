@@ -300,7 +300,6 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 
 			// Parse the output as an array of two objects
 			var data []json.RawMessage
-			log.Println(data)
 			err = json.Unmarshal(output, &data)
 			if err != nil {
 				log.Println(err)
