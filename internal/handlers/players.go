@@ -302,33 +302,39 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			var data []json.RawMessage
 			err = json.Unmarshal(output, &data)
 			if err != nil {
-				log.Println(err)
+				log.Println(data)
+				log.Printf("Parsing scraper output err: %v\n", err)
+				return
 			}
 
 			// Unmarshal the first object as a Player
 			var player models.Player
 			err = json.Unmarshal(data[0], &player)
 			if err != nil {
-				log.Println(err)
+				log.Println(data[0])
+				log.Printf("Unmarshaling first object to Player err: %v\n", err)
+				return
 			}
 
 			// Unmarshal the second object as a slice of Badges
 			var badges []models.Badge
 			err = json.Unmarshal(data[1], &badges)
 			if err != nil {
-				log.Println(err)
+				log.Println(data[1])
+				log.Printf("Unmarshaling second object to slice of Badges err: %v\n", err)
+				return
 			}
 
 			err = m.DB.UpdatePlayer(player)
 			if err != nil {
-				log.Println(err)
-				helpers.ServerError(w, err)
+				log.Printf("m.DB.UpdatePlayer err: %v\n", err)
+				return
 			}
 
 			err = m.DB.UpdatePlayerBadges(player, badges)
 			if err != nil {
-				log.Println(err)
-				helpers.ServerError(w, err)
+				log.Printf("m.DB.UpdatePlayerBadges err: %v\n", err)
+				return
 			}
 			log.Println(playerID, ratingsURL, "updated")
 		}(playerID, ratingsURL)

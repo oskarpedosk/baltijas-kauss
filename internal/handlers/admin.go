@@ -102,8 +102,8 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		cmd := exec.Command("node", filePath, strconv.Itoa(player.PlayerID), player.RatingsURL)
 		output, err := cmd.CombinedOutput()
 		if err != nil {
-			log.Printf("Command failed with error: %v\n", err)
 			log.Println(failMsg)
+			log.Printf("Command failed with error: %v\n", err)
 			continue
 		}
 
@@ -111,8 +111,8 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		var data []json.RawMessage
 		err = json.Unmarshal(output, &data)
 		if err != nil {
-			log.Println(err)
-			log.Println(failMsg)
+			log.Println(data)
+			log.Printf("Parsing scraper output err: %v\n", err)
 			continue
 		}
 
@@ -120,8 +120,8 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		var player models.Player
 		err = json.Unmarshal(data[0], &player)
 		if err != nil {
-			log.Println(err)
-			log.Println(failMsg)
+			log.Println(data[0])
+			log.Printf("Unmarshaling first object to Player err: %v\n", err)
 			continue
 		}
 
@@ -129,22 +129,22 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		var badges []models.Badge
 		err = json.Unmarshal(data[1], &badges)
 		if err != nil {
-			log.Println(err)
-			log.Println(failMsg)
+			log.Println(data[1])
+			log.Printf("Unmarshaling second object to slice of Badges err: %v\n", err)
 			continue
 		}
 
 		err = m.DB.UpdatePlayer(player)
 		if err != nil {
-			log.Println(err)
 			log.Println(failMsg)
+			log.Printf("m.DB.UpdatePlayer err: %v\n", err)
 			continue
 		}
 
 		err = m.DB.UpdatePlayerBadges(player, badges)
 		if err != nil {
-			log.Println(err)
 			log.Println(failMsg)
+			log.Printf("m.DB.UpdatePlayerBadges err: %v\n", err)
 			continue
 		}
 		success++
