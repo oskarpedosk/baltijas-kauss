@@ -15,7 +15,7 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
 
-const ubuntu = false
+const ubuntu = true
 
 var queryFilters = map[string]string{
 	"team":   "TeamID",
