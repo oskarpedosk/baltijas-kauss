@@ -39,12 +39,12 @@
                         <p class="text-muted pointer" data-bs-toggle="dropdown" aria-expanded="false">Team <span id="player_team" class="text-dark">{{$.Data.team.Name}}</span></p>
                         <div class="dropdown-menu">
                             {{range $team := $.Data.teams}}
-                                <li class="dropdown-item" onclick="changeTeam('{{$.Data.player.PlayerID}}', '{{$team.TeamID}}', '{{$team.Name}}', '{{$.CSRFToken}}')">
+                                <li class="dropdown-item pointer" onclick="changeTeam('{{$.Data.player.PlayerID}}', '{{$team.TeamID}}', '{{$team.Name}}', '{{$.CSRFToken}}')">
                                     {{$team.Abbreviation}} {{$team.Name}}
                                 </li>
                             {{end}}
                             <hr class="dropdown-divider">
-                            <li class="dropdown-item" onclick="changeTeam('{{$.Data.player.PlayerID}}', '{{$.Data.FA.TeamID}}', '{{$.Data.FA.Name}}', '{{$.CSRFToken}}')">
+                            <li class="dropdown-item pointer" onclick="changeTeam('{{$.Data.player.PlayerID}}', '{{$.Data.FA.TeamID}}', '{{$.Data.FA.Name}}', '{{$.CSRFToken}}')">
                                 {{$.Data.FA.Name}}
                             </li>
                         </div>

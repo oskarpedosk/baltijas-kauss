@@ -34,7 +34,7 @@
                                 {{ if $player.Player.ImgURL }}
                                     <img src="{{$player.Player.ImgURL}}" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
                                 {{ else }}
-                                    <img src="/static/images/players/default_player.png" alt="" class="header-image rounded-circle inline-block border">
+                                    <img src="/static/images/players/default_player.png" alt="" class="header-image rounded-circle inline-block {{if eq $player.Player.Legend 1}}legend-border{{else}}border{{end}}">
                                 {{ end }}
                             </a>
                         </td>
