@@ -3,6 +3,7 @@ package dbrepo
 import (
 	"context"
 	"fmt"
+	"log"
 	"math"
 	"time"
 
@@ -274,7 +275,7 @@ func (m *postgresDBRepo) GetPlayer(playerID int) (models.Player, error) {
 		if player.Birthdate != "" {
 			timestamp, err := time.Parse("January 2, 2006", player.Birthdate)
 			if err != nil {
-				fmt.Println(err)
+				log.Println(err)
 			}
 			player.Age = fmt.Sprintf("%d y.o.", int(time.Since(timestamp).Hours()/24/365))
 		}
@@ -797,6 +798,34 @@ func (m *postgresDBRepo) GetADP(playerID int) (float64, error) {
 	adp := math.Round(sum/counter*10) / 10
 
 	return adp, nil
+}
+
+// Create new player to database
+func (m *postgresDBRepo) CreateNewPlayer(ratingsURL string) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `SELECT MAX(player_id) FROM players`
+
+	var playerID int
+	err := m.DB.QueryRowContext(ctx, stmt).Scan(&playerID)
+	if err != nil {
+		return err
+	}
+
+	stmt = `
+	INSERT INTO
+		players (player_id, first_name, last_name, ratings_url, overall, height, weight, created_at, updated_at) 
+	VALUES 
+		($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+	`
+
+	_, err = m.DB.ExecContext(ctx, stmt, playerID+1, "New", "Player", ratingsURL, 1, helpers.NewNullInt(0), helpers.NewNullInt(0))
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // Delete player from db

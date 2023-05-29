@@ -59,6 +59,12 @@
                 {{end}}
             </tbody>
         </table>
+        <form method="post" action="/admin/players/new">
+            <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+            <label>2KRatings URL</label>
+            <input type="text" name="ratings_url" required>
+            <button class="btn btn-primary">Add new player</button>
+        </form>
     </div>
 {{end}}
 

@@ -245,7 +245,14 @@ func (m *Repository) AdminPlayer(w http.ResponseWriter, r *http.Request) {
 }
 
 func (m *Repository) NewPlayer(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("new player")
+	ratingsURL := r.FormValue("ratings_url")
+	err := m.DB.CreateNewPlayer(ratingsURL)
+	if err != nil {
+		m.App.Session.Put(r.Context(), "error", "Cannot create player.")
+		http.Redirect(w, r, "/admin/players", http.StatusSeeOther)
+	}
+	m.App.Session.Put(r.Context(), "flash", "Player successfully created!")
+	http.Redirect(w, r, "/admin/players", http.StatusSeeOther)
 }
 
 func (m *Repository) EditPlayer(w http.ResponseWriter, r *http.Request) {
@@ -263,9 +270,14 @@ func (m *Repository) EditPlayer(w http.ResponseWriter, r *http.Request) {
 
 	switch method {
 	case "edit":
-		fmt.Println(r.Form)
+		log.Println(r.Form)
 	case "delete":
-		m.DB.AddPlayer(playerID)
+		err = m.DB.DeletePlayer(playerID)
+		if err != nil {
+			m.App.Session.Put(r.Context(), "error", fmt.Sprintf("Error deleting playerID: %d", playerID))
+			http.Redirect(w, r, r.RequestURI, http.StatusSeeOther)
+			return
+		}
 		m.App.Session.Put(r.Context(), "flash", "Player deleted!")
 		http.Redirect(w, r, "/admin/players", http.StatusSeeOther)
 	}

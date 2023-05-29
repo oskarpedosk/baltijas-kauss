@@ -20,6 +20,7 @@ type DatabaseRepo interface {
 	UpdateTeam(team models.Team) error
 
 	// Players
+	CreateNewPlayer(ratingsURL string) error
 	AddPlayer(playerID, teamID int) error
 	DeletePlayer(playerID int) error
 	DropPlayer(playerID int) error
