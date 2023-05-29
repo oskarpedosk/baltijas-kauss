@@ -21,6 +21,7 @@ type DatabaseRepo interface {
 
 	// Players
 	AddPlayer(playerID, teamID int) error
+	DeletePlayer(playerID int) error
 	DropPlayer(playerID int) error
 	SwitchTeam(player models.Player) error
 	AssignPosition(playerID, position int) error

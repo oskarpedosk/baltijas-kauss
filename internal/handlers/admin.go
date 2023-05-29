@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/oskarpedosk/baltijas-kauss/internal/helpers"
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
@@ -18,7 +19,7 @@ func (m *Repository) AdminHome(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "admin-home.page.tmpl", &models.TemplateData{})
 }
 
-func (m *Repository) AdminNBATeams(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) AdminTeams(w http.ResponseWriter, r *http.Request) {
 	render.Template(w, r, "admin-nba-teams.page.tmpl", &models.TemplateData{})
 }
 
@@ -156,15 +157,48 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-func (m *Repository) AdminNBAPlayers(w http.ResponseWriter, r *http.Request) {
-	// players, err := m.DB.GetPlayers(120, 0)
-	// if err != nil {
-	// 	helpers.ServerError(w, err)
-	// 	return
-	// }
+func (m *Repository) AdminPlayers(w http.ResponseWriter, r *http.Request) {
+	filter := models.Filter{
+		TeamID:              0,
+		HeightMin:           150,
+		HeightMax:           250,
+		WeightMin:           50,
+		WeightMax:           150,
+		OverallMin:          1,
+		OverallMax:          99,
+		ThreePointShotMin:   1,
+		ThreePointShotMax:   99,
+		DrivingDunkMin:      1,
+		DrivingDunkMax:      99,
+		AthleticismMin:      1,
+		AthleticismMax:      99,
+		PerimeterDefenseMin: 1,
+		PerimeterDefenseMax: 99,
+		InteriorDefenseMin:  1,
+		InteriorDefenseMax:  99,
+		ReboundingMin:       1,
+		ReboundingMax:       99,
+		Position1:           1,
+		Position2:           1,
+		Position3:           1,
+		Position4:           1,
+		Position5:           1,
+		Limit:               1000,
+		Offset:              0,
+		Era:                 2,
+		Col1:                "overall",
+		Col2:                "\"attributes/TotalAttributes\"",
+		Order:               "desc",
+	}
+
+	players, err := m.DB.GetPlayers(filter)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
 
 	data := make(map[string]interface{})
-	// data["nba_players"] = players
+	data["players"] = players
 
 	render.Template(w, r, "admin-nba-players.page.tmpl", &models.TemplateData{
 		Data: data,
@@ -181,8 +215,7 @@ func (m *Repository) PostAdminStandings(w http.ResponseWriter, r *http.Request) 
 	http.Redirect(w, r, "/standings", http.StatusSeeOther)
 }
 
-// Shows a single players stats
-func (m *Repository) AdminShowNBAPlayer(w http.ResponseWriter, r *http.Request) {
+func (m *Repository) AdminPlayer(w http.ResponseWriter, r *http.Request) {
 	exploded := strings.Split(r.RequestURI, "/")
 	id, err := strconv.Atoi(exploded[3])
 	if err != nil {
@@ -203,10 +236,37 @@ func (m *Repository) AdminShowNBAPlayer(w http.ResponseWriter, r *http.Request) 
 	}
 
 	data := make(map[string]interface{})
-	data["nba_player"] = player
-	data["nba_teams"] = teams
+	data["player"] = player
+	data["teams"] = teams
 
 	render.Template(w, r, "admin-nba-player.page.tmpl", &models.TemplateData{
 		Data: data,
 	})
+}
+
+func (m *Repository) NewPlayer(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("new player")
+}
+
+func (m *Repository) EditPlayer(w http.ResponseWriter, r *http.Request) {
+	playerID, err := strconv.Atoi(chi.URLParam(r, "id"))
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	method := r.Form.Get("method")
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	switch method {
+	case "edit":
+		fmt.Println(r.Form)
+	case "delete":
+		m.DB.AddPlayer(playerID)
+		m.App.Session.Put(r.Context(), "flash", "Player deleted!")
+		http.Redirect(w, r, "/admin/players", http.StatusSeeOther)
+	}
 }

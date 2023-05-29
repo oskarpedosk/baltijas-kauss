@@ -576,9 +576,10 @@ func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, erro
 		OR ($23 = 1 AND (primary_position = 'PF' OR secondary_position = 'PF'))
 		OR ($24 = 1 AND (primary_position = 'C' OR secondary_position = 'C')))
 	AND lower(first_name || '+' || last_name) LIKE '%' || lower($25) || '%'
+	AND legend != $26
 	ORDER BY ` + filter.Col1 + ` ` + filter.Order + `, ` + filter.Col2 + ` DESC
-	LIMIT $26
-	OFFSET $27
+	LIMIT $27
+	OFFSET $28
 	`
 
 	rows, err := m.DB.QueryContext(ctx, query,
@@ -607,6 +608,7 @@ func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, erro
 		filter.Position4,
 		filter.Position5,
 		filter.Search,
+		filter.Era,
 		filter.Limit,
 		filter.Offset,
 	)
@@ -795,4 +797,25 @@ func (m *postgresDBRepo) GetADP(playerID int) (float64, error) {
 	adp := math.Round(sum/counter*10) / 10
 
 	return adp, nil
+}
+
+// Delete player from db
+func (m *postgresDBRepo) DeletePlayer(playerID int) error {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+	delete from 
+		players
+	where
+		player_id = $1
+	`
+
+	_, err := m.DB.ExecContext(ctx, stmt, playerID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

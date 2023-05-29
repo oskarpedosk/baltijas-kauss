@@ -5,10 +5,10 @@
 {{end}}
 
 {{define "content"}}
-    {{$player := index .Data "nba_player"}}
+    {{$player := index .Data "player"}}
     <div class="col-md-12">
         <form method="post" action="/admin/players/{{$player.PlayerID}}" novalidate>
-            <input type="hidden" name="player_id" value="{{$player.PlayerID}}">
+            <input type="hidden" name="method" value="edit">
             <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
             <div class="form-group">
                 <div class="row">
@@ -57,10 +57,9 @@
                     <div class="col">
                         <label>Team</label>
                         <select class="form-select" name="team_id" aria-label="Default select example">
-                            {{range $teamInfo := index $.Data "nba_teams"}}
-                                <option {{if eq $player.TeamID.Int64 $teamInfo.TeamID.Int64}}selected{{end}} value="{{$teamInfo.Name}}">{{$teamInfo.Name}}</option>
+                            {{range $teamInfo := index $.Data "teams"}}
+                                <option {{if eq $player.TeamID $teamInfo.TeamID}}selected{{end}} value="{{$teamInfo.Name}}">{{$teamInfo.Name}}</option>
                             {{end}}
-                            <option {{if eq $player.TeamID.Valid false}}selected{{end}} value="null">Free Agency</option>
                         </select>
                     </div>
                     <div class="col">
@@ -106,110 +105,110 @@
                 <label>Arcehtype</label>
                 <input type="text" class="form-control" name="archetype" value="{{$player.Archetype}}">
                 <label>2K Ratings URL</label>
-                <input type="url" class="form-control" name="player_url" value="{{$player.PlayerUrl}}">
+                <input type="url" class="form-control" name="player_url" value="{{$player.RatingsURL}}">
                 <label>Player Image URL</label>
-                <input type="url" class="form-control" name="img_url" value="{{$player.ImgUrl}}">
+                <input type="url" class="form-control" name="img_url" value="{{$player.ImgURL}}">
             </div>
             <hr>
             <div class="form-group">
                 <label>Overall Rating</label>
-                <input type="number" class="form-control" name="stats_overall" value="{{$player.StatsOverall}}">
+                <input type="number" class="form-control" name="stats_overall" value="{{$player.Overall}}">
                 <div class="row">
                     <div class="col">
                         <label><strong>Outside Scoring</strong></label>
-                        <input type="number" class="form-control" name="stats_outside_scoring" value="{{$player.StatsOutsideScoring}}">
+                        <input type="number" class="form-control" name="stats_outside_scoring" value="{{$player.Attributes.OutsideScoring}}">
                         <label>Close Shot</label>
-                        <input type="number" class="form-control" name="stats_close_shot" value="{{$player.StatsCloseShot}}">
+                        <input type="number" class="form-control" name="stats_close_shot" value="{{$player.Attributes.CloseShot}}">
                         <label>Mid-Range Shot</label>
-                        <input type="number" class="form-control" name="stats_mid_range" value="{{$player.StatsMidRangeShot}}">
+                        <input type="number" class="form-control" name="stats_mid_range" value="{{$player.Attributes.MidRangeShot}}">
                         <label>Three Point Shot</label>
-                        <input type="number" class="form-control" name="stats_three_point" value="{{$player.StatsThreePointShot}}">
+                        <input type="number" class="form-control" name="stats_three_point" value="{{$player.Attributes.ThreePointShot}}">
                         <label>Free Throw</label>
-                        <input type="number" class="form-control" name="stats_free_throw" value="{{$player.StatsFreeThrow}}">
+                        <input type="number" class="form-control" name="stats_free_throw" value="{{$player.Attributes.FreeThrow}}">
                         <label>Shot IQ</label>
-                        <input type="number" class="form-control" name="stats_shot_iq" value="{{$player.StatsShotIQ}}">
+                        <input type="number" class="form-control" name="stats_shot_iq" value="{{$player.Attributes.ShotIQ}}">
                         <label>Offensive Consistency</label>
-                        <input type="number" class="form-control" name="stats_offensive_consistency" value="{{$player.StatsOffensiveConsistency}}">
+                        <input type="number" class="form-control" name="stats_offensive_consistency" value="{{$player.Attributes.OffensiveConsistency}}">
                     </div>
                     <div class="col">
                         <label><strong>Athleticism</strong></label>
-                        <input type="number" class="form-control" name="stats_atheleticism" value="{{$player.StatsAthleticism}}">
+                        <input type="number" class="form-control" name="stats_atheleticism" value="{{$player.Attributes.Athleticism}}">
                         <label>Speed</label>
-                        <input type="number" class="form-control" name="stats_speed" value="{{$player.StatsSpeed}}">
+                        <input type="number" class="form-control" name="stats_speed" value="{{$player.Attributes.Speed}}">
                         <label>Acceleration</label>
-                        <input type="number" class="form-control" name="stats_acceleration" value="{{$player.StatsAcceleration}}">
+                        <input type="number" class="form-control" name="stats_acceleration" value="{{$player.Attributes.Acceleration}}">
                         <label>Strength</label>
-                        <input type="number" class="form-control" name="stats_strength" value="{{$player.StatsStrength}}">
+                        <input type="number" class="form-control" name="stats_strength" value="{{$player.Attributes.Strength}}">
                         <label>Vertical</label>
-                        <input type="number" class="form-control" name="stats_vertical" value="{{$player.StatsVertical}}">
+                        <input type="number" class="form-control" name="stats_vertical" value="{{$player.Attributes.Vertical}}">
                         <label>Stamina</label>
-                        <input type="number" class="form-control" name="stats_stamina" value="{{$player.StatsStamina}}">
+                        <input type="number" class="form-control" name="stats_stamina" value="{{$player.Attributes.Stamina}}">
                         <label>Hustle</label>
-                        <input type="number" class="form-control" name="stats_hustle" value="{{$player.StatsHustle}}">
+                        <input type="number" class="form-control" name="stats_hustle" value="{{$player.Attributes.Hustle}}">
                         <label>Overall Durability</label>
-                        <input type="number" class="form-control" name="stats_overall_durability" value="{{$player.StatsOverallDurability}}">
+                        <input type="number" class="form-control" name="stats_overall_durability" value="{{$player.Attributes.OverallDurability}}">
                     </div>
                     <div class="col">
                         <label><strong>Inside Scoring</strong></label>
-                        <input type="number" class="form-control" name="stats_inside_scoring" value="{{$player.StatsInsideScoring}}">
+                        <input type="number" class="form-control" name="stats_inside_scoring" value="{{$player.Attributes.InsideScoring}}">
                         <label>Layup</label>
-                        <input type="number" class="form-control" name="stats_layup" value="{{$player.StatsLayup}}">
+                        <input type="number" class="form-control" name="stats_layup" value="{{$player.Attributes.Layup}}">
                         <label>Standing Dunk</label>
-                        <input type="number" class="form-control" name="stats_standing_dunk" value="{{$player.StatsStandingDunk}}">
+                        <input type="number" class="form-control" name="stats_standing_dunk" value="{{$player.Attributes.StandingDunk}}">
                         <label>Driving Dunk</label>
-                        <input type="number" class="form-control" name="stats_driving_dunk" value="{{$player.StatsDrivingDunk}}">
+                        <input type="number" class="form-control" name="stats_driving_dunk" value="{{$player.Attributes.DrivingDunk}}">
                         <label>Post Hook</label>
-                        <input type="number" class="form-control" name="stats_post_hook" value="{{$player.StatsPostHook}}">
+                        <input type="number" class="form-control" name="stats_post_hook" value="{{$player.Attributes.PostHook}}">
                         <label>Post Fade</label>
-                        <input type="number" class="form-control" name="stats_post_fade" value="{{$player.StatsPostFade}}">
+                        <input type="number" class="form-control" name="stats_post_fade" value="{{$player.Attributes.PostFade}}">
                         <label>Post Control</label>
-                        <input type="number" class="form-control" name="stats_post_control" value="{{$player.StatsPostControl}}">
+                        <input type="number" class="form-control" name="stats_post_control" value="{{$player.Attributes.PostControl}}">
                         <label>Draw Foul</label>
-                        <input type="number" class="form-control" name="stats_draw_foul" value="{{$player.StatsDrawFoul}}">
+                        <input type="number" class="form-control" name="stats_draw_foul" value="{{$player.Attributes.DrawFoul}}">
                         <label>Hands</label>
-                        <input type="number" class="form-control" name="stats_hands" value="{{$player.StatsHands}}">
+                        <input type="number" class="form-control" name="stats_hands" value="{{$player.Attributes.Hands}}">
                     </div>
                     <div class="col">
                         <label><strong>Playmaking</strong></label>
-                        <input type="number" class="form-control" name="stats_playmaking" value="{{$player.StatsPlaymaking}}">
+                        <input type="number" class="form-control" name="stats_playmaking" value="{{$player.Attributes.Playmaking}}">
                         <label>Pass Accuracy</label>
-                        <input type="number" class="form-control" name="stats_pass_accuracy" value="{{$player.StatsPassAccuracy}}">
+                        <input type="number" class="form-control" name="stats_pass_accuracy" value="{{$player.Attributes.PassAccuracy}}">
                         <label>Ball Handle</label>
-                        <input type="number" class="form-control" name="stats_ball_handle" value="{{$player.StatsBallHandle}}">
+                        <input type="number" class="form-control" name="stats_ball_handle" value="{{$player.Attributes.BallHandle}}">
                         <label>Speed With Ball</label>
-                        <input type="number" class="form-control" name="stats_speed_with_ball" value="{{$player.StatsSpeedWithBall}}">
+                        <input type="number" class="form-control" name="stats_speed_with_ball" value="{{$player.Attributes.SpeedWithBall}}">
                         <label>Pass IQ</label>
-                        <input type="number" class="form-control" name="stats_pass_iq" value="{{$player.StatsPassIQ}}">
+                        <input type="number" class="form-control" name="stats_pass_iq" value="{{$player.Attributes.PassIQ}}">
                         <label>Pass Vision</label>
-                        <input type="number" class="form-control" name="stats_pass_vision" value="{{$player.StatsPassVision}}">
+                        <input type="number" class="form-control" name="stats_pass_vision" value="{{$player.Attributes.PassVision}}">
                     </div>
                     <div class="col">
                         <label><strong>Defending</strong></label>
-                        <input type="number" class="form-control" name="stats_defending" value="{{$player.StatsDefending}}">
+                        <input type="number" class="form-control" name="stats_defending" value="{{$player.Attributes.Defending}}">
                         <label>Interior Defense</label>
-                        <input type="number" class="form-control" name="stats_interior_defense" value="{{$player.StatsInteriorDefense}}">
+                        <input type="number" class="form-control" name="stats_interior_defense" value="{{$player.Attributes.InteriorDefense}}">
                         <label>Perimeter Defense</label>
-                        <input type="number" class="form-control" name="stats_perimeter_defense" value="{{$player.StatsPerimeterDefense}}">
+                        <input type="number" class="form-control" name="stats_perimeter_defense" value="{{$player.Attributes.PerimeterDefense}}">
                         <label>Steal</label>
-                        <input type="number" class="form-control" name="stats_steal" value="{{$player.StatsSteal}}">
+                        <input type="number" class="form-control" name="stats_steal" value="{{$player.Attributes.Steal}}">
                         <label>Block</label>
-                        <input type="number" class="form-control" name="stats_block" value="{{$player.StatsBlock}}">
+                        <input type="number" class="form-control" name="stats_block" value="{{$player.Attributes.Block}}">
                         <label>Lateral Quickness</label>
-                        <input type="number" class="form-control" name="stats_lateral_quickness" value="{{$player.StatsLateralQuickness}}">
+                        <input type="number" class="form-control" name="stats_lateral_quickness" value="{{$player.Attributes.LateralQuickness}}">
                         <label>Help Defense IQ</label>
-                        <input type="number" class="form-control" name="stats_help_defense_iq" value="{{$player.StatsHelpDefenseIQ}}">
+                        <input type="number" class="form-control" name="stats_help_defense_iq" value="{{$player.Attributes.HelpDefenseIQ}}">
                         <label>Pass Perception</label>
-                        <input type="number" class="form-control" name="stats_pass_perception" value="{{$player.StatsPassPerception}}">
+                        <input type="number" class="form-control" name="stats_pass_perception" value="{{$player.Attributes.PassPerception}}">
                         <label>Defensive Consistency</label>
-                        <input type="number" class="form-control" name="stats_defensive_consistency" value="{{$player.StatsDefensiveConsistency}}">
+                        <input type="number" class="form-control" name="stats_defensive_consistency" value="{{$player.Attributes.DefensiveConsistency}}">
                     </div>
                     <div class="col">
                         <label><strong>Rebounding</strong></label>
-                        <input type="number" class="form-control" name="stats_rebounding" value="{{$player.StatsRebounding}}">
+                        <input type="number" class="form-control" name="stats_rebounding" value="{{$player.Attributes.Rebounding}}">
                         <label>Offensive Rebound</label>
-                        <input type="number" class="form-control" name="stats_offensive_rebound" value="{{$player.StatsOffensiveRebound}}">
+                        <input type="number" class="form-control" name="stats_offensive_rebound" value="{{$player.Attributes.OffensiveRebound}}">
                         <label>Defensive Rebound</label>
-                        <input type="number" class="form-control" name="stats_defensive_rebound" value="{{$player.StatsDefensiveRebound}}">
+                        <input type="number" class="form-control" name="stats_defensive_rebound" value="{{$player.Attributes.DefensiveRebound}}">
                     </div>
                 </div>
             </div>
@@ -218,15 +217,22 @@
                 <div class="row">
                     <div class="col">
                         <label><strong>Intangibles</strong></label>
-                        <input type="number" class="form-control" name="stats_intangibles" value="{{$player.StatsIntangibles}}">
+                        <input type="number" class="form-control" name="stats_intangibles" value="{{$player.Attributes.Intangibles}}">
                     </div>
                     <div class="col">
                         <label><strong>Potential</strong></label>
-                        <input type="number" class="form-control" name="stats_potential" value="{{$player.StatsPotential}}">
+                        <input type="number" class="form-control" name="stats_potential" value="{{$player.Attributes.Potential}}">
                     </div>
                     <div class="col">
                         <label><strong>Total Attributes</strong></label>
-                        <input type="number" class="form-control" name="stats_total_attributes" value="{{$player.StatsTotalAttributes}}">
+                        <input type="number" class="form-control" name="stats_total_attributes" value="{{$player.Attributes.TotalAttributes}}">
+                    </div>
+                    <div class="col">
+                        <label>Legend</label>
+                        <select class="form-select" name="legend">
+                            <option {{if eq $player.Legend 0}}selected{{end}} value="0">Current Player</option>
+                            <option {{if eq $player.Legend 1}}selected{{end}} value="1">Legend</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -235,23 +241,23 @@
                 <div class="row">
                     <div class="col">
                         <label>Bronze Badges Count</label>
-                        <input type="number" class="form-control" name="bronze_badge_count" value="{{$player.BronzeBadgesCount}}">
+                        <input type="number" class="form-control" name="bronze_badge_count" value="{{$player.BronzeBadges}}">
                     </div>
                     <div class="col">
                         <label>Silver Badges Count</label>
-                        <input type="number" class="form-control" name="silver_badge_count" value="{{$player.SilverBadgesCount}}">
+                        <input type="number" class="form-control" name="silver_badge_count" value="{{$player.SilverBadges}}">
                     </div>
                     <div class="col">
                         <label>Gold Badges Count</label>
-                        <input type="number" class="form-control" name="gold_badge_count" value="{{$player.GoldBadgesCount}}">
+                        <input type="number" class="form-control" name="gold_badge_count" value="{{$player.GoldBadges}}">
                     </div>
                     <div class="col">
                         <label>HOF Badges Count</label>
-                        <input type="number" class="form-control" name="hof_badge_count" value="{{$player.HOFBadgesCount}}">
+                        <input type="number" class="form-control" name="hof_badge_count" value="{{$player.HOFBadges}}">
                     </div>
                     <div class="col">
                         <label>Total Badges Count</label>
-                        <input type="number" class="form-control" name="total_badge_count" value="{{$player.TotalBadgesCount}}">
+                        <input type="number" class="form-control" name="total_badge_count" value="{{$player.TotalBadges}}">
                     </div>
                 </div>                
             </div>
@@ -260,10 +266,13 @@
                 <input type="submit" class="btn btn-primary" value="Save">
                 <a href="/admin/players" class="btn btn-warning">Cancel</a>
             </div>
-            <div class="float-end">
-                <a href="/admin/players" class="btn btn-danger float-right">Delete Player</a>
-            </div>
-            <div class="clearfix"></div>
         </form>
+        <div class="float-end">
+            <form method="post" action="/admin/players/{{$player.PlayerID}}">
+                <input type="hidden" name="method" value="delete">
+                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                <button class="btn btn-danger float-right">Delete Player</a>
+            </form>
+        </div>
     </div>
 {{end}}

@@ -59,12 +59,15 @@ func routes(app *config.AppConfig) http.Handler {
 		// add routes here for admin
 		mux.Get("/", handlers.Repo.AdminHome)
 		
-		mux.Get("/teams", handlers.Repo.AdminNBATeams)
+		mux.Get("/teams", handlers.Repo.AdminTeams)
 
-		mux.Get("/players", handlers.Repo.AdminNBAPlayers)
+		mux.Get("/players", handlers.Repo.AdminPlayers)
 		mux.Post("/players", handlers.Repo.PostAdminPlayers)
+		
+		mux.Post("/players/new", handlers.Repo.NewPlayer)
+		mux.Post("/players/{id}", handlers.Repo.EditPlayer)
 
-		mux.Get("/{src}/{id}", handlers.Repo.AdminShowNBAPlayer)
+		mux.Get("/{src}/{id}", handlers.Repo.AdminPlayer)
 		
 		mux.Get("/standings", handlers.Repo.AdminStandings)
 		mux.Post("/standings", handlers.Repo.PostAdminStandings)

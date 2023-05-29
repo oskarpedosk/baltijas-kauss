@@ -104,6 +104,7 @@ type Filter struct {
 	Position5           int
 	Limit               int
 	Offset              int
+	Era                 int
 	Col1                string
 	Col2                string
 	Order               string

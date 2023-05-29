@@ -152,6 +152,7 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 		Position5:           1,
 		Limit:               20,
 		Offset:              0,
+		Era:                 2,
 		Col1:                "overall",
 		Col2:                "\"attributes/TotalAttributes\"",
 		Order:               "desc",
@@ -188,6 +189,12 @@ func (m *Repository) Players(w http.ResponseWriter, r *http.Request) {
 			filter.Order = value[0]
 		} else if key == "search" {
 			filter.Search = value[0]
+		} else if key == "era" {
+			if value[0] == "current" {
+				filter.Era = 1
+			} else if value[0] == "legends" {
+				filter.Era = 0
+			}
 		} else {
 			queryInt, err := strconv.Atoi(value[0])
 			if err != nil {
@@ -291,7 +298,7 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 			if ubuntu {
 				filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 			}
-			
+
 			cmd := exec.Command("node", filePath, playerID, ratingsURL)
 			output, err := cmd.CombinedOutput()
 			if err != nil {

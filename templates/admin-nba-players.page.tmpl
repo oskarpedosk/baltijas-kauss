@@ -47,13 +47,13 @@
                 </tr>
             </thead>
             <tbody>
-                {{range $index, $players := index .Data "nba_players"}}
+                {{range $index, $players := index .Data "players"}}
                 <tr>
                     <td>{{$players.PlayerID}}</td>
                     <td>{{add $index 1}}</td>
                     <td>{{$players.FirstName}}</td>
                     <td>{{$players.LastName}}</td>
-                    <td>{{$players.StatsOverall}}</td>
+                    <td>{{$players.Overall}}</td>
                     <td><a href="/admin/players/{{$players.PlayerID}}">EDIT</a></td>
                 </tr>
                 {{end}}

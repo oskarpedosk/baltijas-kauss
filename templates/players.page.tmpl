@@ -188,6 +188,13 @@
                     <option value="20">20 players</option>
                     <option value="30">30 players</option>
                     <option value="50">50 players</option>
+                    <option value="100">100 players</option>
+                </select>
+
+                <select id="legendSelect" class="form-select mb-2">
+                    <option value="both">Current & Legends</option>
+                    <option value="current">Current Players</option>
+                    <option value="legends">Legends</option>
                 </select>
 
                 <button class="btn btn-primary my-2" style="width: 100%;" onclick="filterPlayers()">Submit</button>
@@ -285,12 +292,16 @@
             }
         })
         let teams = document.getElementById('teamSelect')
-        if (teams.value !== '0') {
+        if (teams.value !== "0") {
             url.searchParams.set("team", teams.value)
         }
         let limit = document.getElementById('limitSelect')
-        if (limit.value !== '20') {
+        if (limit.value !== "20") {
             url.searchParams.set("limit", limit.value)
+        }
+        let era = document.getElementById('legendSelect')
+        if (era.value !== "both") {
+            url.searchParams.set("era", era.value)
         }
         window.location.href = url.toString()
     }
@@ -355,6 +366,11 @@
     const limit = document.getElementById('limitSelect')
     if (searchParams.has('limit')) {
         limit.value = searchParams.get('limit')
+    }
+
+    const era = document.getElementById('legendSelect')
+    if (searchParams.has('era')) {
+        era.value = searchParams.get('era')
     }
 
     // Handle the table sorting
