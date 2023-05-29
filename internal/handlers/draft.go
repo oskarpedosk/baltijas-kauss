@@ -262,7 +262,6 @@ func draftPlayer(e DraftPayload) {
 		response.TeamName = draftPicks[pick].TeamName
 	}
 
-	
 	response.Pick = pick + 1
 	response.PlayerID = e.PlayerID
 	response.Row = draftPicks[pick-1].Row
@@ -491,6 +490,7 @@ func (m *Repository) Draft(w http.ResponseWriter, r *http.Request) {
 		Position5:           1,
 		Limit:               1000,
 		Offset:              0,
+		Era:                 2,
 		Col1:                "overall",
 		Col2:                "\"attributes/TotalAttributes\"",
 		Order:               "desc",
