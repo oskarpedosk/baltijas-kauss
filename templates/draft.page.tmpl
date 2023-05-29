@@ -121,7 +121,10 @@
       </div>
     </div>
     <div class="col-md-3">
-      <input id="search" class="form-control mb-2" type="text" name="search" autocomplete="off" placeholder="Search...">
+      <div class="d-flex mb-2">
+        <input id="search" class="form-control" type="text" name="search" autocomplete="off" placeholder="Search...">
+        <button id="star-0" class="btn bg-white ms-2 px-3 py-0" type="button" style="color: #E6E6E6; border-color: rgb(210, 210, 210); font-size: 18px;" onclick="toggleFavourites()">☆</button>
+      </div>
       <div class="rounded-3 border">
         <ul id="draft-players-list" class="list-group">
           {{range $index, $player := index .Data "players"}}
@@ -401,6 +404,30 @@
     event.stopPropagation()
   }
 
+  let favourites = false
+
+  function toggleFavourites() {
+    toggleStar(0)
+    favourites = !favourites
+    const listItems = document.querySelectorAll('#draft-players-list li');
+
+    if (favourites) {
+      listItems.forEach(item => {
+        const starSpan = item.querySelector('span[id^="star-"]')
+        if (starSpan.style.color === 'rgb(230, 230, 230)') {
+          item.classList.add('hidden')
+        } else {
+          item.classList.remove('hidden')
+        }
+      })
+    } else {
+      listItems.forEach(item => {
+        const starSpan = item.querySelector('span[id^="star-"]')
+        item.classList.remove('hidden')
+      })
+    }
+  }
+
   function toggleMute() {
     if (volume.getAttribute('src') === '/static/images/buttons/volume-on.png') {
       volume.setAttribute('src', '/static/images/buttons/volume-off.png')
@@ -604,7 +631,7 @@
   $(document).ready(function() {
     $("#search").on("keyup", function() {
       let value = $(this).val().toLowerCase()
-      $("#draft-players-list li").filter(function() {
+      $("#draft-players-list li:not(.hidden)").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
       })
     })
