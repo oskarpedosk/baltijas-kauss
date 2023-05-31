@@ -31,6 +31,10 @@
 
       <div class="collapse navbar-collapse" id="bk_navbar">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item d-flex align-items-center">
+            <input id="navbar-search" type="text" class="form-control" autocomplete="off" placeholder="Search players..." onkeyup=handleSearch()>
+            <ul id="navbar-search-results" class="dropdown-menu" style="display: none;"></ul>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/teams/{{.User.UserID}}">My Team</a>
           </li>
@@ -51,6 +55,7 @@
               <a class="dropdown-item" href="/alltime">All-Time Rankings</a>
             </div>
           </li>
+          
           {{if eq .User.AccessLevel 2}}
             <li class="nav-item">
               <a class="nav-link" href="/admin" style="color:#cc00ff;">Admin</a>
@@ -132,9 +137,61 @@
     })
   })()
 </script>
+
+<script>
+  let delay
+  let prevQuery
+  const handleSearch = () => {
+    const query = document.getElementById("navbar-search").value;
+    if (query !== prevQuery) {
+      clearTimeout(delay);
+      delay = setTimeout(() => {
+        if (query && query.length > 2) {
+          $.ajax({
+          type: "GET",
+          url: "/search",
+          data: { query: query }, 
+          success: function(data) {
+            if (data) {
+              displaySearchResults(data)
+            }
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+              notie.alert({ type: 3, text: 'Error searching players: ' + errorThrown});
+          }
+          });
+        } else {
+          const searchResults = document.getElementById("navbar-search-results");
+          searchResults.style.display = "none";
+          searchResults.innerHTML = "";
+        }
+      }, 500);
+    }
+    prevQuery = query;
+  }
+
+  const displaySearchResults = (players) => {
+    console.log(players)
+    const searchResults = document.getElementById("navbar-search-results");
+    searchResults.style.display = "block";
+    searchResults.innerHTML = "";
+    
+    if (players.length > 0) {
+      players.forEach((player) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = player.player_id + player.first_name;
+        listItem.classList.add("dropdown-item");
+        searchResults.appendChild(listItem);
+      });
+    } else {
+      searchResults.style.display = "none";
+      searchResults.innerHTML = "";
+    }
+  };
+</script>
     
 {{block "js" .}}
-  
+
 {{end}}
 
 </body>

@@ -350,3 +350,51 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "info", "Updating player ID: "+playerID)
 	http.Redirect(w, r, "/players/"+playerID, http.StatusSeeOther)
 }
+
+func (m *Repository) SearchPlayers(w http.ResponseWriter, r *http.Request) {
+	filter := models.Filter{
+		TeamID:              0,
+		HeightMin:           150,
+		HeightMax:           250,
+		WeightMin:           50,
+		WeightMax:           150,
+		OverallMin:          1,
+		OverallMax:          99,
+		ThreePointShotMin:   1,
+		ThreePointShotMax:   99,
+		DrivingDunkMin:      1,
+		DrivingDunkMax:      99,
+		AthleticismMin:      1,
+		AthleticismMax:      99,
+		PerimeterDefenseMin: 1,
+		PerimeterDefenseMax: 99,
+		InteriorDefenseMin:  1,
+		InteriorDefenseMax:  99,
+		ReboundingMin:       1,
+		ReboundingMax:       99,
+		Position1:           1,
+		Position2:           1,
+		Position3:           1,
+		Position4:           1,
+		Position5:           1,
+		Limit:               10,
+		Offset:              0,
+		Era:                 2,
+		Search:              r.URL.Query().Get("query"),
+		Col1:                "overall",
+		Col2:                "\"attributes/TotalAttributes\"",
+		Order:               "desc",
+	}
+
+	players, err := m.DB.GetPlayers(filter)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+
+	err = helpers.WriteJson(w, http.StatusOK, players, nil)
+	if err != nil {
+		helpers.ServerError(w, err)
+		return
+	}
+}

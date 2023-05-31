@@ -28,6 +28,8 @@ func routes(app *config.AppConfig) http.Handler {
 		
 		mux.Get("/", handlers.Repo.Home)
 
+		mux.Get("/search", handlers.Repo.SearchPlayers)
+
 		mux.Get("/players", handlers.Repo.Players)
 		mux.Post("/players", handlers.Repo.PostPlayers)
 

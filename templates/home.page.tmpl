@@ -8,7 +8,9 @@
     <div class="teams-container">
         {{ range $team := .Data.teams }}
             <div class="rounded-3 p-4" style="background-image: linear-gradient(90deg, {{$team.Team.Color1}}, {{$team.Team.Color2}}); color: {{$team.Team.TextColor}};">
-                <p class="text-center" style="font-weight: 500; font-size: 18px; text-transform: uppercase;">{{ .Team.Name }}</p>
+                <div class="mb-3 text-center">
+                    <a href="/teams/{{.Team.TeamID}}" class="player-link" style="font-weight: 500; font-size: 18px; text-transform: uppercase; color: {{$team.Team.TextColor}};">{{ .Team.Name }}</a>
+                </div>
                 {{ range $line := seq 1 12 }}
                     {{ if eq $line 6}}
                         <hr>

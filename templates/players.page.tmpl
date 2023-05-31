@@ -6,7 +6,7 @@
 
 <div class="container">
     <div class="row">
-        <div id="players_table" class="col-md-9">
+        <div id="players_table" class="col-md-9 table-responsive">
             <table class="table table-sm table-responsive table-borderless table-hover" style="border-bottom: 0.5px solid rgb(190, 190, 190);">
                 <thead style="font-size: 14px; white-space: nowrap; text-align: center;">
                     <tr style="background-color: white;">
@@ -281,14 +281,10 @@
         let url = new URL(URLWithoutQueries)
         let inputs = document.querySelectorAll('#filterForm input')
         inputs.forEach(input => {
-            if (input.name === 'search' && input.value) {
-                url.searchParams.set("search", (input.value).replaceAll(' ', '+'))
-            } else {
-                if ((!input.checked) && input.type === 'checkbox') {
-                    url.searchParams.set(input.name, 0)
-                } else if (input.value && input.type !== 'checkbox') {
-                    url.searchParams.set(input.name, input.value)
-                }
+            if ((!input.checked) && input.type === 'checkbox') {
+                url.searchParams.set(input.name, 0)
+            } else if (input.value && input.type !== 'checkbox') {
+                url.searchParams.set(input.name, input.value)
             }
         })
         let teams = document.getElementById('teamSelect')

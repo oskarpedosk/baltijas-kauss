@@ -576,7 +576,7 @@ func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, erro
 		OR ($22 = 1 AND (primary_position = 'SF' OR secondary_position = 'SF'))
 		OR ($23 = 1 AND (primary_position = 'PF' OR secondary_position = 'PF'))
 		OR ($24 = 1 AND (primary_position = 'C' OR secondary_position = 'C')))
-	AND lower(first_name || '+' || last_name) LIKE '%' || lower($25) || '%'
+	AND lower(first_name || ' ' || last_name) LIKE '%' || lower($25) || '%'
 	AND legend != $26
 	ORDER BY ` + filter.Col1 + ` ` + filter.Order + `, ` + filter.Col2 + ` DESC
 	LIMIT $27
