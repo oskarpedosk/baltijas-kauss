@@ -20,7 +20,9 @@
                     {{ range $player := $team.Players }}
                         {{ if eq $player.AssignedPosition $line }}
                             {{ $counter = add $counter 1}}
-                            <p class="mb-1 px-3" style="font-weight: 300;">{{ $player.FirstName }} {{ $player.LastName }}</p>
+                            <div class="mb-1 px-3">
+                                <a href="/players/{{$player.PlayerID}}" class="player-link" style="font-weight: 300; color: {{$team.Team.TextColor}};">{{ $player.FirstName }} {{ $player.LastName }}</a>
+                            </div>
                         {{ end }}
                     {{ end }}
                     {{ if eq $counter 0 }}

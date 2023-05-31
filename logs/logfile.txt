@@ -1,0 +1,1 @@
+2023/05/31 10:56:35 template: home.page.tmpl:24: bad character U+0024 '$'
