@@ -1,2 +1,0 @@
-2023/05/31 10:56:35 template: home.page.tmpl:24: bad character U+0024 '$'
-2023/05/31 16:06:07 template: home.page.tmpl:11: undefined variable "$player"

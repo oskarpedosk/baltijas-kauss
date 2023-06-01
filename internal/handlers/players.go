@@ -392,9 +392,5 @@ func (m *Repository) SearchPlayers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = helpers.WriteJson(w, http.StatusOK, players, nil)
-	if err != nil {
-		helpers.ServerError(w, err)
-		return
-	}
+	_ = helpers.WriteJson(w, http.StatusOK, players, nil)
 }

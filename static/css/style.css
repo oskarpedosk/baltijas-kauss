@@ -300,8 +300,7 @@ html {
 
 #players_table thead tr {
     position: sticky;
-    top: 0;
-    z-index: 1;
+    top: 0px;
 }
 
 .badge-menu {
@@ -334,6 +333,9 @@ html {
     #players_table table td:nth-child(2),
     #players_table table td:nth-child(11) {
         display: none;
+    }
+    #players_table {
+        overflow-x: scroll;
     }
 }
 
@@ -584,6 +586,10 @@ html {
     font-variant-numeric: tabular-nums;
 }
 
+.legend-text {
+    color: #d300ea;
+}
+
 .legend-border {
     border: 1px solid #d300ea;
 }
@@ -597,6 +603,11 @@ html {
     top: 50px;
     left: auto;
     z-index: 999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#navbar-search-results li {
+    min-width: 350px;
 }
 
 @media (max-width:768px) {
