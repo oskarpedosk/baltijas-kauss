@@ -86,8 +86,8 @@
     </div>
   </div>
   <hr class="mt-2 mb-3">
-  <div class="row mb-3">
-    <div class="col-md-9">
+  <div class="row mb-1">
+    <div class="col-md-9 mb-2">
       <div id="draft-table-container" class="rounded-3 border">
         <table id="draft-table" class="table table-condensed table-borderless table-responsive m-0">
           <thead style="text-align: center;">
@@ -122,7 +122,7 @@
     </div>
     <div class="col-md-3">
       <div class="d-flex mb-2">
-        <input id="search" class="form-control" type="text" name="search" autocomplete="off" placeholder="Search...">
+        <input id="draft-search" class="form-control" type="text" name="draft-search" autocomplete="off" placeholder="Search...">
         <button id="star-0" class="btn bg-white ms-2 px-3 py-0" type="button" style="color: #E6E6E6; border-color: rgb(210, 210, 210); font-size: 18px;" onclick="toggleFavourites()">☆</button>
       </div>
       <div class="rounded-3 border">
@@ -629,7 +629,7 @@
 <!-- Search -->
 <script>
   $(document).ready(function() {
-    $("#search").on("keyup", function() {
+    $("#draft-search").on("keyup", function() {
       let value = $(this).val().toLowerCase()
       $("#draft-players-list li:not(.hidden)").filter(function() {
         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)

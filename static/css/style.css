@@ -298,9 +298,10 @@ html {
     display: none;
 }
 
-#players_table thead tr {
+#players-table thead tr {
     position: sticky;
-    top: 0px;
+    top: 0;
+    z-index: 1;
 }
 
 .badge-menu {
@@ -327,15 +328,27 @@ html {
 }
 
 @media (max-width:768px) {
-    #players_table table th:nth-child(2),
-    #players_table table th:nth-child(11),
+    #players-table table th:nth-child(2),
+    #players-table table th:nth-child(5),
+    #players-table table th:nth-child(6),
+    #players-table table th:nth-child(7),
+    #players-table table th:nth-child(8),
+    #players-table table th:nth-child(9),
+    #players-table table th:nth-child(10),
+    #players-table table th:nth-child(11),
+    #players-table table th:nth-child(11),
 
-    #players_table table td:nth-child(2),
-    #players_table table td:nth-child(11) {
-        display: none;
-    }
-    #players_table {
-        overflow-x: scroll;
+    #players-table table td:nth-child(2),
+    #players-table table td:nth-child(5),
+    #players-table table td:nth-child(6),
+    #players-table table td:nth-child(7),
+    #players-table table td:nth-child(8),
+    #players-table table td:nth-child(9),
+    #players-table table td:nth-child(10),
+    #players-table table td:nth-child(10),
+    #players-table table td:nth-child(11)
+    {
+        display:none;
     }
 }
 
