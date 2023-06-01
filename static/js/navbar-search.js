@@ -41,6 +41,7 @@ const displaySearchResults = (players) => {
       const border = (i !== players.length) ? "border-bottom" : ""
       const borderColor = (player.legend === 1) ? "legend-border" : "border"
       const textColor = (player.legend === 1) ? "legend-text" : "text-black"
+      const img = (player.img_url === "") ? "/static/images/players/default_player.png" : player.img_url
       let color
       let colorRange = {
         '91-99': 'overall1',
@@ -61,7 +62,7 @@ const displaySearchResults = (players) => {
       listItem.innerHTML = `
         <a href="/players/${player.player_id}" class="d-flex p-2 px-3 justify-content-between ${border}" style="text-decoration: none;">
         <div class="d-flex">
-            <img src="${player.img_url}" alt="" class="header-image rounded-circle inline-block ${borderColor}">
+            <img src="${img}" alt="" class="header-image rounded-circle inline-block ${borderColor}">
             <div class="ps-2 d-flex align-items-center">
               <div>
                 <p class="m-0 ${textColor}">${player.first_name} ${player.last_name}</p>
