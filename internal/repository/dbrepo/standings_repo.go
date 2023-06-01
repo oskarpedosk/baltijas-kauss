@@ -2,6 +2,7 @@ package dbrepo
 
 import (
 	"context"
+	"database/sql"
 	"time"
 
 	"github.com/oskarpedosk/baltijas-kauss/internal/models"
@@ -13,17 +14,23 @@ func (m *postgresDBRepo) AddResult(result models.Result) error {
 
 	stmt := `SELECT MAX(result_id) FROM results`
 
-	var resultID int
+	var resultID sql.NullInt64
 	err := m.DB.QueryRowContext(ctx, stmt).Scan(&resultID)
 	if err != nil {
-		return err
+		// Handle the error
+		if err == sql.ErrNoRows || !resultID.Valid {
+			resultID.Int64 = 1
+			resultID.Valid = true
+		} else {
+			return err
+		}
 	}
 
 	stmt = `insert into results (result_id, season_id, home_team_id, home_score, away_score, away_team_id, created_at, updated_at) 
 	values ($1, $2, $3, $4, $5, $6, now(), now())`
 
 	_, err = m.DB.ExecContext(ctx, stmt,
-		resultID + 1,
+		resultID.Int64+1,
 		result.SeasonID,
 		result.HomeTeam.TeamID,
 		result.HomeScore,
@@ -128,23 +135,23 @@ func (m *postgresDBRepo) GetSeasons() ([]models.Season, error) {
 		FROM seasons
 		ORDER BY season_id DESC
 		`
-		rows, err := m.DB.QueryContext(ctx, query)
+	rows, err := m.DB.QueryContext(ctx, query)
+	if err != nil {
+		return seasons, err
+	}
+	defer rows.Close()
+	for rows.Next() {
+		var season models.Season
+		err := rows.Scan(
+			&season.SeasonID,
+			&season.CreatedAt,
+			&season.UpdatedAt,
+		)
 		if err != nil {
 			return seasons, err
 		}
-		defer rows.Close()
-		for rows.Next() {
-			var season models.Season
-			err := rows.Scan(
-				&season.SeasonID,
-				&season.CreatedAt,
-				&season.UpdatedAt,
-			)
-			if err != nil {
-				return seasons, err
-			}
-			seasons = append(seasons, season)
-		}
+		seasons = append(seasons, season)
+	}
 
 	return seasons, nil
 }

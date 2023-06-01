@@ -1,0 +1,56 @@
+2023/06/01 11:53:42 Error repeated read on failed websocket connection
+2023/06/01 11:53:42 Error repeated read on failed websocket connection
+2023/06/01 11:53:42 Websocket error
+2023/06/01 11:53:47 Error repeated read on failed websocket connection
+2023/06/01 11:53:47 Error repeated read on failed websocket connection
+2023/06/01 11:53:48 Websocket error
+2023/06/01 11:54:58 Error repeated read on failed websocket connection
+2023/06/01 11:54:58 Error repeated read on failed websocket connection
+2023/06/01 11:54:58 Websocket error
+2023/06/01 11:55:15 Error repeated read on failed websocket connection
+2023/06/01 11:55:15 Error repeated read on failed websocket connection
+2023/06/01 11:55:15 Websocket error
+2023/06/01 11:55:17 Error repeated read on failed websocket connection
+2023/06/01 11:55:17 Error repeated read on failed websocket connection
+2023/06/01 11:55:17 Websocket error
+2023/06/01 11:56:34 Error repeated read on failed websocket connection
+2023/06/01 11:56:34 Error repeated read on failed websocket connection
+2023/06/01 11:56:34 Websocket error
+2023/06/01 11:56:35 Error repeated read on failed websocket connection
+2023/06/01 11:56:35 Error repeated read on failed websocket connection
+2023/06/01 11:56:35 Websocket error
+2023/06/01 11:57:10 Error repeated read on failed websocket connection
+2023/06/01 11:57:10 Error repeated read on failed websocket connection
+2023/06/01 11:57:10 Websocket error
+2023/06/01 11:57:12 Error repeated read on failed websocket connection
+2023/06/01 11:57:12 Error repeated read on failed websocket connection
+2023/06/01 11:57:12 Websocket error
+2023/06/01 11:57:45 Error repeated read on failed websocket connection
+2023/06/01 11:57:45 Error repeated read on failed websocket connection
+2023/06/01 11:57:45 Websocket error
+2023/06/01 11:58:08 Error repeated read on failed websocket connection
+2023/06/01 11:58:08 Error repeated read on failed websocket connection
+2023/06/01 11:58:08 Websocket error
+2023/06/01 11:58:40 Error repeated read on failed websocket connection
+2023/06/01 11:58:40 Error repeated read on failed websocket connection
+2023/06/01 11:58:41 Websocket error
+2023/06/01 11:58:54 Error repeated read on failed websocket connection
+2023/06/01 11:58:54 Error repeated read on failed websocket connection
+2023/06/01 11:58:55 Websocket error
+2023/06/01 11:59:07 Error repeated read on failed websocket connection
+2023/06/01 11:59:07 Error repeated read on failed websocket connection
+2023/06/01 11:59:07 Websocket error
+2023/06/01 11:59:56 Error repeated read on failed websocket connection
+2023/06/01 11:59:56 Error repeated read on failed websocket connection
+2023/06/01 11:59:57 Websocket error
+2023/06/01 12:00:11 Error repeated read on failed websocket connection
+2023/06/01 12:00:11 Error repeated read on failed websocket connection
+2023/06/01 12:00:11 Websocket error
+2023/06/01 12:00:16 Error repeated read on failed websocket connection
+2023/06/01 12:00:16 Error repeated read on failed websocket connection
+2023/06/01 12:00:17 Websocket error
+2023/06/01 12:01:27 Error repeated read on failed websocket connection
+2023/06/01 12:01:27 Error repeated read on failed websocket connection
+2023/06/01 12:01:31 Websocket error
+2023/06/01 12:01:32 Error repeated read on failed websocket connection
+2023/06/01 12:01:32 Error repeated read on failed websocket connection
