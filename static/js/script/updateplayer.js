@@ -1,16 +1,21 @@
 import fs from 'fs'
-import path from 'path'
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
-const playerID = process.argv[2]
-const ratingsURL = process.argv[3]
-let ubuntu = true
+const systemOS = process.argv[2]
+const playerID = process.argv[3]
+const ratingsURL = process.argv[4]
 let page
+let imagesPath
+let browserPath
 
-let browserPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-let imagesPath = './static/images/badges'
 
-if (ubuntu) {
+if (systemOS === "mac") {
+    browserPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+    imagesPath = './static/images/badges'
+} else if (systemOS === "windows") {
+    browserPath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+    imagesPath = '.\\static\\images\\badges';    
+} else if (systemOS === "ubuntu") {
     browserPath = '/usr/bin/chromium-browser'
     imagesPath = '/var/www/bkauss/static/images/badges'
 }

@@ -75,7 +75,7 @@ func run() (*driver.DB, error) {
 	dbUser := flag.String("dbuser", "", "Database user")
 	dbPass := flag.String("dbpass", "", "Database password")
 	dbPort := flag.String("dbport", "5432", "Database port")
-	dbSSL := flag.String("dbssl", "disable", "Database SSL settings (disable, preger, require)")
+	dbSSL := flag.String("dbssl", "disable", "Database SSL settings (disable, prefer, require)")
 
 	flag.Parse()
 
