@@ -15,7 +15,8 @@ import (
 	"github.com/oskarpedosk/baltijas-kauss/internal/render"
 )
 
-const ubuntu = true
+// mac, windows or ubuntu
+const systemOS = "mac"
 
 var queryFilters = map[string]string{
 	"team":   "TeamID",
@@ -294,12 +295,17 @@ func (m *Repository) PostUpdatePlayer(w http.ResponseWriter, r *http.Request) {
 
 	if len(playerID) > 0 && len(ratingsURL) > 0 {
 		go func(playerID, ratingsURL string) {
-			filePath := "./static/js/script/updateplayer.js"
-			if ubuntu {
+			filePath := ""
+			switch systemOS {
+			case "mac":
+				filePath = "./static/js/script/updateplayer.js"
+			case "windows":
+				filePath = ".\\static\\js\\script\\updateplayer.js"
+			case "ubuntu":
 				filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 			}
 
-			cmd := exec.Command("node", filePath, playerID, ratingsURL)
+			cmd := exec.Command("node", filePath, systemOS, playerID, ratingsURL)
 			output, err := cmd.CombinedOutput()
 			if err != nil {
 				log.Printf("Command failed with error: %v\n", err)

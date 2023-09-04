@@ -54,3 +54,12 @@
 2023/06/01 12:01:31 Websocket error
 2023/06/01 12:01:32 Error repeated read on failed websocket connection
 2023/06/01 12:01:32 Error repeated read on failed websocket connection
+2023/09/03 14:44:04 ERROR: relation "users" does not exist (SQLSTATE 42P01)
+2023/09/03 14:44:06 ERROR: relation "users" does not exist (SQLSTATE 42P01)
+2023/09/03 14:44:07 ERROR: relation "users" does not exist (SQLSTATE 42P01)
+2023/09/03 14:44:07 ERROR: relation "users" does not exist (SQLSTATE 42P01)
+2023/09/03 14:45:08 ERROR: relation "users" does not exist (SQLSTATE 42P01)
+2023/09/03 14:45:09 ERROR: relation "users" does not exist (SQLSTATE 42P01)
+2023/09/03 15:12:10 1 https://www.2kratings.com/nikola-jokic updated
+2023/09/03 15:14:46 2 https://www.2kratings.com/giannis-antetokounmpo updated
+2023/09/03 18:45:58 3 https://www.2kratings.com/kevin-durant updated
