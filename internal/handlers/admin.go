@@ -51,6 +51,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		Position5:           1,
 		Limit:               20,
 		Offset:              0,
+		Era:                 2,
 		Col1:                "overall",
 		Col2:                "\"attributes/TotalAttributes\"",
 		Order:               "desc",
@@ -86,7 +87,6 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	}
 	filter.Offset = offset
 
-	log.Println(filter)
 	players, err := m.DB.GetPlayers(filter)
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -115,8 +115,6 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Command failed with error: %v\n", err)
 			continue
 		}
-
-		log.Println("cmd")
 
 		// Parse the output as an array of two objects
 		var data []json.RawMessage

@@ -585,8 +585,6 @@ func (m *postgresDBRepo) GetPlayers(filter models.Filter) ([]models.Player, erro
 	OFFSET $28
 	`
 
-	log.Println(query)
-
 	rows, err := m.DB.QueryContext(ctx, query,
 		filter.TeamID,
 		filter.OverallMin,
