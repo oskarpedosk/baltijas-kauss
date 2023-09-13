@@ -86,6 +86,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	}
 	filter.Offset = offset
 
+	log.Println(filter)
 	players, err := m.DB.GetPlayers(filter)
 	if err != nil {
 		helpers.ServerError(w, err)
@@ -101,10 +102,6 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	case "ubuntu":
 		filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 	}
-
-	log.Println(len(players))
-	log.Println(players)
-	log.Println(players[0])
 
 	success := 0
 	for _, player := range players {
