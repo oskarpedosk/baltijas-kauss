@@ -25,7 +25,7 @@ puppeteer.use(StealthPlugin())
 puppeteer.use(AdblockerPlugin())
 puppeteer.launch({
     executablePath: browserPath, 
-    headless: true, 
+    headless: "new", 
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     timeout: 40000
     }).then(async browser => {
