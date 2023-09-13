@@ -78,8 +78,6 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	} else if 0 < limit && limit <= playerCount {
 		filter.Limit = limit
 	}
-
-	log.Println("limit")
 	
 	offset, err := strconv.Atoi(r.FormValue("offset"))
 	if err != nil {
@@ -87,15 +85,12 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	filter.Offset = offset
-	log.Println("offset")
 
 	players, err := m.DB.GetPlayers(filter)
 	if err != nil {
 		helpers.ServerError(w, err)
 		return
 	}
-
-	log.Println("players")
 
 	filePath := ""
 	switch systemOS {
@@ -107,12 +102,12 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 		filePath = "/var/www/bkauss/static/js/script/updateplayer.js"
 	}
 
-	log.Println("path")
+	log.Println(len(players))
+	log.Println(players)
+	log.Println(players[0])
 
 	success := 0
 	for _, player := range players {
-		log.Println(player)
-		log.Println("players")
 		successMsg := fmt.Sprintf("%s %s update success", player.FirstName, player.LastName)
 		failMsg := fmt.Sprintf("%s %s update failed", player.FirstName, player.LastName)
 
