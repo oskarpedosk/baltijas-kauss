@@ -16,7 +16,7 @@ import (
 )
 
 // mac, windows or ubuntu
-const systemOS = "mac"
+const systemOS = "ubuntu"
 
 var queryFilters = map[string]string{
 	"team":   "TeamID",

@@ -1,6 +1,7 @@
 import fs from 'fs'
 import puppeteer from 'puppeteer-extra'
 import StealthPlugin from 'puppeteer-extra-plugin-stealth'
+import AdblockerPlugin from 'puppeteer-extra-plugin-adblocker';
 const systemOS = process.argv[2]
 const playerID = process.argv[3]
 const ratingsURL = process.argv[4]
@@ -11,7 +12,7 @@ let browserPath
 
 if (systemOS === "mac") {
     browserPath = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-    imagesPath = './static/images/badges'
+    imagesPath = '../../images/badges'
 } else if (systemOS === "windows") {
     browserPath = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
     imagesPath = '.\\static\\images\\badges';    
@@ -21,9 +22,10 @@ if (systemOS === "mac") {
 }
 
 puppeteer.use(StealthPlugin())
+puppeteer.use(AdblockerPlugin())
 puppeteer.launch({
     executablePath: browserPath, 
-    headless: true, 
+    headless: false, 
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     timeout: 40000
     }).then(async browser => {
@@ -80,8 +82,8 @@ async function scrapePlayer(url) {
             (Array.from(document.querySelectorAll('.header-subtitle > p'))
             .map(element => element.innerText)));
 
-    for (let i = 0; i < player_info.length; i++) {
-        let info = player_info[i];
+    for (const element of player_info) {
+        let info = element;
         
         // NBA team
         let regex = /Team: (.+\w)/;
@@ -120,7 +122,6 @@ async function scrapePlayer(url) {
         regex = /Jersey: (#\d+)$/;
         if (regex.test(info)) {
             player.jersey = getGroup(regex, info, 1);
-            continue;
         }
     }
 
@@ -153,8 +154,8 @@ async function scrapePlayer(url) {
     // Scrape player badges
     const badges = await scrapePlayerBadges();
 
-    for (let i = 0; i < badges.length; i++) {
-        const level = getGroup(/_(\w+)\./, badges[i].url, 1)
+    for (const badge of badges) {
+        const level = getGroup(/_(\w+)\./, badge.url, 1)
         if (level === "bronze") {
             player.bronze_badges++
         } else if (level === "silver") {
@@ -198,10 +199,10 @@ async function scrapeNBAcom(first_name, last_name) {
                 return null;
             }
         });
-        for (let i = 0; i < nba_com_info.length; i++) {
-            if (nba_com_info[i].length === 2) {
-                const info = nba_com_info[i][0]
-                const data = nba_com_info[i][1]
+        for (const element of nba_com_info) {
+            if (element.length === 2) {
+                const info = element[0]
+                const data = element[1]
                 if (info === "HEIGHT") {
                     let regex = /\((\d\d\d)m\)/;
                     const height = data.replace('.', '');
@@ -237,13 +238,11 @@ async function scrapeNBAcom(first_name, last_name) {
         // Scrape player image url
         if (await page.$('img.PlayerImage_image__wH_YX:nth-child(2)') !== null) {
             nba_com_scrape.img_url = await page.evaluate(() => document.querySelector('img.PlayerImage_image__wH_YX:nth-child(2)').src);
-        } else {
-            if (await page.$('img.PlayerImage_image__wH_YX') !== null) {
+        } else if (await page.$('img.PlayerImage_image__wH_YX') !== null) {
                 nba_com_scrape.img_url = await page.evaluate(() => document.querySelector('img.PlayerImage_image__wH_YX').src);
             } else {
                 nba_com_scrape.img_url = null;
             }
-        }
 
         return nba_com_scrape
     } catch {
@@ -301,20 +300,20 @@ function addAttributes(attributes_scrape) {
         DefensiveRebound: null,
     }
     
-    for (let i = 0; i < attributes_scrape.length; i++) {
+    for (const element of attributes_scrape) {
         let regex = /(\S+) (.+\w)/;
-        let attribute_str = getGroup(regex, attributes_scrape[i], 2);
+        let attribute_str = getGroup(regex, element, 2);
         attribute_str = attribute_str.replaceAll(' ', '');
         attribute_str = attribute_str.replaceAll('-', '');
         let attribute_int = null;
         if (attribute_str === "TotalAttributes") {
             regex = /\d+/g;
-            attribute_int = parseInt(getGroup(regex, attributes_scrape[i], 0) + getGroup(regex, attributes_scrape[i], 1));
+            attribute_int = parseInt(getGroup(regex, element, 0) + getGroup(regex, element, 1));
             if (attribute_int === 0) {
                 attribute_int = null;
             }
         } else {
-            attribute_int = parseInt(getGroup(regex, attributes_scrape[i], 1));
+            attribute_int = parseInt(getGroup(regex, element, 1));
         }
         attributes[attribute_str] = attribute_int;
     }
@@ -364,9 +363,9 @@ async function scrapePlayerBadges() {
             name: name,
             type: type,
             info: info,
-            img_id: await saveImage("https://2kratings.com" + badges_levels[i], imagesPath, getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
+            img_id: await saveImage(badges_levels[i], imagesPath, getGroup(/uploads\/(.+)\.png/, badges_levels[i], 1)),
             level: getGroup(/_(\w+)\./, badges_levels[i], 1),
-            url: "https://2kratings.com" + badges_levels[i],
+            url: badges_levels[i],
         }
         badges.push(badge)
     }
