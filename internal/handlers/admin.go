@@ -106,7 +106,7 @@ func (m *Repository) PostAdminPlayers(w http.ResponseWriter, r *http.Request) {
 	for _, player := range players {
 		successMsg := fmt.Sprintf("%s %s update success", player.FirstName, player.LastName)
 		failMsg := fmt.Sprintf("%s %s update failed", player.FirstName, player.LastName)
-		cmd := exec.Command("node", filePath, strconv.Itoa(player.PlayerID), player.RatingsURL)
+		cmd := exec.Command("node", filePath, systemOS, strconv.Itoa(player.PlayerID), player.RatingsURL)
 		output, err := cmd.CombinedOutput()
 		if err != nil {
 			log.Println(failMsg)
