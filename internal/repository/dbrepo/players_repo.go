@@ -460,7 +460,7 @@ func (m *postgresDBRepo) UpdatePlayerBadges(player models.Player, badges []model
 	}
 
 	for _, badge := range badges {
-		badgeID, err := m.GetBadgeID(badge.URL)
+		badgeID, err := m.GetBadgeID(badge.Name, badge.URL)
 		if err != nil {
 			return err
 		}
@@ -493,7 +493,7 @@ func (m *postgresDBRepo) UpdatePlayerBadges(player models.Player, badges []model
 	return nil
 }
 
-func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
+func (m *postgresDBRepo) GetBadgeID(name, url string) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -502,11 +502,13 @@ func (m *postgresDBRepo) GetBadgeID(url string) (int, error) {
 	FROM 
 		badges
 	WHERE
-		url = $1
+		name = $1
+	AND
+		url = $2
 	`
 	badgeID := 0
 
-	row, err := m.DB.QueryContext(ctx, query, url)
+	row, err := m.DB.QueryContext(ctx, query, name, url)
 	if err != nil {
 		return 0, err
 	}

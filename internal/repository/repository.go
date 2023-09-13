@@ -27,7 +27,7 @@ type DatabaseRepo interface {
 	SwitchTeam(player models.Player) error
 	AssignPosition(playerID, position int) error
 
-	GetBadgeID(url string) (int, error)
+	GetBadgeID(name, url string) (int, error)
 	CreateNewBadge(models.Badge) (int, error)
 	GetPlayerBadges(playerID int) ([]models.Badge, error)
 
