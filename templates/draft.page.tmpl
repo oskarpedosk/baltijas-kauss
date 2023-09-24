@@ -200,7 +200,7 @@
   const roundNumber = document.getElementById("roundNumber")
 
   document.addEventListener("DOMContentLoaded", function() {
-    draftSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/draftws", null, {debug: false, reconnectInterval: 3000})
+    draftSocket = new ReconnectingWebSocket("wss://" + document.location.host + "/draftws", null, {debug: false, reconnectInterval: 3000})
 
     // const online = `<span class="badge bg-success">Draft connected</span>`
     // const offline = `<span class="badge bg-danger">Draft disconnected</span>`
@@ -453,7 +453,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function() {
-    messengerSocket = new ReconnectingWebSocket("ws://" + document.location.host + "/messengerws", null, {debug: false, reconnectInterval: 3000})
+    messengerSocket = new ReconnectingWebSocket("wss://" + document.location.host + "/messengerws", null, {debug: false, reconnectInterval: 3000})
 
     messengerSocket.onopen = () => {
       let jsonData = {}
