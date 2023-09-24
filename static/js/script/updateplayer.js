@@ -180,7 +180,7 @@ async function scrapeNBAcom(first_name, last_name) {
     const nba_com_scrape = {};
     try {
         // Search for player with DuckDuckGo
-        const query = first_name + '+' + last_name + '+' + 'nba.com+profile+stats';
+        const query = `site:nba.com ${first_name}+${last_name} profile`;
         await page.goto('https://www.duckduckgo.com/?q=' + query);
         await page.waitForSelector('#r1-0 > div:nth-child(2) > h2:nth-child(1) > a:nth-child(1)');
         const player_url = await page.evaluate(() => document.querySelector('#r1-0 > div:nth-child(2) > h2:nth-child(1) > a:nth-child(1)').href);
