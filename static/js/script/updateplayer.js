@@ -156,13 +156,13 @@ async function scrapePlayer(url) {
 
     for (const badge of badges) {
         const level = getGroup(/_(\w+)\./, badge.url, 1)
-        if (level === "bronze") {
+        if (level === "bronze" || level === "Bronze") {
             player.bronze_badges++
-        } else if (level === "silver") {
+        } else if (level === "silver" || level === "Silver") {
             player.silver_badges++
-        } else if (level === "gold") {
+        } else if (level === "gold" || level === "Gold") {
             player.gold_badges++
-        } else if (level === "hof") {
+        } else if (level === "hof" || level === "HOF") {
             player.hof_badges++
         }
         player.total_badges++
