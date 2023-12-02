@@ -155,7 +155,7 @@ async function scrapePlayer(url) {
     const badges = await scrapePlayerBadges();
 
     for (const badge of badges) {
-        const level = getGroup(/_(\w+)\./, badge.url, 1)
+        const level = getGroup(/[-_](\w+)\./, badge.url, 1)
         if (level === "bronze" || level === "Bronze") {
             player.bronze_badges++
         } else if (level === "silver" || level === "Silver") {
