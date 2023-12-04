@@ -277,8 +277,22 @@ func draftPlayer(e DraftPayload) {
 
 func generateDraft() {
 	teams := Repo.GenerateDraftOrder()
+	roundsMap := map[int]string{
+		1:  "left",
+		2:  "right",
+		3:  "right",
+		4:  "left",
+		5:  "right",
+		6:  "left",
+		7:  "right",
+		8:  "left",
+		9:  "right",
+		10: "left",
+		11: "right",
+		12: "left",
+	}
 	for row := 1; row <= rounds; row++ {
-		if row%2 != 0 {
+		if roundsMap[row] == "left" {
 			col := 1
 			for j := 0; j < len(teams); j++ {
 				draftPick := models.DraftPick{
@@ -292,7 +306,7 @@ func generateDraft() {
 				pick++
 				col++
 			}
-		} else {
+		} else if roundsMap[row] == "right" {
 			col := len(teams)
 			for j := len(teams) - 1; j >= 0; j-- {
 				draftPick := models.DraftPick{
@@ -314,6 +328,10 @@ func generateDraft() {
 	response.Teams = teams
 	response.Action = "generate_draft"
 	BroadcastToAll(response)
+}
+
+func contains(roundsFromLeftToRight []int, row int) {
+	panic("unimplemented")
 }
 
 func draftCountdown() {
