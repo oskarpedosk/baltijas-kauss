@@ -131,7 +131,7 @@ func (m *postgresDBRepo) GetDraft(draftID int) ([]models.DraftPick, error) {
 	var draft []models.DraftPick
 
 	query := `
-	SELECT drafts.pick, drafts.team_id, CONCAT(players.first_name, ' ', players.last_name) AS name
+	SELECT drafts.pick, drafts.team_id, CONCAT(players.first_name, ' ', players.last_name) AS name, players.player_id
 	FROM drafts
 	JOIN players ON players.player_id = drafts.player_id
 	WHERE draft_id = $1
@@ -150,6 +150,7 @@ func (m *postgresDBRepo) GetDraft(draftID int) ([]models.DraftPick, error) {
 			&pick.Pick,
 			&pick.TeamID,
 			&pick.Name,
+			&pick.PlayerID,
 		)
 		if err != nil {
 			return draft, err

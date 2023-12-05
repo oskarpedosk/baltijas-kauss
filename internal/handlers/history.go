@@ -51,36 +51,34 @@ func (m *Repository) History(w http.ResponseWriter, r *http.Request) {
 		teamMap[team.TeamID] = team
 	}
 
-	round := 1
-	prevTeam := 0
-	var row = []models.DraftPick{}
 	var draftOrder = []models.Team{}
-	var ordererDraft = [][]models.DraftPick{}
-
-	for _, pick := range draft {
-		if prevTeam == pick.TeamID {
-			if round%2 == 0 {
-				reverse(row)
+	var draftByTeams = [][]models.DraftPick{}
+	
+	order: for _, pick := range draft {
+		for _, team := range draftOrder {
+			if pick.TeamID == team.TeamID {
+				break order
 			}
-			ordererDraft = append(ordererDraft, row)
-			row = []models.DraftPick{}
-			round++
 		}
-		row = append(row, pick)
-		if round == 1 {
-			draftOrder = append(draftOrder, teamMap[pick.TeamID])
+		draftOrder = append(draftOrder, teamMap[pick.TeamID])
+	}
+
+	for _, team := range draftOrder {
+		oneTeamPicks := []models.DraftPick{}
+		for _, pick := range draft {
+			if pick.TeamID == team.TeamID {
+				oneTeamPicks = append(oneTeamPicks, pick)
+			}
 		}
-		prevTeam = pick.TeamID
+		draftByTeams = append(draftByTeams, oneTeamPicks)
 	}
-	if round%2 == 0 {
-		reverse(row)
-	}
-	ordererDraft = append(ordererDraft, row)
+
+
 
 	data := make(map[string]interface{})
 	data["drafts"] = drafts
 	data["teams"] = draftOrder
-	data["draft"] = ordererDraft
+	data["draft"] = draftByTeams
 	data["activeDraft"] = draftID
 
 	render.Template(w, r, "history.page.tmpl", &models.TemplateData{
