@@ -26,11 +26,11 @@
                             <tr>
                                 {{ range $index, $team := index .Data.teams }}
                                     {{if ne $index 0 }}
-                                        <th style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 23.75%; color: {{$team.TextColor}};">
+                                        <th style="font-size: 12px; border-left: 0.1px solid rgb(190, 190, 190); width: 25%;">
                                             <a href="/teams/{{$team.TeamID}}" class="player-link" style="font-weight: 500; color: {{$team.TextColor}};">{{ $team.Name }}</a>
                                         </th>
                                     {{else}}
-                                        <th style="font-size: 12px; color: {{$team.TextColor}};">
+                                        <th style="font-size: 12px; color: {{$team.TextColor}}; width: 25%;">
                                             <a href="/teams/{{$team.TeamID}}" class="player-link" style="font-weight: 500; color: {{$team.TextColor}};">{{ $team.Name }}</a>
                                         </th>
                                     {{end}}
@@ -48,14 +48,14 @@
                                 {{ range $index2, $pick := index $teamPicks }}
                                 <div class="p-2 ps-3" style="font-variant-numeric: tabular-nums; text-align: left; font-size: 14px; border-top: 0.1px solid rgb(190, 190, 190);">
                                     {{if lt $index2 9 }}
-                                        {{ add $index2 1 }}.&nbsp;&nbsp;
+                                        <span style="font-weight: 300">{{ add $index2 1 }}.</span>&nbsp;&nbsp;
                                     {{else}}
-                                        {{ add $index2 1 }}.
+                                        <span style="font-weight: 300">{{ add $index2 1 }}.</span>
                                     {{end}}
                                     {{if lt $pick.Pick 10 }}
-                                        <span>({{ $pick.Pick }})</span>&nbsp;&nbsp;&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link" style="font-weight: 300; ">{{ $pick.Name }}</a>
+                                        <span style="font-weight: 300">({{ $pick.Pick }})</span>&nbsp;&nbsp;&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
                                     {{else if ge $pick.Pick 10 }}
-                                        <span>({{ $pick.Pick }})</span>&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link" style="font-weight: 300; ">{{ $pick.Name }}</a>
+                                        <span style="font-weight: 300">({{ $pick.Pick }})</span>&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
                                     {{else}}
                                         {{ $pick.Name }}
                                     {{end}}
