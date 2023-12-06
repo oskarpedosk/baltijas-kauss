@@ -48,9 +48,9 @@
                                 {{ range $index2, $pick := index $teamPicks }}
                                 <div class="p-2 ps-3" style="font-variant-numeric: tabular-nums; text-align: left; font-size: 14px; border-top: 0.1px solid rgb(190, 190, 190);">
                                     {{if lt $index2 9 }}
-                                        {{ add $index2 1 }}.&nbsp;&nbsp;
+                                        {{ add $index2 1 }}.&nbsp;&nbsp;&nbsp;&nbsp;
                                     {{else}}
-                                        {{ add $index2 1 }}.
+                                        {{ add $index2 1 }}.&nbsp;&nbsp;
                                     {{end}}
                                     {{if lt $pick.Pick 10 }}
                                         ({{ $pick.Pick }})&nbsp;&nbsp;&nbsp;&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
