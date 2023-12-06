@@ -48,14 +48,14 @@
                                 {{ range $index2, $pick := index $teamPicks }}
                                 <div class="p-2 ps-3" style="font-variant-numeric: tabular-nums; text-align: left; font-size: 14px; border-top: 0.1px solid rgb(190, 190, 190);">
                                     {{if lt $index2 9 }}
-                                        <span style="font-weight: 300">{{ add $index2 1 }}.</span>&nbsp;&nbsp;
+                                        {{ add $index2 1 }}.&nbsp;&nbsp;
                                     {{else}}
-                                        <span style="font-weight: 300">{{ add $index2 1 }}.</span>
+                                        {{ add $index2 1 }}.
                                     {{end}}
                                     {{if lt $pick.Pick 10 }}
-                                        <span style="font-weight: 300">({{ $pick.Pick }})</span>&nbsp;&nbsp;&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
+                                        ({{ $pick.Pick }})&nbsp;&nbsp;&nbsp;&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
                                     {{else if ge $pick.Pick 10 }}
-                                        <span style="font-weight: 300">({{ $pick.Pick }})</span>&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
+                                        ({{ $pick.Pick }})&nbsp;&nbsp;<a href="/players/{{$pick.PlayerID}}" class="player-link overall1-text">{{ $pick.Name }}</a>
                                     {{else}}
                                         {{ $pick.Name }}
                                     {{end}}
