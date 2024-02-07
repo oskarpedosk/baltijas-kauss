@@ -473,8 +473,8 @@ func (m *postgresDBRepo) UpdatePlayerBadges(player models.Player, badges []model
 		stmt := `
 		INSERT INTO
 			players_badges
-		(player_id, badge_id, first_name, last_name, name, level) 
-		values ($1, $2, $3, $4, $5, $6)`
+		(player_id, badge_id, first_name, last_name, name, level, created_at, updated_at) 
+		values ($1, $2, $3, $4, $5, $6, now(), now())`
 
 		_, err = m.DB.ExecContext(ctx, stmt,
 			player.PlayerID,
